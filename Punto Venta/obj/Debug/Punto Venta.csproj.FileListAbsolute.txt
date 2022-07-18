@@ -1,0 +1,1402 @@
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe.config
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\bin\Debug\Punto Venta.pdb
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto Venta.exe
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto Venta.pdb
+C:\Users\Brandon\documents\visual studio 2012\Projects\Punto Venta\Punto Venta\bin\Debug\MySql.Data.dll
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\bin\Debug\LibPrintTicket.dll
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Documents\Visual Studio 2012\Projects\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+I:\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe.config
+I:\Punto Venta\Punto Venta\obj\Debug\Punto Venta.exe
+I:\Punto Venta\Punto Venta\obj\Debug\Punto Venta.pdb
+I:\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe
+I:\Punto Venta\Punto Venta\bin\Debug\Punto Venta.pdb
+I:\Punto Venta\Punto Venta\bin\Debug\MySql.Data.dll
+I:\Punto Venta\Punto Venta\bin\Debug\LibPrintTicket.pdb
+I:\Punto Venta\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+I:\Punto Venta\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe.config
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto Venta.exe
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto Venta.pdb
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\bin\Debug\Punto Venta.pdb
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\bin\Debug\MySql.Data.dll
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe.config
+C:\Users\Brandon\Desktop\JS\Punto Venta\Punto Venta\obj\Debug\Punto Venta.exe
+C:\Users\Brandon\Desktop\JS\Punto Venta\Punto Venta\obj\Debug\Punto Venta.pdb
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe.config
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto Venta.exe
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto Venta.pdb
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\bin\Debug\Punto Venta.pdb
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\bin\Debug\LibPrintTicket.dll
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\bin\Debug\MySql.Data.dll
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe.manifest
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\bin\Debug\Punto Venta.application
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto Venta.exe.manifest
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta\Punto Venta\obj\Debug\Punto Venta.application
+C:\Jaeger Soft\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe.config
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto Venta.exe
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto Venta.pdb
+C:\Jaeger Soft\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe.manifest
+C:\Jaeger Soft\Punto Venta\Punto Venta\bin\Debug\Punto Venta.application
+C:\Jaeger Soft\Punto Venta\Punto Venta\bin\Debug\Punto Venta.exe
+C:\Jaeger Soft\Punto Venta\Punto Venta\bin\Debug\Punto Venta.pdb
+C:\Jaeger Soft\Punto Venta\Punto Venta\bin\Debug\MySql.Data.dll
+C:\Jaeger Soft\Punto Venta\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto Venta.exe.manifest
+C:\Jaeger Soft\Punto Venta\Punto Venta\obj\Debug\Punto Venta.application
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe.config
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.exe
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.pdb
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe.manifest
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.application
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.pdb
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\bin\Debug\MySql.Data.dll
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.exe.manifest
+C:\Users\Brandon\Desktop\JS\CAFE EL SANTUARIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.application
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe.config
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.exe
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.pdb
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe.config
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.exe
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.pdb
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe.manifest
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.application
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.pdb
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.exe.manifest
+C:\Users\Brandon\Desktop\JS\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.application
+H:\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe.config
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.exe
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.pdb
+H:\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe.manifest
+H:\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.application
+H:\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe
+H:\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.pdb
+H:\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\MySql.Data.dll
+H:\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.exe.manifest
+H:\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.application
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe.manifest
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.application
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.pdb
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\MySql.Data.dll
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.exe.manifest
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.application
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+J:\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe.config
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.exe
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.pdb
+J:\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe.manifest
+J:\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.application
+J:\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.exe
+J:\Punto Venta - Prueba\Punto Venta\bin\Debug\Punto Venta.pdb
+J:\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.exe.manifest
+J:\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.application
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\bin\Debug\MySql.Data.dll
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.exe.config
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.exe.manifest
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.application
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.exe
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.pdb
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.exe.manifest
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.application
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.exe
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.pdb
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Brandon\Desktop\JS\EL REGIO\PRINCIPAL\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.exe.config
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.exe
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.pdb
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.exe.manifest
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.application
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.exe
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.pdb
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.exe.manifest
+C:\Users\Brandon\Desktop\JS\REGIO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.application
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.exe.config
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.exe
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.pdb
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.exe.manifest
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.application
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.exe
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft Restaurantes.pdb
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.exe.manifest
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft Restaurantes.application
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Brandon\Desktop\JS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\MySql.Data.dll
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon\Desktop\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\MySql.Data.dll
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+E:\Users\Brandon\Desktop\JS\MR DOGGERS\MR DOGGERS\PIZZAS PROTOTIPO\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+E:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Bran7594\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+C:\Users\Brandon\Desktop\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+H:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+G:\JS\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarMesas.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesas.resources
+C:\Users\Usuario\Desktop\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCantidad.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarMesas.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCantidad.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesas.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Usuario\Desktop\Brandon\Rincon italiano\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarMesas.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCantidad.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesas.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoVenta.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentasProducto.resources
+C:\Users\Usuario\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoDetallada.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarMesas.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCantidad.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesas.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentasProducto.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoDetallada.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoVenta.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon-PC\Desktop\Brandon\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarMesas.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCantidad.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesas.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentasProducto.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoDetallada.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoVenta.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClaveVendendor.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDetalleCorte.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCategorias.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCategorias.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarOrigen.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmOrigen.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCategorias.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarMesas.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarOrigen.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCantidad.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCategorias.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClaveVendendor.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDetalleCorte.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesas.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmOrigen.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentasProducto.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoDetallada.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoVenta.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCategorias.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarMesas.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarOrigen.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCantidad.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCategorias.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClaveVendendor.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDetalleCorte.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesas.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmOrigen.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentasProducto.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoDetallada.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoVenta.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCortesMesero.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCortesMesero.resources
+C:\Users\Brandon-PC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmArticulosCancelados.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmArticulosCancelados.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCortesMesero.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmExportarInventario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarCategoria.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmArticulosCancelados.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarCategoria.resources
+C:\Users\BranPC\Desktop\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmExportarInventario.resources
+C:\Users\Brandon-PC\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComentarios.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCategorias.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarMesas.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarOrigen.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmArticulosCancelados.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCantidad.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCategorias.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClaveVendendor.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComentarios.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCortesMesero.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDetalleCorte.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarCategoria.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmExportarInventario.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesas.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmOrigen.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentasProducto.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoDetallada.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoVenta.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.Cache
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPizzas.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCompras.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCompras.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPromo.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCombos.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmSeleccionarCombo.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmArmaCombo.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVerCompra.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmProductoMas.resources

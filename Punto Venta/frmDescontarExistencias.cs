@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.OleDb;
+
+namespace Punto_Venta
+{
+    public partial class frmDescontarExistencias : Form
+    {
+        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
+        OleDbCommand cmd;
+        public string lista = "";
+        public frmDescontarExistencias()
+        {
+            InitializeComponent();
+            conectar.Open();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            cmd = new OleDbCommand("select * from invent where idArticulo=" + lblID.Text + ";", conectar);
+            OleDbDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                string salida = "" + (Convert.ToDouble(Convert.ToString(reader[3].ToString())) - Convert.ToDouble(textBox1.Text));
+                cmd = new OleDbCommand("UPDATE invent set entrada='" + salida + "' Where idArticulo=" + lblID.Text + ";", conectar);
+                cmd.ExecuteNonQuery();
+            }
+            cmd = new OleDbCommand("UPDATE articulos set cantidad='" + txtTotales.Text + "' Where id=" + lblID.Text + ";", conectar);
+            cmd.ExecuteNonQuery();
+            MessageBox.Show("Se ha actualizado el producto correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            frmInventario invent = new frmInventario();
+            if (lista == "FISICO")
+            {
+                frmActInventario act = new frmActInventario();
+                act.Show();
+            }
+            else if (lista != "")
+            {
+                invent.checkBox1.Checked = true;
+                invent.textBox1.Enabled = false;
+                invent.cmbOrigen.Text = lista;
+                invent.Show();
+            }
+            
+            this.Close();
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            txtTotales.Text = "" + (Convert.ToDouble(txtActuales.Text) - Convert.ToDouble(textBox1.Text));
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+    }
+}
