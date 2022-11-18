@@ -1398,3 +1398,4 @@ C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta -
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmArmaCombo.resources
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVerCompra.resources
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmProductoMas.resources
+C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache

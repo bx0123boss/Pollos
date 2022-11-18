@@ -53,6 +53,8 @@
             this.Restan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.lblCant = new System.Windows.Forms.Label();
+            this.txtComentario = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPedidoprevio)).BeginInit();
@@ -100,9 +102,9 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(1091, 562);
+            this.button2.Location = new System.Drawing.Point(966, 562);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(285, 44);
+            this.button2.Size = new System.Drawing.Size(453, 44);
             this.button2.TabIndex = 44;
             this.button2.Text = "Aceptar";
             this.button2.UseVisualStyleBackColor = true;
@@ -175,7 +177,7 @@
             this.DgvPedidoprevio.GridColor = System.Drawing.SystemColors.ButtonHighlight;
             this.DgvPedidoprevio.Location = new System.Drawing.Point(966, 68);
             this.DgvPedidoprevio.Name = "DgvPedidoprevio";
-            this.DgvPedidoprevio.Size = new System.Drawing.Size(453, 488);
+            this.DgvPedidoprevio.Size = new System.Drawing.Size(453, 416);
             this.DgvPedidoprevio.TabIndex = 50;
             this.DgvPedidoprevio.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPedidoprevio_CellEndEdit);
             // 
@@ -327,12 +329,34 @@
             this.lblCant.Text = "1";
             this.lblCant.Click += new System.EventHandler(this.lblCant_Click);
             // 
+            // txtComentario
+            // 
+            this.txtComentario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtComentario.Location = new System.Drawing.Point(1055, 490);
+            this.txtComentario.Multiline = true;
+            this.txtComentario.Name = "txtComentario";
+            this.txtComentario.Size = new System.Drawing.Size(364, 66);
+            this.txtComentario.TabIndex = 57;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(967, 493);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(91, 16);
+            this.label7.TabIndex = 58;
+            this.label7.Text = "Comentario:";
+            // 
             // frmSeleccionarCombo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(1507, 627);
+            this.Controls.Add(this.txtComentario);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.lblCant);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.dgvPromo);
@@ -389,5 +413,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Rest;
         public System.Windows.Forms.Label label6;
         public System.Windows.Forms.Label lblCant;
+        public System.Windows.Forms.TextBox txtComentario;
+        public System.Windows.Forms.Label label7;
     }
 }

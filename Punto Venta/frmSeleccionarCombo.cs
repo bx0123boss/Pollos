@@ -22,6 +22,7 @@ namespace Punto_Venta
         public string nombre { get; set; }
         public double precio { get; set; }
         public double total { get; set; }
+        public string comentario { get; set; }
         public frmSeleccionarCombo()
         {
             InitializeComponent();
@@ -75,6 +76,7 @@ namespace Punto_Venta
                     cantidad = lblCant.Text;
                     precio = Convert.ToDouble(dgvInventario[2, dgvInventario.CurrentRow.Index].Value.ToString());
                     total = Convert.ToDouble(dgvInventario[2, dgvInventario.CurrentRow.Index].Value.ToString()) * Convert.ToDouble(cantidad);
+                    comentario = txtComentario.Text;
                     this.DialogResult = System.Windows.Forms.DialogResult.OK;                           
                 }
                 else

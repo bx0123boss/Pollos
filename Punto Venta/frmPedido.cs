@@ -30,7 +30,8 @@ namespace Punto_Venta
         double total = 0;
         int suma = 0;
         string categoria = "";
-        bool mesaNueva = true;
+        bool mesaNueva;
+        string idMesa;
         public frmPedido()
         {
             InitializeComponent();
@@ -114,22 +115,20 @@ namespace Punto_Venta
         {
             if ((sender as Button).BackColor == Color.Red)
             {
-                cmd = new OleDbCommand("select IdMesero,Mesero from Mesas where Nombre='" + (sender as Button).Text + "';", conectar);
+                cmd = new OleDbCommand("select IdMesero,Mesero,Id from Mesas where Nombre='" + (sender as Button).Text + "';", conectar);
                 OleDbDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    if (reader[0].ToString()=="")
-                    {
-                        lblMesero.Text = mesSelect;
-                        idMesero = Convert.ToInt32(idMesSel);
-                        mesaNueva = true;
-                    }
-                    else
-                    {
                     lblMesero.Text = reader[1].ToString();
                     idMesero = Convert.ToInt32(reader[0].ToString());
                     mesaNueva = false;
-                    }
+                    idMesa = reader[2].ToString();
+                }
+                else
+                {
+                    lblMesero.Text = mesSelect;
+                    idMesero = Convert.ToInt32(idMesSel);
+                    mesaNueva = true;
                 }
             }
             else
@@ -212,18 +211,8 @@ namespace Punto_Venta
             CmbMesa.DisplayMember = "Nombre";
             CmbMesa.ValueMember = "Id";
             CmbMesa.DataSource = dt;
-            CmbMesa.Text = "";
+            CmbMesa.Text = "";           
 
-            //dt = new DataTable();
-            //cmd = new OleDbCommand("SELECT Folio from folios where Estatus='COCINA';", conectar);
-            //da = new OleDbDataAdapter(cmd);
-            //da.Fill(dt);
-            //cmbFolios.DisplayMember = "Folio";
-            //cmbFolios.ValueMember = "Folio";
-            //cmbFolios.DataSource = dt;
-            //cmbFolios.Text = "";
-
-            TxtBuscanombre.Focus();         
 
            
             
@@ -239,10 +228,6 @@ namespace Punto_Venta
                 else
                     this.Close();
             }
-        }
-
-        private void extra(object sender, EventArgs e)
-        {
         }
 
         private void Myevent(object sender, EventArgs e)
@@ -327,7 +312,7 @@ namespace Punto_Venta
                         double cantCombo = Convert.ToDouble(pi.DgvPedidoprevio[1, i].Value.ToString()) * Convert.ToDouble(pi.cantidad);
                         ides += cantCombo + "," + idCombo + ";";
                     }
-                    DgvPedidoprevio.Rows.Add(pi.id, pi.cantidad, pi.nombre, pi.precio, pi.total, "", "1",ides);
+                    DgvPedidoprevio.Rows.Add(pi.id, pi.cantidad, pi.nombre, pi.precio, pi.total, pi.comentario, "1",ides);
                 }
                 LblTotal.Text = String.Format("{0:0.00}", total);
             }      
@@ -445,85 +430,112 @@ namespace Punto_Venta
             return subcategoria;
         }
 
-        private void BtnEntregar_Click(object sender, EventArgs e)
-        {            
+        private bool ordenVacia()
+        {
             if (1 > DgvPedidoprevio.RowCount)
             {
                 MessageBox.Show("Orden Vacia, favor de verificar", "Alto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
             }
             else if (String.IsNullOrEmpty(idCliente) && tabControl1.SelectedIndex == 1)
             {
                 MessageBox.Show("NO SE HA SELECCIONADO CLIENTE", "Alto!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
             }
             else
+                return false;
+        }
+
+        private void llevar()
+        {
+           
+            total = 0;
+            for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
+            {
+                string subcategoria = obtenerSubcategoria(DgvPedidoprevio[0, i].Value.ToString());
+                cmd = new OleDbCommand("insert into ventas(idProducto,Cantidad,Producto,Comentarios,Precio,Total,Folio,Fecha,Estatus,Subcategoria) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + lblFolio.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COBRADO','" + subcategoria + "');", conectar);
+                cmd.ExecuteNonQuery();
+                string ide = "";
+                if (DgvPedidoprevio[7, i].Value.ToString().Length > 0)
+                    ide = DgvPedidoprevio[7, i].Value.ToString();
+                cmd = new OleDbCommand("insert into temp(id,cantidad, producto, precio, total,ide) values ('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "'," + DgvPedidoprevio[3, i].Value.ToString() + ",'" + DgvPedidoprevio[4, i].Value.ToString() + "','" + ide + "');", conectar);
+                cmd.ExecuteNonQuery();
+                total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
+            }
+            cmd = new OleDbCommand("insert into folios(Folio,ModalidadVenta,Estatus,idCliente,Fecha,Colonia,Monto,FormaPago) values ('" + lblFolio.Text + "','P/LLEVAR','COBRADO','" + idCliente + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblColonia.Text + "','" + total + "','Efectivo');", conectar);
+            cmd.ExecuteNonQuery();
+            cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('VENTA FOLIO: " + lblFolio.Text + "'," + total + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
+            cmd.ExecuteNonQuery();
+            int width = 420;
+            int height = 540;
+            printDocument1.PrinterSettings.DefaultPageSettings.PaperSize = new PaperSize("", width, height);
+            PrintDocument pd = new PrintDocument();
+            pd.PrintPage += new PrintPageEventHandler(this.printDocument1_PrintPage);
+            PrintDialog printdlg = new PrintDialog();
+            PrintPreviewDialog printPrvDlg = new PrintPreviewDialog();
+            printPrvDlg.Document = pd;
+            printdlg.Document = pd;
+            pd.Print();
+            DialogResult dialogResult = MessageBox.Show("¿Imprimir otro ticket?", "Alto!", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                pd.Print();
+            }
+            obtenerYSumar2();
+        }
+
+        private void enMesa()
+        {
+            for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
+            {
+                string ide = "";
+                if (DgvPedidoprevio[7, i].Value.ToString().Length > 0)
+                    ide = DgvPedidoprevio[7, i].Value.ToString();
+                cmd = new OleDbCommand("insert into ArticulosMesa(id,cantidad,producto,precio,total,Comentario,Mesa,Estatus,ids) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + CmbMesa.SelectedValue + "','COCINA','" + ide + "');", conectar);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private void domicilio()
+        {
+            total = 0;
+            for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
+            {
+                string subcategoria = obtenerSubcategoria(DgvPedidoprevio[0, i].Value.ToString());
+                cmd = new OleDbCommand("insert into ventas(idProducto,Cantidad,Producto,Comentarios,Precio,Total,Folio,Fecha,Estatus,ide,Subcategoria) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + lblFolio.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COCINA','" + DgvPedidoprevio[7, i].Value.ToString() + "','" + subcategoria + "');", conectar);
+                cmd.ExecuteNonQuery();
+                total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
+            }
+            cmd = new OleDbCommand("insert into folios(Folio,ModalidadVenta,Estatus,idCliente,Fecha,Colonia,Monto,FormaPago) values ('" + lblFolio.Text + "','REPARTO','COCINA','" + idCliente + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblColonia.Text + "','" + total + "','Efectivo');", conectar);
+            cmd.ExecuteNonQuery();
+            obtenerYSumar2();
+        }
+        private void BtnEntregar_Click(object sender, EventArgs e)
+        {
+            if (!ordenVacia())            
             {
                 BtnEntregar.Visible = false;
                 Ticket ticket = new Ticket();
                 ticket.FontSize = 12;
-                Ticket ticket2 = new Ticket();
+                ticket.MaxCharDescription = 29;
                 //Llevar
                 if (tabControl1.SelectedIndex == 2)
                 {
-
                     ticket.AddHeaderLine("Folio: " + lblFolio.Text);
                     ticket.AddHeaderLine(" ");
                     ticket.AddHeaderLine("****PARA LLEVAR****");
                     ticket.AddHeaderLine(" ");
                     ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-                    total = 0;               
-                    for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
-                    {
-                        string subcategoria = obtenerSubcategoria(DgvPedidoprevio[0, i].Value.ToString());
-                        cmd = new OleDbCommand("insert into ventas(idProducto,Cantidad,Producto,Comentarios,Precio,Total,Folio,Fecha,Estatus,Subcategoria) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + lblFolio.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COBRADO','"+subcategoria+"');", conectar);
-                        cmd.ExecuteNonQuery();                                               
-                        string ide="";
-                        if (DgvPedidoprevio[7, i].Value.ToString().Length > 0)                        
-                            ide=DgvPedidoprevio[7, i].Value.ToString();
-                        cmd = new OleDbCommand("insert into temp(id,cantidad, producto, precio, total,ide) values ('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "'," + DgvPedidoprevio[3, i].Value.ToString() + ",'" + DgvPedidoprevio[4, i].Value.ToString() + "','"+ide+"');", conectar);
-                        cmd.ExecuteNonQuery();
-                        total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
-                    }
-                    cmd = new OleDbCommand("insert into folios(Folio,ModalidadVenta,Estatus,idCliente,Fecha,Colonia,Monto,FormaPago) values ('" + lblFolio.Text + "','P/LLEVAR','COBRADO','" + idCliente + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblColonia.Text + "','"+total+"','Efectivo');", conectar);
-                    cmd.ExecuteNonQuery();
-                    cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('VENTA FOLIO: " + lblFolio.Text + "'," + total + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
-                    cmd.ExecuteNonQuery();
-                    int width = 420;
-                    int height = 540;
-                    printDocument1.PrinterSettings.DefaultPageSettings.PaperSize = new PaperSize("", width, height);
-                    PrintDocument pd = new PrintDocument();
-                    pd.PrintPage += new PrintPageEventHandler(this.printDocument1_PrintPage);
-                    PrintDialog printdlg = new PrintDialog();
-                    PrintPreviewDialog printPrvDlg = new PrintPreviewDialog();
-                    printPrvDlg.Document = pd;
-                    printdlg.Document = pd;
-                    pd.Print();
-                    obtenerYSumar2();
+                    llevar();
                 }
                 //mesa
-                else if (tabControl1.SelectedIndex == 0)                
+                else if (tabControl1.SelectedIndex == 0)
                 {
                     ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
                     ticket.AddHeaderLine(" ");
-                    ticket.AddHeaderLine("****MESA "+CmbMesa.Text+"****");
+                    ticket.AddHeaderLine("****MESA " + CmbMesa.Text + "****");
                     ticket.AddHeaderLine(" ");
-                    for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
-                    {
-                        string ide = "";
-                        if (DgvPedidoprevio[7, i].Value.ToString().Length > 0)
-                            ide = DgvPedidoprevio[7, i].Value.ToString();                    
-                        cmd = new OleDbCommand("insert into ArticulosMesa(id,cantidad,producto,precio,total,Comentario,Mesa,Estatus,ids) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + CmbMesa.SelectedValue + "','COCINA','" + ide+ "');", conectar);
-                        cmd.ExecuteNonQuery();
-                        /*if (DgvPedidoprevio[6, i].Value.ToString() == "1")
-                        {
-                            ti1++;
-                            ticket.AddItem(DgvPedidoprevio[1, i].Value.ToString(), DgvPedidoprevio[2, i].Value.ToString() + ": " + DgvPedidoprevio[5, i].Value.ToString(), "");
-                        }
-                        else
-                        {
-                            ti2++;
-                            ticket2.AddItem(DgvPedidoprevio[1, i].Value.ToString(), DgvPedidoprevio[2, i].Value.ToString() + ": " + DgvPedidoprevio[5, i].Value.ToString(), "");
-                        }*/
-                    }
+                    enMesa();
                 }
                 //domicilio
                 else if (tabControl1.SelectedIndex == 1)
@@ -532,76 +544,22 @@ namespace Punto_Venta
                     ticket.AddHeaderLine(" ");
                     ticket.AddHeaderLine("****ENTREGA A DOMICILIO****");
                     ticket.AddHeaderLine("Folio: " + lblFolio.Text);
-                    ticket.AddHeaderLine("Cliente: " +LblNombre.Text);
-                    //ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-                            total = 0;
-                            for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
-                            {
-                                string subcategoria = obtenerSubcategoria(DgvPedidoprevio[0, i].Value.ToString());
-                                cmd = new OleDbCommand("insert into ventas(idProducto,Cantidad,Producto,Comentarios,Precio,Total,Folio,Fecha,Estatus,ide,Subcategoria) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + lblFolio.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COCINA','" + DgvPedidoprevio[7, i].Value.ToString() + "','"+subcategoria+"');", conectar);
-                                cmd.ExecuteNonQuery();
-                                //ticket.AddItem(DgvPedidoprevio[1, i].Value.ToString(), DgvPedidoprevio[2, i].Value.ToString() + ": " + DgvPedidoprevio[5, i].Value.ToString(), "");
-                                total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
-                            }
-                            cmd = new OleDbCommand("insert into folios(Folio,ModalidadVenta,Estatus,idCliente,Fecha,Colonia,Monto,FormaPago) values ('" + lblFolio.Text + "','REPARTO','COCINA','" + idCliente + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblColonia.Text + "','" + total + "','Efectivo');", conectar);
-                            cmd.ExecuteNonQuery();
-                            obtenerYSumar2();                    
+                    ticket.AddHeaderLine("Cliente: " + LblNombre.Text);
+                    domicilio();
                 }
                 ticket.AddHeaderLine("MESERO:" + lblMesero.Text);
-
-                ticket2.AddHeaderLine("MESA:" + CmbMesa.Text);
-                ticket2.AddHeaderLine("MESERO:" + lblMesero.Text);
                 ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-                ticket2.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
                 for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
                 {
-                    if (DgvPedidoprevio[6, i].Value.ToString() == "1")
+                    string comentario = " ";
+                    if(DgvPedidoprevio[5, i].Value.ToString().Length>0)
                     {
-                        ti1++;
-                        // FALTA COMBO
-                        //if (DgvPedidoprevio[0, i].Value.ToString().Substring(0, 1) == "C")
-                        //{
-                        //    cmd = new OleDbCommand("SELECT * FROM ArticulosPromos where IdPromo='" + DgvPedidoprevio[0, i].Value.ToString() + "';", conectar);
-                        //    OleDbDataReader reader = cmd.ExecuteReader();
-                        //    while (reader.Read())
-                        //    {
-                        //        ticket.AddItem(reader[3].ToString(), reader[4].ToString() + ": " + DgvPedidoprevio[5, i].Value.ToString(), "");
-                        //    }
-                        //}
-                        //else
-                        ticket.AddItem(DgvPedidoprevio[1, i].Value.ToString(), DgvPedidoprevio[2, i].Value.ToString() + ": " + DgvPedidoprevio[5, i].Value.ToString(), "0");
-                        string ide = "";
-                        //MessageBox.Show(DgvPedidoprevio[0 , i].Value.ToString());
-                        if (DgvPedidoprevio[0, i].Value.ToString().Substring(0,1)== "C")
-                        {
-                            if (DgvPedidoprevio[7, i].Value.ToString().Length > 0)
-                            {
-                                ide = DgvPedidoprevio[7, i].Value.ToString();
-                                string[] ids = ide.Split(';');
-                                string RESULT = "";
-                                foreach (var word in ids)
-                                {
-                                    string[] ids2 = word.Split(',');
-                                    for (int i2 = 0; i2 < ids2.Length - 1; i2 = i2 + 2)
-                                    {
-                                        cmd = new OleDbCommand("SELECT Id,Nombre FROM Inventario where Id=" + ids2[1] + ";", conectar);
-                                        OleDbDataReader reader = cmd.ExecuteReader();
-                                        while (reader.Read())
-                                        {
-                                            ticket.AddItem(ids2[0], reader[1].ToString() + ": " + DgvPedidoprevio[5, i].Value.ToString(), "");
-                                            RESULT += ids2[0] + " : " + reader[1].ToString() + "\n";
-                                        }
-                                    }
-                                }
-                                //MessageBox.Show(RESULT);
-                            }
-                        }
+                        comentario+=":" + DgvPedidoprevio[5, i].Value.ToString();
                     }
-                    else
+                    ticket.AddItem(DgvPedidoprevio[1, i].Value.ToString(), DgvPedidoprevio[2, i].Value.ToString() + comentario , "");
+                    string ide = "";
+                    if (DgvPedidoprevio[0, i].Value.ToString().Substring(0, 1) == "C")
                     {
-                        ti2++;                       
-                        ticket2.AddItem(DgvPedidoprevio[1, i].Value.ToString(), DgvPedidoprevio[2, i].Value.ToString() + ": " + DgvPedidoprevio[5, i].Value.ToString(), "");
-                        string ide = "";
                         if (DgvPedidoprevio[7, i].Value.ToString().Length > 0)
                         {
                             ide = DgvPedidoprevio[7, i].Value.ToString();
@@ -616,48 +574,28 @@ namespace Punto_Venta
                                     OleDbDataReader reader = cmd.ExecuteReader();
                                     while (reader.Read())
                                     {
-                                        ticket.AddItem(ids2[0], reader[1].ToString() + ": " + DgvPedidoprevio[5, i].Value.ToString(), "");
+                                        ticket.AddItem(ids2[0], reader[1].ToString() + "", "");
                                         RESULT += ids2[0] + " : " + reader[1].ToString() + "\n";
                                     }
                                 }
                             }
-                            //MessageBox.Show(RESULT);
                         }
-                    }
+                    }                       
                 }
-                ticket.MaxCharDescription = 30;
-                if (Conexion.impresora == "")
-                {
-                }
-                else
-                {
-                    if (ti1 > 0)
-                    {
-                        ticket.MaxCharDescription = 20;
-                        ticket.PrintTicket(Conexion.impresora);
-                    }
-                    if (ti2 > 0)
-                    {
-                        ticket2.PrintTicket(Conexion.impresora2);
-                    }
-                }
+                ticket.PrintTicket(Conexion.impresora);
                 if (mesaNueva)
                 {
-                    cmd = new OleDbCommand("select id from Mesas where Nombre='" + CmbMesa.Text + "';", conectar);
-                    OleDbDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        cmd = new OleDbCommand("UPDATE Mesas SET IdMesero='" + idMesero + "',Mesero='" + lblMesero.Text + "' where Id=" + reader[0].ToString() + ";", conectar);
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd = new OleDbCommand("UPDATE Mesas SET IdMesero='" + idMesero + "',Mesero='" + lblMesero.Text + "' where Id=" + CmbMesa.SelectedValue + ";", conectar);
+                    cmd.ExecuteNonQuery();  
                 }
-               
-                MessageBox.Show("SE HA REALIZADO LA ORDEN CON EXITO!", "ORDEN REALIZADA", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
+                MessageBox.Show("SE HA REALIZADO LA ORDEN CON EXITO!", "ORDEN REALIZADA", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 frmPedido pedo = new frmPedido();
                 pedo.Show();
             }
         }
+
+
 
         private void recalcular()
         {

@@ -39,10 +39,12 @@ namespace Punto_Venta
         {
             cmd = new OleDbCommand("select Numero from Folio where Folio='Venta';", conectar);
             OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                suma = Convert.ToInt32(Convert.ToString(reader[0].ToString()));
-            }
+            if (reader.Read())            
+                suma = Convert.ToInt32(Convert.ToString(reader[0].ToString()));            
+            cmd = new OleDbCommand("select Folio from Folios where Folio='" + "V" + String.Format("{0:0000}", suma) + "';", conectar);
+            reader = cmd.ExecuteReader();
+            if (reader.Read())            
+                suma++;            
             lblFolio.Text = suma + "";
         }
         public void obtenerYSumar2()
