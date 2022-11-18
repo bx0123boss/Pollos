@@ -11,7 +11,7 @@ namespace Punto_Venta
     class Conexion
     {
         public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Jaeger Soft\FastFood.accdb; Jet OLEDB:Database Password=yolo1234@";
-        //public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=E:\JS\FastFood.accdb; Jet OLEDB:Database Password=yolo1234@";
+        //public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=G:\Mi unidad\JS\FastFood.accdb; Jet OLEDB:Database Password=yolo1234@";
         //public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Jaeger Soft\FastFood.accdb";
         //public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\107.180.55.14\JS\FastFood.accdb;Jet OLEDB:System Database=system.mdw;";
         //public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\18.222.246.68\rts\FastFood.accdb;Jet OLEDB:System Database=system.mdw; User ID=Brandon;Password=75941232;";

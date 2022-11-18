@@ -217,7 +217,7 @@ namespace Punto_Venta
             string Subject; //asunto
             List<string> Archivo = new List<string>(); //lista de archivos a enviar
             string DE = "bran.7594@gmail.com"; //nuestro usuario de smtp
-            string PASS = "Br759400"; //nuestro password de smtp
+            string PASS = "1"; //nuestro password de smtp
 
             System.Net.Mail.MailMessage Email;
 

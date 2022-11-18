@@ -25,18 +25,25 @@ namespace Punto_Venta
         private void button1_Click(object sender, EventArgs e)
         {
             conectar.Open();
-            cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('SALIDA POR CONCEPTO: " + txtConcepto.Text + "',-" + txtIngreso.Text + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
-            cmd.ExecuteNonQuery();
-            Ticket ticket2 = new Ticket();
-            ticket2.MaxChar = 35;
-            ticket2.MaxCharDescription = 22;
-            ticket2.FontSize = 8;
-            ticket2.AddHeaderLine("****** SALIDA DE EFECTIVO  *****");
-            ticket2.AddSubHeaderLine("FECHA Y HORA:" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-            ticket2.AddSubHeaderLine("Usuario:" + usuario);
-            ticket2.AddItem("1", txtConcepto.Text, "$" + txtIngreso.Text);
-            ticket2.PrintTicket(Conexion.impresora);
-            MessageBox.Show("Se ha retirado de caja correctamente", "Listo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('SALIDA POR CONCEPTO: " + txtConcepto.Text + "',-" + txtIngreso.Text + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
+                cmd.ExecuteNonQuery();
+                Ticket ticket2 = new Ticket();
+                ticket2.MaxChar = 35;
+                ticket2.MaxCharDescription = 22;
+                ticket2.FontSize = 8;
+                ticket2.AddHeaderLine("****** SALIDA DE EFECTIVO  *****");
+                ticket2.AddSubHeaderLine("FECHA Y HORA:" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
+                ticket2.AddSubHeaderLine("Usuario:" + usuario);
+                ticket2.AddItem("1", txtConcepto.Text, "$" + txtIngreso.Text);
+                ticket2.PrintTicket(Conexion.impresora);
+                MessageBox.Show("Se ha retirado de caja correctamente", "Listo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+
+            }
             conectar.Close();
             this.Close();
         }

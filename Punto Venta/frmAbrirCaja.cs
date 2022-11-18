@@ -38,15 +38,34 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
+            aceptar();
+
+        }
+
+        private void txtIngreso_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                aceptar();
+            }
+            else if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
+            {
+                MessageBox.Show("Solo se permiten numeros", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+                return;
+            }
+        }
+        public void aceptar()
+        {
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
-                cmd = new OleDbCommand("INSERT INTO invent (idArticulo, articulo, entrada, salida, antiguas) VALUES ('" + dataGridView1[0, i].Value.ToString() + "','" + dataGridView1[1, i].Value.ToString() + "',0,0,'"+dataGridView1[2, i].Value.ToString()+"');", conectar);
+                cmd = new OleDbCommand("INSERT INTO invent (idArticulo, articulo, entrada, salida, antiguas) VALUES ('" + dataGridView1[0, i].Value.ToString() + "','" + dataGridView1[1, i].Value.ToString() + "',0,0,'" + dataGridView1[2, i].Value.ToString() + "');", conectar);
                 //MessageBox.Show("INSERT INTO invent (idArticulo, articulo, entrada, salida) VALUES ('" + dataGridView1[0, i].Value.ToString() + "','" + dataGridView1[1, i].Value.ToString() + "',0,0);");
                 cmd.ExecuteNonQuery();
             }
             if ((txtIngreso.Text == "0") || (txtIngreso.Text == ""))
             {
-                
+
             }
             else
             {
@@ -61,17 +80,6 @@ namespace Punto_Venta
             principal.id = id;
             principal.Show();
             this.Close();
-
-        }
-
-        private void txtIngreso_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
-            {
-                MessageBox.Show("Solo se permiten numeros", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                e.Handled = true;
-                return;
-            }
         }
     }
 }

@@ -122,8 +122,16 @@ namespace Punto_Venta
                 }
                 else
                 {
-                    cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('RETIRO PARA CAMBIO VENTA " + lblFolio.Text + " A DOMICILIO',-" + textBox1.Text + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
-                    cmd.ExecuteNonQuery();
+                    try
+                    {
+                        double cambio = Convert.ToDouble(textBox1.Text);
+                        if (cambio > 0)
+                        {
+                            cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('RETIRO PARA CAMBIO VENTA " + lblFolio.Text + " A DOMICILIO',-" + textBox1.Text + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    catch (Exception ex) { }
                 }
                 MessageBox.Show("ORDEN EN RUTA", "ENTREGADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();

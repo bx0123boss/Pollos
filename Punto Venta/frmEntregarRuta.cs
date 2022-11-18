@@ -73,9 +73,11 @@ namespace Punto_Venta
             cmd = new OleDbCommand("UPDATE folios set Estatus='COBRADO', DepositoEnvio='" + txtDineroMoto.Text + "' where Folio='" + lblFolio.Text + "';", conectar);
             cmd.ExecuteNonQuery();
             double cambio = Convert.ToDouble(txtDineroMoto.Text) - total;
-            cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('DEPOSITO DE CAMBIO FOLIO:" + lblFolio.Text + " A DOMICILIO'," + cambio + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
-            //MessageBox.Show("INSERT INTO corte (concepto, total,fecha) VALUES ('DEPOSITO DE CAMBIO FOLIO:" + lblFolio.Text + " A DOMICILIO'," + txtDineroMoto + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "');");
-            cmd.ExecuteNonQuery();
+            if (cambio > 0)
+            {
+                cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('DEPOSITO DE CAMBIO FOLIO:" + lblFolio.Text + " A DOMICILIO'," + cambio + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
+                cmd.ExecuteNonQuery();
+            }
 
             cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('COBRO FOLIO:" + lblFolio.Text + " A DOMICILIO'," + total + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
             cmd.ExecuteNonQuery();

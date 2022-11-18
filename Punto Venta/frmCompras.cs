@@ -51,6 +51,7 @@ namespace Punto_Venta
         private void button4_Click(object sender, EventArgs e)
         {
             frmVerCompra detalles = new frmVerCompra();
+            detalles.lblUser.Text = dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString();
             detalles.id = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
             detalles.lblDocRel.Text = dataGridView1[4, dataGridView1.CurrentRow.Index].Value.ToString();
             detalles.lblMovimiento.Text = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();

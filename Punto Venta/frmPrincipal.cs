@@ -50,6 +50,7 @@ namespace Punto_Venta
             conectar.Open();
             if (lblUser.Text == "VENTAS")
             {
+                button3.Visible = true;
                 button6.Visible = false;
                 button11.Visible = false;
                 button10.Visible = false;
@@ -414,6 +415,13 @@ namespace Punto_Venta
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            frmCompras com = new frmCompras();
+            com.usuario = usuario;
+            com.Show();
         }
     }
 }

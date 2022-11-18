@@ -39,6 +39,7 @@ namespace Punto_Venta
                 dataGridView1.Rows.Add(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), "0", reader[2].ToString());
             }
             cmbProveedor.SelectedIndex = 0;
+            lblUser.Text = usuario;
         }
 
         private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
