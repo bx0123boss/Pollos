@@ -17,7 +17,6 @@ namespace Punto_Venta
 
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
         OleDbCommand cmd;
-        MySqlCommand cmd2;
 
         public frmPedidoRealizado()
         {

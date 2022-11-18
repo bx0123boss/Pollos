@@ -173,7 +173,6 @@
             this.label11.Size = new System.Drawing.Size(185, 47);
             this.label11.TabIndex = 45;
             this.label11.Text = "TOTAL: $";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // BtnEntregar
             // 
@@ -202,24 +201,17 @@
             // 
             // TxtComentarios
             // 
-            this.TxtComentarios.Font = new System.Drawing.Font("Stencil", 15F);
-            this.TxtComentarios.Location = new System.Drawing.Point(160, 361);
-            this.TxtComentarios.Multiline = true;
+            this.TxtComentarios.Location = new System.Drawing.Point(0, 0);
             this.TxtComentarios.Name = "TxtComentarios";
-            this.TxtComentarios.Size = new System.Drawing.Size(444, 63);
-            this.TxtComentarios.TabIndex = 42;
-            this.TxtComentarios.Visible = false;
-            this.TxtComentarios.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtComentarios_KeyPress);
+            this.TxtComentarios.Size = new System.Drawing.Size(100, 20);
+            this.TxtComentarios.TabIndex = 65;
             // 
             // TxtBuscaid
             // 
-            this.TxtBuscaid.Font = new System.Drawing.Font("Stencil", 15F);
-            this.TxtBuscaid.Location = new System.Drawing.Point(829, 332);
+            this.TxtBuscaid.Location = new System.Drawing.Point(0, 0);
             this.TxtBuscaid.Name = "TxtBuscaid";
-            this.TxtBuscaid.Size = new System.Drawing.Size(376, 31);
-            this.TxtBuscaid.TabIndex = 41;
-            this.TxtBuscaid.TextChanged += new System.EventHandler(this.TxtBuscaid_TextChanged);
-            this.TxtBuscaid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtBuscaid_KeyPress);
+            this.TxtBuscaid.Size = new System.Drawing.Size(100, 20);
+            this.TxtBuscaid.TabIndex = 64;
             // 
             // label9
             // 
@@ -234,13 +226,10 @@
             // 
             // TxtBuscanombre
             // 
-            this.TxtBuscanombre.Font = new System.Drawing.Font("Stencil", 15F);
-            this.TxtBuscanombre.Location = new System.Drawing.Point(257, 324);
+            this.TxtBuscanombre.Location = new System.Drawing.Point(0, 0);
             this.TxtBuscanombre.Name = "TxtBuscanombre";
-            this.TxtBuscanombre.Size = new System.Drawing.Size(347, 31);
-            this.TxtBuscanombre.TabIndex = 39;
-            this.TxtBuscanombre.TextChanged += new System.EventHandler(this.TxtBuscanombre_TextChanged);
-            this.TxtBuscanombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtBuscanombre_KeyPress);
+            this.TxtBuscanombre.Size = new System.Drawing.Size(100, 20);
+            this.TxtBuscanombre.TabIndex = 63;
             // 
             // label8
             // 
@@ -332,17 +321,10 @@
             // 
             // DgvPidiendo
             // 
-            this.DgvPidiendo.AllowUserToAddRows = false;
-            this.DgvPidiendo.AllowUserToDeleteRows = false;
-            this.DgvPidiendo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.DgvPidiendo.BackgroundColor = System.Drawing.Color.GhostWhite;
-            this.DgvPidiendo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvPidiendo.Location = new System.Drawing.Point(3, 43);
+            this.DgvPidiendo.Location = new System.Drawing.Point(0, 0);
             this.DgvPidiendo.Name = "DgvPidiendo";
-            this.DgvPidiendo.ReadOnly = true;
-            this.DgvPidiendo.Size = new System.Drawing.Size(562, 250);
-            this.DgvPidiendo.TabIndex = 36;
-            this.DgvPidiendo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPidiendo_CellContentClick);
+            this.DgvPidiendo.Size = new System.Drawing.Size(240, 150);
+            this.DgvPidiendo.TabIndex = 62;
             // 
             // lblFolio
             // 
@@ -367,7 +349,6 @@
             this.label6.Size = new System.Drawing.Size(72, 24);
             this.label6.TabIndex = 55;
             this.label6.Text = "Folio:";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // button1
             // 
@@ -470,7 +451,6 @@
             this.cmbFolios.Size = new System.Drawing.Size(122, 21);
             this.cmbFolios.TabIndex = 64;
             this.cmbFolios.Visible = false;
-            this.cmbFolios.SelectedIndexChanged += new System.EventHandler(this.cmbFolios_SelectedIndexChanged);
             // 
             // panel2
             // 
@@ -505,7 +485,6 @@
             this.checkBox2.Text = "Botones";
             this.checkBox2.UseVisualStyleBackColor = false;
             this.checkBox2.Visible = false;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // flowPizzaTradicional
             // 
@@ -690,268 +669,6 @@
             this.panelCategorias.Size = new System.Drawing.Size(121, 61);
             this.panelCategorias.TabIndex = 71;
             this.panelCategorias.Visible = false;
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.Color.Aqua;
-            this.button6.FlatAppearance.BorderSize = 0;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(3, 3);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(125, 53);
-            this.button6.TabIndex = 0;
-            this.button6.Text = "TACOS";
-            this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // button7
-            // 
-            this.button7.BackColor = System.Drawing.Color.Lime;
-            this.button7.FlatAppearance.BorderSize = 0;
-            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.Location = new System.Drawing.Point(3, 62);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(125, 53);
-            this.button7.TabIndex = 1;
-            this.button7.Text = "TORTAS";
-            this.button7.UseVisualStyleBackColor = false;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // button8
-            // 
-            this.button8.BackColor = System.Drawing.Color.Red;
-            this.button8.FlatAppearance.BorderSize = 0;
-            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button8.Location = new System.Drawing.Point(3, 121);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(125, 53);
-            this.button8.TabIndex = 2;
-            this.button8.Text = "ENTRADAS";
-            this.button8.UseVisualStyleBackColor = false;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
-            // button9
-            // 
-            this.button9.BackColor = System.Drawing.Color.DarkOrange;
-            this.button9.FlatAppearance.BorderSize = 0;
-            this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button9.Location = new System.Drawing.Point(3, 180);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(125, 53);
-            this.button9.TabIndex = 3;
-            this.button9.Text = "HAMBURGUESAS";
-            this.button9.UseVisualStyleBackColor = false;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // button10
-            // 
-            this.button10.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button10.FlatAppearance.BorderSize = 0;
-            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button10.Location = new System.Drawing.Point(3, 239);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(125, 53);
-            this.button10.TabIndex = 4;
-            this.button10.Text = "ALITAS";
-            this.button10.UseVisualStyleBackColor = false;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
-            // button11
-            // 
-            this.button11.BackColor = System.Drawing.Color.Tomato;
-            this.button11.FlatAppearance.BorderSize = 0;
-            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button11.Location = new System.Drawing.Point(3, 298);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(125, 53);
-            this.button11.TabIndex = 5;
-            this.button11.Text = "BONELESS";
-            this.button11.UseVisualStyleBackColor = false;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            // 
-            // button12
-            // 
-            this.button12.BackColor = System.Drawing.Color.SaddleBrown;
-            this.button12.FlatAppearance.BorderSize = 0;
-            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button12.ForeColor = System.Drawing.Color.White;
-            this.button12.Location = new System.Drawing.Point(3, 357);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(125, 53);
-            this.button12.TabIndex = 6;
-            this.button12.Text = "ENSALADAS";
-            this.button12.UseVisualStyleBackColor = false;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button13
-            // 
-            this.button13.BackColor = System.Drawing.Color.Magenta;
-            this.button13.FlatAppearance.BorderSize = 0;
-            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button13.Location = new System.Drawing.Point(3, 416);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(125, 53);
-            this.button13.TabIndex = 7;
-            this.button13.Text = "ALAMBRES";
-            this.button13.UseVisualStyleBackColor = false;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // button14
-            // 
-            this.button14.BackColor = System.Drawing.Color.Navy;
-            this.button14.FlatAppearance.BorderSize = 0;
-            this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button14.ForeColor = System.Drawing.Color.White;
-            this.button14.Location = new System.Drawing.Point(3, 475);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(125, 53);
-            this.button14.TabIndex = 8;
-            this.button14.Text = "HOTDOG";
-            this.button14.UseVisualStyleBackColor = false;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
-            // 
-            // button15
-            // 
-            this.button15.BackColor = System.Drawing.Color.OliveDrab;
-            this.button15.FlatAppearance.BorderSize = 0;
-            this.button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button15.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button15.Location = new System.Drawing.Point(3, 534);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(125, 53);
-            this.button15.TabIndex = 9;
-            this.button15.Text = "CERVEZA(SOLA)";
-            this.button15.UseVisualStyleBackColor = false;
-            this.button15.Click += new System.EventHandler(this.button15_Click);
-            // 
-            // button16
-            // 
-            this.button16.BackColor = System.Drawing.Color.Gray;
-            this.button16.FlatAppearance.BorderSize = 0;
-            this.button16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button16.Location = new System.Drawing.Point(3, 593);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(125, 53);
-            this.button16.TabIndex = 10;
-            this.button16.Text = "BALON DE CERVEZA";
-            this.button16.UseVisualStyleBackColor = false;
-            this.button16.Click += new System.EventHandler(this.button16_Click);
-            // 
-            // button17
-            // 
-            this.button17.BackColor = System.Drawing.Color.Purple;
-            this.button17.FlatAppearance.BorderSize = 0;
-            this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button17.ForeColor = System.Drawing.Color.White;
-            this.button17.Location = new System.Drawing.Point(3, 652);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(125, 53);
-            this.button17.TabIndex = 11;
-            this.button17.Text = "BEBIDAS";
-            this.button17.UseVisualStyleBackColor = false;
-            this.button17.Click += new System.EventHandler(this.button17_Click);
-            // 
-            // button18
-            // 
-            this.button18.BackColor = System.Drawing.Color.Gold;
-            this.button18.FlatAppearance.BorderSize = 0;
-            this.button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button18.Location = new System.Drawing.Point(3, 711);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(125, 53);
-            this.button18.TabIndex = 12;
-            this.button18.Text = "LICORES";
-            this.button18.UseVisualStyleBackColor = false;
-            this.button18.Click += new System.EventHandler(this.button18_Click);
-            // 
-            // button19
-            // 
-            this.button19.BackColor = System.Drawing.Color.Black;
-            this.button19.FlatAppearance.BorderSize = 0;
-            this.button19.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button19.ForeColor = System.Drawing.Color.White;
-            this.button19.Location = new System.Drawing.Point(3, 770);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(125, 53);
-            this.button19.TabIndex = 13;
-            this.button19.Text = "ESPECIALIDADES";
-            this.button19.UseVisualStyleBackColor = false;
-            this.button19.Visible = false;
-            this.button19.Click += new System.EventHandler(this.button19_Click);
-            // 
-            // button20
-            // 
-            this.button20.AutoEllipsis = true;
-            this.button20.BackColor = System.Drawing.Color.White;
-            this.button20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button20.Location = new System.Drawing.Point(3, 829);
-            this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(125, 53);
-            this.button20.TabIndex = 14;
-            this.button20.Text = "CAPUCCINOS";
-            this.button20.UseVisualStyleBackColor = false;
-            this.button20.Visible = false;
-            this.button20.Click += new System.EventHandler(this.button20_Click);
-            // 
-            // button4
-            // 
-            this.button4.AutoEllipsis = true;
-            this.button4.BackColor = System.Drawing.Color.Maroon;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.button4.Location = new System.Drawing.Point(3, 888);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(125, 53);
-            this.button4.TabIndex = 15;
-            this.button4.Text = "VINOS";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Visible = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click_1);
-            // 
-            // button5
-            // 
-            this.button5.AutoEllipsis = true;
-            this.button5.BackColor = System.Drawing.Color.MediumPurple;
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(3, 947);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(125, 53);
-            this.button5.TabIndex = 16;
-            this.button5.Text = "NIÑOS";
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Visible = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click_1);
-            // 
-            // button21
-            // 
-            this.button21.AutoEllipsis = true;
-            this.button21.BackColor = System.Drawing.Color.LightGreen;
-            this.button21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button21.Location = new System.Drawing.Point(3, 1006);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(125, 53);
-            this.button21.TabIndex = 17;
-            this.button21.Text = "BEBIDAS";
-            this.button21.UseVisualStyleBackColor = false;
-            this.button21.Visible = false;
-            this.button21.Click += new System.EventHandler(this.button21_Click);
             // 
             // panel4
             // 
@@ -1210,7 +927,6 @@
             this.LblNombre.TabIndex = 59;
             this.LblNombre.Text = "LblNombre";
             this.LblNombre.Visible = false;
-            this.LblNombre.Click += new System.EventHandler(this.LblNombre_Click);
             // 
             // LblDomicilio
             // 
@@ -1328,7 +1044,6 @@
             this.tabPage2.Size = new System.Drawing.Size(362, 129);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "A domicilio";
-            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             this.tabPage2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabPage2_MouseClick);
             // 
             // tabPage3
@@ -1435,7 +1150,6 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.flowLayoutPanel2);
-            this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.CmbMesa);
             this.Controls.Add(this.txtMesa);
             this.Controls.Add(this.lblMesero);
@@ -1456,6 +1170,7 @@
             this.Controls.Add(this.dgvMesas);
             this.Controls.Add(this.cmbFolios);
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "frmPedido";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pedido";

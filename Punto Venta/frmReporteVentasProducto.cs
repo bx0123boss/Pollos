@@ -18,8 +18,6 @@ namespace Punto_Venta
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
         private DataSet ds;
         OleDbDataAdapter da;
-        private DataSet ds2;
-        OleDbDataAdapter da2;
         string anoSQL = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();            
         public frmReporteVentasProducto()
         {

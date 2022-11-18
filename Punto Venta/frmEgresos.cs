@@ -40,7 +40,7 @@ namespace Punto_Venta
                 ticket2.PrintTicket(Conexion.impresora);
                 MessageBox.Show("Se ha retirado de caja correctamente", "Listo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
+            catch 
             {
 
             }

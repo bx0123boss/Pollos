@@ -20,13 +20,13 @@ namespace Punto_Venta
         private DataSet ds;
         int idMesero = 0;
         int ti1 = 0, ti2 = 0;
-        string idCliente , modalidad = "RAPIDO";
+        string idCliente;
+        string modalidad;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
         OleDbDataAdapter da;
         OleDbCommand cmd;
         public String Usuario;
         string mesSelect = "", idMesSel = "";
-        string tipo;
         double total = 0;
         int suma = 0;
         string categoria = "";
@@ -109,6 +109,7 @@ namespace Punto_Venta
                 }
             }
         }
+
         private void Mesa(object sender, EventArgs e)
         {
             if ((sender as Button).BackColor == Color.Red)
@@ -139,6 +140,7 @@ namespace Punto_Venta
             }
             CmbMesa.Text = (sender as Button).Text;
         }
+
         public void cargarCategoriasAutomatico()
         {
             panelCategorias.Hide();
@@ -180,295 +182,7 @@ namespace Punto_Venta
             flowLayoutPanel2.Controls.Add(butC);
             //groupBox2.Show();
         }
-        public void cargarProductosNormal()
-        {
-            #region botonesAutomaticos
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='TACOS';", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.Aqua;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowPizzaTradicional.Controls.Add(but);
-            }
 
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='TORTAS';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.Lime;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowPizzasEsp.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='ENTRADAS';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.Red;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowPastas.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='HAMBURGUESAS';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.DarkOrange;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowParaAcompa.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='ALITAS';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.DodgerBlue;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowMitades.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='BONELESS';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.Tomato;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowCuartos.Controls.Add(but);
-            }
-
-            Button ex = new Button();
-            ex.FlatStyle = FlatStyle.Flat;
-            ex.FlatAppearance.BorderSize = 0;
-            ex.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-            ex.BackColor = Color.SaddleBrown;
-            ex.ForeColor = Color.White;
-            ex.Size = new System.Drawing.Size(170, 85);
-            ex.Text = "EXTRA MODIFICABLE";
-            ex.Click += new EventHandler(this.extra);
-            //flowExtras.Controls.Add(ex);
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='ENSALADAS';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.SaddleBrown;
-                but.ForeColor = Color.White;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowExtras.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='ALAMBRES';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.Magenta;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowCockteleria.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='HOTDOG';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.Navy;
-                but.ForeColor = Color.White;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowCalzone.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='CERVEZA(SOLA)';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.OliveDrab;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowHamburguesas.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='BALON DE CERVEZA';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.Gray;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                FlowPromos.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='BEBIDAS';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.Purple;
-                but.ForeColor = Color.White;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowBebidas.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='CAFE';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.Gold;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowCervezas.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='LICORES';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.ForeColor = Color.White;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.Black;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowCafe.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='CAPUCCINOS';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 1;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.White;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowPostres.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='VINOS';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.ForeColor = Color.White;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.Maroon;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowPromociones.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='NINOS';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.MediumPurple;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                FlowNinos.Controls.Add(but);
-            }
-
-            cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='BEBIDAS';", conectar);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = Color.LightGreen;
-                but.Size = new System.Drawing.Size(170, 85);
-                but.Text = reader[0].ToString();
-                but.Click += new EventHandler(this.Myevent);
-                flowBebi.Controls.Add(but);
-            }
-
-
-            #endregion
-        }
         private void frmPedido_Load(object sender, EventArgs e)
         {            
             conectar.Open();
@@ -527,11 +241,10 @@ namespace Punto_Venta
             }
         }
 
-
         private void extra(object sender, EventArgs e)
         {
-            //DgvPedidoprevio.Rows.Add("0", "1", "Extra", "0","0", "");
         }
+
         private void Myevent(object sender, EventArgs e)
         {
 
@@ -555,6 +268,7 @@ namespace Punto_Venta
                 }
             }
         }
+
         private void Pizzas(object sender, EventArgs e)
         {
             using (frmPizzas pi = new frmPizzas())
@@ -619,7 +333,6 @@ namespace Punto_Venta
             }      
         }
 
-
         private void Myevent2(object sender, EventArgs e)
         {
             if (categoria == (sender as Button).Text)
@@ -665,61 +378,12 @@ namespace Punto_Venta
 
 
         }
+
         public void obtenerYSumar2()
         {
             suma = suma + 1;
             cmd = new OleDbCommand("UPDATE Folio set Numero=" + suma + " where Folio='Venta';", conectar);
             cmd.ExecuteNonQuery();
-        }
-
-        private void TxtBuscanombre_TextChanged(object sender, EventArgs e)
-        {
-            if (TxtBuscanombre.Text == "")
-            {
-
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select id,Nombre,Precio,Categoria from inventario ORDER BY Nombre;", conectar);
-                da.Fill(ds, "Id");
-                DgvPidiendo.DataSource = ds.Tables["Id"];
-            }
-            else
-             {
-
-                 ds = new DataSet();
-                 da = new OleDbDataAdapter("select id,Nombre,Precio,Categoria from inventario where Nombre LIKE '%" + TxtBuscanombre.Text + "%';", conectar);
-                 da.Fill(ds, "Id");
-                 DgvPidiendo.DataSource = ds.Tables["Id"];
-             }
-        }
-
-        private void DgvPidiendo_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-       
-        }
-
-        private void TxtComentarios_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == Convert.ToChar(Keys.Enter))
-            {
-                DgvPedidoprevio.Rows.Add(DgvPidiendo[0, DgvPidiendo.CurrentRow.Index].Value.ToString(), "1", DgvPidiendo[1, DgvPidiendo.CurrentRow.Index].Value.ToString(), DgvPidiendo[2, DgvPidiendo.CurrentRow.Index].Value.ToString(), DgvPidiendo[2, DgvPidiendo.CurrentRow.Index].Value.ToString(), TxtComentarios.Text);
-                total += Convert.ToDouble(DgvPidiendo[2, DgvPidiendo.CurrentRow.Index].Value.ToString());
-                LblTotal.Text = String.Format("{0:0.00}", total);
-                TxtComentarios.Clear();
-                TxtBuscanombre.Clear();
-            }
-        }
-
-        private void TxtBuscanombre_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == Convert.ToChar(Keys.Enter))
-            {
-                TxtComentarios.Focus();
-            }
-        }
-
-        private void TxtBuscaid_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void TxtBuscaid_KeyPress(object sender, KeyPressEventArgs e)
@@ -754,10 +418,6 @@ namespace Punto_Venta
             foreach (var word in ids)
             {
                 string[] ids2 = word.Split(',');
-                //foreach (var word2 in ids2)
-                //{
-                //    resultado += word2+"\n";
-                //}
                 for (int i = 0; i < ids2.Length-1; i=i+2)
                 {
                     resultado += ids2[0] + " : " + ids2[1] + "\n";
@@ -801,7 +461,6 @@ namespace Punto_Venta
                 Ticket ticket = new Ticket();
                 ticket.FontSize = 12;
                 Ticket ticket2 = new Ticket();
-                //ticket.MaxCharDescription = 10;
                 //Llevar
                 if (tabControl1.SelectedIndex == 2)
                 {
@@ -1000,36 +659,36 @@ namespace Punto_Venta
             }
         }
 
-        private void DgvPedidoprevio_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void recalcular()
         {
             total = 0;
-            double cantidad = Convert.ToDouble(DgvPedidoprevio[1, DgvPedidoprevio.CurrentRow.Index].Value.ToString());
-            double precio = Convert.ToDouble(DgvPedidoprevio[3, DgvPedidoprevio.CurrentRow.Index].Value.ToString());
-            double monto = cantidad * precio;
-            DgvPedidoprevio.Rows[e.RowIndex].Cells[4].Value = monto;
             for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
             {
                 total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
             }
             LblTotal.Text = String.Format("{0:0.00}", total);
         }
+
+        private void DgvPedidoprevio_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {            
+            double cantidad = Convert.ToDouble(DgvPedidoprevio[1, DgvPedidoprevio.CurrentRow.Index].Value.ToString());
+            double precio = Convert.ToDouble(DgvPedidoprevio[3, DgvPedidoprevio.CurrentRow.Index].Value.ToString());
+            double monto = cantidad * precio;
+            DgvPedidoprevio.Rows[e.RowIndex].Cells[4].Value = monto;
+            recalcular();
+        }
+
         private void frmPedido_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.LControlKey)
             {
-                total = 0;
                 DgvPedidoprevio.Rows.RemoveAt(DgvPedidoprevio.CurrentRow.Index);
-                for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
-                {
-                    total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
-                }
-                LblTotal.Text = String.Format("{0:0.00}", total);
+                recalcular();
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-           
                 cmd = new OleDbCommand("select id,Nombre,Precio,Categoria from inventario where Nombre='" + DgvPidiendo[1, DgvPidiendo.CurrentRow.Index].Value.ToString() + "';", conectar);
                 OleDbDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
@@ -1040,27 +699,17 @@ namespace Punto_Venta
                 }
                 TxtBuscaid.Clear();
                 TxtComentarios.Clear();
-                TxtBuscanombre.Clear();
-            
+                TxtBuscanombre.Clear();            
         }
 
+        //ELIMINAR DESDE BOTON
         private void button2_Click(object sender, EventArgs e)
         {
             if(DgvPedidoprevio.RowCount>0)
             {
-                total = 0;
-            DgvPedidoprevio.Rows.RemoveAt(DgvPedidoprevio.CurrentRow.Index);
-            for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
-            {
-                total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
+                DgvPedidoprevio.Rows.RemoveAt(DgvPedidoprevio.CurrentRow.Index);
+                recalcular();
             }
-            LblTotal.Text = String.Format("{0:0.00}", total);
-            }
-        }
-
-        private void CmbMesa_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -1085,27 +734,6 @@ namespace Punto_Venta
                 lblFolio.Visible = true;
                 groupBox1.Visible = true;
             }
-        }
-
-        private void LblNombre_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-           
-
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            
-            
         }
 
         private void cbCliente_CheckedChanged(object sender, EventArgs e)
@@ -1138,91 +766,7 @@ namespace Punto_Venta
             }
         }
 
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            flowPizzaTradicional.BringToFront();
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            flowPizzasEsp.BringToFront();
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            flowPastas.BringToFront();
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            flowParaAcompa.BringToFront();
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            flowMitades.BringToFront(); 
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            flowCuartos.BringToFront(); 
-        }
-
-        private void button12_Click(object sender, EventArgs e)
-        {
-            flowExtras.BringToFront();
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-            flowCockteleria.BringToFront();
-        }
-
-        private void button14_Click(object sender, EventArgs e)
-        {
-            flowCalzone.BringToFront();
-        }
-
-        private void button15_Click(object sender, EventArgs e)
-        {
-            flowHamburguesas.BringToFront();
-        }
-
-        private void button16_Click(object sender, EventArgs e)
-        {
-            FlowPromos.BringToFront();
-        }
-
-        private void button17_Click(object sender, EventArgs e)
-        {
-            flowBebidas.BringToFront();
-        }
-
-        private void button18_Click(object sender, EventArgs e)
-        {
-            flowCervezas.BringToFront();
-        }
-
-        private void button19_Click(object sender, EventArgs e)
-        {
-            flowCafe.BringToFront();
-        }
-
-        private void button20_Click(object sender, EventArgs e)
-        {
-            flowPostres.BringToFront();
-        }
-
-        private void cmbFolios_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             if (tabControl1.SelectedIndex == 1)
@@ -1339,26 +883,7 @@ namespace Punto_Venta
             }
         }
 
-        private void button4_Click_1(object sender, EventArgs e)
-        {
-            flowPromociones.BringToFront();
-        }
-
-        private void button5_Click_1(object sender, EventArgs e)
-        {
-            FlowNinos.BringToFront();
-        }
-
-        private void button21_Click(object sender, EventArgs e)
-        {
-            flowBebi.BringToFront();
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-            
-        }
-
+       //BUSCAR CLIENTES
         private void tabPage2_MouseClick(object sender, MouseEventArgs e)
         {
             using (frmBuscarClientes ori = new frmBuscarClientes())
@@ -1379,16 +904,6 @@ namespace Punto_Venta
                 }
                 
             }
-        }
-
-        private void tabPage2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-            
         }
     }
 }

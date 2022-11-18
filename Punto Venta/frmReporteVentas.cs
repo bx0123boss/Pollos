@@ -41,7 +41,7 @@ namespace Punto_Venta
                 detalles.Show();
                 this.Close();
             }
-            catch (Exception ex)
+            catch 
             {
                 MessageBox.Show("Tiene que seleccionar un folio antes", "Reporte de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

@@ -19,7 +19,6 @@ namespace Punto_Venta
         OleDbCommand cmd;
         int suma;
         public string id;
-        double total = 0;
         bool lunes, martes, miercoles, jueves, viernes, sabado, domingo;
         public frmAgregarPromo()
         {
@@ -150,7 +149,7 @@ namespace Punto_Venta
             {
                 double cantidad = Convert.ToDouble(DgvPedidoprevio[0, DgvPedidoprevio.CurrentRow.Index].Value.ToString());
             }
-            catch (Exception ex)
+            catch 
             {
                 MessageBox.Show("Solo puedes introducir números", "Alto", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 DgvPedidoprevio.Rows[e.RowIndex].Cells[0].Value = "1";

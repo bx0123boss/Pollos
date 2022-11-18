@@ -49,7 +49,7 @@ namespace Punto_Venta
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Tiene que seleccionar un folio antes", "Reporte de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Tiene que seleccionar un folio antes \n" + ex.ToString(), "Reporte de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

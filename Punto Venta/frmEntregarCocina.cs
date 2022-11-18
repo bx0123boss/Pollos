@@ -131,7 +131,7 @@ namespace Punto_Venta
                             cmd.ExecuteNonQuery();
                         }
                     }
-                    catch (Exception ex) { }
+                    catch { }
                 }
                 MessageBox.Show("ORDEN EN RUTA", "ENTREGADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();

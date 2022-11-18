@@ -14,9 +14,9 @@ namespace Punto_Venta
 {
     public partial class frmComanda : Form
     {
-        int n = 0;
-        MySqlCommand cmd;
-        MySqlDataAdapter ad;
+        //int n = 0;
+        //MySqlCommand cmd;
+        //MySqlDataAdapter ad;
 
 
         public frmComanda()

@@ -27,7 +27,6 @@ namespace Punto_Venta
         double descuento;
         double total = 0;
         int suma = 0;
-        string total2 = "";
         string folio = "";
         string tipoUser = "";
         public int idMesero = 0;
@@ -388,7 +387,7 @@ namespace Punto_Venta
                 }
                 
             }
-            catch (Exception ex)
+            catch
             {
 
             }

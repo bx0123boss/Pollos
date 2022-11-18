@@ -82,7 +82,7 @@ namespace Punto_Venta
                     MessageBox.Show("FALTAN ELEMENTOS DEL COMBO, FAVOR DE CHECAR", "ALTO", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (Exception ex) {
+            catch {
                 MessageBox.Show("NO HA SELECCIONADO COMBO", "ALTO", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //MessageBox.Show("Error " + ex.ToString(), "Alto", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -229,7 +229,7 @@ namespace Punto_Venta
                 double cantidad = Convert.ToDouble(DgvPedidoprevio[0, DgvPedidoprevio.CurrentRow.Index].Value.ToString());
                 comparaCategorias();
             }
-            catch (Exception ex)
+            catch 
             {
                 MessageBox.Show("Solo puedes introducir números", "Alto", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 DgvPedidoprevio.Rows[e.RowIndex].Cells[1].Value = "1"; 

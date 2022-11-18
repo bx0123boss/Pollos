@@ -1327,8 +1327,6 @@ C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta -
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
-C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\LibPrintTicket.pdb
-C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources

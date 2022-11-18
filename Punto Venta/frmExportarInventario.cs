@@ -51,7 +51,7 @@ namespace Punto_Venta
                 MyDataAdapter.Fill(dt);
                 dgv.DataSource = dt;
             }
-            catch (Exception ex)
+            catch 
             { }
 
         }

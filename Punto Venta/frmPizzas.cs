@@ -14,9 +14,7 @@ namespace Punto_Venta
     public partial class frmPizzas : Form
     {
 
-        private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbDataAdapter da;
         OleDbCommand cmd;
         string tamaño, masa;
         public string tipo;

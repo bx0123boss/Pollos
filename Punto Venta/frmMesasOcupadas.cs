@@ -149,7 +149,7 @@ namespace Punto_Venta
                         {
                             cobrar.idMesero = Convert.ToInt32(reader[1].ToString());
                         }
-                        catch (Exception ex)
+                        catch 
                         {
                             cobrar.idMesero = 0;
                             cobrar.lblMesero.Text = "Administrador";

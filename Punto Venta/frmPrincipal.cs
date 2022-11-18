@@ -37,14 +37,14 @@ namespace Punto_Venta
                 this.BackgroundImage = Image.FromFile("C:\\Jaeger Soft\\w2.jpg");
                 pictureBox1.Image = Image.FromFile("C:\\Jaeger Soft\\logo2.jpg");
             }
-            catch (Exception ex)
+            catch
             {
             }
             try
             {
                 pictureBox1.Image = Image.FromFile("C:\\Jaeger Soft\\logo2.png");
             }
-            catch (Exception ex)
+            catch 
             {
             }
             conectar.Open();

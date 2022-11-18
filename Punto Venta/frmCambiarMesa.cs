@@ -15,9 +15,7 @@ namespace Punto_Venta
     {
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
         OleDbDataAdapter da;
-        OleDbDataAdapter da2;
         OleDbCommand cmd;
-        OleDbCommand cmd2;
         private DataSet ds;
         public frmCambiarMesa()
         {

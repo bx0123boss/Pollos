@@ -16,10 +16,7 @@ namespace Punto_Venta
         private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
         OleDbDataAdapter da;
-        OleDbCommand cmd;
-        int suma;
-        double total = 0;
-        bool lunes, martes, miercoles, jueves, viernes, sabado, domingo;
+      
         public frmArmaCombo()
         {
             InitializeComponent();

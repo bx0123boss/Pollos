@@ -308,7 +308,7 @@ namespace Punto_Venta
                     return false;
                 }
 
-                return false;
+                //return false;
 
             }
         }

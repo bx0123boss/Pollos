@@ -25,7 +25,6 @@ namespace Punto_Venta
         public string Nombre1 = "0", Nombre2 = "0", Nombre3 = "0", Nombre4 = "0", Nombre5 = "0", Nombre6 = "0", Nombre7 = "0", Nombre8 = "0", Nombre9 = "0", Nombre10 = "0";
         public string Medida1 = "0", Medida2 = "0", Medida3 = "0", Medida4 = "0", Medida5 = "0", Medida6 = "0", Medida7 = "0", Medida8 = "0", Medida9 = "0", Medida10 = "0";
         public string Precio1 = "0", Precio2 = "0", Precio3 = "0", Precio4 = "0", Precio5 = "0", Precio6 = "0", Precio7 = "0", Precio8 = "0", Precio9 = "0", Precio10 = "0";
-        bool check = false;
         public frmAgregarPlatillo()
         {
             InitializeComponent();
@@ -332,7 +331,7 @@ namespace Punto_Venta
                     lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
                 }
             }
-            catch (Exception EX)
+            catch
             { }
         }
 
@@ -349,7 +348,7 @@ namespace Punto_Venta
             }
             lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
             }
-            catch (Exception EX)
+            catch 
             { }
         }
 
@@ -367,7 +366,7 @@ namespace Punto_Venta
                 lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
             }
             }
-            catch (Exception EX)
+            catch 
             { }
         }
 
@@ -385,7 +384,7 @@ namespace Punto_Venta
                 lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
             }
             }
-            catch (Exception EX)
+            catch
             { }
         }
 
@@ -404,7 +403,7 @@ namespace Punto_Venta
             }
 
             }
-            catch (Exception EX)
+            catch 
             { }
         }
 
@@ -422,7 +421,7 @@ namespace Punto_Venta
                 lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
             }
             }
-            catch (Exception EX)
+            catch 
             { }
         }
 
@@ -437,7 +436,7 @@ namespace Punto_Venta
                 lblPrecio7.Text = "" + Convert.ToDouble(Precio7) * Convert.ToDouble(txtCantidad7.Text);
             lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
             }
-            catch (Exception EX)
+            catch 
             { }
         }
 
@@ -452,7 +451,7 @@ namespace Punto_Venta
                 lblPrecio9.Text = "" + Convert.ToDouble(Precio9) * Convert.ToDouble(txtCantidad9.Text);
             lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
             }
-            catch (Exception EX)
+            catch 
             { }
         }
 
@@ -467,7 +466,7 @@ namespace Punto_Venta
                 lblPrecio10.Text = "" + Convert.ToDouble(Precio10) * Convert.ToDouble(txtCantidad10.Text);
             lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
             }
-            catch (Exception EX)
+            catch
             { }
         }
 

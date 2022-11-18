@@ -16,7 +16,6 @@ namespace Punto_Venta
         private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
         OleDbDataAdapter da;
-        OleDbCommand cmd;
         public string usuario = "";
         public frmCompras()
         {

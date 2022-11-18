@@ -13,7 +13,6 @@ namespace Punto_Venta
 {
     public partial class frmAgregarCompras : Form
     {
-        private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
         public string usuario = "";
         OleDbCommand cmd;
