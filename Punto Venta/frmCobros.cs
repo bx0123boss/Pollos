@@ -285,7 +285,7 @@ namespace Punto_Venta
         {
             try
             {
-                if (print=="1")
+                if (print=="0")
                 {
                     cmd = new OleDbCommand("delete from ArticulosMesa where ID1=" + dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString() + ";", conectar);
                     cmd.ExecuteNonQuery();
@@ -297,7 +297,7 @@ namespace Punto_Venta
                     if (reader.Read())
                     {
                         idInsertado = reader[0].ToString();
-                        MessageBox.Show("ID cancelado: " + idInsertado);
+                        //MessageBox.Show("ID cancelado: " + idInsertado);
                     }
                     if (dataGridView1.RowCount == 1)
                     {

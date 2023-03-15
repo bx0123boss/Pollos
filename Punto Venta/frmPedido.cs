@@ -516,8 +516,8 @@ namespace Punto_Venta
             {
                 BtnEntregar.Visible = false;
                 Ticket ticket = new Ticket();
-                ticket.FontSize = 12;
-                ticket.MaxCharDescription = 29;
+                ticket.FontSize = 10;
+                ticket.MaxCharDescription = 26;
                 //Llevar
                 if (tabControl1.SelectedIndex == 2)
                 {

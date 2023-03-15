@@ -30,10 +30,10 @@ namespace Punto_Venta
 
         //public static string empresa = "CAZADORES";
         public static string empresa = "CERQUITA";
-        public static string[] datosTicket = new string[] { "PIZZAS ANGELOTTI", "ABASOLO #211 CENTRO", "", "" };
+        public static string[] datosTicket = new string[] { "PIZZAS ANGELOTTI", "", "", "" };
         public static string[] pieDeTicket = new string[] { "   *GRACIAS POR SU PREFERENCIA*", "            Visitanos en Facebook:", "Pizzas Angelotti Teziutlan" };
         public static string Font = "";
-        public static string impresora = "print";
+        public static string impresora = "print2";
         public static string impresora2 = "print";
     }
 }
