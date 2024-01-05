@@ -125,7 +125,7 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(584, 74);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 16);
+            this.label2.Size = new System.Drawing.Size(43, 16);
             this.label2.TabIndex = 5;
             this.label2.Text = "Total";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -138,7 +138,7 @@
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(584, 100);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 16);
+            this.label3.Size = new System.Drawing.Size(44, 16);
             this.label3.TabIndex = 7;
             this.label3.Text = "Pago";
             // 
@@ -160,7 +160,7 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(568, 126);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 16);
+            this.label4.Size = new System.Drawing.Size(60, 16);
             this.label4.TabIndex = 9;
             this.label4.Text = "Cambio";
             // 
@@ -269,6 +269,7 @@
             this.lblFolio.Size = new System.Drawing.Size(63, 18);
             this.lblFolio.TabIndex = 20;
             this.lblFolio.Text = "MESA0";
+            this.lblFolio.Visible = false;
             // 
             // label7
             // 
@@ -281,6 +282,7 @@
             this.label7.Size = new System.Drawing.Size(51, 18);
             this.label7.TabIndex = 19;
             this.label7.Text = "Folio:";
+            this.label7.Visible = false;
             // 
             // label5
             // 

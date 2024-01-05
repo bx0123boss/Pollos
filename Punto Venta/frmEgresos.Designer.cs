@@ -68,6 +68,7 @@
             // 
             // txtConcepto
             // 
+            this.txtConcepto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtConcepto.Location = new System.Drawing.Point(100, 12);
             this.txtConcepto.Multiline = true;
             this.txtConcepto.Name = "txtConcepto";

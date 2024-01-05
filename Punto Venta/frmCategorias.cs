@@ -44,12 +44,12 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("¿Estas seguro de elimiar la " + tipo + "?", "Alto!", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("¿Estas seguro de elimiar la Categoria?", "Alto!", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                cmd = new OleDbCommand("delete from "+tipo+" where Id=" + dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString() + ";", conectar);
+                cmd = new OleDbCommand("delete from Categorias where Id=" + dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString() + ";", conectar);
                 cmd.ExecuteNonQuery();
-                cmd = new OleDbCommand("update Inventario set " + tipo + "='SIN CATEGORIA' where " + tipo + "='" + dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString() + "';", conectar);
+                cmd = new OleDbCommand("update Inventario set Categoria='SIN CATEGORIA' where Categoria='" + dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString() + "';", conectar);
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Se ha eliminado la " + tipo + " con exito", "ELIMINADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ds = new DataSet();

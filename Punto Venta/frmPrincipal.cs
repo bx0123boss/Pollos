@@ -27,7 +27,7 @@ namespace Punto_Venta
         {
             frmClientes comanda = new frmClientes();
             
-            comanda.Show();
+            comanda.ShowDialog();
         }
 
         private void frmPrincipal_Load(object sender, EventArgs e)
@@ -48,7 +48,21 @@ namespace Punto_Venta
             {
             }
             conectar.Open();
-            if (lblUser.Text == "VENTAS")
+            if (Conexion.lugar.Equals("TERRAZA"))
+            {
+                button3.Visible = false;
+                button9.Visible = false;
+                button1.Visible = false;
+                button7.Visible = false;
+                button2.Visible = false;
+                button4.Visible = false;
+                button5.Visible = false;
+                button6.Visible = false;
+                button11.Visible = false;
+                button10.Visible = false;
+                button14.Visible = false;
+            }
+            else if (lblUser.Text == "VENTAS")
             {
                 button3.Visible = true;
                 button6.Visible = false;
@@ -125,7 +139,7 @@ namespace Punto_Venta
             else
             {
                 frmCambiarMesa mesa = new frmCambiarMesa();
-                mesa.Show();
+                mesa.ShowDialog();
             } 
            
         }
@@ -149,7 +163,7 @@ namespace Punto_Venta
             {
                 frmIngreso mesa = new frmIngreso();
                 mesa.usuario = usuario;
-                mesa.Show();
+                mesa.ShowDialog();
             } 
            
         }
@@ -173,7 +187,7 @@ namespace Punto_Venta
             {
                 frmEgresos mesa = new frmEgresos();
                 mesa.usuario = usuario;
-                mesa.Show();
+                mesa.ShowDialog();
             } 
         }
 
@@ -237,12 +251,12 @@ namespace Punto_Venta
                 if (valor == 0)
                 {
                     
-                    corte.Show();
+                    corte.ShowDialog();
                 }
                 else
                 {
                     corte.button1.Visible = false;
-                    corte.Show();
+                    corte.ShowDialog();
                     MessageBox.Show("AUN NO HA ACTUALIZADO EL INVENTARIO, FAVOR DE ACTUALIZAR", "ALERTA!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
             //}
@@ -266,7 +280,7 @@ namespace Punto_Venta
             else
             {
                 frmMesasOcupadas mesa = new frmMesasOcupadas();
-                mesa.Show();
+                mesa.ShowDialog();
             } 
            
         }
@@ -289,7 +303,7 @@ namespace Punto_Venta
             else
             {
                 frmActInventario mesa = new frmActInventario();
-                mesa.Show();
+                mesa.ShowDialog();
             } 
             
         }
@@ -297,7 +311,7 @@ namespace Punto_Venta
         private void button10_Click(object sender, EventArgs e)
         {
             frmHistoCortes histo = new frmHistoCortes();
-            histo.Show();
+            histo.ShowDialog();
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -360,7 +374,7 @@ namespace Punto_Venta
         private void button13_Click(object sender, EventArgs e)
         {
             frmComandaGeneral com = new frmComandaGeneral();
-            com.Show();
+            com.ShowDialog();
         }
 
         private void frmPrincipal_FormClosed(object sender, FormClosedEventArgs e)
@@ -408,7 +422,7 @@ namespace Punto_Venta
             else
             {            
                 frmMesas mesa = new frmMesas();
-                mesa.Show();
+                mesa.ShowDialog();
             } 
         }
 

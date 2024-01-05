@@ -322,7 +322,7 @@ namespace Punto_Venta
             }
             catch(Exception ex)
             {
-                MessageBox.Show("rrror: " + ex);
+                MessageBox.Show("Tiene que seleccionar un MESERO antes", "Corte de caja", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

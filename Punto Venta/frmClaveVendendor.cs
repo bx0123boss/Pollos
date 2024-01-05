@@ -31,6 +31,22 @@ namespace Punto_Venta
         private void frmClaveVendendor_Load(object sender, EventArgs e)
         {
             conectar.Open();
+            // Obtener el tamaño del formulario
+            int formWidth = this.ClientSize.Width;
+            int formHeight = this.ClientSize.Height;
+
+            // Obtener el tamaño del control de usuario
+            int userControlWidth = label3.Width;
+            int userControlHeight = label3.Height;
+
+            // Calcular las coordenadas X e Y para centrar el control de usuario
+            int userControlX = (formWidth - userControlWidth) / 2;
+            int userControlY = (formHeight - userControlHeight) / 2;
+
+            // Establecer la propiedad Location del control de usuario
+            label3.Location = new Point(userControlX-220, userControlY);
+            txtPass.Location = new Point(userControlX, userControlY);
+            button1.Location = new Point(userControlX-50, userControlY+50);
         }
 
         private void txtPass_KeyPress(object sender, KeyPressEventArgs e)

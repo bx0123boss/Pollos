@@ -41,12 +41,18 @@ namespace Punto_Venta
 
         private void button3_Click(object sender, EventArgs e)
         {
-            frmAgregarPromo agg = new frmAgregarPromo();
-            agg.id = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-            agg.txtNombre.Text = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
-            agg.txtPrecio.Text = dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString();
-            agg.Show();
-            this.Close();
+            try
+            {
+                frmAgregarPromo agg = new frmAgregarPromo();
+                agg.id = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
+                agg.txtNombre.Text = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
+                agg.txtPrecio.Text = dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString();
+                agg.Show();
+                this.Close();
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Tiene que seleccionar un combo antes", "Reporte de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

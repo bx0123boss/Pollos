@@ -1399,3 +1399,84 @@ C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta -
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVerCompra.resources
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmProductoMas.resources
 C:\Users\Usuario\Desktop\Brandon\180517 Precios Pintura\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csprojResolveAssemblyReference.cache
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.AssemblyReference.cache
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCategorias.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCompras.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarMesas.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarOrigen.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPromo.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmArmaCombo.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmArticulosCancelados.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCantidad.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCategorias.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClaveVendendor.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCombos.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComentarios.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCompras.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCortesMesero.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDetalleCorte.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarCategoria.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmExportarInventario.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesas.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmOrigen.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPizzas.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmProductoMas.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentasProducto.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmSeleccionarCombo.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoDetallada.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoVenta.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVerCompra.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.cache
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.CoreCompileInputs.cache
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.CopyComplete
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb

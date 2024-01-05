@@ -258,7 +258,7 @@
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button3.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(53, 234);
+            this.button3.Location = new System.Drawing.Point(51, 234);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(455, 102);
             this.button3.TabIndex = 23;

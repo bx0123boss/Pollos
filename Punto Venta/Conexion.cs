@@ -10,6 +10,7 @@ namespace Punto_Venta
 {
     class Conexion
     {
+        //public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\192.168.1.70\Jaeger Soft\FastFood.accdb; Jet OLEDB:Database Password=yolo1234@";
         public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Jaeger Soft\FastFood.accdb; Jet OLEDB:Database Password=yolo1234@";
         //public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=G:\Mi unidad\JS\FastFood.accdb; Jet OLEDB:Database Password=yolo1234@";
         //public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Jaeger Soft\FastFood.accdb";
@@ -31,9 +32,9 @@ namespace Punto_Venta
         //public static string empresa = "CAZADORES";
         public static string empresa = "CERQUITA";
         public static string[] datosTicket = new string[] { "PIZZAS ANGELOTTI", "", "", "" };
-        public static string[] pieDeTicket = new string[] { "   *GRACIAS POR SU PREFERENCIA*", "            Visitanos en Facebook:", "Pizzas Angelotti Teziutlan" };
+        public static string[] pieDeTicket = new string[] { "   *GRACIAS POR SU PREFERENCIA*", "            Visitanos en Facebook:", "Pizzas Angelotti" };
         public static string Font = "";
-        public static string impresora = "print2";
+        public static string impresora = "print";
         public static string impresora2 = "print";
     }
 }

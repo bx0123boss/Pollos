@@ -196,11 +196,7 @@ namespace Punto_Venta
             }
                           
             panel2.Visible = false;
-            obtenerYSumar();
-            if(Conexion.lugar=="TERRAZA")
-                lblFolio.Text = "T"+ String.Format("{0:0000}", suma);
-            else if(Conexion.lugar=="COCINA")
-                lblFolio.Text = "V" + String.Format("{0:0000}", suma);
+           
             DataTable dt = new DataTable();
             CmbMesa.Text = "";
 
@@ -304,7 +300,7 @@ namespace Punto_Venta
                 if (pi.ShowDialog() == DialogResult.OK)
                 {
                     total += Convert.ToDouble(Convert.ToString(pi.total));
-                    //ESTRUCTURA DE IDES EXTRAS: CANTIDAD1,ID1;CANTIDAD2,ID2;...
+                    //ESTRUCTURA DE IDES EXTRAS: CANTIDAD1,ID1;CANTIDAD2,ID2;CANTIDADn,IDn...
                     string ides="";
                     for (int i = 0; i < pi.DgvPedidoprevio.RowCount; i++)
                     {
@@ -353,13 +349,17 @@ namespace Punto_Venta
         
         public void obtenerYSumar()
         {
-            cmd = new OleDbCommand("select Numero from Folio where Folio='Venta';", conectar);
+            
+            cmd = new OleDbCommand("SELECT TOP 1 Folio AS MaxFolio FROM folios ORDER BY fecha DESC, Folio DESC;", conectar);
+            Console.WriteLine(cmd.ToString());
             OleDbDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
-                suma = Convert.ToInt32(Convert.ToString(reader[0].ToString()));
+                int numero = Convert.ToInt32(reader[0].ToString().Substring(1));
+                suma = numero;
+                suma++;
             }
-            lblFolio.Text = suma + "";
+            lblFolio.Text = "V"+ suma ;
 
 
         }
@@ -515,6 +515,11 @@ namespace Punto_Venta
             if (!ordenVacia())            
             {
                 BtnEntregar.Visible = false;
+                obtenerYSumar();
+                if (Conexion.lugar == "TERRAZA")
+                    lblFolio.Text = "T" + String.Format("{0:0000}", suma);
+                else if (Conexion.lugar == "COCINA")
+                    lblFolio.Text = "V" + String.Format("{0:0000}", suma);
                 Ticket ticket = new Ticket();
                 ticket.FontSize = 10;
                 ticket.MaxCharDescription = 26;
@@ -582,7 +587,7 @@ namespace Punto_Venta
                         }
                     }                       
                 }
-                ticket.PrintTicket(Conexion.impresora);
+                ticket.PrintTicket(Conexion.impresora2);
                 if (mesaNueva)
                 {
                     cmd = new OleDbCommand("UPDATE Mesas SET IdMesero='" + idMesero + "',Mesero='" + lblMesero.Text + "' where Id=" + CmbMesa.SelectedValue + ";", conectar);

@@ -332,11 +332,12 @@
             this.lblFolio.BackColor = System.Drawing.Color.White;
             this.lblFolio.Font = new System.Drawing.Font("Stencil", 15F);
             this.lblFolio.ForeColor = System.Drawing.Color.Black;
-            this.lblFolio.Location = new System.Drawing.Point(90, 185);
+            this.lblFolio.Location = new System.Drawing.Point(90, 196);
             this.lblFolio.Name = "lblFolio";
             this.lblFolio.Size = new System.Drawing.Size(81, 24);
             this.lblFolio.TabIndex = 56;
             this.lblFolio.Text = "label5";
+            this.lblFolio.Visible = false;
             // 
             // label6
             // 
@@ -344,11 +345,12 @@
             this.label6.BackColor = System.Drawing.Color.White;
             this.label6.Font = new System.Drawing.Font("Stencil", 15F);
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(12, 185);
+            this.label6.Location = new System.Drawing.Point(12, 196);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(72, 24);
             this.label6.TabIndex = 55;
             this.label6.Text = "Folio:";
+            this.label6.Visible = false;
             // 
             // button1
             // 
@@ -633,7 +635,7 @@
             this.cbCliente.BackColor = System.Drawing.Color.Transparent;
             this.cbCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbCliente.ForeColor = System.Drawing.Color.White;
-            this.cbCliente.Location = new System.Drawing.Point(12, 222);
+            this.cbCliente.Location = new System.Drawing.Point(12, 232);
             this.cbCliente.Name = "cbCliente";
             this.cbCliente.Size = new System.Drawing.Size(152, 28);
             this.cbCliente.TabIndex = 70;
@@ -669,6 +671,132 @@
             this.panelCategorias.Size = new System.Drawing.Size(121, 61);
             this.panelCategorias.TabIndex = 71;
             this.panelCategorias.Visible = false;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(3, 3);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 0;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(3, 32);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.TabIndex = 1;
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(3, 61);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 2;
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(3, 90);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.TabIndex = 3;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(3, 119);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(75, 23);
+            this.button10.TabIndex = 4;
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(3, 148);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(75, 23);
+            this.button11.TabIndex = 5;
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(3, 177);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(75, 23);
+            this.button12.TabIndex = 6;
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(3, 206);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(75, 23);
+            this.button13.TabIndex = 7;
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(3, 235);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(75, 23);
+            this.button14.TabIndex = 8;
+            // 
+            // button15
+            // 
+            this.button15.Location = new System.Drawing.Point(3, 264);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(75, 23);
+            this.button15.TabIndex = 9;
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(3, 293);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(75, 23);
+            this.button16.TabIndex = 10;
+            // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(3, 322);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(75, 23);
+            this.button17.TabIndex = 11;
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(3, 351);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(75, 23);
+            this.button18.TabIndex = 12;
+            // 
+            // button19
+            // 
+            this.button19.Location = new System.Drawing.Point(3, 380);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(75, 23);
+            this.button19.TabIndex = 13;
+            // 
+            // button20
+            // 
+            this.button20.Location = new System.Drawing.Point(3, 409);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(75, 23);
+            this.button20.TabIndex = 14;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(3, 438);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 15;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(3, 467);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 16;
+            // 
+            // button21
+            // 
+            this.button21.Location = new System.Drawing.Point(3, 496);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(75, 23);
+            this.button21.TabIndex = 17;
             // 
             // panel4
             // 
@@ -718,7 +846,7 @@
             this.label12.BackColor = System.Drawing.Color.White;
             this.label12.Font = new System.Drawing.Font("Stencil", 15F);
             this.label12.ForeColor = System.Drawing.Color.Black;
-            this.label12.Location = new System.Drawing.Point(12, 161);
+            this.label12.Location = new System.Drawing.Point(12, 171);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(67, 24);
             this.label12.TabIndex = 73;
@@ -743,7 +871,7 @@
             this.flowBotones.AutoScroll = true;
             this.flowBotones.Location = new System.Drawing.Point(3, 3);
             this.flowBotones.Name = "flowBotones";
-            this.flowBotones.Size = new System.Drawing.Size(334, 130);
+            this.flowBotones.Size = new System.Drawing.Size(358, 139);
             this.flowBotones.TabIndex = 74;
             // 
             // dgvMesas
@@ -764,7 +892,7 @@
             this.lblMesero.BackColor = System.Drawing.Color.White;
             this.lblMesero.Font = new System.Drawing.Font("Stencil", 15F);
             this.lblMesero.ForeColor = System.Drawing.Color.Black;
-            this.lblMesero.Location = new System.Drawing.Point(180, 185);
+            this.lblMesero.Location = new System.Drawing.Point(180, 196);
             this.lblMesero.Name = "lblMesero";
             this.lblMesero.Size = new System.Drawing.Size(0, 24);
             this.lblMesero.TabIndex = 77;
@@ -775,7 +903,7 @@
             this.label15.BackColor = System.Drawing.Color.White;
             this.label15.Font = new System.Drawing.Font("Stencil", 15F);
             this.label15.ForeColor = System.Drawing.Color.Black;
-            this.label15.Location = new System.Drawing.Point(180, 162);
+            this.label15.Location = new System.Drawing.Point(180, 172);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(94, 24);
             this.label15.TabIndex = 76;
@@ -787,7 +915,7 @@
             this.txtMesa.BackColor = System.Drawing.Color.White;
             this.txtMesa.Font = new System.Drawing.Font("Stencil", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMesa.ForeColor = System.Drawing.Color.Black;
-            this.txtMesa.Location = new System.Drawing.Point(31, 163);
+            this.txtMesa.Location = new System.Drawing.Point(31, 174);
             this.txtMesa.Name = "txtMesa";
             this.txtMesa.Size = new System.Drawing.Size(21, 22);
             this.txtMesa.TabIndex = 78;
@@ -799,7 +927,7 @@
             this.CmbMesa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CmbMesa.Enabled = false;
             this.CmbMesa.FormattingEnabled = true;
-            this.CmbMesa.Location = new System.Drawing.Point(85, 163);
+            this.CmbMesa.Location = new System.Drawing.Point(85, 174);
             this.CmbMesa.Name = "CmbMesa";
             this.CmbMesa.Size = new System.Drawing.Size(89, 21);
             this.CmbMesa.TabIndex = 79;
@@ -1010,7 +1138,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(370, 155);
+            this.tabControl1.Size = new System.Drawing.Size(370, 166);
             this.tabControl1.TabIndex = 82;
             // 
             // tabPage1
@@ -1019,8 +1147,8 @@
             this.tabPage1.Controls.Add(this.flowBotones);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(362, 129);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Size = new System.Drawing.Size(362, 140);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Mesas:";
             // 
@@ -1040,8 +1168,8 @@
             this.tabPage2.Controls.Add(this.LblNombre);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(362, 129);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Size = new System.Drawing.Size(362, 140);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "A domicilio";
             this.tabPage2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabPage2_MouseClick);
@@ -1053,7 +1181,7 @@
             this.tabPage3.Controls.Add(this.label1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(362, 129);
+            this.tabPage3.Size = new System.Drawing.Size(362, 140);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Llevar";
             // 

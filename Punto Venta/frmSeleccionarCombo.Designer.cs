@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.dgvInventario = new System.Windows.Forms.DataGridView();
@@ -55,6 +56,13 @@
             this.lblCant = new System.Windows.Forms.Label();
             this.txtComentario = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPedidoprevio)).BeginInit();
@@ -78,7 +86,7 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(388, 43);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 16);
+            this.label2.Size = new System.Drawing.Size(59, 16);
             this.label2.TabIndex = 43;
             this.label2.Text = "Buscar:";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -96,8 +104,8 @@
             this.dgvInventario.ReadOnly = true;
             this.dgvInventario.Size = new System.Drawing.Size(358, 314);
             this.dgvInventario.TabIndex = 42;
+            this.dgvInventario.Visible = false;
             this.dgvInventario.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInventario_CellContentClick);
-            this.dgvInventario.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInventario_CellDoubleClick);
             // 
             // button2
             // 
@@ -117,7 +125,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(12, 357);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(159, 16);
+            this.label1.Size = new System.Drawing.Size(158, 16);
             this.label1.TabIndex = 45;
             this.label1.Text = "La promoción incluye:";
             // 
@@ -140,9 +148,9 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(481, 9);
+            this.label3.Location = new System.Drawing.Point(586, 24);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(153, 16);
+            this.label3.Size = new System.Drawing.Size(152, 16);
             this.label3.TabIndex = 48;
             this.label3.Text = "Selecciona articulos:";
             // 
@@ -206,12 +214,14 @@
             this.Categoria.HeaderText = "SubCategoria";
             this.Categoria.Name = "Categoria";
             this.Categoria.ReadOnly = true;
+            this.Categoria.Width = 180;
             // 
             // C
             // 
             this.C.HeaderText = "C";
             this.C.Name = "C";
             this.C.ReadOnly = true;
+            this.C.Visible = false;
             // 
             // Rest
             // 
@@ -241,7 +251,7 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(84, 21);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(141, 16);
+            this.label4.Size = new System.Drawing.Size(140, 16);
             this.label4.TabIndex = 52;
             this.label4.Text = "Selecciona combo:";
             // 
@@ -252,7 +262,7 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(963, 40);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(194, 16);
+            this.label5.Size = new System.Drawing.Size(193, 16);
             this.label5.TabIndex = 53;
             this.label5.Text = "Contenido de la promoción";
             // 
@@ -274,6 +284,7 @@
             this.dgvPromo.ReadOnly = true;
             this.dgvPromo.Size = new System.Drawing.Size(358, 225);
             this.dgvPromo.TabIndex = 54;
+            this.dgvPromo.Visible = false;
             this.dgvPromo.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPromo_CellDoubleClick);
             // 
             // Cant
@@ -313,7 +324,7 @@
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(1249, 40);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(74, 16);
+            this.label6.Size = new System.Drawing.Size(73, 16);
             this.label6.TabIndex = 55;
             this.label6.Text = "Cantidad:";
             // 
@@ -324,7 +335,7 @@
             this.lblCant.ForeColor = System.Drawing.Color.White;
             this.lblCant.Location = new System.Drawing.Point(1320, 40);
             this.lblCant.Name = "lblCant";
-            this.lblCant.Size = new System.Drawing.Size(16, 16);
+            this.lblCant.Size = new System.Drawing.Size(15, 16);
             this.lblCant.TabIndex = 56;
             this.lblCant.Text = "1";
             this.lblCant.Click += new System.EventHandler(this.lblCant_Click);
@@ -345,16 +356,95 @@
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(967, 493);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(91, 16);
+            this.label7.Size = new System.Drawing.Size(90, 16);
             this.label7.TabIndex = 58;
             this.label7.Text = "Comentario:";
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.AutoScroll = true;
+            this.flowLayoutPanel2.BackColor = System.Drawing.Color.Black;
+            this.flowLayoutPanel2.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(33, 40);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(337, 314);
+            this.flowLayoutPanel2.TabIndex = 59;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.ForeColor = System.Drawing.Color.White;
+            this.checkBox1.Location = new System.Drawing.Point(305, 21);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(65, 17);
+            this.checkBox1.TabIndex = 60;
+            this.checkBox1.Text = "Botones";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.Black;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(14, 373);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(358, 261);
+            this.flowLayoutPanel1.TabIndex = 61;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.ForeColor = System.Drawing.Color.White;
+            this.checkBox2.Location = new System.Drawing.Point(312, 356);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(65, 17);
+            this.checkBox2.TabIndex = 62;
+            this.checkBox2.Text = "Botones";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.AutoScroll = true;
+            this.flowLayoutPanel3.BackColor = System.Drawing.Color.Black;
+            this.flowLayoutPanel3.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(384, 68);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(517, 538);
+            this.flowLayoutPanel3.TabIndex = 63;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.ForeColor = System.Drawing.Color.White;
+            this.checkBox3.Location = new System.Drawing.Point(843, 21);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(65, 17);
+            this.checkBox3.TabIndex = 64;
+            this.checkBox3.Text = "Botones";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // frmSeleccionarCombo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(1507, 627);
+            this.ClientSize = new System.Drawing.Size(1443, 644);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.flowLayoutPanel3);
+            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.txtComentario);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.lblCant);
@@ -405,15 +495,22 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Cat;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Agregado;
         private System.Windows.Forms.DataGridViewTextBoxColumn Restan;
+        public System.Windows.Forms.Label label6;
+        public System.Windows.Forms.Label lblCant;
+        public System.Windows.Forms.TextBox txtComentario;
+        public System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Canti;
         private System.Windows.Forms.DataGridViewTextBoxColumn Prod;
         private System.Windows.Forms.DataGridViewTextBoxColumn Categoria;
         private System.Windows.Forms.DataGridViewCheckBoxColumn C;
         private System.Windows.Forms.DataGridViewTextBoxColumn Rest;
-        public System.Windows.Forms.Label label6;
-        public System.Windows.Forms.Label lblCant;
-        public System.Windows.Forms.TextBox txtComentario;
-        public System.Windows.Forms.Label label7;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }

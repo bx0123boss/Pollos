@@ -312,5 +312,16 @@ namespace Punto_Venta
 
             }
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            //0 cant, 1 producto, 2 precioUni, 3 precioTotal
+            List<string[]> DatosTicket = new List<string[]>();
+            DatosTicket.Add(new string[] { "1", "PAPA ATUN", "115", "115" });
+            DatosTicket.Add(new string[] { "1", "MINI LIGTH", "50", "50" });
+            DatosTicket.Add(new string[] { "2", "MINI COCTEL", "65", "130" });
+            TicketJaegersoftRestaurante ticket = new TicketJaegersoftRestaurante("V0047", "01", "Brandon", 295, DatosTicket);
+            ticket.imprimir();
+        }
     }
 }

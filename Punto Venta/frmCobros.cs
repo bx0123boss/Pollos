@@ -37,15 +37,16 @@ namespace Punto_Venta
         }
         public void obtenerYSumar()
         {
-            cmd = new OleDbCommand("select Numero from Folio where Folio='Venta';", conectar);
+            cmd = new OleDbCommand("SELECT TOP 1 Folio AS MaxFolio FROM folios ORDER BY fecha DESC, Folio DESC;", conectar);
+            Console.WriteLine(cmd.ToString());
             OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())            
-                suma = Convert.ToInt32(Convert.ToString(reader[0].ToString()));            
-            cmd = new OleDbCommand("select Folio from Folios where Folio='" + "V" + String.Format("{0:0000}", suma) + "';", conectar);
-            reader = cmd.ExecuteReader();
-            if (reader.Read())            
-                suma++;            
-            lblFolio.Text = suma + "";
+            if (reader.Read())
+            {
+                int numero = Convert.ToInt32(reader[0].ToString().Substring(1));
+                suma = numero;
+                suma++;
+            }
+            lblFolio.Text = "V" + suma;
         }
         public void obtenerYSumar2()
         {
@@ -56,8 +57,7 @@ namespace Punto_Venta
         private void frmCobros_Load(object sender, EventArgs e)
         {
             conectar.Open();
-            obtenerYSumar();
-            folio = "V" + String.Format("{0:0000}", suma);
+           
             ds = new DataSet();
             da = new OleDbDataAdapter("select * from ArticulosMesa where Mesa='"+lblID.Text + "';", conectar);
             da.Fill(ds, "Id");
@@ -123,7 +123,7 @@ namespace Punto_Venta
             {
                 txtCambio.Text = "" + (Convert.ToDouble(txtPago.Text) - total);
                 txtPago.Text = "" + txtPago.Text;
-                button1.Focus();
+                button2.Focus();
             }
         }
 
@@ -204,6 +204,8 @@ namespace Punto_Venta
         private void button2_Click(object sender, EventArgs e)
         {
             button2.Hide();
+            obtenerYSumar();
+            folio = "V" + String.Format("{0:0000}", suma);
             string formaPago = "Efectivo";
             if (checkBox1.Checked)
             {
@@ -242,7 +244,7 @@ namespace Punto_Venta
                 cmd.ExecuteNonQuery();
                //SUBCATEGORIALV
                 string subcategoria =obtenerSubcategoria(dataGridView1[0, i].Value.ToString());
-                cmd = new OleDbCommand("insert into ventas(idProducto,cantidad, producto, precio, total,folio,Fecha,Estatus,subcategoria) values ('" + dataGridView1[0, i].Value.ToString() + "','" + dataGridView1[1, i].Value.ToString() + "','" + dataGridView1[2, i].Value.ToString() + "'," + dataGridView1[3, i].Value.ToString() + ",'" + dataGridView1[4, i].Value.ToString() + "','" + folio + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COBRADO','"+subcategoria+"');", conectar);
+                cmd = new OleDbCommand("insert into ventas(idProducto,cantidad, producto, precio, total,folio,Fecha,Estatus,ide,subcategoria) values ('" + dataGridView1[0, i].Value.ToString() + "','" + dataGridView1[1, i].Value.ToString() + "','" + dataGridView1[2, i].Value.ToString() + "'," + dataGridView1[3, i].Value.ToString() + ",'" + dataGridView1[4, i].Value.ToString() + "','" + folio + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COBRADO','"+ ide + "','"+subcategoria+"');", conectar);
                 cmd.ExecuteNonQuery();
             }
                 cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('VENTA FOLIO:" + folio + " MESA " + lblMesa.Text + "'," + total + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','"+formaPago+"');", conectar);
