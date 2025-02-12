@@ -68,7 +68,8 @@ namespace Punto_Venta
             dataGridView1.Columns[7].Visible = false;
             dataGridView1.Columns[8].Visible = false;
             dataGridView1.Columns[9].Visible = false;
-            
+            dataGridView1.Columns[10].Visible = false;
+
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
                 total += Convert.ToDouble(dataGridView1[4, i].Value.ToString());
@@ -211,20 +212,11 @@ namespace Punto_Venta
             {
                 formaPago = "Tarjeta";
             }
-            //try
-            //{
-                cmd = new OleDbCommand("INSERT INTO folios(Folio,ModalidadVenta,Estatus,idCliente,Vehiculo,Repartidor,Fecha,Monto,FormaPago) VALUES ('" + folio + "','Mesa','COBRADO','0','" + idMesero + "','" + lblMesero.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + total + "','" + formaPago + "');", conectar);
-                cmd.ExecuteNonQuery();
-            //}catch(Exception ex)
-            //{
-            //    suma=suma+2;
-            //    folio = "V" + String.Format("{0:0000}", suma);
-            //    cmd = new OleDbCommand("INSERT INTO folios(Folio,ModalidadVenta,Estatus,idCliente,Vehiculo,Repartidor,Fecha,Monto,FormaPago) VALUES ('" + folio + "','Mesa','COBRADO','0','" + idMesero + "','" + lblMesero.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + total + "','" + formaPago + "');", conectar);
-            //    cmd.ExecuteNonQuery();
-            //}
+            double utilidad = 0;
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
 
+                utilidad += Convert.ToDouble(dataGridView1[10, i].Value.ToString());
                 double lol = Convert.ToDouble(dataGridView1[4, i].Value.ToString());
                 string producto;
                 if (dataGridView1[2, i].Value.ToString().Length > 12)
@@ -244,10 +236,13 @@ namespace Punto_Venta
                 cmd.ExecuteNonQuery();
                //SUBCATEGORIALV
                 string subcategoria =obtenerSubcategoria(dataGridView1[0, i].Value.ToString());
-                cmd = new OleDbCommand("insert into ventas(idProducto,cantidad, producto, precio, total,folio,Fecha,Estatus,ide,subcategoria) values ('" + dataGridView1[0, i].Value.ToString() + "','" + dataGridView1[1, i].Value.ToString() + "','" + dataGridView1[2, i].Value.ToString() + "'," + dataGridView1[3, i].Value.ToString() + ",'" + dataGridView1[4, i].Value.ToString() + "','" + folio + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COBRADO','"+ ide + "','"+subcategoria+"');", conectar);
+                cmd = new OleDbCommand("insert into ventas(idProducto,cantidad, producto, precio, total,folio,Fecha,Estatus,ide,subcategoria,Utilidad) values ('" + dataGridView1[0, i].Value.ToString() + "','" + dataGridView1[1, i].Value.ToString() + "','" + dataGridView1[2, i].Value.ToString() + "'," + dataGridView1[3, i].Value.ToString() + ",'" + dataGridView1[4, i].Value.ToString() + "','" + folio + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COBRADO','"+ ide + "','"+subcategoria+"','"+ dataGridView1[10, i].Value.ToString()+"');", conectar);
                 cmd.ExecuteNonQuery();
             }
-                cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('VENTA FOLIO:" + folio + " MESA " + lblMesa.Text + "'," + total + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','"+formaPago+"');", conectar);
+            cmd = new OleDbCommand("INSERT INTO folios(Folio,ModalidadVenta,Estatus,idCliente,Vehiculo,Repartidor,Fecha,Monto,FormaPago, Utilidad) VALUES ('" + folio + "','Mesa','COBRADO','0','" + idMesero + "','" + lblMesero.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + total + "','" + formaPago + "','"+utilidad+"');", conectar);
+            cmd.ExecuteNonQuery();
+
+            cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('VENTA FOLIO:" + folio + " MESA " + lblMesa.Text + "'," + total + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','"+formaPago+"');", conectar);
                 cmd.ExecuteNonQuery(); 
                 double ventas = 0;
                 int mesas = 0;

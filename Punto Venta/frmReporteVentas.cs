@@ -33,6 +33,7 @@ namespace Punto_Venta
                 detalles.lblFecha.Text = dataGridView1[8, dataGridView1.CurrentRow.Index].Value.ToString();
                 detalles.lblModalidad.Text = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
                 detalles.usuario = usuario;
+                detalles.lblUtilidad.Text = "$"+dataGridView1[13, dataGridView1.CurrentRow.Index].Value.ToString();
                 if (dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString() == "CANCELADO")
                 {
                     detalles.button2.Hide();

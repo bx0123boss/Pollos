@@ -39,14 +39,6 @@
             this.TxtBuscanombre = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.DgvPedidoprevio = new System.Windows.Forms.DataGridView();
-            this.Aidi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Canti = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Pre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tot = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Comentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Comanda = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idExtra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DgvPidiendo = new System.Windows.Forms.DataGridView();
             this.lblFolio = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -136,6 +128,15 @@
             this.rbDomicilo = new System.Windows.Forms.RadioButton();
             this.rbRapido = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Aidi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Canti = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Pre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tot = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Comentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Comanda = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idExtra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Costo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPedidoprevio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPidiendo)).BeginInit();
             this.panel2.SuspendLayout();
@@ -256,7 +257,8 @@
             this.Tot,
             this.Comentario,
             this.Comanda,
-            this.idExtra});
+            this.idExtra,
+            this.Costo});
             this.DgvPedidoprevio.GridColor = System.Drawing.SystemColors.ButtonHighlight;
             this.DgvPedidoprevio.Location = new System.Drawing.Point(613, 256);
             this.DgvPedidoprevio.Name = "DgvPedidoprevio";
@@ -264,60 +266,6 @@
             this.DgvPedidoprevio.Size = new System.Drawing.Size(418, 312);
             this.DgvPedidoprevio.TabIndex = 37;
             this.DgvPedidoprevio.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPedidoprevio_CellEndEdit);
-            // 
-            // Aidi
-            // 
-            this.Aidi.HeaderText = "Id";
-            this.Aidi.Name = "Aidi";
-            this.Aidi.ReadOnly = true;
-            this.Aidi.Visible = false;
-            // 
-            // Canti
-            // 
-            this.Canti.HeaderText = "Cant";
-            this.Canti.Name = "Canti";
-            this.Canti.ReadOnly = true;
-            this.Canti.Width = 50;
-            // 
-            // Prod
-            // 
-            this.Prod.HeaderText = "Producto";
-            this.Prod.Name = "Prod";
-            this.Prod.ReadOnly = true;
-            // 
-            // Pre
-            // 
-            this.Pre.HeaderText = "Precio";
-            this.Pre.Name = "Pre";
-            this.Pre.ReadOnly = true;
-            this.Pre.Width = 70;
-            // 
-            // Tot
-            // 
-            this.Tot.HeaderText = "Total";
-            this.Tot.Name = "Tot";
-            this.Tot.ReadOnly = true;
-            this.Tot.Width = 70;
-            // 
-            // Comentario
-            // 
-            this.Comentario.HeaderText = "Comentario";
-            this.Comentario.Name = "Comentario";
-            this.Comentario.ReadOnly = true;
-            this.Comentario.Width = 1000;
-            // 
-            // Comanda
-            // 
-            this.Comanda.HeaderText = "Comanda";
-            this.Comanda.Name = "Comanda";
-            this.Comanda.ReadOnly = true;
-            this.Comanda.Visible = false;
-            // 
-            // idExtra
-            // 
-            this.idExtra.HeaderText = "idExtra";
-            this.idExtra.Name = "idExtra";
-            this.idExtra.ReadOnly = true;
             // 
             // DgvPidiendo
             // 
@@ -1147,7 +1095,7 @@
             this.tabPage1.Controls.Add(this.flowBotones);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(362, 140);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Mesas:";
@@ -1168,7 +1116,7 @@
             this.tabPage2.Controls.Add(this.LblNombre);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(362, 140);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "A domicilio";
@@ -1268,6 +1216,67 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "DESTINO VENTA";
             this.groupBox1.Visible = false;
+            // 
+            // Aidi
+            // 
+            this.Aidi.HeaderText = "Id";
+            this.Aidi.Name = "Aidi";
+            this.Aidi.ReadOnly = true;
+            this.Aidi.Visible = false;
+            // 
+            // Canti
+            // 
+            this.Canti.HeaderText = "Cant";
+            this.Canti.Name = "Canti";
+            this.Canti.ReadOnly = true;
+            this.Canti.Width = 50;
+            // 
+            // Prod
+            // 
+            this.Prod.HeaderText = "Producto";
+            this.Prod.Name = "Prod";
+            this.Prod.ReadOnly = true;
+            // 
+            // Pre
+            // 
+            this.Pre.HeaderText = "Precio";
+            this.Pre.Name = "Pre";
+            this.Pre.ReadOnly = true;
+            this.Pre.Width = 70;
+            // 
+            // Tot
+            // 
+            this.Tot.HeaderText = "Total";
+            this.Tot.Name = "Tot";
+            this.Tot.ReadOnly = true;
+            this.Tot.Width = 70;
+            // 
+            // Comentario
+            // 
+            this.Comentario.HeaderText = "Comentario";
+            this.Comentario.Name = "Comentario";
+            this.Comentario.ReadOnly = true;
+            this.Comentario.Width = 1000;
+            // 
+            // Comanda
+            // 
+            this.Comanda.HeaderText = "Comanda";
+            this.Comanda.Name = "Comanda";
+            this.Comanda.ReadOnly = true;
+            this.Comanda.Visible = false;
+            // 
+            // idExtra
+            // 
+            this.idExtra.HeaderText = "idExtra";
+            this.idExtra.Name = "idExtra";
+            this.idExtra.ReadOnly = true;
+            this.idExtra.Visible = false;
+            // 
+            // Costo
+            // 
+            this.Costo.HeaderText = "Costo";
+            this.Costo.Name = "Costo";
+            this.Costo.ReadOnly = true;
             // 
             // frmPedido
             // 
@@ -1435,5 +1444,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Comentario;
         private System.Windows.Forms.DataGridViewTextBoxColumn Comanda;
         private System.Windows.Forms.DataGridViewTextBoxColumn idExtra;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Costo;
     }
 }

@@ -1480,3 +1480,84 @@ C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\o
 C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.CopyComplete
 C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
 C:\Users\infra\OneDrive\Documentos\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.config
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\bin\Debug\JaegerSoft FastFood.pdb
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.AssemblyReference.cache
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Form1.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAbrirCaja.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmActInventario.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCategorias.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCliente.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarCompras.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarExistencias.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarInventario.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarMesas.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarOrigen.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPlatillo.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarPromo.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmAgregarUsuario.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmArmaCombo.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmArticulosCancelados.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCantidad.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCategorias.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClaveVendendor.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCombos.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmComentarios.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCompras.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCorte.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCortesMesero.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmCredito.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDescontarExistencias.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmDetalleCorte.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarCategoria.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarGasto.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarInventario.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEditarPass.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEgresos.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregar.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarCocina.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmEntregarRuta.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmExportarInventario.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmGastos.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmHistoCortes.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesas.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmOrigen.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPizzas.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmProductoMas.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentas.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentasProducto.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmSeleccionarCombo.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoDetallada.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmTipoVenta.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmVerCompra.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Properties.Resources.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.Resources.Resource1.resources
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.GenerateResource.cache
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Venta.csproj.CoreCompileInputs.cache
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe.manifest
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.application
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto Ve.DAC0EF31.Up2Date
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.exe
+C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\JaegerSoft FastFood.pdb

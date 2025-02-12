@@ -49,6 +49,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.lblModalidad = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lblUtilidad = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -277,12 +279,38 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(12, 116);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(201, 25);
+            this.label7.TabIndex = 33;
+            this.label7.Text = "UTILIDAD TOTAL:";
+            // 
+            // lblUtilidad
+            // 
+            this.lblUtilidad.AutoSize = true;
+            this.lblUtilidad.BackColor = System.Drawing.Color.Transparent;
+            this.lblUtilidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUtilidad.ForeColor = System.Drawing.Color.White;
+            this.lblUtilidad.Location = new System.Drawing.Point(219, 116);
+            this.lblUtilidad.Name = "lblUtilidad";
+            this.lblUtilidad.Size = new System.Drawing.Size(25, 25);
+            this.lblUtilidad.TabIndex = 34;
+            this.lblUtilidad.Text = "0";
+            // 
             // frmVentaDetallada
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(972, 608);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblUtilidad);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.lblModalidad);
@@ -328,5 +356,7 @@
         private System.Windows.Forms.Label label6;
         public System.Windows.Forms.Label lblModalidad;
         public System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label7;
+        public System.Windows.Forms.Label lblUtilidad;
     }
 }
