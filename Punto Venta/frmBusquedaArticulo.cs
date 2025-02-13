@@ -8,14 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
     public partial class frmBusquedaArticulo : Form
-    {
-        private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbDataAdapter da;
+    {      
 
         public string Id { get; set; }
         public string Nombre { get; set; }
@@ -29,12 +27,15 @@ namespace Punto_Venta
 
         private void frmBusquedaArticulo_Load(object sender, EventArgs e)
         {
-            ds = new DataSet();
-            conectar.Open();
-            da = new OleDbDataAdapter("select * from articulos;", conectar);
-            da.Fill(ds, "Id");
-            dataGridView1.DataSource = ds.Tables["Id"];
-            dataGridView1.Columns[0].Visible = false;
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos;", conectar))
+            {
+                conectar.Open();
+                DataSet ds = new DataSet();
+                da.Fill(ds, "Id");
+                dataGridView1.DataSource = ds.Tables["Id"];
+                dataGridView1.Columns[0].Visible = false;
+            }
         }
 
 
@@ -50,20 +51,27 @@ namespace Punto_Venta
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text == "")
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
+                conectar.Open();
+                DataSet ds = new DataSet();
 
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from articulos order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dataGridView1.DataSource = ds.Tables["Id"];
-                dataGridView1.Columns[0].Visible = false;
-            }
-            else
-            {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from articulos where Nombre LIKE '%" + textBox1.Text + "%';", conectar);
-                da.Fill(ds, "Id");
+                if (string.IsNullOrEmpty(textBox1.Text))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos ORDER BY Nombre;", conectar))
+                    {
+                        da.Fill(ds, "Id");
+                    }
+                }
+                else
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos WHERE Nombre LIKE @Nombre;", conectar))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@Nombre", $"%{textBox1.Text}%");
+                        da.Fill(ds, "Id");
+                    }
+                }
+
                 dataGridView1.DataSource = ds.Tables["Id"];
                 dataGridView1.Columns[0].Visible = false;
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,66 +14,84 @@ namespace Punto_Venta
 {
     public partial class frmAgregarCategorias : Form
     {
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbCommand cmd;
         public string id="";
         string color="bab8b8";
         public string tipo;
         public frmAgregarCategorias()
         {
             InitializeComponent();
-            conectar.Open();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (txtNombre.Text == "")
+            if (string.IsNullOrEmpty(txtNombre.Text))
             {
-                MessageBox.Show("Nombre invalido", "Agregar "+tipo, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Nombre inválido", $"Agregar {tipo}", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 bool existe = false;
-                cmd = new OleDbCommand("select Nombre from "+ tipo +" where Nombre='" + txtNombre.Text + "';", conectar);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
+
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    existe = true;
-                }
-                if (id!="")
-                {
-                    string letra;
-                    if (radioButton1.Checked)
-                        letra = "Black";
+                    conectar.Open();
+
+                    using (SqlCommand cmd = new SqlCommand($"SELECT Nombre FROM {tipo} WHERE Nombre = @Nombre;", conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                existe = true;
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(id))
+                    {
+                        string letra = radioButton1.Checked ? "Black" : "White";
+
+                        using (SqlCommand cmd = new SqlCommand($"UPDATE {tipo} SET Nombre = @Nombre, Color = @Color, Letra = @Letra WHERE Id{tipo.Substring(0, tipo.Length-1)} = @Id;", conectar))
+                        {
+                            cmd.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                            cmd.Parameters.AddWithValue("@Color", color);
+                            cmd.Parameters.AddWithValue("@Letra", letra);
+                            cmd.Parameters.AddWithValue("@Id", id);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        MessageBox.Show($"Se ha editado la {tipo} con éxito", "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        frmCategorias apart = new frmCategorias();
+                        apart.tipo = tipo;
+                        apart.Show();
+                        this.Close();
+                    }
+                    else if (existe)
+                    {
+                        MessageBox.Show($"Existe una {tipo} similar, favor de verificar", $"Agregar {tipo}", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     else
-                        letra = "White";
-                    cmd = new OleDbCommand("update "+tipo+" set Nombre='" + txtNombre.Text + "', Color='" + color + "', Letra='" + letra + "' where Id=" + id + ";", conectar);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Se ha editado la "+tipo+" con exito", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    frmCategorias apart = new frmCategorias();
-                    apart.tipo = tipo;
-                    apart.Show();
-                    this.Close();
+                    {
+                        string letra = radioButton1.Checked ? "Black" : "White";
+
+                        using (SqlCommand cmd = new SqlCommand($"INSERT INTO {tipo} (Nombre, Color, Letra) VALUES (@Nombre, @Color, @Letra);", conectar))
+                        {
+                            cmd.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                            cmd.Parameters.AddWithValue("@Color", color);
+                            cmd.Parameters.AddWithValue("@Letra", letra);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        MessageBox.Show($"Se ha creado la {tipo} con éxito", "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        frmCategorias apart = new frmCategorias();
+                        apart.tipo = tipo;
+                        apart.Show();
+                        this.Close();
+                    }
                 }
-                else if (existe)
-                {
-                    MessageBox.Show("Existe una "+tipo+" similar, favor de verificar", "Agregar Categoria", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    string letra;
-                    if (radioButton1.Checked)
-                        letra = "Black";
-                    else
-                        letra = "White";
-                    cmd = new OleDbCommand("insert into " + tipo + "(Nombre,Color,Letra) Values('" + txtNombre.Text + "','" + color + "','" + letra + "');", conectar);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Se ha creado la " + tipo + " con exito", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    frmCategorias apart = new frmCategorias();
-                    apart.tipo = tipo;
-                    apart.Show();
-                    this.Close();
-                }
+
+               
             }
         }
         private void button2_Click(object sender, EventArgs e)

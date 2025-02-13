@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Data.OleDb;
 using System.IO;
+using System.Data.SqlClient;
+using System.Reflection;
 
 namespace Punto_Venta
 {
@@ -19,7 +21,6 @@ namespace Punto_Venta
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
         OleDbDataAdapter da;
         OleDbCommand cmd2;
-        OleDbCommand cmd;
         
         public frmPlatillos()
         {
@@ -29,55 +30,36 @@ namespace Punto_Venta
 
         private void frmPlatillos_Load(object sender, EventArgs e)
         {
-            if (checkBox1.Checked)
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                textBox1.Enabled = false;
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select id,Nombre,Precio,Categoria,Comanda, Subcategoria from Inventario where Categoria='" + comboBox2.Text + "' order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-            }
-            else
-            {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select id,Nombre,Precio,Categoria,Comanda,Subcategoria from inventario ORDER BY Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-            }
-            dgvInventario.Columns[0].Visible = false;
+                DataSet ds = new DataSet();
+                using (SqlDataAdapter da = new SqlDataAdapter("SELECT A.IdInventario, A.Nombre, A.Precio, B.Nombre AS Categoria, A.Comanda, C.Nombre AS Subcategoria " +
+                    " FROM Inventario A  " +
+                    " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
+                    " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria "+
+                    "ORDER BY A.Nombre;", conectar))
+                {
+                    da.Fill(ds, "Id");
+                    dgvInventario.DataSource = ds.Tables["Id"];
+                    dgvInventario.Columns[0].Visible = false;
+                }
 
-            //dgvInventario.Columns[3].Visible = false;
-            //dgvInventario.Columns[4].Visible = false;
-            //dgvInventario.Columns[5].Visible = false;
-            //dgvInventario.Columns[6].Visible = false;
-            //dgvInventario.Columns[7].Visible = false;
-            //dgvInventario.Columns[8].Visible = false;
-            //dgvInventario.Columns[9].Visible = false;
-            //dgvInventario.Columns[10].Visible = false;
-            //dgvInventario.Columns[11].Visible = false;
-            //dgvInventario.Columns[12].Visible = false;
-            //dgvInventario.Columns[13].Visible = false;
-            //dgvInventario.Columns[14].Visible = false;
-            //dgvInventario.Columns[15].Visible = false;
-            //dgvInventario.Columns[16].Visible = false;
-            //dgvInventario.Columns[17].Visible = false;
-            //dgvInventario.Columns[18].Visible = false;
-            //dgvInventario.Columns[19].Visible = false;
-            //dgvInventario.Columns[20].Visible = false;
-            //dgvInventario.Columns[21].Visible = false;
-            //dgvInventario.Columns[22].Visible = false;
-            DataTable dt = new DataTable();
-            cmd = new OleDbCommand("SELECT * from Categorias;", conectar);
-            da = new OleDbDataAdapter(cmd);
-            da.Fill(dt);
-            comboBox2.DisplayMember = "Nombre";
-            comboBox2.ValueMember = "Id";
-            comboBox2.DataSource = dt;     
+                // Llenar el ComboBox
+                DataTable dt = new DataTable();
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM Categorias;", conectar))
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(dt);
+                    comboBox2.DisplayMember = "Nombre";
+                    comboBox2.ValueMember = "IdCategoria";
+                    comboBox2.DataSource = dt;
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             frmAgregarPlatillo platillo = new frmAgregarPlatillo();
-            platillo.lista = comboBox2.Text;
             platillo.Text = "Agregar Platillo";
             platillo.Show();
             this.Close();
@@ -253,180 +235,100 @@ namespace Punto_Venta
 
         private void button3_Click(object sender, EventArgs e)
         {
-            cmd2 = new OleDbCommand("delete from inventario where Id=" + dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString() + ";", conectar);
-            cmd2.ExecuteNonQuery();
-            //cmd = new MySqlCommand("delete from inventario where Id='" + dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString() + "';", Conexion.obtenerConexion());
-            //cmd.ExecuteNonQuery();
-            MessageBox.Show("Se ha eliminado con exito", "Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ds = new DataSet();
-            da = new OleDbDataAdapter("select id,Nombre,Precio,Categoria,Comanda from inventario ORDER BY Nombre;", conectar);
-            da.Fill(ds, "Id");
-            dgvInventario.DataSource = ds.Tables["Id"];
-            //dgvInventario.Columns[0].Visible = false;
-            //dgvInventario.Columns[3].Visible = false;
-            //dgvInventario.Columns[4].Visible = false;
-            //dgvInventario.Columns[5].Visible = false;
-            //dgvInventario.Columns[6].Visible = false;
-            //dgvInventario.Columns[7].Visible = false;
-            //dgvInventario.Columns[8].Visible = false;
-            //dgvInventario.Columns[9].Visible = false;
-            //dgvInventario.Columns[10].Visible = false;
-            //dgvInventario.Columns[11].Visible = false;
-            //dgvInventario.Columns[12].Visible = false;
-            //dgvInventario.Columns[13].Visible = false;
-            //dgvInventario.Columns[14].Visible = false;
-            //dgvInventario.Columns[15].Visible = false;
-            //dgvInventario.Columns[16].Visible = false;
-            //dgvInventario.Columns[17].Visible = false;
-            //dgvInventario.Columns[18].Visible = false;
-            //dgvInventario.Columns[19].Visible = false;
-            //dgvInventario.Columns[20].Visible = false;
-            //dgvInventario.Columns[21].Visible = false;
-            //dgvInventario.Columns[22].Visible = false;
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
+
+                using (SqlCommand cmd2 = new SqlCommand("DELETE FROM INVENTARIO WHERE IdInventario = @Id;", conectar))
+                {
+                    cmd2.Parameters.AddWithValue("@Id", dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString());
+                    cmd2.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("Se ha eliminado con éxito", "Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                using (SqlDataAdapter da = new SqlDataAdapter("SELECT A.IdInventario, A.Nombre, A.Precio, B.Nombre AS Categoria, A.Comanda, C.Nombre AS Subcategoria " +
+                    " FROM Inventario A  " +
+                    " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
+                    " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
+                    "ORDER BY A.Nombre;", conectar))
+                {
+                    DataSet ds = new DataSet();
+                    da.Fill(ds, "Id");
+                    dgvInventario.DataSource = ds.Tables["Id"];
+                }
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text == "")
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select id,Nombre,Precio,Categoria,Comanda,Subcategoria from inventario ORDER BY Nombre;", conectar);
-                da.Fill(ds, "Id");
+                conectar.Open();
+
+                DataSet ds = new DataSet();
+
+                if (string.IsNullOrEmpty(textBox1.Text))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT A.IdInventario, A.Nombre, A.Precio, B.Nombre AS Categoria, A.Comanda, C.Nombre AS Subcategoria " +
+                    " FROM Inventario A  " +
+                    " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
+                    " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
+                    "ORDER BY A.Nombre;", conectar))
+                    {
+                        da.Fill(ds, "Id");
+                    }
+                }
+                else
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT A.IdInventario, A.Nombre, A.Precio, B.Nombre AS Categoria, A.Comanda, C.Nombre AS Subcategoria " +
+                    " FROM Inventario A  " +
+                    " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
+                    " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
+                    " WHERE A.Nombre LIKE @Nombre ORDER BY A.Nombre;", conectar))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@Nombre", $"%{textBox1.Text}%");
+                        da.Fill(ds, "Id");
+                    }
+                }
+
                 dgvInventario.DataSource = ds.Tables["Id"];
-                //dgvInventario.Columns[0].Visible = false;
-                //dgvInventario.Columns[3].Visible = false;
-                //dgvInventario.Columns[4].Visible = false;
-                //dgvInventario.Columns[5].Visible = false;
-                //dgvInventario.Columns[6].Visible = false;
-                //dgvInventario.Columns[7].Visible = false;
-                //dgvInventario.Columns[8].Visible = false;
-                //dgvInventario.Columns[9].Visible = false;
-                //dgvInventario.Columns[10].Visible = false;
-                //dgvInventario.Columns[11].Visible = false;
-                //dgvInventario.Columns[12].Visible = false;
-                //dgvInventario.Columns[13].Visible = false;
-                //dgvInventario.Columns[14].Visible = false;
-                //dgvInventario.Columns[15].Visible = false;
-                //dgvInventario.Columns[16].Visible = false;
-                //dgvInventario.Columns[17].Visible = false;
-                //dgvInventario.Columns[18].Visible = false;
-                //dgvInventario.Columns[19].Visible = false;
-                //dgvInventario.Columns[20].Visible = false;
-                //dgvInventario.Columns[21].Visible = false;
-                //dgvInventario.Columns[22].Visible = false;
-            }
-            else
-            {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select id,Nombre,Precio,Categoria,Comanda,Subcategoria from inventario where Nombre LIKE '%" + textBox1.Text + "%';", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                //dgvInventario.Columns[0].Visible = false;
-                //dgvInventario.Columns[3].Visible = false;
-                //dgvInventario.Columns[4].Visible = false;
-                //dgvInventario.Columns[5].Visible = false;
-                //dgvInventario.Columns[6].Visible = false;
-                //dgvInventario.Columns[7].Visible = false;
-                //dgvInventario.Columns[8].Visible = false;
-                //dgvInventario.Columns[9].Visible = false;
-                //dgvInventario.Columns[10].Visible = false;
-                //dgvInventario.Columns[11].Visible = false;
-                //dgvInventario.Columns[12].Visible = false;
-                //dgvInventario.Columns[13].Visible = false;
-                //dgvInventario.Columns[14].Visible = false;
-                //dgvInventario.Columns[15].Visible = false;
-                //dgvInventario.Columns[16].Visible = false;
-                //dgvInventario.Columns[17].Visible = false;
-                //dgvInventario.Columns[18].Visible = false;
-                //dgvInventario.Columns[19].Visible = false;
-                //dgvInventario.Columns[20].Visible = false;
-                //dgvInventario.Columns[21].Visible = false;
-                //dgvInventario.Columns[22].Visible = false;
             }
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-        }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked == true)
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                textBox1.Enabled = false;
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select id,Nombre,Precio,Categoria,Comanda,Subcategoria from Inventario where Categoria='" + comboBox2.Text + "' order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-            //    dgvInventario.Columns[0].Visible = false;
-            //    dgvInventario.Columns[3].Visible = false;
-            //    dgvInventario.Columns[4].Visible = false;
-            //    dgvInventario.Columns[5].Visible = false;
-            //    dgvInventario.Columns[6].Visible = false;
-            //    dgvInventario.Columns[7].Visible = false;
-            //    dgvInventario.Columns[8].Visible = false;
-            //    dgvInventario.Columns[9].Visible = false;
-            //    dgvInventario.Columns[10].Visible = false;
-            //    dgvInventario.Columns[11].Visible = false;
-            //    dgvInventario.Columns[12].Visible = false;
-            //    dgvInventario.Columns[13].Visible = false;
-            //    dgvInventario.Columns[14].Visible = false;
-            //    dgvInventario.Columns[15].Visible = false;
-            //    dgvInventario.Columns[16].Visible = false;
-            //    dgvInventario.Columns[17].Visible = false;
-            //    dgvInventario.Columns[18].Visible = false;
-            //    dgvInventario.Columns[19].Visible = false;
-            //    dgvInventario.Columns[20].Visible = false;
-            //    dgvInventario.Columns[21].Visible = false;
-            //    dgvInventario.Columns[22].Visible = false;
-            }
-            else
-            {
-                textBox1.Enabled = true;
-                comboBox2.SelectedIndex = 0;
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select id,Nombre,Precio,Categoria,Comanda,Subcategoria from Inventario order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                //dgvInventario.Columns[0].Visible = false;
-                //dgvInventario.Columns[3].Visible = false;
-                //dgvInventario.Columns[4].Visible = false;
-                //dgvInventario.Columns[5].Visible = false;
-                //dgvInventario.Columns[6].Visible = false;
-                //dgvInventario.Columns[7].Visible = false;
-                //dgvInventario.Columns[8].Visible = false;
-                //dgvInventario.Columns[9].Visible = false;
-                //dgvInventario.Columns[10].Visible = false;
-                //dgvInventario.Columns[11].Visible = false;
-                //dgvInventario.Columns[12].Visible = false;
-                //dgvInventario.Columns[13].Visible = false;
-                //dgvInventario.Columns[14].Visible = false;
-                //dgvInventario.Columns[15].Visible = false;
-                //dgvInventario.Columns[16].Visible = false;
-                //dgvInventario.Columns[17].Visible = false;
-                //dgvInventario.Columns[18].Visible = false;
-                //dgvInventario.Columns[19].Visible = false;
-                //dgvInventario.Columns[20].Visible = false;
-                //dgvInventario.Columns[21].Visible = false;
-                //dgvInventario.Columns[22].Visible = false;
-            }
-        }
+                conectar.Open();
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (checkBox1.Checked == true)
-            {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select id,Nombre,Precio,Categoria,Comanda,Subcategoria from Inventario where Categoria='" + comboBox2.Text + "' order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                dgvInventario.Columns[0].Visible = false;
-            }
-            else
-            {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select id,Nombre,Precio,Categoria,Comanda,Subcategoria from Inventario order by Nombre;", conectar);
-                da.Fill(ds, "Id");
+                DataSet ds = new DataSet();
+
+                if (checkBox1.Checked)
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT A.IdInventario, A.Nombre, A.Precio, B.Nombre AS Categoria, A.Comanda, C.Nombre AS Subcategoria " +
+                    " FROM Inventario A  " +
+                    " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
+                    " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
+                    " WHERE B.IdCategoria = @Categoria ORDER BY Nombre;", conectar))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@Categoria", comboBox2.Text);
+                        da.Fill(ds, "Id");
+                    }
+                }
+                else
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT A.IdInventario, A.Nombre, A.Precio, B.Nombre AS Categoria, A.Comanda, C.Nombre AS Subcategoria " +
+                     " FROM Inventario A  " +
+                     " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
+                     " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
+                     "ORDER BY A.Nombre;", conectar))
+                    {
+                        da.Fill(ds, "Id");
+                    }
+                }
+
                 dgvInventario.DataSource = ds.Tables["Id"];
                 dgvInventario.Columns[0].Visible = false;
             }
@@ -437,11 +339,6 @@ namespace Punto_Venta
             frmGastos gas = new frmGastos();
             gas.Show();
             this.Close();
-        }
-
-        private void dgvInventario_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }

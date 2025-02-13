@@ -88,7 +88,6 @@
             this.dgvInventario.ReadOnly = true;
             this.dgvInventario.Size = new System.Drawing.Size(654, 516);
             this.dgvInventario.TabIndex = 6;
-            this.dgvInventario.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInventario_CellContentClick);
             // 
             // label1
             // 
@@ -148,7 +147,6 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(188, 32);
             this.comboBox2.TabIndex = 17;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -160,7 +158,6 @@
             this.label2.Size = new System.Drawing.Size(86, 24);
             this.label2.TabIndex = 16;
             this.label2.Text = "Filtrado:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // button7
             // 

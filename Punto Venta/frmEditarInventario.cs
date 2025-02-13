@@ -8,15 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
     public partial class frmEditarInventario : Form
     {
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbCommand cmd;
-        public string lista = "";
-        OleDbDataAdapter da;
         public string origen;
         public frmEditarInventario()
         {
@@ -25,11 +22,29 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
-            conectar.Open();
-            cmd = new OleDbCommand("UPDATE articulos set Nombre='" + txtProducto.Text + "', Cantidad='" + txtCantidad.Text + "', Medida='" + comboBox1.Text + "', Origen='" + comboBox2.Text + "', precio='"+txtPrecio.Text+"', limite='"+txtLimite.Text+"' Where id=" + txtID.Text + ";", conectar);
-            cmd.ExecuteNonQuery();
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
+
+                // Usar parámetros para evitar la inyección SQL
+                string query = "UPDATE Productos SET Nombre=@Nombre, Cantidad=@Cantidad, Medida=@Medida, IdOrigen=@Origen, precio=@precio, limite=@limite WHERE IdProducto=@id;";
+
+                using (SqlCommand cmd = new SqlCommand(query, conectar))
+                {
+                    cmd.Parameters.AddWithValue("@Nombre", txtProducto.Text);
+                    cmd.Parameters.AddWithValue("@Cantidad", txtCantidad.Text);
+                    cmd.Parameters.AddWithValue("@Medida", comboBox1.Text);
+                    cmd.Parameters.AddWithValue("@Origen", comboBox2.SelectedValue);
+                    cmd.Parameters.AddWithValue("@precio", txtPrecio.Text);
+                    cmd.Parameters.AddWithValue("@limite", txtLimite.Text);
+                    cmd.Parameters.AddWithValue("@id", txtID.Text);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
             MessageBox.Show("Se ha actualizado el producto correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            frmInventario invent = new frmInventario();            
+            frmInventario invent = new frmInventario();
             invent.Show();
             this.Close();
         }
@@ -37,13 +52,17 @@ namespace Punto_Venta
         private void frmEditarInventario_Load(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
-            cmd = new OleDbCommand("SELECT * from Origen;", conectar);
-            da = new OleDbDataAdapter(cmd);
-            da.Fill(dt);
+
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Origen;", conectar))
+            using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+            {
+                da.Fill(dt);
+            }
+
             comboBox2.DisplayMember = "Nombre";
-            comboBox2.ValueMember = "Nombre";
+            comboBox2.ValueMember = "IdOrigen";
             comboBox2.DataSource = dt;
-            comboBox2.Text = origen;
         }
 
         private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)

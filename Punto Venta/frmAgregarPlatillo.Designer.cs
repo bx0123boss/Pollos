@@ -263,7 +263,6 @@
             this.txtCantidad10.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad10.TabIndex = 6;
             this.txtCantidad10.Text = "0";
-            this.txtCantidad10.Click += new System.EventHandler(this.txtCantidad10_Click);
             this.txtCantidad10.TextChanged += new System.EventHandler(this.txtCantidad10_TextChanged);
             this.txtCantidad10.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad7_KeyPress);
             // 
@@ -367,7 +366,6 @@
             this.txtCantidad8.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad8.TabIndex = 6;
             this.txtCantidad8.Text = "0";
-            this.txtCantidad8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtCantidad8_MouseClick);
             this.txtCantidad8.TextChanged += new System.EventHandler(this.txtCantidad8_TextChanged);
             this.txtCantidad8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad7_KeyPress);
             // 
@@ -481,7 +479,6 @@
             this.txtCantidad5.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad5.TabIndex = 6;
             this.txtCantidad5.Text = "0";
-            this.txtCantidad5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtCantidad5_MouseClick);
             this.txtCantidad5.TextChanged += new System.EventHandler(this.txtCantidad5_TextChanged);
             this.txtCantidad5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad5_KeyPress);
             // 
@@ -606,7 +603,6 @@
             this.txtCantidad9.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad9.TabIndex = 6;
             this.txtCantidad9.Text = "0";
-            this.txtCantidad9.Click += new System.EventHandler(this.txtCantidad9_Click);
             this.txtCantidad9.TextChanged += new System.EventHandler(this.txtCantidad9_TextChanged);
             this.txtCantidad9.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad7_KeyPress);
             // 
@@ -631,7 +627,6 @@
             this.button9.Text = "Buscar";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
-            this.button9.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button9_MouseClick);
             // 
             // groupBox8
             // 
@@ -721,7 +716,6 @@
             this.txtCantidad7.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad7.TabIndex = 6;
             this.txtCantidad7.Text = "0";
-            this.txtCantidad7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtCantidad7_MouseClick);
             this.txtCantidad7.TextChanged += new System.EventHandler(this.txtCantidad7_TextChanged);
             this.txtCantidad7.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad7_KeyPress);
             // 
@@ -835,7 +829,6 @@
             this.txtCantidad6.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad6.TabIndex = 6;
             this.txtCantidad6.Text = "0";
-            this.txtCantidad6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtCantidad6_MouseClick);
             this.txtCantidad6.TextChanged += new System.EventHandler(this.txtCantidad6_TextChanged);
             this.txtCantidad6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad6_KeyPress);
             // 
@@ -949,7 +942,6 @@
             this.txtCantidad4.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad4.TabIndex = 6;
             this.txtCantidad4.Text = "0";
-            this.txtCantidad4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtCantidad4_MouseClick);
             this.txtCantidad4.TextChanged += new System.EventHandler(this.txtCantidad4_TextChanged);
             this.txtCantidad4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad4_KeyPress);
             // 
@@ -1069,7 +1061,6 @@
             this.txtCantidad3.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad3.TabIndex = 6;
             this.txtCantidad3.Text = "0";
-            this.txtCantidad3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtCantidad3_MouseClick);
             this.txtCantidad3.TextChanged += new System.EventHandler(this.txtCantidad3_TextChanged);
             this.txtCantidad3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad3_KeyPress);
             // 
@@ -1191,7 +1182,6 @@
             this.txtCantidad2.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad2.TabIndex = 6;
             this.txtCantidad2.Text = "0";
-            this.txtCantidad2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtCantidad2_MouseClick);
             this.txtCantidad2.TextChanged += new System.EventHandler(this.txtCantidad2_TextChanged);
             this.txtCantidad2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad2_KeyPress);
             // 
@@ -1312,7 +1302,6 @@
             this.txtCantidad.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad.TabIndex = 6;
             this.txtCantidad.Text = "0";
-            this.txtCantidad.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtCantidad_MouseClick);
             this.txtCantidad.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
             this.txtCantidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad_KeyPress);
             // 

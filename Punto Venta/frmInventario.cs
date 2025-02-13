@@ -28,34 +28,20 @@ namespace Punto_Venta
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
-                if (checkBox1.Checked)
+                DataSet ds = new DataSet();
+                using (SqlDataAdapter da = new SqlDataAdapter(
+                    "SELECT A.IdProducto, A.Nombre, A.Cantidad, A.Medida, B.Nombre AS Origen, A.Precio, A.Limite " +
+                    "FROM PRODUCTOS A " +
+                    "INNER JOIN ORIGEN B ON A.IdOrigen = B.IdOrigen ORDER BY NOMBRE;",
+                    conectar))
                 {
-                    DataSet ds = new DataSet();
-                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos WHERE IdOrigen = @Origen ORDER BY Nombre;", conectar))
-                    {
-                        da.SelectCommand.Parameters.AddWithValue("@Origen", cmbOrigen.SelectedValue);
-                        da.Fill(ds, "Productos");
-                    }
-                    dgvInventario.DataSource = ds.Tables["Productos"];
-                    if (dgvInventario.Columns.Count > 0)
-                    {
-                        dgvInventario.Columns[0].Visible = false;
-                    }
+                    da.Fill(ds, "Productos");
                 }
-                else
+                dgvInventario.DataSource = ds.Tables["Productos"];
+                if (dgvInventario.Columns.Count > 0)
                 {
-                    DataSet ds = new DataSet();
-                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos ORDER BY Nombre;", conectar))
-                    {
-                        da.Fill(ds, "Productos");
-                    }
-                    dgvInventario.DataSource = ds.Tables["Productos"];
-                    if (dgvInventario.Columns.Count > 0)
-                    {
-                        dgvInventario.Columns[0].Visible = false;
-                    }
+                    dgvInventario.Columns[0].Visible = false;
                 }
-
                 System.Data.DataTable dt = new System.Data.DataTable();
                 using (SqlCommand cmd = new SqlCommand("SELECT * FROM Origen;", conectar))
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
@@ -78,7 +64,6 @@ namespace Punto_Venta
         private void button1_Click(object sender, EventArgs e)
         {
             frmAgregarInventario add = new frmAgregarInventario();
-            add.lista = cmbOrigen.SelectedValue.ToString();
             add.Show();
             this.Close();
         }
@@ -86,7 +71,6 @@ namespace Punto_Venta
         private void button2_Click(object sender, EventArgs e)
         {
             frmEditarInventario edita = new frmEditarInventario();
-            edita.lista = cmbOrigen.SelectedValue.ToString();
             edita.txtID.Text = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtProducto.Text = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtCantidad.Text = dgvInventario[2, dgvInventario.CurrentRow.Index].Value.ToString();
@@ -100,7 +84,7 @@ namespace Punto_Venta
 
         private void button3_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("¿Estás seguro de eliminar el artículo?", "Alto!", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("¿Estás seguro de eliminar el Producto?", "Alto!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dialogResult == DialogResult.Yes)
             {
                 using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
@@ -112,10 +96,14 @@ namespace Punto_Venta
                         cmd.ExecuteNonQuery();
                     }
 
-                    MessageBox.Show("Se ha eliminado el Productos con éxito", "Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Se ha eliminado el Producto con éxito", "Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     DataSet ds = new DataSet();
-                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos ORDER BY Nombre;", conectar))
+                    using (SqlDataAdapter da = new SqlDataAdapter(
+                        "SELECT A.IdProducto, A.Nombre, A.Cantidad, A.Medida, B.Nombre AS Origen, A.Precio, A.Limite " +
+                        "FROM PRODUCTOS A " +
+                        "INNER JOIN ORIGEN B ON A.IdOrigen = B.IdOrigen ORDER BY NOMBRE;",
+                        conectar))
                     {
                         da.Fill(ds, "Productos");
                     }
@@ -144,7 +132,7 @@ namespace Punto_Venta
         {
             frmPlatillos platillo = new frmPlatillos();
             platillo.Show();
-            this.Close();
+            //this.Close();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -166,7 +154,11 @@ namespace Punto_Venta
                 if (textBox1.Text == "")
                 {
                     DataSet ds = new DataSet();
-                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos ORDER BY Nombre;", conectar))
+                    using (SqlDataAdapter da = new SqlDataAdapter(
+                     "SELECT A.IdProducto, A.Nombre, A.Cantidad, A.Medida, B.Nombre AS Origen, A.Precio, A.Limite " +
+                     "FROM PRODUCTOS A " +
+                     "INNER JOIN ORIGEN B ON A.IdOrigen = B.IdOrigen ORDER BY NOMBRE;",
+                     conectar))
                     {
                         da.Fill(ds, "Productos");
                     }
@@ -179,7 +171,11 @@ namespace Punto_Venta
                 else
                 {
                     DataSet ds = new DataSet();
-                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos WHERE Nombre LIKE @Nombre;", conectar))
+                    using (SqlDataAdapter da = new SqlDataAdapter(
+                        "SELECT A.IdProducto, A.Nombre, A.Cantidad, A.Medida, B.Nombre AS Origen, A.Precio, A.Limite " +
+                        "FROM PRODUCTOS A " +
+                        "INNER JOIN ORIGEN B ON A.IdOrigen = B.IdOrigen WHERE A.Nombre LIKE @Nombre ORDER BY NOMBRE;",
+                    conectar))
                     {
                         da.SelectCommand.Parameters.AddWithValue("@Nombre", "%" + textBox1.Text + "%");
                         da.Fill(ds, "Productos");
@@ -202,7 +198,10 @@ namespace Punto_Venta
                 {
                     textBox1.Enabled = false;
                     DataSet ds = new DataSet();
-                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos WHERE IdOrigen = @Origen ORDER BY Nombre;", conectar))
+                    using (SqlDataAdapter da = new SqlDataAdapter(
+                     "SELECT A.IdProducto, A.Nombre, A.Cantidad, A.Medida, B.Nombre AS Origen, A.Precio, A.Limite " +
+                     "FROM PRODUCTOS A " +
+                     "INNER JOIN ORIGEN B ON A.IdOrigen = B.IdOrigen WHERE B.IdOrigen = @Origen ORDER BY Nombre;", conectar))
                     {
                         da.SelectCommand.Parameters.AddWithValue("@Origen", cmbOrigen.SelectedValue);
                         da.Fill(ds, "Productos");
@@ -217,7 +216,11 @@ namespace Punto_Venta
                 {
                     textBox1.Enabled = true;
                     DataSet ds = new DataSet();
-                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos ORDER BY Nombre;", conectar))
+                    using (SqlDataAdapter da = new SqlDataAdapter(
+                      "SELECT A.IdProducto, A.Nombre, A.Cantidad, A.Medida, B.Nombre AS Origen, A.Precio, A.Limite " +
+                      "FROM PRODUCTOS A " +
+                      "INNER JOIN ORIGEN B ON A.IdOrigen = B.IdOrigen ORDER BY NOMBRE;",
+                      conectar))
                     {
                         da.Fill(ds, "Productos");
                     }
@@ -237,8 +240,12 @@ namespace Punto_Venta
                 conectar.Open();
                 if (checkBox1.Checked)
                 {
+                    textBox1.Enabled = false;
                     DataSet ds = new DataSet();
-                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos WHERE IdOrigen = @Origen ORDER BY Nombre;", conectar))
+                    using (SqlDataAdapter da = new SqlDataAdapter(
+                     "SELECT A.IdProducto, A.Nombre, A.Cantidad, A.Medida, B.Nombre AS Origen, A.Precio, A.Limite " +
+                     "FROM PRODUCTOS A " +
+                     "INNER JOIN ORIGEN B ON A.IdOrigen = B.IdOrigen WHERE B.IdOrigen = @Origen ORDER BY Nombre;", conectar))
                     {
                         da.SelectCommand.Parameters.AddWithValue("@Origen", cmbOrigen.SelectedValue);
                         da.Fill(ds, "Productos");
@@ -251,8 +258,13 @@ namespace Punto_Venta
                 }
                 else
                 {
+                    textBox1.Enabled = true;
                     DataSet ds = new DataSet();
-                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos ORDER BY Nombre;", conectar))
+                    using (SqlDataAdapter da = new SqlDataAdapter(
+                      "SELECT A.IdProducto, A.Nombre, A.Cantidad, A.Medida, B.Nombre AS Origen, A.Precio, A.Limite " +
+                      "FROM PRODUCTOS A " +
+                      "INNER JOIN ORIGEN B ON A.IdOrigen = B.IdOrigen ORDER BY NOMBRE;",
+                      conectar))
                     {
                         da.Fill(ds, "Productos");
                     }
@@ -277,7 +289,6 @@ namespace Punto_Venta
             frmCategorias cat = new frmCategorias();
             cat.tipo = "Categorias";
             cat.Show();
-            this.Close();
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -333,9 +344,8 @@ namespace Punto_Venta
         private void button13_Click(object sender, EventArgs e)
         {
             frmCategorias cat = new frmCategorias();
-            cat.tipo = "Subcategoria";
+            cat.tipo = "Subcategorias";
             cat.Show();
-            this.Close();
         }
     }
 }

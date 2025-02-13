@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -25,37 +26,56 @@ namespace Punto_Venta
         {
             if (txtPass.Text == txtPass2.Text)
             {
-                
                 bool existe = false;
-                cmd = new OleDbCommand("select Usuario from Usuarios where Usuario='" + txtNombre.Text + "';", conectar);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    existe = true;
-                }
 
-                cmd = new OleDbCommand("select Usuario from Usuarios where Contraseña='" + txtPass.Text + "';", conectar);
-                reader = cmd.ExecuteReader();
-                if (reader.Read())
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    existe = true;
-                }
-                if (existe)
-                {
-                    MessageBox.Show("Existe un usuario similar, favor de verificar", "Agregar Usuario", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    cmd = new OleDbCommand("insert into Usuarios(Usuario,Contraseña,TipoUsuario,Ventas,Mesas) Values('" + txtNombre.Text + "','" + txtPass.Text + "','" + txtTipo.Text + "','0','0');", conectar);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("¡Se ha agregado al usuario con exito!", "Agregar Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    conectar.Close();
-                    this.Close();
+                    conectar.Open();
+                    using (SqlCommand cmd = new SqlCommand("SELECT Usuario FROM Usuarios WHERE Usuario = @Usuario;", conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Usuario", txtNombre.Text);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                existe = true;
+                            }
+                        }
+                    }
+                    using (SqlCommand cmd = new SqlCommand("SELECT Usuario FROM Usuarios WHERE Contraseña = @Contraseña;", conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Contraseña", txtPass.Text);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                existe = true;
+                            }
+                        }
+                    }
+
+                    if (existe)
+                    {
+                        MessageBox.Show("Existe un usuario similar, favor de verificar", "Agregar Usuario", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        using (SqlCommand cmd = new SqlCommand("INSERT INTO Usuarios (Usuario, Contraseña, TipoUsuario, Ventas, Mesas) VALUES (@Usuario, @Contraseña, @TipoUsuario, '0', '0');", conectar))
+                        {
+                            cmd.Parameters.AddWithValue("@Usuario", txtNombre.Text);
+                            cmd.Parameters.AddWithValue("@Contraseña", txtPass.Text);
+                            cmd.Parameters.AddWithValue("@TipoUsuario", txtTipo.Text);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        MessageBox.Show("¡Se ha agregado al usuario con éxito!", "Agregar Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
                 }
             }
             else
             {
-                MessageBox.Show("Las contraseñas no son identicas", "Agregar Usuario", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Las contraseñas no son idénticas", "Agregar Usuario", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtPass.Clear();
                 txtPass2.Clear();
                 txtPass.Focus();

@@ -1534,8 +1534,6 @@ C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Vent
 C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmIngreso.resources
 C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventario.resources
 C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmInventarioFisico.resources
-C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesa.resources
-C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesas.resources
 C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
 C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmOrigen.resources
 C:\Users\Brandon\Documents\Jaegersoft\ntm\Pollos\Punto Venta - Prueba\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources

@@ -243,6 +243,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmEditarInventario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Editar Inventario";
             this.Load += new System.EventHandler(this.frmEditarInventario_Load);
             this.ResumeLayout(false);

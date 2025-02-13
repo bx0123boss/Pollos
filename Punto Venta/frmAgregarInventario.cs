@@ -64,12 +64,7 @@ namespace Punto_Venta
 
                     // Abrir el formulario de inventario
                     frmInventario invent = new frmInventario();
-                    if (!string.IsNullOrEmpty(lista))
-                    {
-                        invent.checkBox1.Checked = true;
-                        invent.textBox1.Enabled = false;
-                        invent.cmbOrigen.Text = lista;
-                    }
+                   
                     invent.Show();
 
                     // Cerrar el formulario actual

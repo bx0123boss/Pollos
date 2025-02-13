@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.IO;
+using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
     public partial class frmAgregarPlatillo : Form
     {
-        public string lista = "";
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
         OleDbCommand cmd2;
         OleDbDataAdapter da;
@@ -193,25 +193,118 @@ namespace Punto_Venta
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string comanda = "";
-            if (checkBox1.Checked)            
-                comanda = "1";            
-            else
-                comanda = "0";
+            string comanda = checkBox1.Checked ? "1" : "0";
 
-            if (this.Text == "Agregar Platillo")
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                //obtenersumar();
-                cmd2 = new OleDbCommand("insert into Inventario(Nombre, Precio, idProducto1,CantidadProducto1,idProducto2,CantidadProducto2,idProducto3,CantidadProducto3,idProducto4,CantidadProducto4,idProducto5,CantidadProducto5,idProducto6,CantidadProducto6,idProducto7,CantidadProducto7,idProducto8,CantidadProducto8,idProducto9,CantidadProducto9,idProducto10,CantidadProducto10,Categoria,CostoTotal,Comanda,SubCategoria) values('" + txtNombre.Text + "'," + txtPrecio.Text + ",'" + idArticulo1 + "','" + txtCantidad.Text + "','" + idArticulo2 + "','" + txtCantidad2.Text + "','" + idArticulo3 + "','" + txtCantidad3.Text + "','" + idArticulo4 + "','" + txtCantidad4.Text + "','" + idArticulo5 + "','" + txtCantidad5.Text + "','" + idArticulo6 + "','" + txtCantidad6.Text + "','" + idArticulo7 + "','" + txtCantidad7.Text + "','" + idArticulo8 + "','" + txtCantidad8.Text + "','" + idArticulo9 + "','" + txtCantidad9.Text + "','" + idArticulo10 + "','" + txtCantidad10.Text + "','" + comboBox1.Text + "','" + lblTotal.Text + "','" + comanda + "','"+comboBox2.Text+"');", conectar);
-                cmd2.ExecuteNonQuery();
-                MessageBox.Show("Se ha agregado el platillo con exito", "AGREGADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
-            }
-            if (this.Text == "Editar Platillo")
-            {
-                cmd2 = new OleDbCommand("UPDATE Inventario set nombre='" + txtNombre.Text + "', Precio='" + txtPrecio.Text + "', idProducto1='" + idArticulo1 + "',CantidadProducto1='" + txtCantidad.Text + "', idProducto2='" + idArticulo2 + "',CantidadProducto2='" + txtCantidad2.Text + "', idProducto3='" + idArticulo3 + "',CantidadProducto3='" + txtCantidad3.Text + "', idProducto4='" + idArticulo4 + "',CantidadProducto4='" + txtCantidad4.Text + "', idProducto5='" + idArticulo5 + "',CantidadProducto5='" + txtCantidad5.Text + "', idProducto6='" + idArticulo6 + "',CantidadProducto6='" + txtCantidad6.Text + "', idProducto7='" + idArticulo7 + "',CantidadProducto7='" + txtCantidad7.Text + "', idProducto8='" + idArticulo8 + "',CantidadProducto8='" + txtCantidad8.Text + "', idProducto9='" + idArticulo9 + "',CantidadProducto9='" + txtCantidad9.Text + "', idProducto10='" + idArticulo10 + "',CantidadProducto10='" + txtCantidad10.Text + "',Categoria='" + comboBox1.Text + "', CostoTotal='" + lblTotal.Text + "' ,Comanda='" + comanda + "',SubCategoria='"+comboBox2.Text+"' Where Id=" + id + ";", conectar);
-                cmd2.ExecuteNonQuery();
-                MessageBox.Show("Se ha editado el platillo con exito", "EDITADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                conectar.Open();
+
+                if (this.Text == "Agregar Platillo")
+                {
+                    string query = @"
+            INSERT INTO Inventario (
+                Nombre, Precio, idProducto1, CantidadProducto1, idProducto2, CantidadProducto2, 
+                idProducto3, CantidadProducto3, idProducto4, CantidadProducto4, idProducto5, 
+                CantidadProducto5, idProducto6, CantidadProducto6, idProducto7, CantidadProducto7, 
+                idProducto8, CantidadProducto8, idProducto9, CantidadProducto9, idProducto10, 
+                CantidadProducto10, IdCategoria, CostoTotal, Comanda, IdSubCategoria
+            ) VALUES (
+                @Nombre, @Precio, @idProducto1, @CantidadProducto1, @idProducto2, @CantidadProducto2, 
+                @idProducto3, @CantidadProducto3, @idProducto4, @CantidadProducto4, @idProducto5, 
+                @CantidadProducto5, @idProducto6, @CantidadProducto6, @idProducto7, @CantidadProducto7, 
+                @idProducto8, @CantidadProducto8, @idProducto9, @CantidadProducto9, @idProducto10, 
+                @CantidadProducto10, @Categoria, @CostoTotal, @Comanda, @SubCategoria
+            );";
+                    MessageBox.Show(query);
+
+                    using (SqlCommand cmd2 = new SqlCommand(query, conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                        cmd2.Parameters.AddWithValue("@Precio", txtPrecio.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto1", idArticulo1);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto1", txtCantidad.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto2", idArticulo2);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto2", txtCantidad2.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto3", idArticulo3);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto3", txtCantidad3.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto4", idArticulo4);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto4", txtCantidad4.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto5", idArticulo5);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto5", txtCantidad5.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto6", idArticulo6);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto6", txtCantidad6.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto7", idArticulo7);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto7", txtCantidad7.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto8", idArticulo8);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto8", txtCantidad8.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto9", idArticulo9);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto9", txtCantidad9.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto10", idArticulo10);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto10", txtCantidad10.Text);
+                        cmd2.Parameters.AddWithValue("@Categoria", comboBox1.SelectedValue);
+                        cmd2.Parameters.AddWithValue("@CostoTotal", lblTotal.Text);
+                        cmd2.Parameters.AddWithValue("@Comanda", comanda);
+                        cmd2.Parameters.AddWithValue("@SubCategoria", comboBox2.SelectedValue);
+
+                        cmd2.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Se ha agregado el platillo con éxito", "AGREGADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+                else if (this.Text == "Editar Platillo")
+                {
+                    string query = @"
+            UPDATE Inventario SET 
+                Nombre = @Nombre, Precio = @Precio, idProducto1 = @idProducto1, 
+                CantidadProducto1 = @CantidadProducto1, idProducto2 = @idProducto2, 
+                CantidadProducto2 = @CantidadProducto2, idProducto3 = @idProducto3, 
+                CantidadProducto3 = @CantidadProducto3, idProducto4 = @idProducto4, 
+                CantidadProducto4 = @CantidadProducto4, idProducto5 = @idProducto5, 
+                CantidadProducto5 = @CantidadProducto5, idProducto6 = @idProducto6, 
+                CantidadProducto6 = @CantidadProducto6, idProducto7 = @idProducto7, 
+                CantidadProducto7 = @CantidadProducto7, idProducto8 = @idProducto8, 
+                CantidadProducto8 = @CantidadProducto8, idProducto9 = @idProducto9, 
+                CantidadProducto9 = @CantidadProducto9, idProducto10 = @idProducto10, 
+                CantidadProducto10 = @CantidadProducto10, IdCategoria = @Categoria, 
+                CostoTotal = @CostoTotal, Comanda = @Comanda, IdSubCategoria = @SubCategoria 
+            WHERE IdInventario = @Id;";
+
+                    using (SqlCommand cmd2 = new SqlCommand(query, conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                        cmd2.Parameters.AddWithValue("@Precio", txtPrecio.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto1", idArticulo1);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto1", txtCantidad.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto2", idArticulo2);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto2", txtCantidad2.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto3", idArticulo3);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto3", txtCantidad3.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto4", idArticulo4);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto4", txtCantidad4.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto5", idArticulo5);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto5", txtCantidad5.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto6", idArticulo6);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto6", txtCantidad6.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto7", idArticulo7);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto7", txtCantidad7.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto8", idArticulo8);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto8", txtCantidad8.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto9", idArticulo9);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto9", txtCantidad9.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto10", idArticulo10);
+                        cmd2.Parameters.AddWithValue("@CantidadProducto10", txtCantidad10.Text);
+                        cmd2.Parameters.AddWithValue("@Categoria", comboBox1.SelectedValue);
+                        cmd2.Parameters.AddWithValue("@CostoTotal", lblTotal.Text);
+                        cmd2.Parameters.AddWithValue("@Comanda", comanda);
+                        cmd2.Parameters.AddWithValue("@SubCategoria", comboBox2.SelectedValue);
+                        cmd2.Parameters.AddWithValue("@Id", id);
+
+                        cmd2.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show("Se ha editado el platillo con éxito", "EDITADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
         }
@@ -251,69 +344,34 @@ namespace Punto_Venta
 
         }
 
-        private void txtCantidad_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void txtCantidad2_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void txtCantidad3_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void txtCantidad4_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void txtCantidad5_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void txtCantidad6_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void txtCantidad7_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void txtCantidad8_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void button9_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void txtCantidad10_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void txtCantidad9_Click(object sender, EventArgs e)
-        {
-        }
 
         private void frmAgregarPlatillo_Load(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
-            cmd = new OleDbCommand("SELECT * from Categorias;", conectar);
-            da = new OleDbDataAdapter(cmd);
-            da.Fill(dt);
-            comboBox1.DisplayMember = "Nombre";
-            comboBox1.ValueMember = "Id";
-            comboBox1.DataSource = dt;
-            comboBox1.Text = cat1;
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
 
-            dt = new DataTable();
-            cmd = new OleDbCommand("SELECT * from SubCategoria;", conectar);
-            da = new OleDbDataAdapter(cmd);
-            da.Fill(dt);
-            comboBox2.DisplayMember = "Nombre";
-            comboBox2.ValueMember = "Id";
-            comboBox2.DataSource = dt;
-            comboBox2.Text = cat2;
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM Categorias;", conectar))
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    comboBox1.DisplayMember = "Nombre";
+                    comboBox1.ValueMember = "IdCategoria";
+                    comboBox1.DataSource = dt;
+                }
+
+                // Llenar comboBox2 con SubCategoria
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM SubCategoria;", conectar))
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    comboBox2.DisplayMember = "Nombre";
+                    comboBox2.ValueMember = "IdSubcategoria";
+                    comboBox2.DataSource = dt;
+                }
+            }
         }
 
         private void txtCantidad_TextChanged(object sender, EventArgs e)

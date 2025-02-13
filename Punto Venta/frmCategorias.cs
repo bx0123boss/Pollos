@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,6 @@ namespace Punto_Venta
     public partial class frmCategorias : Form
     {
         private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
         public string tipo;
         public frmCategorias()
         {
@@ -27,11 +25,15 @@ namespace Punto_Venta
         {
             this.Text = tipo;
             ds = new DataSet();
-            conectar.Open();
-            da = new OleDbDataAdapter("select * from "+tipo+";", conectar);
-            da.Fill(ds, "Id");
-            dataGridView1.DataSource = ds.Tables["Id"];
-            dataGridView1.Columns[0].Visible = false;
+
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            using (SqlDataAdapter da = new SqlDataAdapter($"SELECT * FROM {tipo};", conectar))
+            {
+                conectar.Open();
+                da.Fill(ds, "Id");
+                dataGridView1.DataSource = ds.Tables["Id"];
+                dataGridView1.Columns[0].Visible = false;
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -44,19 +46,34 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("¿Estas seguro de elimiar la Categoria?", "Alto!", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+
+            if (MessageBox.Show("¿Estás seguro de eliminar la Categoría?", "Alto!", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                cmd = new OleDbCommand("delete from Categorias where Id=" + dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString() + ";", conectar);
-                cmd.ExecuteNonQuery();
-                cmd = new OleDbCommand("update Inventario set Categoria='SIN CATEGORIA' where Categoria='" + dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString() + "';", conectar);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Se ha eliminado la " + tipo + " con exito", "ELIMINADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from " + tipo + ";", conectar);
-                da.Fill(ds, "Id");
-                dataGridView1.DataSource = ds.Tables["Id"];
-                dataGridView1.Columns[0].Visible = false;
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    conectar.Open();
+                    using (SqlCommand cmd = new SqlCommand($"DELETE FROM {tipo} WHERE Id{tipo.Substring(0, tipo.Length - 1)} = @IdCategoria;", conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@IdCategoria", dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString());
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand($"UPDATE Inventario SET Id{tipo.Substring(0, tipo.Length - 1)} = 0 WHERE Id{tipo.Substring(0, tipo.Length - 1)} = @IdCategoria;", conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@IdCategoria", dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString());
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show($"Se ha eliminado la {tipo} con éxito", "ELIMINADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    using (SqlDataAdapter da = new SqlDataAdapter($"SELECT * FROM {tipo};", conectar))
+                    {
+                        DataSet ds = new DataSet();
+                        da.Fill(ds, "Id");
+                        dataGridView1.DataSource = ds.Tables["Id"];
+                        dataGridView1.Columns[0].Visible = false;
+                    }
+                }
             }
         }
 
