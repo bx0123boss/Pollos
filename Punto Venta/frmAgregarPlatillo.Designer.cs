@@ -123,11 +123,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblPrecio1 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.lblMedida = new System.Windows.Forms.Label();
+            this.lblMedida1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.lblNombre = new System.Windows.Forms.Label();
-            this.txtCantidad = new System.Windows.Forms.TextBox();
+            this.lblNombre1 = new System.Windows.Forms.Label();
+            this.txtCantidad1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnArticulo1 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
@@ -161,7 +161,7 @@
             this.lblMedida9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMedida9.Location = new System.Drawing.Point(406, 50);
             this.lblMedida9.Name = "lblMedida9";
-            this.lblMedida9.Size = new System.Drawing.Size(90, 16);
+            this.lblMedida9.Size = new System.Drawing.Size(89, 16);
             this.lblMedida9.TabIndex = 9;
             this.lblMedida9.Text = "No Definido";
             // 
@@ -171,7 +171,7 @@
             this.lblMedida8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMedida8.Location = new System.Drawing.Point(406, 42);
             this.lblMedida8.Name = "lblMedida8";
-            this.lblMedida8.Size = new System.Drawing.Size(90, 16);
+            this.lblMedida8.Size = new System.Drawing.Size(89, 16);
             this.lblMedida8.TabIndex = 9;
             this.lblMedida8.Text = "No Definido";
             // 
@@ -201,7 +201,7 @@
             this.lblPrecio10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrecio10.Location = new System.Drawing.Point(395, 42);
             this.lblPrecio10.Name = "lblPrecio10";
-            this.lblPrecio10.Size = new System.Drawing.Size(16, 16);
+            this.lblPrecio10.Size = new System.Drawing.Size(15, 16);
             this.lblPrecio10.TabIndex = 21;
             this.lblPrecio10.Text = "0";
             // 
@@ -211,7 +211,7 @@
             this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label35.Location = new System.Drawing.Point(315, 42);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(74, 16);
+            this.label35.Size = new System.Drawing.Size(73, 16);
             this.label35.TabIndex = 20;
             this.label35.Text = "Costo ($):";
             // 
@@ -221,7 +221,7 @@
             this.lblMedida10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMedida10.Location = new System.Drawing.Point(395, 26);
             this.lblMedida10.Name = "lblMedida10";
-            this.lblMedida10.Size = new System.Drawing.Size(90, 16);
+            this.lblMedida10.Size = new System.Drawing.Size(89, 16);
             this.lblMedida10.TabIndex = 9;
             this.lblMedida10.Text = "No Definido";
             // 
@@ -231,7 +231,7 @@
             this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label46.Location = new System.Drawing.Point(325, 26);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(64, 16);
+            this.label46.Size = new System.Drawing.Size(63, 16);
             this.label46.TabIndex = 8;
             this.label46.Text = "Medida:";
             // 
@@ -241,7 +241,7 @@
             this.label47.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label47.Location = new System.Drawing.Point(24, 53);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(74, 16);
+            this.label47.Size = new System.Drawing.Size(73, 16);
             this.label47.TabIndex = 7;
             this.label47.Text = "Cantidad:";
             // 
@@ -251,7 +251,7 @@
             this.lblNombre10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombre10.Location = new System.Drawing.Point(97, 26);
             this.lblNombre10.Name = "lblNombre10";
-            this.lblNombre10.Size = new System.Drawing.Size(90, 16);
+            this.lblNombre10.Size = new System.Drawing.Size(89, 16);
             this.lblNombre10.TabIndex = 6;
             this.lblNombre10.Text = "No Definido";
             // 
@@ -263,8 +263,9 @@
             this.txtCantidad10.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad10.TabIndex = 6;
             this.txtCantidad10.Text = "0";
-            this.txtCantidad10.TextChanged += new System.EventHandler(this.txtCantidad10_TextChanged);
-            this.txtCantidad10.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad7_KeyPress);
+            this.txtCantidad10.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
+            this.txtCantidad10.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCantidad_KeyPress);
+            this.txtCantidad10.Leave += new System.EventHandler(this.TxtCantidad_Leave);
             // 
             // label49
             // 
@@ -272,7 +273,7 @@
             this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label49.Location = new System.Drawing.Point(24, 26);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(67, 16);
+            this.label49.Size = new System.Drawing.Size(66, 16);
             this.label49.TabIndex = 5;
             this.label49.Text = "Nombre:";
             // 
@@ -314,7 +315,7 @@
             this.lblPrecio8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrecio8.Location = new System.Drawing.Point(406, 58);
             this.lblPrecio8.Name = "lblPrecio8";
-            this.lblPrecio8.Size = new System.Drawing.Size(16, 16);
+            this.lblPrecio8.Size = new System.Drawing.Size(15, 16);
             this.lblPrecio8.TabIndex = 17;
             this.lblPrecio8.Text = "0";
             // 
@@ -324,7 +325,7 @@
             this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label30.Location = new System.Drawing.Point(326, 58);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(74, 16);
+            this.label30.Size = new System.Drawing.Size(73, 16);
             this.label30.TabIndex = 16;
             this.label30.Text = "Costo ($):";
             // 
@@ -334,7 +335,7 @@
             this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label36.Location = new System.Drawing.Point(336, 42);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(64, 16);
+            this.label36.Size = new System.Drawing.Size(63, 16);
             this.label36.TabIndex = 8;
             this.label36.Text = "Medida:";
             // 
@@ -344,7 +345,7 @@
             this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label37.Location = new System.Drawing.Point(24, 53);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(74, 16);
+            this.label37.Size = new System.Drawing.Size(73, 16);
             this.label37.TabIndex = 7;
             this.label37.Text = "Cantidad:";
             // 
@@ -354,7 +355,7 @@
             this.lblNombre8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombre8.Location = new System.Drawing.Point(97, 26);
             this.lblNombre8.Name = "lblNombre8";
-            this.lblNombre8.Size = new System.Drawing.Size(90, 16);
+            this.lblNombre8.Size = new System.Drawing.Size(89, 16);
             this.lblNombre8.TabIndex = 6;
             this.lblNombre8.Text = "No Definido";
             // 
@@ -366,8 +367,9 @@
             this.txtCantidad8.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad8.TabIndex = 6;
             this.txtCantidad8.Text = "0";
-            this.txtCantidad8.TextChanged += new System.EventHandler(this.txtCantidad8_TextChanged);
-            this.txtCantidad8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad7_KeyPress);
+            this.txtCantidad8.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
+            this.txtCantidad8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCantidad_KeyPress);
+            this.txtCantidad8.Leave += new System.EventHandler(this.TxtCantidad_Leave);
             // 
             // label39
             // 
@@ -375,7 +377,7 @@
             this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label39.Location = new System.Drawing.Point(24, 26);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(67, 16);
+            this.label39.Size = new System.Drawing.Size(66, 16);
             this.label39.TabIndex = 5;
             this.label39.Text = "Nombre:";
             // 
@@ -417,7 +419,7 @@
             this.lblPrecio5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrecio5.Location = new System.Drawing.Point(419, 64);
             this.lblPrecio5.Name = "lblPrecio5";
-            this.lblPrecio5.Size = new System.Drawing.Size(16, 16);
+            this.lblPrecio5.Size = new System.Drawing.Size(15, 16);
             this.lblPrecio5.TabIndex = 19;
             this.lblPrecio5.Text = "0";
             // 
@@ -427,7 +429,7 @@
             this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label27.Location = new System.Drawing.Point(339, 64);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(74, 16);
+            this.label27.Size = new System.Drawing.Size(73, 16);
             this.label27.TabIndex = 18;
             this.label27.Text = "Costo ($):";
             // 
@@ -437,7 +439,7 @@
             this.lblMedida5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMedida5.Location = new System.Drawing.Point(419, 48);
             this.lblMedida5.Name = "lblMedida5";
-            this.lblMedida5.Size = new System.Drawing.Size(90, 16);
+            this.lblMedida5.Size = new System.Drawing.Size(89, 16);
             this.lblMedida5.TabIndex = 9;
             this.lblMedida5.Text = "No Definido";
             // 
@@ -447,7 +449,7 @@
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.Location = new System.Drawing.Point(349, 48);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(64, 16);
+            this.label15.Size = new System.Drawing.Size(63, 16);
             this.label15.TabIndex = 8;
             this.label15.Text = "Medida:";
             // 
@@ -457,7 +459,7 @@
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label17.Location = new System.Drawing.Point(24, 53);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(74, 16);
+            this.label17.Size = new System.Drawing.Size(73, 16);
             this.label17.TabIndex = 7;
             this.label17.Text = "Cantidad:";
             // 
@@ -467,7 +469,7 @@
             this.lblNombre5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombre5.Location = new System.Drawing.Point(102, 26);
             this.lblNombre5.Name = "lblNombre5";
-            this.lblNombre5.Size = new System.Drawing.Size(90, 16);
+            this.lblNombre5.Size = new System.Drawing.Size(89, 16);
             this.lblNombre5.TabIndex = 6;
             this.lblNombre5.Text = "No Definido";
             // 
@@ -479,8 +481,9 @@
             this.txtCantidad5.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad5.TabIndex = 6;
             this.txtCantidad5.Text = "0";
-            this.txtCantidad5.TextChanged += new System.EventHandler(this.txtCantidad5_TextChanged);
-            this.txtCantidad5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad5_KeyPress);
+            this.txtCantidad5.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
+            this.txtCantidad5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCantidad_KeyPress);
+            this.txtCantidad5.Leave += new System.EventHandler(this.TxtCantidad_Leave);
             // 
             // label19
             // 
@@ -488,7 +491,7 @@
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.Location = new System.Drawing.Point(24, 26);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(67, 16);
+            this.label19.Size = new System.Drawing.Size(66, 16);
             this.label19.TabIndex = 5;
             this.label19.Text = "Nombre:";
             // 
@@ -550,7 +553,7 @@
             this.lblPrecio9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrecio9.Location = new System.Drawing.Point(406, 66);
             this.lblPrecio9.Name = "lblPrecio9";
-            this.lblPrecio9.Size = new System.Drawing.Size(16, 16);
+            this.lblPrecio9.Size = new System.Drawing.Size(15, 16);
             this.lblPrecio9.TabIndex = 19;
             this.lblPrecio9.Text = "0";
             // 
@@ -560,7 +563,7 @@
             this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label33.Location = new System.Drawing.Point(326, 66);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(74, 16);
+            this.label33.Size = new System.Drawing.Size(73, 16);
             this.label33.TabIndex = 18;
             this.label33.Text = "Costo ($):";
             // 
@@ -570,7 +573,7 @@
             this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label41.Location = new System.Drawing.Point(336, 50);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(64, 16);
+            this.label41.Size = new System.Drawing.Size(63, 16);
             this.label41.TabIndex = 8;
             this.label41.Text = "Medida:";
             // 
@@ -581,7 +584,7 @@
             this.label42.ForeColor = System.Drawing.Color.White;
             this.label42.Location = new System.Drawing.Point(24, 53);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(74, 16);
+            this.label42.Size = new System.Drawing.Size(73, 16);
             this.label42.TabIndex = 7;
             this.label42.Text = "Cantidad:";
             // 
@@ -591,7 +594,7 @@
             this.lblNombre9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombre9.Location = new System.Drawing.Point(97, 26);
             this.lblNombre9.Name = "lblNombre9";
-            this.lblNombre9.Size = new System.Drawing.Size(90, 16);
+            this.lblNombre9.Size = new System.Drawing.Size(89, 16);
             this.lblNombre9.TabIndex = 6;
             this.lblNombre9.Text = "No Definido";
             // 
@@ -603,8 +606,9 @@
             this.txtCantidad9.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad9.TabIndex = 6;
             this.txtCantidad9.Text = "0";
-            this.txtCantidad9.TextChanged += new System.EventHandler(this.txtCantidad9_TextChanged);
-            this.txtCantidad9.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad7_KeyPress);
+            this.txtCantidad9.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
+            this.txtCantidad9.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCantidad_KeyPress);
+            this.txtCantidad9.Leave += new System.EventHandler(this.TxtCantidad_Leave);
             // 
             // label44
             // 
@@ -612,7 +616,7 @@
             this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label44.Location = new System.Drawing.Point(24, 26);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(67, 16);
+            this.label44.Size = new System.Drawing.Size(66, 16);
             this.label44.TabIndex = 5;
             this.label44.Text = "Nombre:";
             // 
@@ -654,7 +658,7 @@
             this.lblPrecio7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrecio7.Location = new System.Drawing.Point(406, 61);
             this.lblPrecio7.Name = "lblPrecio7";
-            this.lblPrecio7.Size = new System.Drawing.Size(16, 16);
+            this.lblPrecio7.Size = new System.Drawing.Size(15, 16);
             this.lblPrecio7.TabIndex = 15;
             this.lblPrecio7.Text = "0";
             // 
@@ -664,7 +668,7 @@
             this.lblMedida7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMedida7.Location = new System.Drawing.Point(406, 45);
             this.lblMedida7.Name = "lblMedida7";
-            this.lblMedida7.Size = new System.Drawing.Size(90, 16);
+            this.lblMedida7.Size = new System.Drawing.Size(89, 16);
             this.lblMedida7.TabIndex = 9;
             this.lblMedida7.Text = "No Definido";
             // 
@@ -674,7 +678,7 @@
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label29.Location = new System.Drawing.Point(326, 61);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(74, 16);
+            this.label29.Size = new System.Drawing.Size(73, 16);
             this.label29.TabIndex = 14;
             this.label29.Text = "Costo ($):";
             // 
@@ -684,7 +688,7 @@
             this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label31.Location = new System.Drawing.Point(336, 45);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(64, 16);
+            this.label31.Size = new System.Drawing.Size(63, 16);
             this.label31.TabIndex = 8;
             this.label31.Text = "Medida:";
             // 
@@ -694,7 +698,7 @@
             this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label32.Location = new System.Drawing.Point(24, 53);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(74, 16);
+            this.label32.Size = new System.Drawing.Size(73, 16);
             this.label32.TabIndex = 7;
             this.label32.Text = "Cantidad:";
             // 
@@ -704,7 +708,7 @@
             this.lblNombre7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombre7.Location = new System.Drawing.Point(97, 26);
             this.lblNombre7.Name = "lblNombre7";
-            this.lblNombre7.Size = new System.Drawing.Size(90, 16);
+            this.lblNombre7.Size = new System.Drawing.Size(89, 16);
             this.lblNombre7.TabIndex = 6;
             this.lblNombre7.Text = "No Definido";
             // 
@@ -716,8 +720,9 @@
             this.txtCantidad7.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad7.TabIndex = 6;
             this.txtCantidad7.Text = "0";
-            this.txtCantidad7.TextChanged += new System.EventHandler(this.txtCantidad7_TextChanged);
-            this.txtCantidad7.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad7_KeyPress);
+            this.txtCantidad7.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
+            this.txtCantidad7.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCantidad_KeyPress);
+            this.txtCantidad7.Leave += new System.EventHandler(this.TxtCantidad_Leave);
             // 
             // label34
             // 
@@ -725,7 +730,7 @@
             this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label34.Location = new System.Drawing.Point(24, 26);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(67, 16);
+            this.label34.Size = new System.Drawing.Size(66, 16);
             this.label34.TabIndex = 5;
             this.label34.Text = "Nombre:";
             // 
@@ -767,7 +772,7 @@
             this.lblPrecio6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrecio6.Location = new System.Drawing.Point(406, 64);
             this.lblPrecio6.Name = "lblPrecio6";
-            this.lblPrecio6.Size = new System.Drawing.Size(16, 16);
+            this.lblPrecio6.Size = new System.Drawing.Size(15, 16);
             this.lblPrecio6.TabIndex = 13;
             this.lblPrecio6.Text = "0";
             // 
@@ -777,7 +782,7 @@
             this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label28.Location = new System.Drawing.Point(326, 64);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(74, 16);
+            this.label28.Size = new System.Drawing.Size(73, 16);
             this.label28.TabIndex = 12;
             this.label28.Text = "Costo ($):";
             // 
@@ -787,7 +792,7 @@
             this.lblMedida6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMedida6.Location = new System.Drawing.Point(406, 48);
             this.lblMedida6.Name = "lblMedida6";
-            this.lblMedida6.Size = new System.Drawing.Size(90, 16);
+            this.lblMedida6.Size = new System.Drawing.Size(89, 16);
             this.lblMedida6.TabIndex = 9;
             this.lblMedida6.Text = "No Definido";
             // 
@@ -797,7 +802,7 @@
             this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.Location = new System.Drawing.Point(336, 48);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(64, 16);
+            this.label21.Size = new System.Drawing.Size(63, 16);
             this.label21.TabIndex = 8;
             this.label21.Text = "Medida:";
             // 
@@ -807,7 +812,7 @@
             this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label22.Location = new System.Drawing.Point(24, 53);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(74, 16);
+            this.label22.Size = new System.Drawing.Size(73, 16);
             this.label22.TabIndex = 7;
             this.label22.Text = "Cantidad:";
             // 
@@ -817,7 +822,7 @@
             this.lblNombre6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombre6.Location = new System.Drawing.Point(97, 26);
             this.lblNombre6.Name = "lblNombre6";
-            this.lblNombre6.Size = new System.Drawing.Size(90, 16);
+            this.lblNombre6.Size = new System.Drawing.Size(89, 16);
             this.lblNombre6.TabIndex = 6;
             this.lblNombre6.Text = "No Definido";
             // 
@@ -829,8 +834,9 @@
             this.txtCantidad6.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad6.TabIndex = 6;
             this.txtCantidad6.Text = "0";
-            this.txtCantidad6.TextChanged += new System.EventHandler(this.txtCantidad6_TextChanged);
-            this.txtCantidad6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad6_KeyPress);
+            this.txtCantidad6.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
+            this.txtCantidad6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCantidad_KeyPress);
+            this.txtCantidad6.Leave += new System.EventHandler(this.TxtCantidad_Leave);
             // 
             // label24
             // 
@@ -838,7 +844,7 @@
             this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label24.Location = new System.Drawing.Point(24, 26);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(67, 16);
+            this.label24.Size = new System.Drawing.Size(66, 16);
             this.label24.TabIndex = 5;
             this.label24.Text = "Nombre:";
             // 
@@ -880,7 +886,7 @@
             this.lblPrecio4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrecio4.Location = new System.Drawing.Point(424, 64);
             this.lblPrecio4.Name = "lblPrecio4";
-            this.lblPrecio4.Size = new System.Drawing.Size(16, 16);
+            this.lblPrecio4.Size = new System.Drawing.Size(15, 16);
             this.lblPrecio4.TabIndex = 17;
             this.lblPrecio4.Text = "0";
             // 
@@ -890,7 +896,7 @@
             this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label26.Location = new System.Drawing.Point(339, 64);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(74, 16);
+            this.label26.Size = new System.Drawing.Size(73, 16);
             this.label26.TabIndex = 16;
             this.label26.Text = "Costo ($):";
             // 
@@ -900,7 +906,7 @@
             this.lblMedida4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMedida4.Location = new System.Drawing.Point(424, 48);
             this.lblMedida4.Name = "lblMedida4";
-            this.lblMedida4.Size = new System.Drawing.Size(90, 16);
+            this.lblMedida4.Size = new System.Drawing.Size(89, 16);
             this.lblMedida4.TabIndex = 9;
             this.lblMedida4.Text = "No Definido";
             // 
@@ -910,7 +916,7 @@
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(349, 48);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(64, 16);
+            this.label12.Size = new System.Drawing.Size(63, 16);
             this.label12.TabIndex = 8;
             this.label12.Text = "Medida:";
             // 
@@ -920,7 +926,7 @@
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.Location = new System.Drawing.Point(24, 53);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(74, 16);
+            this.label14.Size = new System.Drawing.Size(73, 16);
             this.label14.TabIndex = 7;
             this.label14.Text = "Cantidad:";
             // 
@@ -930,7 +936,7 @@
             this.lblNombre4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombre4.Location = new System.Drawing.Point(102, 26);
             this.lblNombre4.Name = "lblNombre4";
-            this.lblNombre4.Size = new System.Drawing.Size(90, 16);
+            this.lblNombre4.Size = new System.Drawing.Size(89, 16);
             this.lblNombre4.TabIndex = 6;
             this.lblNombre4.Text = "No Definido";
             // 
@@ -942,8 +948,9 @@
             this.txtCantidad4.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad4.TabIndex = 6;
             this.txtCantidad4.Text = "0";
-            this.txtCantidad4.TextChanged += new System.EventHandler(this.txtCantidad4_TextChanged);
-            this.txtCantidad4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad4_KeyPress);
+            this.txtCantidad4.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
+            this.txtCantidad4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCantidad_KeyPress);
+            this.txtCantidad4.Leave += new System.EventHandler(this.TxtCantidad_Leave);
             // 
             // label16
             // 
@@ -951,7 +958,7 @@
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.Location = new System.Drawing.Point(24, 26);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(67, 16);
+            this.label16.Size = new System.Drawing.Size(66, 16);
             this.label16.TabIndex = 5;
             this.label16.Text = "Nombre:";
             // 
@@ -994,7 +1001,7 @@
             this.lblPrecio3.ForeColor = System.Drawing.Color.White;
             this.lblPrecio3.Location = new System.Drawing.Point(414, 63);
             this.lblPrecio3.Name = "lblPrecio3";
-            this.lblPrecio3.Size = new System.Drawing.Size(16, 16);
+            this.lblPrecio3.Size = new System.Drawing.Size(15, 16);
             this.lblPrecio3.TabIndex = 15;
             this.lblPrecio3.Text = "0";
             // 
@@ -1005,7 +1012,7 @@
             this.label25.ForeColor = System.Drawing.Color.White;
             this.label25.Location = new System.Drawing.Point(334, 63);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(74, 16);
+            this.label25.Size = new System.Drawing.Size(73, 16);
             this.label25.TabIndex = 14;
             this.label25.Text = "Costo ($):";
             // 
@@ -1016,7 +1023,7 @@
             this.lblMedida3.ForeColor = System.Drawing.Color.White;
             this.lblMedida3.Location = new System.Drawing.Point(414, 47);
             this.lblMedida3.Name = "lblMedida3";
-            this.lblMedida3.Size = new System.Drawing.Size(90, 16);
+            this.lblMedida3.Size = new System.Drawing.Size(89, 16);
             this.lblMedida3.TabIndex = 9;
             this.lblMedida3.Text = "No Definido";
             // 
@@ -1027,7 +1034,7 @@
             this.label10.ForeColor = System.Drawing.Color.White;
             this.label10.Location = new System.Drawing.Point(344, 47);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(64, 16);
+            this.label10.Size = new System.Drawing.Size(63, 16);
             this.label10.TabIndex = 8;
             this.label10.Text = "Medida:";
             // 
@@ -1038,7 +1045,7 @@
             this.label11.ForeColor = System.Drawing.Color.White;
             this.label11.Location = new System.Drawing.Point(24, 53);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(74, 16);
+            this.label11.Size = new System.Drawing.Size(73, 16);
             this.label11.TabIndex = 7;
             this.label11.Text = "Cantidad:";
             // 
@@ -1049,7 +1056,7 @@
             this.lblNombre3.ForeColor = System.Drawing.Color.White;
             this.lblNombre3.Location = new System.Drawing.Point(97, 26);
             this.lblNombre3.Name = "lblNombre3";
-            this.lblNombre3.Size = new System.Drawing.Size(90, 16);
+            this.lblNombre3.Size = new System.Drawing.Size(89, 16);
             this.lblNombre3.TabIndex = 6;
             this.lblNombre3.Text = "No Definido";
             // 
@@ -1061,8 +1068,9 @@
             this.txtCantidad3.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad3.TabIndex = 6;
             this.txtCantidad3.Text = "0";
-            this.txtCantidad3.TextChanged += new System.EventHandler(this.txtCantidad3_TextChanged);
-            this.txtCantidad3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad3_KeyPress);
+            this.txtCantidad3.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
+            this.txtCantidad3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCantidad_KeyPress);
+            this.txtCantidad3.Leave += new System.EventHandler(this.TxtCantidad_Leave);
             // 
             // label13
             // 
@@ -1071,7 +1079,7 @@
             this.label13.ForeColor = System.Drawing.Color.White;
             this.label13.Location = new System.Drawing.Point(24, 26);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(67, 16);
+            this.label13.Size = new System.Drawing.Size(66, 16);
             this.label13.TabIndex = 5;
             this.label13.Text = "Nombre:";
             // 
@@ -1115,7 +1123,7 @@
             this.lblPrecio2.ForeColor = System.Drawing.Color.White;
             this.lblPrecio2.Location = new System.Drawing.Point(414, 63);
             this.lblPrecio2.Name = "lblPrecio2";
-            this.lblPrecio2.Size = new System.Drawing.Size(16, 16);
+            this.lblPrecio2.Size = new System.Drawing.Size(15, 16);
             this.lblPrecio2.TabIndex = 13;
             this.lblPrecio2.Text = "0";
             // 
@@ -1126,7 +1134,7 @@
             this.label23.ForeColor = System.Drawing.Color.White;
             this.label23.Location = new System.Drawing.Point(334, 63);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(74, 16);
+            this.label23.Size = new System.Drawing.Size(73, 16);
             this.label23.TabIndex = 12;
             this.label23.Text = "Costo ($):";
             // 
@@ -1137,7 +1145,7 @@
             this.lblMedida2.ForeColor = System.Drawing.Color.White;
             this.lblMedida2.Location = new System.Drawing.Point(414, 47);
             this.lblMedida2.Name = "lblMedida2";
-            this.lblMedida2.Size = new System.Drawing.Size(90, 16);
+            this.lblMedida2.Size = new System.Drawing.Size(89, 16);
             this.lblMedida2.TabIndex = 9;
             this.lblMedida2.Text = "No Definido";
             // 
@@ -1148,7 +1156,7 @@
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(344, 47);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(64, 16);
+            this.label6.Size = new System.Drawing.Size(63, 16);
             this.label6.TabIndex = 8;
             this.label6.Text = "Medida:";
             // 
@@ -1159,7 +1167,7 @@
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(24, 53);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(74, 16);
+            this.label7.Size = new System.Drawing.Size(73, 16);
             this.label7.TabIndex = 7;
             this.label7.Text = "Cantidad:";
             // 
@@ -1170,7 +1178,7 @@
             this.lblNombre2.ForeColor = System.Drawing.Color.White;
             this.lblNombre2.Location = new System.Drawing.Point(97, 26);
             this.lblNombre2.Name = "lblNombre2";
-            this.lblNombre2.Size = new System.Drawing.Size(90, 16);
+            this.lblNombre2.Size = new System.Drawing.Size(89, 16);
             this.lblNombre2.TabIndex = 6;
             this.lblNombre2.Text = "No Definido";
             // 
@@ -1182,8 +1190,9 @@
             this.txtCantidad2.Size = new System.Drawing.Size(94, 22);
             this.txtCantidad2.TabIndex = 6;
             this.txtCantidad2.Text = "0";
-            this.txtCantidad2.TextChanged += new System.EventHandler(this.txtCantidad2_TextChanged);
-            this.txtCantidad2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad2_KeyPress);
+            this.txtCantidad2.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
+            this.txtCantidad2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCantidad_KeyPress);
+            this.txtCantidad2.Leave += new System.EventHandler(this.TxtCantidad_Leave);
             // 
             // label9
             // 
@@ -1192,7 +1201,7 @@
             this.label9.ForeColor = System.Drawing.Color.White;
             this.label9.Location = new System.Drawing.Point(24, 26);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(67, 16);
+            this.label9.Size = new System.Drawing.Size(66, 16);
             this.label9.TabIndex = 5;
             this.label9.Text = "Nombre:";
             // 
@@ -1212,11 +1221,11 @@
             // 
             this.groupBox1.Controls.Add(this.lblPrecio1);
             this.groupBox1.Controls.Add(this.label20);
-            this.groupBox1.Controls.Add(this.lblMedida);
+            this.groupBox1.Controls.Add(this.lblMedida1);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.lblNombre);
-            this.groupBox1.Controls.Add(this.txtCantidad);
+            this.groupBox1.Controls.Add(this.lblNombre1);
+            this.groupBox1.Controls.Add(this.txtCantidad1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.btnArticulo1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1235,7 +1244,7 @@
             this.lblPrecio1.ForeColor = System.Drawing.Color.White;
             this.lblPrecio1.Location = new System.Drawing.Point(414, 64);
             this.lblPrecio1.Name = "lblPrecio1";
-            this.lblPrecio1.Size = new System.Drawing.Size(16, 16);
+            this.lblPrecio1.Size = new System.Drawing.Size(15, 16);
             this.lblPrecio1.TabIndex = 11;
             this.lblPrecio1.Text = "0";
             // 
@@ -1246,20 +1255,20 @@
             this.label20.ForeColor = System.Drawing.Color.White;
             this.label20.Location = new System.Drawing.Point(334, 64);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(74, 16);
+            this.label20.Size = new System.Drawing.Size(73, 16);
             this.label20.TabIndex = 10;
             this.label20.Text = "Costo ($):";
             // 
-            // lblMedida
+            // lblMedida1
             // 
-            this.lblMedida.AutoSize = true;
-            this.lblMedida.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMedida.ForeColor = System.Drawing.Color.White;
-            this.lblMedida.Location = new System.Drawing.Point(414, 48);
-            this.lblMedida.Name = "lblMedida";
-            this.lblMedida.Size = new System.Drawing.Size(90, 16);
-            this.lblMedida.TabIndex = 9;
-            this.lblMedida.Text = "No Definido";
+            this.lblMedida1.AutoSize = true;
+            this.lblMedida1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMedida1.ForeColor = System.Drawing.Color.White;
+            this.lblMedida1.Location = new System.Drawing.Point(414, 48);
+            this.lblMedida1.Name = "lblMedida1";
+            this.lblMedida1.Size = new System.Drawing.Size(89, 16);
+            this.lblMedida1.TabIndex = 9;
+            this.lblMedida1.Text = "No Definido";
             // 
             // label5
             // 
@@ -1268,7 +1277,7 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(344, 48);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 16);
+            this.label5.Size = new System.Drawing.Size(63, 16);
             this.label5.TabIndex = 8;
             this.label5.Text = "Medida:";
             // 
@@ -1279,31 +1288,32 @@
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(24, 53);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 16);
+            this.label3.Size = new System.Drawing.Size(73, 16);
             this.label3.TabIndex = 7;
             this.label3.Text = "Cantidad:";
             // 
-            // lblNombre
+            // lblNombre1
             // 
-            this.lblNombre.AutoSize = true;
-            this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombre.ForeColor = System.Drawing.Color.White;
-            this.lblNombre.Location = new System.Drawing.Point(97, 26);
-            this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(90, 16);
-            this.lblNombre.TabIndex = 6;
-            this.lblNombre.Text = "No Definido";
+            this.lblNombre1.AutoSize = true;
+            this.lblNombre1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombre1.ForeColor = System.Drawing.Color.White;
+            this.lblNombre1.Location = new System.Drawing.Point(97, 26);
+            this.lblNombre1.Name = "lblNombre1";
+            this.lblNombre1.Size = new System.Drawing.Size(89, 16);
+            this.lblNombre1.TabIndex = 6;
+            this.lblNombre1.Text = "No Definido";
             // 
-            // txtCantidad
+            // txtCantidad1
             // 
-            this.txtCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCantidad.Location = new System.Drawing.Point(100, 50);
-            this.txtCantidad.Name = "txtCantidad";
-            this.txtCantidad.Size = new System.Drawing.Size(94, 22);
-            this.txtCantidad.TabIndex = 6;
-            this.txtCantidad.Text = "0";
-            this.txtCantidad.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
-            this.txtCantidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad_KeyPress);
+            this.txtCantidad1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCantidad1.Location = new System.Drawing.Point(100, 50);
+            this.txtCantidad1.Name = "txtCantidad1";
+            this.txtCantidad1.Size = new System.Drawing.Size(94, 22);
+            this.txtCantidad1.TabIndex = 6;
+            this.txtCantidad1.Text = "0";
+            this.txtCantidad1.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
+            this.txtCantidad1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCantidad_KeyPress);
+            this.txtCantidad1.Leave += new System.EventHandler(this.TxtCantidad_Leave);
             // 
             // label2
             // 
@@ -1312,7 +1322,7 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(24, 26);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 16);
+            this.label2.Size = new System.Drawing.Size(66, 16);
             this.label2.TabIndex = 5;
             this.label2.Text = "Nombre:";
             // 
@@ -1335,7 +1345,7 @@
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(-1, 68);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(80, 16);
+            this.label8.Size = new System.Drawing.Size(79, 16);
             this.label8.TabIndex = 27;
             this.label8.Text = "Categoria:";
             // 
@@ -1346,7 +1356,7 @@
             this.txtPrecio.Name = "txtPrecio";
             this.txtPrecio.Size = new System.Drawing.Size(296, 22);
             this.txtPrecio.TabIndex = 1;
-            this.txtPrecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecio_KeyPress);
+            this.txtPrecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCantidad_KeyPress);
             // 
             // button2
             // 
@@ -1374,7 +1384,7 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(18, 35);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 16);
+            this.label4.Size = new System.Drawing.Size(56, 16);
             this.label4.TabIndex = 25;
             this.label4.Text = "Precio:";
             // 
@@ -1385,7 +1395,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(8, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 16);
+            this.label1.Size = new System.Drawing.Size(70, 16);
             this.label1.TabIndex = 23;
             this.label1.Text = "Nombre: ";
             // 
@@ -1394,25 +1404,6 @@
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "DESAYUNOS",
-            "PASTAS",
-            "ENTRADAS",
-            "ENSALADAS",
-            "MAR",
-            "TIERRA",
-            "POSTRES",
-            "COPAS",
-            "COCKTAILS",
-            "CERVEZAS",
-            "FRAPPE",
-            "MALTEADAS",
-            "CAFE",
-            "ESPECIALIDADES",
-            "CAPUCCINOS",
-            "VINOS",
-            "NINOS",
-            "BEBIDAS"});
             this.comboBox1.Location = new System.Drawing.Point(74, 62);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(413, 28);
@@ -1425,9 +1416,9 @@
             this.label18.ForeColor = System.Drawing.Color.White;
             this.label18.Location = new System.Drawing.Point(658, 115);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(426, 39);
+            this.label18.Size = new System.Drawing.Size(396, 39);
             this.label18.TabIndex = 28;
-            this.label18.Text = "Costo Total del Platillo: $";
+            this.label18.Text = "Costo Total del Platillo:";
             // 
             // lblTotal
             // 
@@ -1457,25 +1448,6 @@
             this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "DESAYUNOS",
-            "PASTAS",
-            "ENTRADAS",
-            "ENSALADAS",
-            "MAR",
-            "TIERRA",
-            "POSTRES",
-            "COPAS",
-            "COCKTAILS",
-            "CERVEZAS",
-            "FRAPPE",
-            "MALTEADAS",
-            "CAFE",
-            "ESPECIALIDADES",
-            "CAPUCCINOS",
-            "VINOS",
-            "NINOS",
-            "BEBIDAS"});
             this.comboBox2.Location = new System.Drawing.Point(74, 96);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(413, 28);
@@ -1488,7 +1460,7 @@
             this.label38.ForeColor = System.Drawing.Color.White;
             this.label38.Location = new System.Drawing.Point(29, 96);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(39, 16);
+            this.label38.Size = new System.Drawing.Size(38, 16);
             this.label38.TabIndex = 32;
             this.label38.Text = "Sub:";
             // 
@@ -1619,11 +1591,11 @@
         public System.Windows.Forms.Label label9;
         public System.Windows.Forms.Button button1;
         public System.Windows.Forms.GroupBox groupBox1;
-        public System.Windows.Forms.Label lblMedida;
+        public System.Windows.Forms.Label lblMedida1;
         public System.Windows.Forms.Label label5;
         public System.Windows.Forms.Label label3;
-        public System.Windows.Forms.Label lblNombre;
-        public System.Windows.Forms.TextBox txtCantidad;
+        public System.Windows.Forms.Label lblNombre1;
+        public System.Windows.Forms.TextBox txtCantidad1;
         public System.Windows.Forms.Label label2;
         public System.Windows.Forms.Button btnArticulo1;
         public System.Windows.Forms.Label label8;
