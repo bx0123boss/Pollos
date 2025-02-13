@@ -13,6 +13,8 @@ using System.IO;
 using System.Data.OleDb;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Data.SqlClient;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Punto_Venta
 {
@@ -20,7 +22,6 @@ namespace Punto_Venta
     {
         private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        //OleDbConnection conectar = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\192.168.0.10\Jaeger Soft\Restaurante.accdb");
         OleDbDataAdapter da;
         OleDbCommand cmd;
         double iva;
@@ -54,27 +55,49 @@ namespace Punto_Venta
             cmd = new OleDbCommand("UPDATE Folio set Numero=" + suma + " where Folio='Venta';", conectar);
             cmd.ExecuteNonQuery();
         }
+        private double RecalcularTotal
+        {
+            get
+            {
+                total = 0;
+                for (int i = 0; i < dataGridView1.RowCount; i++)
+                {
+                    total += Convert.ToDouble(dataGridView1.Rows[i].Cells["Total"].Value);
+                }
+                return total;
+            }
+        }
+
         private void frmCobros_Load(object sender, EventArgs e)
         {
-            conectar.Open();
-           
-            ds = new DataSet();
-            da = new OleDbDataAdapter("select * from ArticulosMesa where Mesa='"+lblID.Text + "';", conectar);
-            da.Fill(ds, "Id");
-            dataGridView1.DataSource = ds.Tables["Id"];
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[5].Visible = false;
-            dataGridView1.Columns[6].Visible = false;
-            dataGridView1.Columns[7].Visible = false;
-            dataGridView1.Columns[8].Visible = false;
-            dataGridView1.Columns[9].Visible = false;
-            dataGridView1.Columns[10].Visible = false;
-
-            for (int i = 0; i < dataGridView1.RowCount; i++)
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                total += Convert.ToDouble(dataGridView1[4, i].Value.ToString());
+                conectar.Open();
+                DataSet ds = new DataSet();
+                string query = @"
+                    SELECT 
+                    A.IdArticulosMesa, A.Cantidad, B.Precio, A.Total, A.Comentario, A.FechaHora
+                    FROM ArticulosMesa A
+                    INNER JOIN INVENTARIO B ON A.IdInventario = B.IdInventario
+                    WHERE A.IdUsuarioCancelo IS NULL 
+                    AND A.Estatus = 'COCINA'
+                    AND A.IdMesa = @Mesa";
+                using (SqlDataAdapter da = new SqlDataAdapter(query, conectar))
+                {
+                    da.SelectCommand.Parameters.AddWithValue("@Mesa", $"{lblID.Text}");
+                    da.Fill(ds, "Articulos"); // Cambia "Id" por "Origen" para mayor claridad
+                }
+
+                dataGridView1.DataSource = ds.Tables["Articulos"];
+
+                // Ocultar la primera columna (si es necesario)
+                if (dataGridView1.Columns.Count > 0)
+                {
+                    dataGridView1.Columns[0].Visible = false;
+                }
+                lblTotal.Text = $"{RecalcularTotal:C}";
             }
-            txtTotal.Text = "" + Math.Round(total,2);
+
         }
 
         public void imprimir()
@@ -99,15 +122,6 @@ namespace Punto_Venta
             imprimir();
 
         }
-        private void txtPago_Leave(object sender, EventArgs e)
-        {
-        }
-        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
-        {
-        }
-        private void printDocument1_BeginPrint(object sender, PrintEventArgs e)
-        {
-        }
         private void txtPago_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
@@ -116,7 +130,7 @@ namespace Punto_Venta
             }
 
             // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            if ((e.KeyChar == '.') && ((sender as System.Windows.Forms.TextBox).Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
             }
@@ -128,9 +142,6 @@ namespace Punto_Venta
             }
         }
 
-        private void dgvMesa_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-        }
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
@@ -142,7 +153,7 @@ namespace Punto_Venta
                         iva = ori.iva;
                         double lol = total;
                         lol = Math.Truncate((lol * (iva/100+1)) * 100) / 100;
-                        txtTotal.Text = "" + lol;
+                        lblTotal.Text = $"{lol:C}";
                     }
                     
                 }
@@ -150,7 +161,7 @@ namespace Punto_Venta
             }
             else
             {
-                txtTotal.Text = "$" + total + ".00";
+                lblTotal.Text = $"{total:C}";
             }
 
 
@@ -177,11 +188,11 @@ namespace Punto_Venta
             {
                 double lol = total;
                 lol = Math.Truncate((lol * 1.03) * 100) / 100;
-                txtTotal.Text = ""+lol;
+                lblTotal.Text = $"{lol:C}";
             }
             else
             {
-                txtTotal.Text = ""+ total;
+                lblTotal.Text = $"{total:C}";
             }
         }
         public string obtenerSubcategoria(string id)
@@ -316,7 +327,7 @@ namespace Punto_Venta
                         {
                             total += Convert.ToDouble(dataGridView1[4, i].Value.ToString());
                         }
-                        txtTotal.Text = "" + total;
+                        lblTotal.Text = $"{RecalcularTotal:C}";
                         MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         tipoUser = "";
                     }
@@ -367,7 +378,8 @@ namespace Punto_Venta
                                             {
                                                 total += Convert.ToDouble(dataGridView1[4, i].Value.ToString());
                                             }
-                                            txtTotal.Text = "" + total;
+                                            lblTotal.Text = $"{RecalcularTotal:C}";
+
                                             MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                             tipoUser = "";
                                         }
@@ -520,69 +532,16 @@ namespace Punto_Venta
             }
             else if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
-                bool yaDescuento = false;
-                for (int i = 0; i < dataGridView1.RowCount; i++)
+                if (radioButton1.Checked)
                 {
-                    if (dataGridView1[2, i].Value.ToString()=="DESCUENTO")
-                    {
-                        yaDescuento = true;
-                    }
-                    
-                }
-                if (yaDescuento)
-                {
-                    txtDescuento.Text = "";
-                }
-                else if (radioButton1.Checked)
-                {
-                    total = 0;
-                    for (int i = 0; i < dataGridView1.RowCount; i++)
-                    {
-                        total += Convert.ToDouble(dataGridView1[3, i].Value.ToString());
-                    }
                     descuento = ((Convert.ToDouble(txtDescuento.Text) / 100)) * total;
-                    total = Math.Round(total - descuento, 0);
-                    MessageBox.Show("DESCUENTO REALIZADO POR LA CANTIDAD DE: $" + descuento, "DESCUENTO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    cmd = new OleDbCommand("insert into ArticulosMesa(id,cantidad,producto,precio,total,Mesa,Estatus) values(0, '1', 'DESCUENTO', '-" + descuento+"', '-" + descuento+ "', "+lblID.Text+",'Cocina');", conectar);
-                    cmd.ExecuteNonQuery();
-                    total = 0;
-                    ds = new DataSet();
-                    da = new OleDbDataAdapter("select * from ArticulosMesa where Mesa='" + lblID.Text + "';", conectar);
-                    da.Fill(ds, "Id");
-                    dataGridView1.DataSource = ds.Tables["Id"];
-                    dataGridView1.Columns[0].Visible = false;
-                    dataGridView1.Columns[5].Visible = false;
-                    for (int i = 0; i < dataGridView1.RowCount; i++)
-                    {
-                        total += Convert.ToDouble(dataGridView1[4, i].Value.ToString());
-                    }
-                    txtTotal.Text = String.Format("{0:0.00}", total);
                 }
                 else if (radioButton2.Checked)
                 {
-                    total = 0;
-                    for (int i = 0; i < dataGridView1.RowCount; i++)
-                    {
-                        total += Convert.ToDouble(dataGridView1[3, i].Value.ToString());
-                    }
                     descuento = Convert.ToDouble(txtDescuento.Text);
-                    total = total - descuento;
-                    MessageBox.Show("DESCUENTO REALIZADO POR LA CANTIDAD DE: $" + descuento, "DESCUENTO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    cmd = new OleDbCommand("insert into ArticulosMesa(id,cantidad,producto,precio,total,Mesa,Estatus) values(0, '1', 'DESCUENTO', '-" + descuento + "', '-" + descuento + "', " + lblID.Text + ",'Cocina');", conectar);
-                    cmd.ExecuteNonQuery();
-                    total = 0;
-                    ds = new DataSet();
-                    da = new OleDbDataAdapter("select * from ArticulosMesa where Mesa='" + lblID.Text + "';", conectar);
-                    da.Fill(ds, "Id");
-                    dataGridView1.DataSource = ds.Tables["Id"];
-                    dataGridView1.Columns[0].Visible = false;
-                    dataGridView1.Columns[5].Visible = false;
-                    for (int i = 0; i < dataGridView1.RowCount; i++)
-                    {
-                        total += Convert.ToDouble(dataGridView1[4, i].Value.ToString());
-                    }
-                    txtTotal.Text = String.Format("{0:0.00}", total);
                 }
+                lblTotal.Text = $"{Math.Round(RecalcularTotal - descuento, 0):C}";
+                MessageBox.Show("DESCUENTO REALIZADO POR LA CANTIDAD DE: $" + descuento, "DESCUENTO", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

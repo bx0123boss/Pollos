@@ -4,7 +4,7 @@ IF OBJECT_ID('ArticulosMesa', 'U') IS NOT NULL
 
 CREATE TABLE ArticulosMesa (
     IdArticulosMesa INT PRIMARY KEY IDENTITY(1,1),
-    IdProducto INT FOREIGN KEY REFERENCES PRODUCTOS(IdProducto),
+    IdInventario INT FOREIGN KEY REFERENCES Inventario(IdInventario),
     Cantidad NUMERIC(6,2),
     Total NUMERIC(8,2),
     Comentario VARCHAR(250),

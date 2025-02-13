@@ -62,7 +62,8 @@ namespace Punto_Venta
                                         Nombre = reader["Nombre"].ToString(), 
                                         Impresion = reader["Impresion"].ToString(), 
                                         IdMesero = reader["IdMesero"].ToString(),
-                                        Mesero = reader["Mesero"].ToString()
+                                        Mesero = reader["Mesero"].ToString(),
+                                        CantPersonas = reader["CantidadPersonas"].ToString(),
                         };
 
                         // Agregar el botón al FlowLayoutPanel
@@ -148,6 +149,7 @@ namespace Punto_Venta
                 cobrar.lblMesero.Text = data.Mesero;
                 cobrar.idMesero = int.Parse(data.IdMesero);
                 cobrar.print = data.Impresion == "True" ? "1" : "0";
+                cobrar.lblPersonas.Text = data.CantPersonas;
                 cobrar.ShowDialog();
                 this.Close();
             

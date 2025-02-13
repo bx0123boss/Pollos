@@ -82,7 +82,6 @@ namespace Punto_Venta
             frmAgregarCategorias cat = new frmAgregarCategorias();
             cat.tipo = tipo;
             cat.id = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-            //cat.nombre = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
             cat.txtNombre.Text = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
             cat.button2.BackColor = System.Drawing.ColorTranslator.FromHtml("#" + dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString());
             cat.button2.ForeColor = Color.FromName(dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString());
