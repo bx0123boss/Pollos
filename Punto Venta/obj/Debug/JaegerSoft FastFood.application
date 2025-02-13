@@ -7,14 +7,14 @@
     <framework targetVersion="4.8" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="JaegerSoft FastFood.exe.manifest" size="6208">
+    <dependentAssembly dependencyType="install" codebase="JaegerSoft FastFood.exe.manifest" size="6219">
       <assemblyIdentity name="JaegerSoft FastFood.exe" version="1.0.1.220" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>7ObS0RE5vOU/eOHM9ZbKVduhsQKvLvlhjDJ3ci3dDB8=</dsig:DigestValue>
+        <dsig:DigestValue>mzLDwPUh5nXKq9GHMcqfZ9rwYK4YJu4wMi0or69kzOg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
