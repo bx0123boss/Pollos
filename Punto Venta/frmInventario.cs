@@ -9,15 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using Microsoft.Office.Interop.Excel;
+using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
     public partial class frmInventario : Form
     {
-        private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
+       
+        bool loaded = false;
         public string usuario;
         public frmInventario()
         {
@@ -26,39 +25,60 @@ namespace Punto_Venta
 
         private void frmInventario_Load(object sender, EventArgs e)
         {
-            conectar.Open();
-            if (checkBox1.Checked)
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from articulos where Origen='" + cmbOrigen.Text + "' order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                dgvInventario.Columns[0].Visible = false;
+                conectar.Open();
+                if (checkBox1.Checked)
+                {
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos WHERE IdOrigen = @Origen ORDER BY Nombre;", conectar))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@Origen", cmbOrigen.SelectedValue);
+                        da.Fill(ds, "Productos");
+                    }
+                    dgvInventario.DataSource = ds.Tables["Productos"];
+                    if (dgvInventario.Columns.Count > 0)
+                    {
+                        dgvInventario.Columns[0].Visible = false;
+                    }
+                }
+                else
+                {
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos ORDER BY Nombre;", conectar))
+                    {
+                        da.Fill(ds, "Productos");
+                    }
+                    dgvInventario.DataSource = ds.Tables["Productos"];
+                    if (dgvInventario.Columns.Count > 0)
+                    {
+                        dgvInventario.Columns[0].Visible = false;
+                    }
+                }
+
+                System.Data.DataTable dt = new System.Data.DataTable();
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM Origen;", conectar))
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(dt);
+                }
+                cmbOrigen.DisplayMember = "Nombre";
+                cmbOrigen.ValueMember = "IdOrigen";
+                cmbOrigen.DataSource = dt;
+
+                if (usuario == "Administrador")
+                {
+                    button10.Visible = true;
+                }
+
             }
-            else
-            {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from articulos order by Origen;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                dgvInventario.Columns[0].Visible = false;
-            }
-            System.Data.DataTable dt = new System.Data.DataTable();
-            cmd = new OleDbCommand("SELECT * from Origen;", conectar);
-            da = new OleDbDataAdapter(cmd);
-            da.Fill(dt);
-            cmbOrigen.DisplayMember = "Nombre";
-            cmbOrigen.ValueMember = "Nombre";
-            cmbOrigen.DataSource = dt;
-            cmbOrigen.Text = "";
-            if (usuario == "Administrador")
-                button10.Visible = true;
+            loaded = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             frmAgregarInventario add = new frmAgregarInventario();
-            add.lista = cmbOrigen.Text;
+            add.lista = cmbOrigen.SelectedValue.ToString();
             add.Show();
             this.Close();
         }
@@ -66,7 +86,7 @@ namespace Punto_Venta
         private void button2_Click(object sender, EventArgs e)
         {
             frmEditarInventario edita = new frmEditarInventario();
-            edita.lista = cmbOrigen.Text;
+            edita.lista = cmbOrigen.SelectedValue.ToString();
             edita.txtID.Text = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtProducto.Text = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtCantidad.Text = dgvInventario[2, dgvInventario.CurrentRow.Index].Value.ToString();
@@ -80,17 +100,32 @@ namespace Punto_Venta
 
         private void button3_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("¿Estas seguro de elimiar el articulo?", "Alto!", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("¿Estás seguro de eliminar el artículo?", "Alto!", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                cmd = new OleDbCommand("delete from articulos where id=" + dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString() + ";", conectar);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Se ha eliminado con exito", "Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from articulos order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                dgvInventario.Columns[0].Visible = false;
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    conectar.Open();
+                    using (SqlCommand cmd = new SqlCommand("DELETE FROM Productos WHERE IdProducto = @Id;", conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", dgvInventario[0, dgvInventario.CurrentRow.Index].Value);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Se ha eliminado el Productos con éxito", "Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos ORDER BY Nombre;", conectar))
+                    {
+                        da.Fill(ds, "Productos");
+                    }
+
+                    dgvInventario.DataSource = ds.Tables["Productos"];
+                    if (dgvInventario.Columns.Count > 0)
+                    {
+                        dgvInventario.Columns[0].Visible = false;
+                    }
+                }
             }
         }
 
@@ -98,7 +133,7 @@ namespace Punto_Venta
         {
             frmAgregarExistencias agregar = new frmAgregarExistencias();
             agregar.lblProducto.Text = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
-            agregar.lista = cmbOrigen.Text;
+            agregar.lista = cmbOrigen.SelectedValue.ToString();
             agregar.txtActuales.Text = dgvInventario[2, dgvInventario.CurrentRow.Index].Value.ToString();
             agregar.lblID.Text = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
             agregar.Show();
@@ -115,7 +150,7 @@ namespace Punto_Venta
         private void button6_Click(object sender, EventArgs e)
         {
             frmDescontarExistencias agregar = new frmDescontarExistencias();
-            agregar.lista = cmbOrigen.Text;
+            agregar.lista = cmbOrigen.SelectedValue.ToString();
             agregar.lblProducto.Text = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
             agregar.txtActuales.Text = dgvInventario[2, dgvInventario.CurrentRow.Index].Value.ToString();
             agregar.lblID.Text = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
@@ -125,77 +160,109 @@ namespace Punto_Venta
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text == "")
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from articulos order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                dgvInventario.Columns[0].Visible = false;
+                conectar.Open();
+                if (textBox1.Text == "")
+                {
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos ORDER BY Nombre;", conectar))
+                    {
+                        da.Fill(ds, "Productos");
+                    }
+                    dgvInventario.DataSource = ds.Tables["Productos"];
+                    if (dgvInventario.Columns.Count > 0)
+                    {
+                        dgvInventario.Columns[0].Visible = false;
+                    }
+                }
+                else
+                {
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos WHERE Nombre LIKE @Nombre;", conectar))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@Nombre", "%" + textBox1.Text + "%");
+                        da.Fill(ds, "Productos");
+                    }
+                    dgvInventario.DataSource = ds.Tables["Productos"];
+                    if (dgvInventario.Columns.Count > 0)
+                    {
+                        dgvInventario.Columns[0].Visible = false;
+                    }
+                }
             }
-            else
-            {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from articulos where Nombre LIKE '%" + textBox1.Text + "%';", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                dgvInventario.Columns[0].Visible = false;
-            }
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            frmMesas fisico = new frmMesas();
-            fisico.Show();
-            this.Close();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked == true)
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                textBox1.Enabled = false;
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from articulos where Origen='"+cmbOrigen.Text+"' order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                dgvInventario.Columns[0].Visible = false;
-            }
-            else
-            {
-                textBox1.Enabled = true;
-                cmbOrigen.SelectedIndex = 0;
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from articulos order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                dgvInventario.Columns[0].Visible = false;
+                conectar.Open();
+                if (checkBox1.Checked)
+                {
+                    textBox1.Enabled = false;
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos WHERE IdOrigen = @Origen ORDER BY Nombre;", conectar))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@Origen", cmbOrigen.SelectedValue);
+                        da.Fill(ds, "Productos");
+                    }
+                    dgvInventario.DataSource = ds.Tables["Productos"];
+                    if (dgvInventario.Columns.Count > 0)
+                    {
+                        dgvInventario.Columns[0].Visible = false;
+                    }
+                }
+                else
+                {
+                    textBox1.Enabled = true;
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos ORDER BY Nombre;", conectar))
+                    {
+                        da.Fill(ds, "Productos");
+                    }
+                    dgvInventario.DataSource = ds.Tables["Productos"];
+                    if (dgvInventario.Columns.Count > 0)
+                    {
+                        dgvInventario.Columns[0].Visible = false;
+                    }
+                }
             }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked == true)
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from articulos where Origen='" + cmbOrigen.Text + "' order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                dgvInventario.Columns[0].Visible = false;
+                conectar.Open();
+                if (checkBox1.Checked)
+                {
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos WHERE IdOrigen = @Origen ORDER BY Nombre;", conectar))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@Origen", cmbOrigen.SelectedValue);
+                        da.Fill(ds, "Productos");
+                    }
+                    dgvInventario.DataSource = ds.Tables["Productos"];
+                    if (dgvInventario.Columns.Count > 0)
+                    {
+                        dgvInventario.Columns[0].Visible = false;
+                    }
+                }
+                else
+                {
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Productos ORDER BY Nombre;", conectar))
+                    {
+                        da.Fill(ds, "Productos");
+                    }
+                    dgvInventario.DataSource = ds.Tables["Productos"];
+                    if (dgvInventario.Columns.Count > 0)
+                    {
+                        dgvInventario.Columns[0].Visible = false;
+                    }
+                }
             }
-            else
-            {
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from articulos order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dgvInventario.DataSource = ds.Tables["Id"];
-                dgvInventario.Columns[0].Visible = false;
-            }
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void button8_Click(object sender, EventArgs e)

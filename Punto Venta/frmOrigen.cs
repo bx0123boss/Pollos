@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -25,12 +26,26 @@ namespace Punto_Venta
 
         private void frmOrigen_Load(object sender, EventArgs e)
         {
-            ds = new DataSet();
-            conectar.Open();
-            da = new OleDbDataAdapter("select * from Origen;", conectar);
-            da.Fill(ds, "Id");
-            dataGridView1.DataSource = ds.Tables["Id"];
-            dataGridView1.Columns[0].Visible = false;
+
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
+                DataSet ds = new DataSet();
+                using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Origen;", conectar))
+                {
+                    // Llenar el DataSet con los resultados de la consulta
+                    da.Fill(ds, "Origen"); // Cambia "Id" por "Origen" para mayor claridad
+                }
+
+                // Asignar el DataTable al DataGridView
+                dataGridView1.DataSource = ds.Tables["Origen"];
+
+                // Ocultar la primera columna (si es necesario)
+                if (dataGridView1.Columns.Count > 0)
+                {
+                    dataGridView1.Columns[0].Visible = false;
+                }
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -42,17 +57,32 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("¿Estas seguro de elimiar el Origen?", "Alto!", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("¿Estás seguro de eliminar el Origen?", "Alto!", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                cmd = new OleDbCommand("delete from Origen where Id=" + dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString() + ";", conectar);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Se ha eliminado el Origen con exito", "ELIMINADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from Origen;", conectar);
-                da.Fill(ds, "Id");
-                dataGridView1.DataSource = ds.Tables["Id"];
-                dataGridView1.Columns[0].Visible = false;
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    conectar.Open();
+                    using (SqlCommand cmd = new SqlCommand("DELETE FROM Origen WHERE IdOrigen = @Id;", conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", dataGridView1[0, dataGridView1.CurrentRow.Index].Value);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Se ha eliminado el Origen con éxito", "ELIMINADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Origen;", conectar))
+                    {
+                        da.Fill(ds, "Origen");
+                    }
+
+                    dataGridView1.DataSource = ds.Tables["Origen"];
+                    if (dataGridView1.Columns.Count > 0)
+                    {
+                        dataGridView1.Columns[0].Visible = false;
+                    }
+                }
             }
         }
     }

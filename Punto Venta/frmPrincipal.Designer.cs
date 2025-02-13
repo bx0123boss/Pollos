@@ -52,7 +52,7 @@
             // 
             this.button1.BackColor = System.Drawing.Color.Black;
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button1.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Location = new System.Drawing.Point(283, 484);
             this.button1.Name = "button1";
@@ -76,7 +76,7 @@
             // 
             this.button2.BackColor = System.Drawing.Color.Black;
             this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button2.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Location = new System.Drawing.Point(582, 219);
             this.button2.Name = "button2";
@@ -90,7 +90,7 @@
             // 
             this.button4.BackColor = System.Drawing.Color.Black;
             this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button4.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Location = new System.Drawing.Point(582, 312);
             this.button4.Name = "button4";
@@ -104,7 +104,7 @@
             // 
             this.button5.BackColor = System.Drawing.Color.Black;
             this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button5.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button5.ForeColor = System.Drawing.Color.White;
             this.button5.Location = new System.Drawing.Point(758, 312);
             this.button5.Name = "button5";
@@ -118,7 +118,7 @@
             // 
             this.button6.BackColor = System.Drawing.Color.Black;
             this.button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button6.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button6.ForeColor = System.Drawing.Color.White;
             this.button6.Location = new System.Drawing.Point(52, 234);
             this.button6.Name = "button6";
@@ -132,7 +132,7 @@
             // 
             this.button7.BackColor = System.Drawing.Color.Black;
             this.button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button7.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button7.ForeColor = System.Drawing.Color.White;
             this.button7.Location = new System.Drawing.Point(582, 497);
             this.button7.Name = "button7";
@@ -145,7 +145,7 @@
             // button9
             // 
             this.button9.BackColor = System.Drawing.Color.Black;
-            this.button9.Font = new System.Drawing.Font("Stencil", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button9.ForeColor = System.Drawing.Color.White;
             this.button9.Location = new System.Drawing.Point(53, 484);
             this.button9.Name = "button9";
@@ -159,7 +159,7 @@
             // 
             this.button10.BackColor = System.Drawing.Color.Black;
             this.button10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button10.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button10.ForeColor = System.Drawing.Color.White;
             this.button10.Location = new System.Drawing.Point(282, 351);
             this.button10.Name = "button10";
@@ -173,7 +173,7 @@
             // 
             this.button11.BackColor = System.Drawing.Color.Black;
             this.button11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button11.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button11.ForeColor = System.Drawing.Color.White;
             this.button11.Location = new System.Drawing.Point(52, 351);
             this.button11.Name = "button11";
@@ -198,7 +198,7 @@
             // 
             this.button13.BackColor = System.Drawing.Color.Black;
             this.button13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button13.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button13.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button13.ForeColor = System.Drawing.Color.White;
             this.button13.Location = new System.Drawing.Point(582, 85);
             this.button13.Name = "button13";
@@ -213,7 +213,7 @@
             // 
             this.button12.BackColor = System.Drawing.Color.Black;
             this.button12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button12.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button12.ForeColor = System.Drawing.Color.White;
             this.button12.Location = new System.Drawing.Point(582, 61);
             this.button12.Name = "button12";
@@ -227,7 +227,7 @@
             // 
             this.button14.BackColor = System.Drawing.Color.Black;
             this.button14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button14.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button14.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button14.ForeColor = System.Drawing.Color.White;
             this.button14.Location = new System.Drawing.Point(582, 420);
             this.button14.Name = "button14";
@@ -239,26 +239,18 @@
             // 
             // button15
             // 
-            this.button15.BackColor = System.Drawing.Color.Black;
-            this.button15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button15.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button15.ForeColor = System.Drawing.Color.White;
-            this.button15.Location = new System.Drawing.Point(582, 12);
+            this.button15.Location = new System.Drawing.Point(0, 0);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(72, 71);
-            this.button15.TabIndex = 22;
-            this.button15.Text = "Mesas";
-            this.button15.UseVisualStyleBackColor = false;
-            this.button15.Visible = false;
-            this.button15.Click += new System.EventHandler(this.button15_Click);
+            this.button15.Size = new System.Drawing.Size(75, 23);
+            this.button15.TabIndex = 24;
             // 
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.Black;
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button3.Font = new System.Drawing.Font("Stencil", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(51, 234);
+            this.button3.Location = new System.Drawing.Point(554, 605);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(455, 102);
             this.button3.TabIndex = 23;

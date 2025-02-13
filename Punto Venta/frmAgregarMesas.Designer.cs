@@ -65,9 +65,9 @@
             // 
             // txtUbicacion
             // 
-            this.txtUbicacion.Location = new System.Drawing.Point(103, 38);
+            this.txtUbicacion.Location = new System.Drawing.Point(100, 38);
             this.txtUbicacion.Name = "txtUbicacion";
-            this.txtUbicacion.Size = new System.Drawing.Size(169, 20);
+            this.txtUbicacion.Size = new System.Drawing.Size(172, 20);
             this.txtUbicacion.TabIndex = 1;
             // 
             // label2
@@ -77,9 +77,9 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(9, 37);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 18);
+            this.label2.Size = new System.Drawing.Size(85, 18);
             this.label2.TabIndex = 60;
-            this.label2.Text = "Ubicacion:";
+            this.label2.Text = "Personas:";
             // 
             // frmAgregarMesas
             // 

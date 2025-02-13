@@ -404,27 +404,6 @@ namespace Punto_Venta
             }             
         }
 
-        private void button15_Click(object sender, EventArgs e)
-        {
-            bool abierto = false;
-            foreach (Form frm in Application.OpenForms)
-            {
-                if (frm.GetType() == typeof(frmMesas))
-                {
-                    abierto = true;
-                    frm.BringToFront();
-                }
-            }
-            if (abierto)
-            {
-
-            }
-            else
-            {            
-                frmMesas mesa = new frmMesas();
-                mesa.ShowDialog();
-            } 
-        }
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {

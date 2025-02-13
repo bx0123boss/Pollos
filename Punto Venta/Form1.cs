@@ -12,46 +12,17 @@ using System.Data.OleDb;
 using System.IO;
 using System.Diagnostics;
 using System.Net.Mail;
+using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
     public partial class Form1 : Form
     {
-        //MySqlCommand cmd;
-        //MySqlDataAdapter ad;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);  
-        OleDbCommand cmd;
         int idMesero = 0;
         string usuario = "";
         public Form1()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-
-            //else
-            //{
-            //    frmPrincipal principal = new frmPrincipal();
-            //    principal.Show();
-            //    this.Hide();
-            //}
-            //else
-            //{
-            //    usuario = "administrador";
-            //    frmPrincipal principal = new frmPrincipal();
-            //    principal.lblUser.Text = usuario;
-            //    principal.Show();
-            //    this.Hide();
-            //}
-            
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            
         }
 
         private void button1_Click_2(object sender, EventArgs e)
@@ -60,18 +31,21 @@ namespace Punto_Venta
         }
         public String Autentica()
         {
-            cmd = new OleDbCommand("select Id,Usuario,TipoUsuario from Usuarios where Usuario='" + txtUser.Text + "' AND Contraseña='" + txtContraseña.Text + "';", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                idMesero = Convert.ToInt32(reader[0].ToString());
-                usuario = reader[1].ToString();
-                return Convert.ToString(reader[2].ToString());
-                
-            }
-            else
-            {
-                return "ERROR";
+                conectar.Open();
+                using (SqlCommand cmd = new SqlCommand("select IdUsuario,Usuario,TipoUsuario from Usuarios where Usuario='" + txtUser.Text + "' AND Contraseña='" + txtContraseña.Text + "';", conectar))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        idMesero = Convert.ToInt32(reader["IdUsuario"].ToString());
+                        usuario = reader["Usuario"].ToString();
+                        return Convert.ToString(reader["TipoUsuario"].ToString());
+
+                    }
+                    return "ERROR";
+                }
             }
         }
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -81,7 +55,6 @@ namespace Punto_Venta
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Conexion.obtenerConexion();
             try
             {
                 this.BackgroundImage = Image.FromFile("C:\\Jaeger Soft\\w1.jpg");
@@ -98,15 +71,21 @@ namespace Punto_Venta
             {
                 Console.WriteLine("Exception: " + ex.Message);
             }
-            conectar.Open();
-            DataTable dt = new DataTable();
-            cmd = new OleDbCommand("Select Id,Usuario from Usuarios;", conectar);
-            OleDbDataAdapter da = new OleDbDataAdapter(cmd);
-            da.Fill(dt);
-            txtUser.DisplayMember = "Usuario";
-            txtUser.ValueMember = "Id";
-            txtUser.DataSource = dt;
-            txtUser.Text = "";
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
+                DataTable dt = new DataTable();
+                using (SqlCommand cmd = new SqlCommand("SELECT IdUsuario, Usuario FROM Usuarios;", conectar))
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(dt);
+                    txtUser.DisplayMember = "Usuario";
+                    txtUser.ValueMember = "Id";
+                    txtUser.DataSource = dt;
+                    txtUser.Text = "";
+                }
+            }
+            
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -135,48 +114,54 @@ namespace Punto_Venta
             }
             else
             {
-                cmd = new OleDbCommand("select * from inicio where id=1;", conectar);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    if (Convert.ToString(reader[1].ToString()) == "0")
+                    conectar.Open();
+                    using (SqlCommand cmd = new SqlCommand("select * from inicio where id=1;", conectar))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        string aut = Autentica();
-                        if (aut != "ERROR")
+                        while (reader.Read())
                         {
-                            frmAbrirCaja caja = new frmAbrirCaja();
-                            caja.usuario = aut;
-                            caja.id = idMesero;
-                            caja.nombre = usuario;
-                            caja.Show();
-                            this.Hide();
-                        }
-                        else
-                        {
-                            MessageBox.Show("El usuario y/o contraseña no son valids,\nFavor de introducirlas nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            txtUser.Text = "";
-                            txtContraseña.Clear();
-                            txtContraseña.Focus();
-                        }
-                    }
-                    else
-                    {
-                        string aut = Autentica();
-                        if (aut != "ERROR")
-                        {
-                            frmPrincipal principal = new frmPrincipal();
-                            principal.id = idMesero;
-                            principal.lblUser.Text = aut;
-                            principal.usuario = usuario;
-                            principal.Show();
-                            this.Hide();
-                        }
-                        else
-                        {
-                            MessageBox.Show("El usuario y/o contraseña no son valids,\nFavor de introducirlas nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            txtUser.Text = "";
-                            txtContraseña.Clear();
-                            txtContraseña.Focus();
+                            if (Convert.ToString(reader["inicio"].ToString()) == "0")
+                            {
+                                string aut = Autentica();
+                                if (aut != "ERROR")
+                                {
+                                    frmAbrirCaja caja = new frmAbrirCaja();
+                                    caja.usuario = aut;
+                                    caja.id = idMesero;
+                                    caja.nombre = usuario;
+                                    caja.Show();
+                                    this.Hide();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("El usuario y/o contraseña no son valids,\nFavor de introducirlas nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    txtUser.Text = "";
+                                    txtContraseña.Clear();
+                                    txtContraseña.Focus();
+                                }
+                            }
+                            else
+                            {
+                                string aut = Autentica();
+                                if (aut != "ERROR")
+                                {
+                                    frmPrincipal principal = new frmPrincipal();
+                                    principal.id = idMesero;
+                                    principal.lblUser.Text = aut;
+                                    principal.usuario = usuario;
+                                    principal.Show();
+                                    this.Hide();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("El usuario y/o contraseña no son valids,\nFavor de introducirlas nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    txtUser.Text = "";
+                                    txtContraseña.Clear();
+                                    txtContraseña.Focus();
+                                }
+                            }
                         }
                     }
                 }

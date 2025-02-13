@@ -50,7 +50,6 @@
             this.txtProducto.Name = "txtProducto";
             this.txtProducto.Size = new System.Drawing.Size(234, 20);
             this.txtProducto.TabIndex = 0;
-            this.txtProducto.TextChanged += new System.EventHandler(this.txtProducto_TextChanged);
             // 
             // label1
             // 
@@ -63,7 +62,6 @@
             this.label1.Size = new System.Drawing.Size(147, 18);
             this.label1.TabIndex = 4;
             this.label1.Text = "Nombre Producto:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // txtCantidad
             // 
@@ -71,7 +69,6 @@
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(185, 20);
             this.txtCantidad.TabIndex = 1;
-            this.txtCantidad.TextChanged += new System.EventHandler(this.txtCantidad_TextChanged);
             this.txtCantidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad_KeyPress);
             // 
             // label3
@@ -85,7 +82,6 @@
             this.label3.Size = new System.Drawing.Size(79, 18);
             this.label3.TabIndex = 8;
             this.label3.Text = "Cantidad:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // button1
             // 
@@ -123,7 +119,6 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(188, 21);
             this.comboBox1.TabIndex = 2;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -136,7 +131,6 @@
             this.label4.Size = new System.Drawing.Size(147, 18);
             this.label4.TabIndex = 12;
             this.label4.Text = "Unidad de medida:";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label2
             // 
@@ -149,7 +143,6 @@
             this.label2.Size = new System.Drawing.Size(63, 18);
             this.label2.TabIndex = 14;
             this.label2.Text = "Origen:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // comboBox2
             // 
@@ -168,7 +161,6 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(188, 21);
             this.comboBox2.TabIndex = 3;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // txtPrecio
             // 

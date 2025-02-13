@@ -38,7 +38,6 @@
             this.button6 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button7 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbOrigen = new System.Windows.Forms.ComboBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -153,17 +152,6 @@
             this.textBox1.TabIndex = 7;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // button7
-            // 
-            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.Location = new System.Drawing.Point(850, 401);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(131, 37);
-            this.button7.TabIndex = 9;
-            this.button7.Text = "Mesas";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -174,7 +162,6 @@
             this.label2.Size = new System.Drawing.Size(86, 24);
             this.label2.TabIndex = 10;
             this.label2.Text = "Filtrado:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // cmbOrigen
             // 
@@ -292,7 +279,6 @@
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.cmbOrigen);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button7);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button6);
@@ -323,7 +309,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.ComboBox cmbOrigen;
         public System.Windows.Forms.CheckBox checkBox1;

@@ -36,9 +36,9 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(123, 55);
+            this.button1.Location = new System.Drawing.Point(98, 41);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(116, 43);
+            this.button1.Size = new System.Drawing.Size(241, 43);
             this.button1.TabIndex = 49;
             this.button1.Text = "Agregar";
             this.button1.UseVisualStyleBackColor = true;
@@ -47,7 +47,7 @@
             // txtNombre
             // 
             this.txtNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombre.Location = new System.Drawing.Point(123, 9);
+            this.txtNombre.Location = new System.Drawing.Point(98, 9);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(241, 26);
             this.txtNombre.TabIndex = 48;
@@ -59,16 +59,16 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(12, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(105, 24);
+            this.label2.Size = new System.Drawing.Size(80, 24);
             this.label2.TabIndex = 47;
-            this.label2.Text = "Categoria:";
+            this.label2.Text = "Origen:";
             // 
             // frmAgregarOrigen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(393, 117);
+            this.ClientSize = new System.Drawing.Size(351, 100);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.label2);

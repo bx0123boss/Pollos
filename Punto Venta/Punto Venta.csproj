@@ -379,18 +379,6 @@
     <Compile Include="frmInventarioFisico.Designer.cs">
       <DependentUpon>frmInventarioFisico.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmMesa.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMesa.Designer.cs">
-      <DependentUpon>frmMesa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmMesas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMesas.Designer.cs">
-      <DependentUpon>frmMesas.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmMesasOcupadas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -639,12 +627,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmInventarioFisico.resx">
       <DependentUpon>frmInventarioFisico.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMesa.resx">
-      <DependentUpon>frmMesa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMesas.resx">
-      <DependentUpon>frmMesas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMesasOcupadas.resx">
       <DependentUpon>frmMesasOcupadas.cs</DependentUpon>
