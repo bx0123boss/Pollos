@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
@@ -26,41 +27,50 @@ namespace Punto_Venta
         private void frmMesasOcupadas_Load(object sender, EventArgs e)
         {
             cargarMesas();
-            cargarFolios();
-            cargarRuta();
+            //cargarFolios();
+            //cargarRuta();
         }
         public void cargarMesas()
         {
-
-            ds = new DataSet();
-            conectar.Open();
-            da = new OleDbDataAdapter("select * from mesas order by Nombre;", conectar);
-            da.Fill(ds, "Id");
-            dgvMesas.DataSource = ds.Tables["Id"];
-            for (int i = 0; i < dgvMesas.RowCount; i++)
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                string id = dgvMesas[0, i].Value.ToString();
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 16, FontStyle.Bold);
-                //but.BackColor = Color.Aqua;
-                but.Size = new System.Drawing.Size(135, 80);
-                but.Text = dgvMesas[1, i].Value.ToString();
-                but.Click += new EventHandler(this.Myevent);
-                but.MouseHover += new EventHandler(this.Myevent2);
-                flowBotones.Controls.Add(but);
-                cmd = new OleDbCommand("SELECT * FROM ArticulosMesa where Mesa='" + id + "';", conectar);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
+                conectar.Open();
+
+                // Consulta para obtener las mesas
+                string query = @"SELECT A.IdMesa, A.Nombre, B.Usuario AS Mesero, A.CantidadPersonas, A.Impresion, A.IdMesero
+                                    FROM MESAS A INNER JOIN  USUARIOS B ON A.IdMesero = B.IdUsuario
+                                    ORDER BY Nombre";
+
+                using (SqlCommand cmd = new SqlCommand(query, conectar))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    but.BackColor = Color.Red;
+                    // Recorrer los resultados de la consulta
+                    while (reader.Read())
+                    {
+                        // Crear un botón para la mesa
+                        Button but = new Button();
+                        but.FlatStyle = FlatStyle.Flat;
+                        but.FlatAppearance.BorderSize = 0;
+                        but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 16, FontStyle.Bold);
+                        but.Size = new System.Drawing.Size(135, 80);
+                        but.Text = reader["Nombre"].ToString(); // Asignar el nombre de la mesa al botón
+                        but.Click += new EventHandler(this.Myevent); // Asignar evento Click
+                        but.MouseHover += new EventHandler(this.Myevent2); // Asignar evento MouseHover
+                        but.BackColor = Color.SkyBlue;
+                        but.Tag = new { 
+                                        Id = reader["IdMesa"].ToString(), 
+                                        Nombre = reader["Nombre"].ToString(), 
+                                        Impresion = reader["Impresion"].ToString(), 
+                                        IdMesero = reader["IdMesero"].ToString(),
+                                        Mesero = reader["Mesero"].ToString()
+                        };
+
+                        // Agregar el botón al FlowLayoutPanel
+                        flowBotones.Controls.Add(but);
+                    }
                 }
-                else
-                {
-                    but.BackColor = Color.SkyBlue;
-                }
-            }               
+            }
+
         }
         public void cargarFolios()
         {
@@ -106,7 +116,7 @@ namespace Punto_Venta
                 but2.Click += new EventHandler(this.Myevent4);
                 flowBotones.Controls.Add(but2);
                 but2.BackColor = Color.Sienna;
-
+                but2.Visible = true;
             }
         }
         private void button1_Click(object sender, EventArgs e)
@@ -115,62 +125,42 @@ namespace Punto_Venta
         }
         private void Myevent(object sender, EventArgs e)
         {
-            //BOTON PULSADO ALV
-            if ((sender as Button).BackColor == Color.SkyBlue)
+            Button boton = sender as Button;
+            var data = (dynamic)boton.Tag;
+            bool abierto = false;
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm.GetType() == typeof(frmCobros))
+                {
+                    abierto = true;
+                    frm.BringToFront();
+                }
+            }
+            if (abierto)
             {
 
             }
             else
             {
-                bool abierto = false;
-                foreach (Form frm in Application.OpenForms)
-                {
-                    if (frm.GetType() == typeof(frmCobros))
-                    {
-                        abierto = true;
-                        frm.BringToFront();
-                    }
-                }
-                if (abierto)
-                {
-
-                }
-                else
-                {
-                    cmd = new OleDbCommand("select id,IdMesero,Mesero,Print from Mesas where Nombre='" + (sender as Button).Text + "';", conectar);
-                    OleDbDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        frmCobros cobrar = new frmCobros();
-                        cobrar.lblID.Text = reader[0].ToString();
-                        cobrar.lblMesa.Text = (sender as Button).Text;
-                        cobrar.lblMesero.Text = reader[2].ToString();
-                        try
-                        {
-                            cobrar.idMesero = Convert.ToInt32(reader[1].ToString());
-                        }
-                        catch 
-                        {
-                            cobrar.idMesero = 0;
-                            cobrar.lblMesero.Text = "Administrador";
-                        }
-
-                        cobrar.print = reader[3].ToString();
-                        cobrar.ShowDialog();
-                        this.Close();
-                    }
-                }
+                frmCobros cobrar = new frmCobros();
+                cobrar.lblID.Text = data.Id;
+                cobrar.lblMesa.Text = (sender as Button).Text;
+                cobrar.lblMesero.Text = data.Mesero;
+                cobrar.idMesero = int.Parse(data.IdMesero);
+                cobrar.print = data.Impresion == "True" ? "1" : "0";
+                cobrar.ShowDialog();
+                this.Close();
+            
             }
+
+
         }
 
         private void Myevent2(object sender, EventArgs e)
         {
-            cmd = new OleDbCommand("select Mesero from Mesas where Nombre='" + (sender as Button).Text + "';", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                lblMesero.Text = reader[0].ToString();
-            }
+            Button boton = sender as Button;
+            var data = (dynamic)boton.Tag;
+            lblMesero.Text = data.Mesero;
         }
 
         private void Myevent3(object sender, EventArgs e)
@@ -226,6 +216,13 @@ namespace Punto_Venta
         {
             frmComandaGeneral com = new frmComandaGeneral();
             com.ShowDialog();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            frmAgregarMesas add = new frmAgregarMesas();
+            add.Show();
+            this.Close();
         }
     }
 }

@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="JaegerSoft FastFood.exe" size="10178560">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="JaegerSoft FastFood.exe" size="10177024">
       <assemblyIdentity name="JaegerSoft FastFood" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>xPSJSJzJqfuctpXbzMKVspVVXSvoa6e2ezWl6YGn/Z4=</dsig:DigestValue>
+        <dsig:DigestValue>6qmO1ceDyFMjIz2fG8leE5hZCcdp6n7WCrwA9swo63k=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

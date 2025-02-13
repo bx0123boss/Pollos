@@ -132,7 +132,7 @@ namespace Punto_Venta
         {
             frmPlatillos platillo = new frmPlatillos();
             platillo.Show();
-            //this.Close();
+            this.Close();
         }
 
         private void button6_Click(object sender, EventArgs e)
