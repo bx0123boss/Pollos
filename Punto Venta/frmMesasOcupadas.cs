@@ -151,8 +151,8 @@ namespace Punto_Venta
                 cobrar.idMesero = int.Parse(data.IdMesero);
                 cobrar.print = data.Impresion == "True" ? "1" : "0";
                 cobrar.lblPersonas.Text = data.CantPersonas;
-                cobrar.ShowDialog();
-                this.Close();
+                cobrar.Show();
+                
             
             }
 

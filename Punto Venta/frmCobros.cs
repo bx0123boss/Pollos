@@ -22,7 +22,7 @@ namespace Punto_Venta
     public partial class frmCobros : Form
     {
         private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
+        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
         OleDbDataAdapter da;
         OleDbCommand cmd;
         double iva;
@@ -33,6 +33,8 @@ namespace Punto_Venta
         string tipoUser = "";
         public int idMesero = 0;
         public string print = "";
+        public int idCliente = 0;
+
         public frmCobros()
         {
             InitializeComponent();
@@ -54,14 +56,14 @@ namespace Punto_Venta
         private void frmCobros_Load(object sender, EventArgs e)
         {
             if (print == "1")
-                button1.Visible = false; 
+                button1.Visible = false;
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
                 DataSet ds = new DataSet();
                 string query = @"
                     SELECT 
-                    A.IdInventario, A.IdArticulosMesa, A.Cantidad,B.Nombre, B.Precio, A.Total,A.FechaHora, A.Comentario
+                    A.IdInventario, A.IdArticulosMesa, A.Cantidad,B.Nombre, B.Precio, A.Total,A.FechaHora, A.Comentario, '0' AS Ids
                     FROM ArticulosMesa A
                     INNER JOIN INVENTARIO B ON A.IdInventario = B.IdInventario
                     WHERE A.IdUsuarioCancelo IS NULL 
@@ -143,12 +145,12 @@ namespace Punto_Venta
                     {
                         iva = ori.iva;
                         double lol = total;
-                        lol = Math.Truncate((lol * (iva/100+1)) * 100) / 100;
+                        lol = Math.Truncate((lol * (iva / 100 + 1)) * 100) / 100;
                         lblTotal.Text = $"{lol:C}";
                     }
-                    
+
                 }
-                
+
             }
             else
             {
@@ -177,84 +179,97 @@ namespace Punto_Venta
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            
-            using (SqlConnection connection = new SqlConnection(Conexion.CadConSql))
+            double ventas = 0;
+            int mesas = 0;
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                try
+                conectar.Open();
+
+                // 1. Insertar en la tabla Folios y obtener el último IdFolio
+                string insertFolioQuery = "INSERT INTO Folios (ModalidadVenta, Estatus, idCliente, FechaHora, Total, Utilidad) " +
+                                          "VALUES (@ModalidadVenta, @Estatus, @idCliente, @FechaHora, @Total, @Utilidad); " +
+                                          "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
+
+                using (SqlCommand cmd = new SqlCommand(insertFolioQuery, conectar))
                 {
-                    connection.Open();
+                    cmd.Parameters.AddWithValue("@ModalidadVenta", "MESA");
+                    cmd.Parameters.AddWithValue("@Estatus", "COBRADO");
+                    cmd.Parameters.AddWithValue("@idCliente", idCliente == 0 ? (object)DBNull.Value : idCliente);
+                    cmd.Parameters.AddWithValue("@FechaHora", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@Total", total);
+                    cmd.Parameters.AddWithValue("@Utilidad", 20.00);
 
-                    // 1. Insertar en la tabla Folios y obtener el último IdFolio
-                    string insertFolioQuery = "INSERT INTO Folios (ModalidadVenta, Estatus, idCliente, FechaHora, Total, Utilidad) " +
-                                              "VALUES (@ModalidadVenta, @Estatus, @idCliente, @FechaHora, @Total, @Utilidad); " +
-                                              "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
+                    // Ejecutar la inserción y obtener el último ID insertado
+                    int lastIdFolio = Convert.ToInt32(cmd.ExecuteScalar());
 
-                    using (SqlCommand cmd = new SqlCommand(insertFolioQuery, connection))
+                    // 2. Insertar en la tabla ArticulosFolio usando el último IdFolio
+                    string insertArticuloQuery = "INSERT INTO ArticulosFolio (IdInventario, IdFolio, Cantidad, Comentario, Total, IdExtra) " +
+                                                  "VALUES (@IdProducto, @IdFolio, @Cantidad, @Comentario, @Total, @IdExtra);";
+
+                    for (int i = 0; i < dataGridView1.RowCount; i++)
                     {
-                        cmd.Parameters.AddWithValue("@ModalidadVenta", "MESA");
-                        cmd.Parameters.AddWithValue("@Estatus", "COBRADO");
-                        cmd.Parameters.AddWithValue("@idCliente", "NULL");
-                        cmd.Parameters.AddWithValue("@FechaHora", DateTime.Now);
-                        cmd.Parameters.AddWithValue("@Total", total);
-                        cmd.Parameters.AddWithValue("@Utilidad", 20.00);
-
-                        // Ejecutar la inserción y obtener el último ID insertado
-                        int lastIdFolio = Convert.ToInt32(cmd.ExecuteScalar());
-
-                        // 2. Insertar en la tabla ArticulosFolio usando el último IdFolio
-                        string insertArticuloQuery = "INSERT INTO ArticulosFolio (IdProducto, IdFolio, Cantidad, Comentario, Total, IdExtra) " +
-                                                      "VALUES (@IdProducto, @IdFolio, @Cantidad, @Comentario, @Total, @IdExtra);";
-
-                        for (int i = 0; i < dataGridView1.RowCount; i++)
+                        using (SqlCommand cmd2 = new SqlCommand(insertArticuloQuery, conectar))
                         {
-                            using (SqlCommand insertArticuloCommand = new SqlCommand(insertArticuloQuery, connection))
-                            {
-                                insertArticuloCommand.Parameters.AddWithValue("@IdProducto", dataGridView1.Rows[i].Cells["IdProducto"].Value);
-                                insertArticuloCommand.Parameters.AddWithValue("@IdFolio", lastIdFolio);
-                                insertArticuloCommand.Parameters.AddWithValue("@Cantidad", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Cantidad"].Value));
-                                insertArticuloCommand.Parameters.AddWithValue("@Comentario", dataGridView1.Rows[i].Cells["Comentario"].Value?.ToString());
-                                insertArticuloCommand.Parameters.AddWithValue("@Total", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Total"].Value));
-                                insertArticuloCommand.Parameters.AddWithValue("@IdExtra", dataGridView1.Rows[i].Cells["IdExtra"].Value?.ToString());
+                            cmd2.Parameters.AddWithValue("@IdProducto", dataGridView1.Rows[i].Cells["IdInventario"].Value);
+                            cmd2.Parameters.AddWithValue("@IdFolio", lastIdFolio);
+                            cmd2.Parameters.AddWithValue("@Cantidad", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Cantidad"].Value));
+                            cmd2.Parameters.AddWithValue("@Comentario", dataGridView1.Rows[i].Cells["Comentario"].Value?.ToString());
+                            cmd2.Parameters.AddWithValue("@Total", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Total"].Value));
+                            cmd2.Parameters.AddWithValue("@IdExtra", dataGridView1.Rows[i].Cells["Ids"].Value?.ToString());
 
-                                insertArticuloCommand.ExecuteNonQuery();
-                            }
+                            cmd2.ExecuteNonQuery();
                         }
-
                     }
                 }
-                catch (Exception ex)
+                using (SqlCommand cmd = new SqlCommand("SELECT Ventas, Mesas FROM Usuarios WHERE IdUsuario = @IdMesero;", conectar))
                 {
-                    Console.WriteLine("Error: " + ex.Message);
+                    cmd.Parameters.AddWithValue("@IdMesero", idMesero);
+
+                    using (SqlDataReader sqlDataReader = cmd.ExecuteReader())
+                    {
+                        if (sqlDataReader.Read())
+                        {
+                            ventas = Convert.ToDouble(sqlDataReader["Ventas"]);
+                            mesas = Convert.ToInt32(sqlDataReader["Mesas"]);
+                        }
+                    }
+
+                    // Actualizar las ventas y mesas
+                    ventas += total;
+                    mesas++;
+
+                    using (SqlCommand cmd2 = new SqlCommand("UPDATE Usuarios SET Ventas = @Ventas, Mesas = @Mesas WHERE IdUsuario = @IdMesero;", conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@Ventas", ventas);
+                        cmd2.Parameters.AddWithValue("@Mesas", mesas);
+                        cmd2.Parameters.AddWithValue("@IdMesero", idMesero);
+
+                        cmd2.ExecuteNonQuery();
+                    }
+                    using (SqlCommand cmd2 = new SqlCommand("UPDATE MESAS SET Estatus = 'COBRADO' WHERE IdMesa = @IdMesa;", conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@IdMesa", lblID.Text);
+
+                        cmd2.ExecuteNonQuery();
+                    }
+                    using (SqlCommand cmd2 = new SqlCommand("UPDATE ArticulosMesa SET Estatus = 'COBRADO' WHERE IdMesa = @IdMesa;", conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@IdMesa", lblID.Text);
+
+                        cmd2.ExecuteNonQuery();
+                    }
+
+
                 }
+
+
             }
-                double ventas = 0;
-                int mesas = 0;
-            cmd = new OleDbCommand("select * from Usuarios where Id=" + idMesero + ";", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                ventas = Convert.ToDouble(reader[4].ToString());
-                mesas = Convert.ToInt32(reader[5].ToString());
-            }
-            ventas += total;
-            mesas++;
-            cmd = new OleDbCommand("UPDATE Usuarios SET Ventas='" + ventas + "', Mesas='" + mesas + "' where Id=" + idMesero + ";", conectar);
-            cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("UPDATE Mesas SET idMesero='0', Mesero='',Print='0' where Id=" + lblID.Text+ ";", conectar);
-            cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("delete from ArticulosMesa where Mesa='" + lblID.Text + "';", conectar);
-            cmd.ExecuteNonQuery();
-            if (Conexion.impresora == "")
-            {
-            }
-            else
+            if (print == "1")
+                imprimir();
+            DialogResult dialogResult = MessageBox.Show("¿Imprimir otro ticket?", "Alto!", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
                 imprimir();
-                DialogResult dialogResult = MessageBox.Show("¿Imprimir otro ticket?", "Alto!", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    imprimir();
-                }
             }
             MessageBox.Show("EL COBRO SE HA REALIZADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
@@ -386,7 +401,7 @@ namespace Punto_Venta
             posicion += 50;
             //Titulo Columna
             e.Graphics.DrawString("Cant   Producto        P.Unit  Importe", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-            posicion+=20;
+            posicion += 20;
             e.Graphics.DrawLine(new Pen(Color.Black), 1, posicion, 420, posicion);
             posicion += 10;
             //Lista de Productos
@@ -395,27 +410,28 @@ namespace Punto_Venta
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
 
-                double precio = Convert.ToDouble(dataGridView1[4, i].Value.ToString());
-                string producto = dataGridView1[2, i].Value.ToString();
-                double cant = Convert.ToDouble(dataGridView1[1, i].Value.ToString());
+
+                double precio = Convert.ToDouble(dataGridView1.Rows[i].Cells["Total"].Value);
+                string producto = dataGridView1.Rows[i].Cells["Nombre"].Value.ToString();
+                double cant = Convert.ToDouble(dataGridView1.Rows[i].Cells["Cantidad"].Value);
                 string item = cant.ToString("0.00", CultureInfo.InvariantCulture);
                 string pre = precio.ToString("00.00", CultureInfo.InvariantCulture);
-                double precioUni = Convert.ToDouble(dataGridView1[3, i].Value.ToString());
+                double precioUni = Convert.ToDouble(dataGridView1.Rows[i].Cells["Precio"].Value.ToString());
                 string uni = precioUni.ToString("00.00", CultureInfo.InvariantCulture);
                 if (producto.Length > 20)
                 {
                     producto = producto.Substring(0, 20);
                 }
-                
-                e.Graphics.DrawString(item , new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(1, posicion));
+
+                e.Graphics.DrawString(item, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(1, posicion));
                 e.Graphics.DrawString(producto, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(40, posicion));
-                e.Graphics.DrawString(uni, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(230, posicion),sf);
-                e.Graphics.DrawString(String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", precio), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(280, posicion),sf);
+                e.Graphics.DrawString(uni, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(230, posicion), sf);
+                e.Graphics.DrawString(String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", precio), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(280, posicion), sf);
                 posicion += 20;
                 string ide;
                 if (dataGridView1[0, i].Value.ToString().Substring(0, 1) == "C")
                 {
-                    if (dataGridView1[9, i].Value.ToString().Length > 0)
+                    if (dataGridView1.Rows[i].Cells["Ids"].Value.ToString().Length > 0)
                     {
                         ide = dataGridView1[9, i].Value.ToString();
                         string[] ids = ide.Split(';');
@@ -457,7 +473,7 @@ namespace Punto_Venta
             }
             double to = Convert.ToDouble(total);
             string toty = String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", to);
-            e.Graphics.DrawLine(new Pen(Color.Black), 210, posicion+10, 420, posicion+10);            
+            e.Graphics.DrawLine(new Pen(Color.Black), 210, posicion + 10, 420, posicion + 10);
             posicion += 15;
             e.Graphics.DrawString("TOTAL: $" + toty, new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new Point(280, posicion), sf);
             posicion += 50;
@@ -469,7 +485,7 @@ namespace Punto_Venta
             }
             posicion += 20;
             e.Graphics.DrawLine(new Pen(Color.Black), 1, posicion, 2, posicion);
-            
+
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -486,7 +502,7 @@ namespace Punto_Venta
 
         private void txtDescuento_KeyPress(object sender, KeyPressEventArgs e)
         {
-            
+
 
             if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back) && (e.KeyChar != (char)Keys.Enter))
             {
@@ -504,7 +520,7 @@ namespace Punto_Venta
             if (radioButton1.Checked)
             {
                 descuento = Convert.ToDouble(txtDescuento.Text);
-                if (descuento>100)
+                if (descuento > 100)
                 {
                     MessageBox.Show("No se puede hacer un descuento mayor al 100%, favor de verificar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     ResetearDescuento();
@@ -532,7 +548,7 @@ namespace Punto_Venta
         {
             radioButton1.Checked = false;
             radioButton2.Checked = false;
-            
+
             txtDescuento.Clear();
             descuento = 0;
             lblDescuento.Text = $"{descuento:C}";
@@ -543,8 +559,8 @@ namespace Punto_Venta
         private void txtDescuento_Leave(object sender, EventArgs e)
         {
             if (descuento != 0)
-                return;    
-            else if(String.IsNullOrEmpty(txtDescuento.Text))
+                return;
+            else if (String.IsNullOrEmpty(txtDescuento.Text))
             {
                 MessageBox.Show("Ingrese un valor de moneda válido (ejemplo: 13.45)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
