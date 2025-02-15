@@ -15,6 +15,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Data.SqlClient;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Punto_Venta
 {
@@ -35,25 +36,7 @@ namespace Punto_Venta
         public frmCobros()
         {
             InitializeComponent();
-        }
-        public void obtenerYSumar()
-        {
-            cmd = new OleDbCommand("SELECT TOP 1 Folio AS MaxFolio FROM folios ORDER BY fecha DESC, Folio DESC;", conectar);
-            Console.WriteLine(cmd.ToString());
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                int numero = Convert.ToInt32(reader[0].ToString().Substring(1));
-                suma = numero;
-                suma++;
-            }
-            lblFolio.Text = "V" + suma;
-        }
-        public void obtenerYSumar2()
-        {
-            suma = suma + 1;
-            cmd = new OleDbCommand("UPDATE Folio set Numero=" + suma + " where Folio='Venta';", conectar);
-            cmd.ExecuteNonQuery();
+            this.MinimumSize = new Size(810, 400);
         }
         private double RecalcularTotal
         {
@@ -64,19 +47,21 @@ namespace Punto_Venta
                 {
                     total += Convert.ToDouble(dataGridView1.Rows[i].Cells["Total"].Value);
                 }
-                return total;
+                return total - descuento;
             }
         }
 
         private void frmCobros_Load(object sender, EventArgs e)
         {
+            if (print == "1")
+                button1.Visible = false; 
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
                 DataSet ds = new DataSet();
                 string query = @"
                     SELECT 
-                    A.IdArticulosMesa, A.Cantidad, B.Precio, A.Total, A.Comentario, A.FechaHora
+                    A.IdInventario, A.IdArticulosMesa, A.Cantidad,B.Nombre, B.Precio, A.Total,A.FechaHora, A.Comentario
                     FROM ArticulosMesa A
                     INNER JOIN INVENTARIO B ON A.IdInventario = B.IdInventario
                     WHERE A.IdUsuarioCancelo IS NULL 
@@ -89,12 +74,9 @@ namespace Punto_Venta
                 }
 
                 dataGridView1.DataSource = ds.Tables["Articulos"];
-
-                // Ocultar la primera columna (si es necesario)
-                if (dataGridView1.Columns.Count > 0)
-                {
-                    dataGridView1.Columns[0].Visible = false;
-                }
+                dataGridView1.Columns["Precio"].DefaultCellStyle.Format = "N2";
+                dataGridView1.Columns["Total"].DefaultCellStyle.Format = "N2";
+                dataGridView1.Columns[0].Visible = false;
                 lblTotal.Text = $"{RecalcularTotal:C}";
             }
 
@@ -102,9 +84,17 @@ namespace Punto_Venta
 
         public void imprimir()
         {
-            print = "0";
-            cmd = new OleDbCommand("UPDATE Mesas SET Print='0' where Id=" + lblID.Text + ";", conectar);
-            cmd.ExecuteNonQuery();
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
+
+                using (SqlCommand cmd = new SqlCommand("UPDATE MESAS SET Impresion = 1 WHERE IdMesa = @IdMesa;", conectar))
+                {
+                    cmd.Parameters.AddWithValue("@IdMesa", lblID.Text);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
             int width = 420;
             int height = 540;
             printDocument1.PrinterSettings.DefaultPageSettings.PaperSize = new PaperSize("", width, height);
@@ -116,6 +106,7 @@ namespace Punto_Venta
             printPrvDlg.Document = pd;
             printdlg.Document = pd;
             pd.Print();
+            button1.Hide();
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -136,8 +127,8 @@ namespace Punto_Venta
             }
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
-                txtCambio.Text = "" + (Convert.ToDouble(txtPago.Text) - total);
-                txtPago.Text = "" + txtPago.Text;
+                txtCambio.Text = $"{(Convert.ToDouble(txtPago.Text) - total):C}";
+                txtPago.Text = $"{(Convert.ToDouble(txtPago.Text)):C}";
                 button2.Focus();
             }
         }
@@ -166,35 +157,6 @@ namespace Punto_Venta
 
 
         }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            total = 0;
-            float cantidad = Convert.ToSingle(dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString());
-            float precio = Convert.ToSingle(dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString());
-            float monto = cantidad * precio;
-            dataGridView1.Rows[e.RowIndex].Cells[4].Value = monto;
-            for (int i = 0; i < dataGridView1.RowCount; i++)
-            {
-                total += Convert.ToSingle(dataGridView1[4, i].Value.ToString(), CultureInfo.CreateSpecificCulture("es-ES"));
-            }
-
-            if (checkBox1.Checked)
-            {
-                double lol = total;
-                lol = Math.Truncate((lol * 1.03) * 100) / 100;
-                lblTotal.Text = $"{lol:C}";
-            }
-            else
-            {
-                lblTotal.Text = $"{total:C}";
-            }
-        }
         public string obtenerSubcategoria(string id)
         {
             string subcategoria = "";
@@ -215,46 +177,56 @@ namespace Punto_Venta
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            button2.Hide();
-            obtenerYSumar();
-            folio = "V" + String.Format("{0:0000}", suma);
-            string formaPago = "Efectivo";
-            if (checkBox1.Checked)
+            
+            using (SqlConnection connection = new SqlConnection(Conexion.CadConSql))
             {
-                formaPago = "Tarjeta";
-            }
-            double utilidad = 0;
-            for (int i = 0; i < dataGridView1.RowCount; i++)
-            {
+                try
+                {
+                    connection.Open();
 
-                utilidad += Convert.ToDouble(dataGridView1[10, i].Value.ToString());
-                double lol = Convert.ToDouble(dataGridView1[4, i].Value.ToString());
-                string producto;
-                if (dataGridView1[2, i].Value.ToString().Length > 12)
-                {
-                    producto = dataGridView1[2, i].Value.ToString().Substring(0, 12);
-                }
-                else
-                {
-                    producto = dataGridView1[2, i].Value.ToString();
-                }
-                string ide = "";
-                if (dataGridView1[9, i].Value.ToString().Length>0)
-                {
-                    ide = dataGridView1[9, i].Value.ToString();
-                }
-                cmd = new OleDbCommand("insert into temp(id,cantidad, producto, precio, total,ide) values ('" + dataGridView1[0, i].Value.ToString() + "','" + dataGridView1[1, i].Value.ToString() + "','" + dataGridView1[2, i].Value.ToString() + "'," + dataGridView1[3, i].Value.ToString() + ",'" + dataGridView1[4, i].Value.ToString() + "','"+ide+"');", conectar);
-                cmd.ExecuteNonQuery();
-               //SUBCATEGORIALV
-                string subcategoria =obtenerSubcategoria(dataGridView1[0, i].Value.ToString());
-                cmd = new OleDbCommand("insert into ventas(idProducto,cantidad, producto, precio, total,folio,Fecha,Estatus,ide,subcategoria,Utilidad) values ('" + dataGridView1[0, i].Value.ToString() + "','" + dataGridView1[1, i].Value.ToString() + "','" + dataGridView1[2, i].Value.ToString() + "'," + dataGridView1[3, i].Value.ToString() + ",'" + dataGridView1[4, i].Value.ToString() + "','" + folio + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COBRADO','"+ ide + "','"+subcategoria+"','"+ dataGridView1[10, i].Value.ToString()+"');", conectar);
-                cmd.ExecuteNonQuery();
-            }
-            cmd = new OleDbCommand("INSERT INTO folios(Folio,ModalidadVenta,Estatus,idCliente,Vehiculo,Repartidor,Fecha,Monto,FormaPago, Utilidad) VALUES ('" + folio + "','Mesa','COBRADO','0','" + idMesero + "','" + lblMesero.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + total + "','" + formaPago + "','"+utilidad+"');", conectar);
-            cmd.ExecuteNonQuery();
+                    // 1. Insertar en la tabla Folios y obtener el último IdFolio
+                    string insertFolioQuery = "INSERT INTO Folios (ModalidadVenta, Estatus, idCliente, FechaHora, Total, Utilidad) " +
+                                              "VALUES (@ModalidadVenta, @Estatus, @idCliente, @FechaHora, @Total, @Utilidad); " +
+                                              "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
 
-            cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('VENTA FOLIO:" + folio + " MESA " + lblMesa.Text + "'," + total + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','"+formaPago+"');", conectar);
-                cmd.ExecuteNonQuery(); 
+                    using (SqlCommand cmd = new SqlCommand(insertFolioQuery, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@ModalidadVenta", "MESA");
+                        cmd.Parameters.AddWithValue("@Estatus", "COBRADO");
+                        cmd.Parameters.AddWithValue("@idCliente", "NULL");
+                        cmd.Parameters.AddWithValue("@FechaHora", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@Total", total);
+                        cmd.Parameters.AddWithValue("@Utilidad", 20.00);
+
+                        // Ejecutar la inserción y obtener el último ID insertado
+                        int lastIdFolio = Convert.ToInt32(cmd.ExecuteScalar());
+
+                        // 2. Insertar en la tabla ArticulosFolio usando el último IdFolio
+                        string insertArticuloQuery = "INSERT INTO ArticulosFolio (IdProducto, IdFolio, Cantidad, Comentario, Total, IdExtra) " +
+                                                      "VALUES (@IdProducto, @IdFolio, @Cantidad, @Comentario, @Total, @IdExtra);";
+
+                        for (int i = 0; i < dataGridView1.RowCount; i++)
+                        {
+                            using (SqlCommand insertArticuloCommand = new SqlCommand(insertArticuloQuery, connection))
+                            {
+                                insertArticuloCommand.Parameters.AddWithValue("@IdProducto", dataGridView1.Rows[i].Cells["IdProducto"].Value);
+                                insertArticuloCommand.Parameters.AddWithValue("@IdFolio", lastIdFolio);
+                                insertArticuloCommand.Parameters.AddWithValue("@Cantidad", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Cantidad"].Value));
+                                insertArticuloCommand.Parameters.AddWithValue("@Comentario", dataGridView1.Rows[i].Cells["Comentario"].Value?.ToString());
+                                insertArticuloCommand.Parameters.AddWithValue("@Total", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Total"].Value));
+                                insertArticuloCommand.Parameters.AddWithValue("@IdExtra", dataGridView1.Rows[i].Cells["IdExtra"].Value?.ToString());
+
+                                insertArticuloCommand.ExecuteNonQuery();
+                            }
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
                 double ventas = 0;
                 int mesas = 0;
             cmd = new OleDbCommand("select * from Usuarios where Id=" + idMesero + ";", conectar);
@@ -268,11 +240,10 @@ namespace Punto_Venta
             mesas++;
             cmd = new OleDbCommand("UPDATE Usuarios SET Ventas='" + ventas + "', Mesas='" + mesas + "' where Id=" + idMesero + ";", conectar);
             cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("UPDATE Mesas SET idMesero='0', Mesero='',Print='1' where Id=" + lblID.Text+ ";", conectar);
+            cmd = new OleDbCommand("UPDATE Mesas SET idMesero='0', Mesero='',Print='0' where Id=" + lblID.Text+ ";", conectar);
             cmd.ExecuteNonQuery();
             cmd = new OleDbCommand("delete from ArticulosMesa where Mesa='" + lblID.Text + "';", conectar);
             cmd.ExecuteNonQuery();
-            obtenerYSumar2();
             if (Conexion.impresora == "")
             {
             }
@@ -291,45 +262,49 @@ namespace Punto_Venta
 
         private void button3_Click(object sender, EventArgs e)
         {
-            try
+            if (dataGridView1.CurrentRow != null) // Verifica si hay una fila seleccionada
             {
-                if (print=="0")
+                if (print == "0")
                 {
-                    cmd = new OleDbCommand("delete from ArticulosMesa where ID1=" + dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString() + ";", conectar);
-                    cmd.ExecuteNonQuery();
-                    cmd = new OleDbCommand("INSERT INTO ArticulosCancelados(Cantidad, Producto, Comentario, Mesa, Fecha, Mesero, Cancelo) VALUES ('" + dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString() + "','" + dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString() + "','" + dataGridView1[6, dataGridView1.CurrentRow.Index].Value.ToString() + "','"+lblMesa.Text+"','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','"+lblMesero.Text+"','"+lblMesero.Text+"');", conectar);
-                    cmd.ExecuteNonQuery();
-                    string idInsertado = "";
-                    cmd = new OleDbCommand("select @@IDENTITY;", conectar);
-                    OleDbDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
+                    using (frmComentarios com = new frmComentarios())
                     {
-                        idInsertado = reader[0].ToString();
-                        //MessageBox.Show("ID cancelado: " + idInsertado);
-                    }
-                    if (dataGridView1.RowCount == 1)
-                    {
-                        cmd = new OleDbCommand("UPDATE Mesas set IdMesero='0', Mesero='', Print='1' Where Id=" + lblID.Text + ";", conectar);
-                        cmd.ExecuteNonQuery();
-                        MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Close();
-                    }
-                    else
-                    {
-                        total = 0;
-                        ds = new DataSet();
-                        da = new OleDbDataAdapter("select * from ArticulosMesa where Mesa='" + lblID.Text + "';", conectar);
-                        da.Fill(ds, "Id");
-                        dataGridView1.DataSource = ds.Tables["Id"];
-                        dataGridView1.Columns[0].Visible = false;
-                        dataGridView1.Columns[5].Visible = false;
-                        for (int i = 0; i < dataGridView1.RowCount; i++)
+                        if (com.ShowDialog() == DialogResult.OK)
                         {
-                            total += Convert.ToDouble(dataGridView1[4, i].Value.ToString());
+                            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                            {
+                                conectar.Open();
+
+                                using (SqlCommand cmd = new SqlCommand("UPDATE ArticulosMesa SET Comentario= @Comentario, Estatus = 'CANCELADO', IdUsuarioCancelo = @IdUsuarioCancelo WHERE IdArticulosMesa = @IdArticulosMesa;", conectar))
+                                {
+                                    cmd.Parameters.AddWithValue("@Comentario", com.Comentario);
+                                    cmd.Parameters.AddWithValue("@Estatus", "CANCELADO");
+                                    cmd.Parameters.AddWithValue("@IdUsuarioCancelo", idMesero);
+                                    cmd.Parameters.AddWithValue("@IdArticulosMesa", dataGridView1[0, dataGridView1.CurrentRow.Index].Value);
+
+                                    cmd.ExecuteNonQuery();
+                                }
+                                if (dataGridView1.RowCount == 1)
+                                {
+                                    using (SqlCommand cmd = new SqlCommand("UPDATE Mesas SET Estatus = 'CANCELADO' WHERE IdMesa = @IdMesa;", conectar))
+                                    {
+                                        cmd.Parameters.AddWithValue("@IdMesa", lblID.Text);
+
+                                        cmd.ExecuteNonQuery();
+                                        MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        this.Close();
+                                    }
+
+                                }
+                                else
+                                {
+                                    dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+                                    ResetearDescuento();
+                                    MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                            }
                         }
-                        lblTotal.Text = $"{RecalcularTotal:C}";
-                        MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        tipoUser = "";
+                        else
+                            MessageBox.Show("SE REQUIERE UN COMENTARIO PARA CANCELAR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
@@ -341,66 +316,53 @@ namespace Punto_Venta
                             tipoUser = ori.Tipo;
                             if (tipoUser == "Administrador" || tipoUser == "SUPERVISOR")
                             {
+
                                 using (frmComentarios com = new frmComentarios())
                                 {
                                     if (com.ShowDialog() == DialogResult.OK)
                                     {
-                                        string comentario = com.Comentario;
-                                        cmd = new OleDbCommand("delete from ArticulosMesa where ID1=" + dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString() + ";", conectar);
-                                        cmd.ExecuteNonQuery();
-                                        cmd = new OleDbCommand("INSERT INTO ArticulosCancelados(Cantidad, Producto, Comentario, Mesa, Fecha, Mesero, Cancelo) VALUES ('" + dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString() + "','" + dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString() + "','" + com.Comentario+ "','" + lblMesa.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblMesero.Text + "','" + ori.Mesero + "');", conectar);
-                                        cmd.ExecuteNonQuery();
-                                        string idInsertado = "";
-                                        cmd = new OleDbCommand("select @@IDENTITY;", conectar);
-                                        OleDbDataReader reader = cmd.ExecuteReader();
-                                        if (reader.Read())
+                                        using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                                         {
-                                            idInsertado = reader[0].ToString();
-                                            //MessageBox.Show("ID cancelado: " + idInsertado);
-                                        }
-                                        if (dataGridView1.RowCount == 1)
-                                        {
-                                            cmd = new OleDbCommand("UPDATE Mesas set IdMesero='0', Mesero='' Where Id=" + lblID.Text + ";", conectar);
-                                            cmd.ExecuteNonQuery();
-                                            MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                            this.Close();
-                                        }
-                                        else
-                                        {
-                                            total = 0;
-                                            ds = new DataSet();
-                                            da = new OleDbDataAdapter("select * from ArticulosMesa where Mesa='" + lblID.Text + "';", conectar);
-                                            da.Fill(ds, "Id");
-                                            dataGridView1.DataSource = ds.Tables["Id"];
-                                            dataGridView1.Columns[0].Visible = false;
-                                            dataGridView1.Columns[5].Visible = false;
-                                            for (int i = 0; i < dataGridView1.RowCount; i++)
-                                            {
-                                                total += Convert.ToDouble(dataGridView1[4, i].Value.ToString());
-                                            }
-                                            lblTotal.Text = $"{RecalcularTotal:C}";
+                                            conectar.Open();
 
-                                            MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                            tipoUser = "";
+                                            using (SqlCommand cmd = new SqlCommand("UPDATE ArticulosMesa SET Comentario= @Comentario, Estatus = 'CANCELADO', IdUsuarioCancelo = @IdUsuarioCancelo WHERE IdArticulosMesa = @IdArticulosMesa;", conectar))
+                                            {
+                                                cmd.Parameters.AddWithValue("@Comentario", com.Comentario);
+                                                cmd.Parameters.AddWithValue("@Estatus", "CANCELADO");
+                                                cmd.Parameters.AddWithValue("@IdUsuarioCancelo", idMesero);
+                                                cmd.Parameters.AddWithValue("@IdArticulosMesa", dataGridView1[0, dataGridView1.CurrentRow.Index].Value);
+
+                                                cmd.ExecuteNonQuery();
+                                            }
+                                            if (dataGridView1.RowCount == 1)
+                                            {
+                                                using (SqlCommand cmd = new SqlCommand("UPDATE Mesas SET Estatus = 'CANCELADO' WHERE IdMesa = @IdMesa;", conectar))
+                                                {
+                                                    cmd.Parameters.AddWithValue("@IdMesa", lblID.Text);
+
+                                                    cmd.ExecuteNonQuery();
+                                                    MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                                    this.Close();
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+                                                ResetearDescuento();
+                                                MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                            }
                                         }
                                     }
                                     else
-                                    MessageBox.Show("SE REQUIERE UN COMENTARIO PARA CANCELAR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        MessageBox.Show("SE REQUIERE UN COMENTARIO PARA CANCELAR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
                             else
                                 MessageBox.Show("SE REQUIERE CLAVE DE ADMINISTRADOR PARA CANCELAR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                        else
-                            this.Close();
-
                     }
                 }
-                
-            }
-            catch
-            {
-
             }
         }
 
@@ -512,11 +474,13 @@ namespace Punto_Venta
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
+            txtDescuento.Enabled = true;
             txtDescuento.Focus();
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
+            txtDescuento.Enabled = true;
             txtDescuento.Focus();
         }
 
@@ -532,17 +496,68 @@ namespace Punto_Venta
             }
             else if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
-                if (radioButton1.Checked)
-                {
-                    descuento = ((Convert.ToDouble(txtDescuento.Text) / 100)) * total;
-                }
-                else if (radioButton2.Checked)
-                {
-                    descuento = Convert.ToDouble(txtDescuento.Text);
-                }
-                lblTotal.Text = $"{Math.Round(RecalcularTotal - descuento, 0):C}";
-                MessageBox.Show("DESCUENTO REALIZADO POR LA CANTIDAD DE: $" + descuento, "DESCUENTO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RealizarDescuento();
             }
+        }
+        private void RealizarDescuento()
+        {
+            if (radioButton1.Checked)
+            {
+                descuento = Convert.ToDouble(txtDescuento.Text);
+                if (descuento>100)
+                {
+                    MessageBox.Show("No se puede hacer un descuento mayor al 100%, favor de verificar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    ResetearDescuento();
+                    return;
+                }
+                descuento = ((Convert.ToDouble(txtDescuento.Text) / 100)) * total;
+            }
+            else if (radioButton2.Checked)
+            {
+                descuento = Convert.ToDouble(txtDescuento.Text);
+                if (descuento > total)
+                {
+                    MessageBox.Show("No se puede hacer un descuento mayor al total, favor de verificar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    ResetearDescuento();
+                    return;
+                }
+            }
+            lblTotal.Text = $"{Math.Round(RecalcularTotal - descuento, 0):C}";
+            lblDescuento.Text = $"{descuento:C}";
+            label10.Visible = true;
+            lblDescuento.Visible = true;
+            MessageBox.Show($"DESCUENTO REALIZADO POR LA CANTIDAD DE: {descuento:C}", "DESCUENTO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        public void ResetearDescuento()
+        {
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            
+            txtDescuento.Clear();
+            descuento = 0;
+            lblDescuento.Text = $"{descuento:C}";
+            label10.Visible = false;
+            lblDescuento.Visible = false;
+            lblTotal.Text = $"{RecalcularTotal:C}";
+        }
+        private void txtDescuento_Leave(object sender, EventArgs e)
+        {
+            if (descuento != 0)
+                return;    
+            else if(String.IsNullOrEmpty(txtDescuento.Text))
+            {
+                MessageBox.Show("Ingrese un valor de moneda válido (ejemplo: 13.45)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                RealizarDescuento();
+            }
+        }
+
+        private void txtPago_Click(object sender, EventArgs e)
+        {
+            txtPago.Clear();
+            txtCambio.Clear();
         }
     }
 }

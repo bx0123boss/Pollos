@@ -37,11 +37,11 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.lblMesero = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -52,7 +52,7 @@
             this.button190.BackColor = System.Drawing.Color.Red;
             this.button190.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button190.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button190.Location = new System.Drawing.Point(927, 67);
+            this.button190.Location = new System.Drawing.Point(804, 67);
             this.button190.Name = "button190";
             this.button190.Size = new System.Drawing.Size(134, 49);
             this.button190.TabIndex = 56;
@@ -67,7 +67,7 @@
             this.button200.BackColor = System.Drawing.Color.SkyBlue;
             this.button200.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button200.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button200.Location = new System.Drawing.Point(927, 12);
+            this.button200.Location = new System.Drawing.Point(804, 12);
             this.button200.Name = "button200";
             this.button200.Size = new System.Drawing.Size(134, 49);
             this.button200.TabIndex = 55;
@@ -83,14 +83,14 @@
             this.flowBotones.AutoScroll = true;
             this.flowBotones.Location = new System.Drawing.Point(12, 12);
             this.flowBotones.Name = "flowBotones";
-            this.flowBotones.Size = new System.Drawing.Size(909, 253);
+            this.flowBotones.Size = new System.Drawing.Size(786, 239);
             this.flowBotones.TabIndex = 57;
             // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(927, 236);
+            this.button2.Location = new System.Drawing.Point(804, 236);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(134, 45);
             this.button2.TabIndex = 58;
@@ -106,7 +106,7 @@
             this.button1.BackColor = System.Drawing.Color.Orange;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(927, 122);
+            this.button1.Location = new System.Drawing.Point(804, 122);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(134, 49);
             this.button1.TabIndex = 62;
@@ -120,7 +120,7 @@
             this.button3.BackColor = System.Drawing.Color.Sienna;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(925, 177);
+            this.button3.Location = new System.Drawing.Point(802, 177);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(134, 49);
             this.button3.TabIndex = 64;
@@ -128,6 +128,19 @@
             this.toolTip1.SetToolTip(this.button3, "Ocupado");
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(804, 236);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(134, 45);
+            this.button4.TabIndex = 65;
+            this.button4.Text = "Agregar Mesas";
+            this.toolTip1.SetToolTip(this.button4, "Cambiar Mesas");
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // lblMesero
             // 
@@ -174,25 +187,12 @@
             this.dataGridView2.Size = new System.Drawing.Size(473, 147);
             this.dataGridView2.TabIndex = 63;
             // 
-            // button4
-            // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(927, 236);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(134, 45);
-            this.button4.TabIndex = 65;
-            this.button4.Text = "Agregar Mesas";
-            this.toolTip1.SetToolTip(this.button4, "Cambiar Mesas");
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // frmMesasOcupadas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1073, 625);
+            this.ClientSize = new System.Drawing.Size(950, 611);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.dataGridView2);

@@ -39,6 +39,7 @@ namespace Punto_Venta
                 // Consulta para obtener las mesas
                 string query = @"SELECT A.IdMesa, A.Nombre, B.Usuario AS Mesero, A.CantidadPersonas, A.Impresion, A.IdMesero
                                     FROM MESAS A INNER JOIN  USUARIOS B ON A.IdMesero = B.IdUsuario
+                                    WHERE A.Estatus = 'COCINA'
                                     ORDER BY Nombre";
 
                 using (SqlCommand cmd = new SqlCommand(query, conectar))

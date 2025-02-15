@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="JaegerSoft FastFood.exe" size="10178048">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="JaegerSoft FastFood.exe" size="1186304">
       <assemblyIdentity name="JaegerSoft FastFood" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SzhXZiKlx3Cq3O3gvoyWpJE80fVbkWlb7L3Y+xYWl+c=</dsig:DigestValue>
+        <dsig:DigestValue>/5kzpfRualC37G8WbSbfchzHyRNur7W2P9qNhY4cNcU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -96,13 +96,13 @@
       <dsig:DigestValue>Ua49tEPdl6YAss+38vRahMafLxD2q0pHsQwkcdRQOMw=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Resources\COFEE.JPG" size="214320">
+  <file name="Resources\COFEE.JPG" size="51542">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>nDXqyDthqqe5ELnxnfmGs9bJqjDOV5uZIBmbGZNzsmc=</dsig:DigestValue>
+      <dsig:DigestValue>uzvRYi03ITt/H8RLrrf+Mymwbc1XQ7lo2DB8amnrA6w=</dsig:DigestValue>
     </hash>
   </file>
   <file name="RESTAURANTE2.ico" size="32038">
