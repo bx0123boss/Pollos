@@ -26,7 +26,7 @@ namespace Punto_Venta
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new frmMesasOcupadas());
+                    Application.Run(new frmPedido());
                 }
             }
         }

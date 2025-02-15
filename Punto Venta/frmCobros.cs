@@ -186,8 +186,8 @@ namespace Punto_Venta
                 conectar.Open();
 
                 // 1. Insertar en la tabla Folios y obtener el último IdFolio
-                string insertFolioQuery = "INSERT INTO Folios (ModalidadVenta, Estatus, idCliente, FechaHora, Total, Utilidad) " +
-                                          "VALUES (@ModalidadVenta, @Estatus, @idCliente, @FechaHora, @Total, @Utilidad); " +
+                string insertFolioQuery = "INSERT INTO Folios (ModalidadVenta, Estatus, idCliente, FechaHora, Total, Descuento, Utilidad) " +
+                                          "VALUES (@ModalidadVenta, @Estatus, @idCliente, @FechaHora, @Total, @Descuento,@Utilidad); " +
                                           "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
 
                 using (SqlCommand cmd = new SqlCommand(insertFolioQuery, conectar))
@@ -197,6 +197,7 @@ namespace Punto_Venta
                     cmd.Parameters.AddWithValue("@idCliente", idCliente == 0 ? (object)DBNull.Value : idCliente);
                     cmd.Parameters.AddWithValue("@FechaHora", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Total", total);
+                    cmd.Parameters.AddWithValue("@Total", descuento);
                     cmd.Parameters.AddWithValue("@Utilidad", 20.00);
 
                     // Ejecutar la inserción y obtener el último ID insertado
