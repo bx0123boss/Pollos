@@ -14,7 +14,7 @@ namespace Punto_Venta
     public partial class frmCantidad : Form
     {
         public string comentario { get; set; }
-        public string cantidad { get; set; }
+        public double cantidad { get; set; }
         public frmCantidad()
         {
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace Punto_Venta
             textBox1.Text = (Convert.ToDouble(textBox1.Text) + 1).ToString();
             txtComentario.Focus();
         }
-        public void Cantidad(string cant)
+        public void Cantidad(double cant)
         {
             comentario = txtComentario.Text;
             cantidad = cant;
@@ -102,7 +102,7 @@ namespace Punto_Venta
                 try
                 {
                     double price = Convert.ToDouble(textBox1.Text);
-                    Cantidad(textBox1.Text);
+                    Cantidad(price);
                 }
                 catch (FormatException)
                 {

@@ -31,7 +31,6 @@ namespace Punto_Venta
         List<ProductoInventario> productos;
         private DataSet ds;
         int idMesero = 0;
-        int ti1 = 0, ti2 = 0;
         string idCliente;
         string modalidad;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
@@ -49,8 +48,90 @@ namespace Punto_Venta
         public frmPedido()
         {
             InitializeComponent();
-            
+            this.MinimumSize = new Size(810, 600);
+
         }
+        private void frmPedido_Load(object sender, EventArgs e)
+        {
+            conectar.Open();
+            DgvPedidoprevio.Columns["Pre"].DefaultCellStyle.Format = "N2";
+            DgvPedidoprevio.Columns["Tot"].DefaultCellStyle.Format = "N2";
+            productos = ObtenerProductosDesdeBD();
+           
+            //cargarMesas();
+            //cargarCategoriasAutomatico();
+
+
+            using (frmClaveVendendor ori = new frmClaveVendendor())
+            {
+                if (ori.ShowDialog() == DialogResult.OK)
+                {
+                    mesSelect = ori.Mesero;
+                    idMesSel = ori.Id.ToString();
+                    idMesero = ori.Id;
+                    lblMesero.Text = ori.Mesero;
+                }
+                else
+                    this.Close();
+            }
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
+
+                string query = @"SELECT * FROM CATEGORIAS ORDER BY Nombre";
+
+                using (SqlCommand cmd = new SqlCommand(query, conectar))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Recorrer los resultados de la consulta
+                    while (reader.Read())
+                    {
+                        // Crear un botón para la mesa
+                        Button but = new Button();
+                        but.FlatStyle = FlatStyle.Flat;
+                        but.FlatAppearance.BorderSize = 0;
+                        but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
+                        but.BackColor = System.Drawing.ColorTranslator.FromHtml($"#{reader["Color"].ToString()}");
+                        but.ForeColor = Color.FromName(reader["Letra"].ToString());
+                        but.Size = new System.Drawing.Size(135, 70);
+                        but.Text = reader[1].ToString();
+                        but.Click += new EventHandler(this.CambiarCategoria);
+                        but.Tag = new
+                        {
+                            Id = reader["IdCategoria"].ToString(),
+                            Nombre = reader["Nombre"].ToString(),
+                        };
+
+                        // Agregar el botón al FlowLayoutPanel
+                        flpCategorias.Controls.Add(but);
+
+                    }
+                }
+            }
+
+            flpInventario.Controls.Clear();
+            foreach (var producto in productos)
+            {
+                Button but = new Button();
+                but.FlatStyle = FlatStyle.Flat;
+                but.FlatAppearance.BorderSize = 0;
+                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
+                but.BackColor = System.Drawing.ColorTranslator.FromHtml($"#{producto.Color}");
+                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
+                but.Size = new System.Drawing.Size(135, 70);
+                but.Text = producto.Nombre;
+                but.Tag = new
+                {
+                    IdInventario = producto.IdInventario,
+                    Nombre = producto.Nombre,
+                    Precio = producto.Precio,
+                    Comanda = producto.Comanda,
+                };
+                but.Click += new EventHandler(this.AgregarProducto);
+                flpInventario.Controls.Add(but);
+            }
+        }
+
 
         private void rbRapido_CheckedChanged(object sender, EventArgs e)
         {
@@ -178,84 +259,7 @@ namespace Punto_Venta
 
             return productos;
         }
-        private void frmPedido_Load(object sender, EventArgs e)
-        {            
-            conectar.Open();
-            productos = ObtenerProductosDesdeBD();
-            //cargarMesas();
-            //cargarCategoriasAutomatico();
-
-
-            using (frmClaveVendendor ori = new frmClaveVendendor())
-            {
-                if (ori.ShowDialog() == DialogResult.OK)
-                {
-                    mesSelect = ori.Mesero;
-                    idMesSel = ori.Id.ToString();
-                    idMesero = ori.Id;
-                    lblMesero.Text = ori.Mesero;
-                }
-                else
-                    this.Close();
-            }
-            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
-            {
-                conectar.Open();
-
-                string query = @"SELECT * FROM CATEGORIAS ORDER BY Nombre";
-
-                using (SqlCommand cmd = new SqlCommand(query, conectar))
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    // Recorrer los resultados de la consulta
-                    while (reader.Read())
-                    {
-                        // Crear un botón para la mesa
-                        Button but = new Button();
-                        but.FlatStyle = FlatStyle.Flat;
-                        but.FlatAppearance.BorderSize = 0;
-                        but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                        but.BackColor = System.Drawing.ColorTranslator.FromHtml($"#{reader["Color"].ToString()}");
-                        but.ForeColor = Color.FromName(reader["Letra"].ToString());
-                        but.Size = new System.Drawing.Size(135, 70);
-                        but.Text = reader[1].ToString();
-                        but.Click += new EventHandler(this.CambiarCategoria);
-                        but.Tag = new
-                        {
-                            Id = reader["IdCategoria"].ToString(),
-                            Nombre = reader["Nombre"].ToString(),
-                        };
-
-                        // Agregar el botón al FlowLayoutPanel
-                        flpCategorias.Controls.Add(but);
-
-                    }
-                }
-            }
-           
-            flpInventario.Controls.Clear();
-            foreach (var producto in productos)
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = System.Drawing.ColorTranslator.FromHtml($"#{producto.Color}");
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.Size = new System.Drawing.Size(135, 70);
-                but.Text = producto.Nombre;
-                but.Tag = new
-                {
-                    Id = producto.IdInventario,
-                    Nombre = producto.Nombre,
-                    Precio = producto.Precio,
-                    Comanda = producto.Comanda,
-                };
-                but.Click += new EventHandler(this.AgregarProducto);
-                flpInventario.Controls.Add(but);
-            }
-        }
-
+       
         private void CambiarCategoria(object sender, EventArgs e)
         {
             Button boton = sender as Button;
@@ -278,10 +282,10 @@ namespace Punto_Venta
                 but.Text = producto.Nombre;
                 but.Tag = new
                 {
-                    producto.IdInventario,
-                    producto.Nombre,
-                    producto.Precio,
-                    producto.Comanda,
+                    IdInventario =producto.IdInventario,
+                    Nombre= producto.Nombre,
+                    Precio = producto.Precio,
+                    Comanda = producto.Comanda,
                 };
                 but.Click += new EventHandler(this.AgregarProducto);
                 flpInventario.Controls.Add(but);
@@ -290,55 +294,24 @@ namespace Punto_Venta
 
         private void AgregarProducto(object sender, EventArgs e)
         {
-            Button boton = sender as Button;
-            var tag = boton.Tag as dynamic;
-            int id = tag.Id;
-            double cantidad = 1;
-            string nombre = tag.Nombre;
-            double precio = tag.Precio;
-            string comentario = "";
-            bool comanda = tag.Comanda;
-            string idExtra = "";
-            DgvPedidoprevio.Rows.Add(id, cantidad, nombre, precio, precio, comentario, comanda, idExtra);
-            total += precio;
-            LblTotal.Text = String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", total);
-        }
-
-        private void Myevent2(object sender, EventArgs e)
-        {
-            if (categoria == (sender as Button).Text)
+            using (frmCantidad ori = new frmCantidad())
             {
-
-            }
-            else
-            {
-                flpInventario.Controls.Clear();
-                cmd = new OleDbCommand("SELECT Color,Letra FROM Categorias where Nombre='" + (sender as Button).Text + "';", conectar);
-                OleDbDataReader reader1 = cmd.ExecuteReader();
-                if (reader1.Read())
+                if (ori.ShowDialog() == DialogResult.OK)
                 {
-                    cmd = new OleDbCommand("SELECT Nombre FROM Inventario where Categoria='" + (sender as Button).Text + "' order by Nombre;", conectar);
-                    OleDbDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        Button but = new Button();
-                        but.FlatStyle = FlatStyle.Flat;
-                        but.FlatAppearance.BorderSize = 0;
-                        but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                        but.BackColor = System.Drawing.ColorTranslator.FromHtml("#" + reader1[0].ToString());
-                        but.ForeColor = Color.FromName(reader1[1].ToString());
-                        but.Size = new System.Drawing.Size(135, 70);
-                        but.Text = reader[0].ToString();
-                        but.Click += new EventHandler(this.FiltrarInventario);
-                        flpInventario.Controls.Add(but);
-                    }
-                    categoria = (sender as Button).Text;
+                    Button boton = sender as Button;
+                    var tag = boton.Tag as dynamic;
+                    int id = tag.IdInventario;
+                    double cantidad = ori.cantidad;
+                    string nombre = tag.Nombre;
+                    double precio = tag.Precio;
+                    string comentario = ori.comentario;
+                    bool comanda = tag.Comanda;
+                    string idExtra = "";
+                    DgvPedidoprevio.Rows.Add(id, cantidad, nombre, precio, (cantidad*precio), "X", comentario, comanda, idExtra);
+                    total += cantidad*precio;
+                    LblTotal.Text = $"{total:C}";
                 }
             }
-        }
-        private void FiltrarInventario(object sender, EventArgs e)
-        {
-
         }
 
         private void Pizzas(object sender, EventArgs e)
@@ -406,30 +379,6 @@ namespace Punto_Venta
         }
         
         
-        public void obtenerYSumar()
-        {
-            
-            cmd = new OleDbCommand("SELECT TOP 1 Folio AS MaxFolio FROM folios ORDER BY fecha DESC, Folio DESC;", conectar);
-            Console.WriteLine(cmd.ToString());
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                int numero = Convert.ToInt32(reader[0].ToString().Substring(1));
-                suma = numero;
-                suma++;
-            }
-            lblFolio.Text = "V"+ suma ;
-
-
-        }
-
-        public void obtenerYSumar2()
-        {
-            suma = suma + 1;
-            cmd = new OleDbCommand("UPDATE Folio set Numero=" + suma + " where Folio='Venta';", conectar);
-            cmd.ExecuteNonQuery();
-        }
-
         public string separarIdes(string id)
         {
             string[] ids = id.Split(';');
@@ -445,24 +394,6 @@ namespace Punto_Venta
             return resultado;
         }
 
-        public string obtenerSubcategoria(string id)
-        {
-            string subcategoria = "";
-            try
-            {
-                cmd = new OleDbCommand("select subcategoria from Inventario where Id=" + id + ";", conectar);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    subcategoria = reader[0].ToString();
-                }
-            }
-            catch 
-            {
- 
-            }
-            return subcategoria;
-        }
 
         private bool ordenVacia()
         {
@@ -491,8 +422,8 @@ namespace Punto_Venta
                 double piezas = Convert.ToDouble(DgvPedidoprevio[1, i].Value.ToString());
                 double utilidad = (venta - compra) * piezas;
                 utilidadTotal += utilidad;
-                string subcategoria = obtenerSubcategoria(DgvPedidoprevio[0, i].Value.ToString());
-                cmd = new OleDbCommand("insert into ventas(idProducto,Cantidad,Producto,Comentarios,Precio,Total,Folio,Fecha,Estatus,Subcategoria,Utilidad) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + lblFolio.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COBRADO','" + subcategoria + "','"+utilidad+"');", conectar);
+                
+                //cmd = new OleDbCommand("insert into ventas(idProducto,Cantidad,Producto,Comentarios,Precio,Total,Folio,Fecha,Estatus,Subcategoria,Utilidad) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + lblFolio.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COBRADO','" + subcategoria + "','"+utilidad+"');", conectar);
                 cmd.ExecuteNonQuery();
                 string ide = "";
                 if (DgvPedidoprevio[7, i].Value.ToString().Length > 0)
@@ -520,7 +451,6 @@ namespace Punto_Venta
             {
                 pd.Print();
             }
-            obtenerYSumar2();
         }
 
         private void enMesa()
@@ -550,21 +480,18 @@ namespace Punto_Venta
                 double piezas = Convert.ToDouble(DgvPedidoprevio[1, i].Value.ToString());
                 double utilidad = (venta - compra) * piezas;
                 utilidadTotal += utilidad;
-                string subcategoria = obtenerSubcategoria(DgvPedidoprevio[0, i].Value.ToString());
-                cmd = new OleDbCommand("insert into ventas(idProducto,Cantidad,Producto,Comentarios,Precio,Total,Folio,Fecha,Estatus,ide,Subcategoria,Utilidad) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + lblFolio.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COCINA','" + DgvPedidoprevio[7, i].Value.ToString() + "','" + subcategoria + "','"+utilidad+"');", conectar);
+                //cmd = new OleDbCommand("insert into ventas(idProducto,Cantidad,Producto,Comentarios,Precio,Total,Folio,Fecha,Estatus,ide,Subcategoria,Utilidad) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + lblFolio.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COCINA','" + DgvPedidoprevio[7, i].Value.ToString() + "','" + subcategoria + "','"+utilidad+"');", conectar);
                 cmd.ExecuteNonQuery();
                 total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
             }
             cmd = new OleDbCommand("insert into folios(Folio,ModalidadVenta,Estatus,idCliente,Fecha,Colonia,Monto,FormaPago,Utilidad) values ('" + lblFolio.Text + "','REPARTO','COCINA','" + idCliente + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblColonia.Text + "','" + total + "','Efectivo','"+utilidadTotal+"');", conectar);
             cmd.ExecuteNonQuery();
-            obtenerYSumar2();
         }
         private void BtnEntregar_Click(object sender, EventArgs e)
         {
             if (!ordenVacia())            
             {
                 BtnEntregar.Visible = false;
-                obtenerYSumar();
                 if (Conexion.lugar == "TERRAZA")
                     lblFolio.Text = "T" + String.Format("{0:0000}", suma);
                 else if (Conexion.lugar == "COCINA")
@@ -651,41 +578,27 @@ namespace Punto_Venta
 
 
 
-        private void recalcular()
+        private double RecalcularTotal
         {
-            total = 0;
-            for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
+            get
             {
-                total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
-            }
-            LblTotal.Text = String.Format("{0:0.00}", total);
-        }
-
-        private void DgvPedidoprevio_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {            
-            double cantidad = Convert.ToDouble(DgvPedidoprevio[1, DgvPedidoprevio.CurrentRow.Index].Value.ToString());
-            double precio = Convert.ToDouble(DgvPedidoprevio[3, DgvPedidoprevio.CurrentRow.Index].Value.ToString());
-            double monto = cantidad * precio;
-            DgvPedidoprevio.Rows[e.RowIndex].Cells[4].Value = monto;
-            recalcular();
-        }
-
-        private void frmPedido_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.LControlKey)
-            {
-                DgvPedidoprevio.Rows.RemoveAt(DgvPedidoprevio.CurrentRow.Index);
-                recalcular();
+                total = 0;
+                for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
+                {
+                    total += Convert.ToDouble(DgvPedidoprevio.Rows[i].Cells["Tot"].Value);
+                }
+                return total;
             }
         }
 
+        
         //ELIMINAR DESDE BOTON
         private void button2_Click(object sender, EventArgs e)
         {
             if(DgvPedidoprevio.RowCount>0)
             {
                 DgvPedidoprevio.Rows.RemoveAt(DgvPedidoprevio.CurrentRow.Index);
-                recalcular();
+                LblTotal.Text = $"{RecalcularTotal:C}";
             }
         }
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -819,7 +732,16 @@ namespace Punto_Venta
             }
         }
 
-       //BUSCAR CLIENTES
+        private void DgvPedidoprevio_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == DgvPedidoprevio.Columns["btnEliminar"].Index && e.RowIndex >= 0)
+            {
+                DgvPedidoprevio.Rows.RemoveAt(e.RowIndex);
+                LblTotal.Text = $"{RecalcularTotal:C}";
+            }
+        }
+
+        //BUSCAR CLIENTES
         private void tabPage2_MouseClick(object sender, MouseEventArgs e)
         {
             using (frmBuscarClientes ori = new frmBuscarClientes())

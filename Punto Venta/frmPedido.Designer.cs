@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPedido));
             this.LblTotal = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -80,6 +83,7 @@
             this.Prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Pre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tot = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Comentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Comanda = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idExtra = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -99,7 +103,7 @@
             this.LblTotal.BackColor = System.Drawing.Color.Black;
             this.LblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F);
             this.LblTotal.ForeColor = System.Drawing.Color.White;
-            this.LblTotal.Location = new System.Drawing.Point(185, 509);
+            this.LblTotal.Location = new System.Drawing.Point(185, 492);
             this.LblTotal.Name = "LblTotal";
             this.LblTotal.Size = new System.Drawing.Size(119, 46);
             this.LblTotal.TabIndex = 47;
@@ -112,11 +116,11 @@
             this.label11.BackColor = System.Drawing.Color.Black;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F);
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(3, 509);
+            this.label11.Location = new System.Drawing.Point(3, 492);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(192, 46);
+            this.label11.Size = new System.Drawing.Size(170, 46);
             this.label11.TabIndex = 45;
-            this.label11.Text = "TOTAL: $";
+            this.label11.Text = "TOTAL: ";
             // 
             // BtnEntregar
             // 
@@ -124,9 +128,9 @@
             this.BtnEntregar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.BtnEntregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.BtnEntregar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.BtnEntregar.Location = new System.Drawing.Point(905, 511);
+            this.BtnEntregar.Location = new System.Drawing.Point(919, 494);
             this.BtnEntregar.Name = "BtnEntregar";
-            this.BtnEntregar.Size = new System.Drawing.Size(122, 60);
+            this.BtnEntregar.Size = new System.Drawing.Size(144, 60);
             this.BtnEntregar.TabIndex = 44;
             this.BtnEntregar.Text = "ENTREGAR";
             this.BtnEntregar.UseVisualStyleBackColor = false;
@@ -135,11 +139,23 @@
             // DgvPedidoprevio
             // 
             this.DgvPedidoprevio.AllowUserToAddRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            this.DgvPedidoprevio.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvPedidoprevio.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DgvPedidoprevio.BackgroundColor = System.Drawing.Color.GhostWhite;
             this.DgvPedidoprevio.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.SkyBlue;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Tai Le", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvPedidoprevio.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DgvPedidoprevio.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvPedidoprevio.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Aidi,
@@ -147,16 +163,25 @@
             this.Prod,
             this.Pre,
             this.Tot,
+            this.btnEliminar,
             this.Comentario,
             this.Comanda,
             this.idExtra});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.SkyBlue;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvPedidoprevio.DefaultCellStyle = dataGridViewCellStyle3;
             this.DgvPedidoprevio.GridColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.DgvPedidoprevio.Location = new System.Drawing.Point(613, 266);
+            this.DgvPedidoprevio.Location = new System.Drawing.Point(578, 266);
             this.DgvPedidoprevio.Name = "DgvPedidoprevio";
             this.DgvPedidoprevio.ReadOnly = true;
-            this.DgvPedidoprevio.Size = new System.Drawing.Size(414, 236);
+            this.DgvPedidoprevio.Size = new System.Drawing.Size(485, 219);
             this.DgvPedidoprevio.TabIndex = 37;
-            this.DgvPedidoprevio.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPedidoprevio_CellEndEdit);
+            this.DgvPedidoprevio.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPedidoprevio_CellClick);
             // 
             // lblFolio
             // 
@@ -218,7 +243,7 @@
             this.button2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.button2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button2.Location = new System.Drawing.Point(830, 511);
+            this.button2.Location = new System.Drawing.Point(844, 494);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(69, 60);
             this.button2.TabIndex = 59;
@@ -341,7 +366,7 @@
             this.flpCategorias.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.flpCategorias.Location = new System.Drawing.Point(384, 8);
             this.flpCategorias.Name = "flpCategorias";
-            this.flpCategorias.Size = new System.Drawing.Size(645, 247);
+            this.flpCategorias.Size = new System.Drawing.Size(681, 247);
             this.flpCategorias.TabIndex = 1;
             // 
             // flpInventario
@@ -353,7 +378,7 @@
             this.flpInventario.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.flpInventario.Location = new System.Drawing.Point(12, 266);
             this.flpInventario.Name = "flpInventario";
-            this.flpInventario.Size = new System.Drawing.Size(596, 237);
+            this.flpInventario.Size = new System.Drawing.Size(560, 220);
             this.flpInventario.TabIndex = 0;
             // 
             // Id
@@ -656,6 +681,7 @@
             this.Aidi.HeaderText = "Id";
             this.Aidi.Name = "Aidi";
             this.Aidi.ReadOnly = true;
+            this.Aidi.Visible = false;
             // 
             // Canti
             // 
@@ -669,6 +695,7 @@
             this.Prod.HeaderText = "Producto";
             this.Prod.Name = "Prod";
             this.Prod.ReadOnly = true;
+            this.Prod.Width = 125;
             // 
             // Pre
             // 
@@ -684,12 +711,20 @@
             this.Tot.ReadOnly = true;
             this.Tot.Width = 70;
             // 
+            // btnEliminar
+            // 
+            this.btnEliminar.HeaderText = "Eliminar";
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.ReadOnly = true;
+            this.btnEliminar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnEliminar.Width = 90;
+            // 
             // Comentario
             // 
             this.Comentario.HeaderText = "Comentario";
             this.Comentario.Name = "Comentario";
             this.Comentario.ReadOnly = true;
-            this.Comentario.Width = 50;
+            this.Comentario.Width = 150;
             // 
             // Comanda
             // 
@@ -708,7 +743,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1041, 578);
+            this.ClientSize = new System.Drawing.Size(1077, 561);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.flpCategorias);
@@ -734,7 +769,6 @@
             this.Text = "Pedido";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmPedido_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmPedido_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.DgvPedidoprevio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMesas)).EndInit();
             this.tabControl1.ResumeLayout(false);
@@ -803,6 +837,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Prod;
         private System.Windows.Forms.DataGridViewTextBoxColumn Pre;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tot;
+        private System.Windows.Forms.DataGridViewButtonColumn btnEliminar;
         private System.Windows.Forms.DataGridViewTextBoxColumn Comentario;
         private System.Windows.Forms.DataGridViewTextBoxColumn Comanda;
         private System.Windows.Forms.DataGridViewTextBoxColumn idExtra;
