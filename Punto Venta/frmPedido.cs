@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
-using System.IO;
 using LibPrintTicket;
 using System.Globalization;
 using System.Drawing.Printing;
 using System.Data.SqlClient;
-using static Punto_Venta.frmPedido;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Button = System.Windows.Forms.Button;
 
 namespace Punto_Venta
 {
@@ -33,16 +30,15 @@ namespace Punto_Venta
         int idMesero = 0;
         string idCliente;
         string modalidad;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
+        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
         OleDbDataAdapter da;
         OleDbCommand cmd;
         public String Usuario;
-        string mesSelect = "", idMesSel = "";
         double total = 0;
         int suma = 0;
         string categoria = "";
-        bool mesaNueva;
-        string idMesa;
+        bool mesaNueva = false;
+        int idMesa = 0;
         private double utilidadTotal;
 
         public frmPedido()
@@ -57,23 +53,26 @@ namespace Punto_Venta
             DgvPedidoprevio.Columns["Pre"].DefaultCellStyle.Format = "N2";
             DgvPedidoprevio.Columns["Tot"].DefaultCellStyle.Format = "N2";
             productos = ObtenerProductosDesdeBD();
-           
-            //cargarMesas();
-            //cargarCategoriasAutomatico();
+
+            cargarMesas();
+            cargarCategoriasAutomatico();
 
 
             using (frmClaveVendendor ori = new frmClaveVendendor())
             {
                 if (ori.ShowDialog() == DialogResult.OK)
                 {
-                    mesSelect = ori.Mesero;
-                    idMesSel = ori.Id.ToString();
                     idMesero = ori.Id;
                     lblMesero.Text = ori.Mesero;
                 }
                 else
                     this.Close();
             }
+            
+        }
+
+        private void cargarCategoriasAutomatico()
+        {
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
@@ -83,10 +82,8 @@ namespace Punto_Venta
                 using (SqlCommand cmd = new SqlCommand(query, conectar))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    // Recorrer los resultados de la consulta
                     while (reader.Read())
                     {
-                        // Crear un botón para la mesa
                         Button but = new Button();
                         but.FlatStyle = FlatStyle.Flat;
                         but.FlatAppearance.BorderSize = 0;
@@ -102,13 +99,10 @@ namespace Punto_Venta
                             Nombre = reader["Nombre"].ToString(),
                         };
 
-                        // Agregar el botón al FlowLayoutPanel
                         flpCategorias.Controls.Add(but);
-
                     }
                 }
             }
-
             flpInventario.Controls.Clear();
             foreach (var producto in productos)
             {
@@ -132,14 +126,27 @@ namespace Punto_Venta
             }
         }
 
-
+        private void cargarMesas()
+        {
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                DataTable dt = new DataTable();
+                using (SqlCommand cmd = new SqlCommand("SELECT IdMesa, Nombre FROM MESAS Where Estatus = 'COCINA';", conectar))
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(dt);
+                    CmbMesa.DisplayMember = "Nombre";
+                    CmbMesa.ValueMember = "IdMesa";
+                    CmbMesa.DataSource = dt;
+                }
+            }
+        }
         private void rbRapido_CheckedChanged(object sender, EventArgs e)
         {
             CmbMesa.Visible = false;
             idCliente = "";
             modalidad = "RAPIDO";
         }
-
         private void rbDomicilo_CheckedChanged(object sender, EventArgs e)
         {
             if (rbDomicilo.Checked)
@@ -154,7 +161,6 @@ namespace Punto_Venta
                         LblTelefono.Text = ori.Telefono;
                         LblReferencia.Text = ori.Referencia;
                         idCliente = ori.Id;
-                        cbCliente.Checked = true;
                         lblColonia.Text = ori.Colonia;
                         modalidad = "DOMICILIO";
                     }
@@ -162,70 +168,12 @@ namespace Punto_Venta
             }
 
         }
-
         private void rbMesa_CheckedChanged(object sender, EventArgs e)
         {
-
             idCliente = "";
             CmbMesa.Visible = true;
             modalidad = "MESA";
         }
-        private void Mesa(object sender, EventArgs e)
-        {
-            if ((sender as Button).BackColor == Color.Red)
-            {
-                cmd = new OleDbCommand("select IdMesero,Mesero,Id from Mesas where Nombre='" + (sender as Button).Text + "';", conectar);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    lblMesero.Text = reader[1].ToString();
-                    idMesero = Convert.ToInt32(reader[0].ToString());
-                    mesaNueva = false;
-                    idMesa = reader[2].ToString();
-                }
-                else
-                {
-                    lblMesero.Text = mesSelect;
-                    idMesero = Convert.ToInt32(idMesSel);
-                    mesaNueva = true;
-                }
-            }
-            else
-            {
-                lblMesero.Text = mesSelect;
-                idMesero = Convert.ToInt32(idMesSel);
-                mesaNueva = true;
-            }
-            CmbMesa.Text = (sender as Button).Text;
-        }
-
-        public void cargarCategoriasAutomatico()
-        {
-            //Pizzas
-            Button butP = new Button();
-            butP.FlatStyle = FlatStyle.Flat;
-            butP.FlatAppearance.BorderSize = 0;
-            butP.Font = new System.Drawing.Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
-            butP.BackColor = System.Drawing.ColorTranslator.FromHtml("#ff8000");
-            butP.ForeColor = Color.FromName("White");
-            butP.Size = new System.Drawing.Size(104, 56);
-            butP.Text = "PIZZA";
-            butP.Click += new EventHandler(this.Pizzas);
-            flpCategorias.Controls.Add(butP);
-            //Combos
-            Button butC = new Button();
-            butC.FlatStyle = FlatStyle.Flat;
-            butC.FlatAppearance.BorderSize = 0;
-            butC.Font = new System.Drawing.Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
-            butC.BackColor = System.Drawing.ColorTranslator.FromHtml("#654321");
-            butC.ForeColor = Color.FromName("White");
-            butC.Size = new System.Drawing.Size(104, 56);
-            butC.Text = "COMBOS";
-            butC.Click += new EventHandler(this.Combos);
-            flpCategorias.Controls.Add(butC);
-        }
-
-
         public List<ProductoInventario> ObtenerProductosDesdeBD()
         {
             List<ProductoInventario> productos = new List<ProductoInventario>();
@@ -259,16 +207,15 @@ namespace Punto_Venta
 
             return productos;
         }
-       
         private void CambiarCategoria(object sender, EventArgs e)
         {
             Button boton = sender as Button;
             var tag = boton.Tag as dynamic;
             int idCategoria = int.Parse(tag.Id);
-                // Filtrar los productos por IdCategoria usando LINQ
-                var productosFiltrados = productos
-                    .Where(p => p.IdCategoria == idCategoria)
-                    .ToList();
+            // Filtrar los productos por IdCategoria usando LINQ
+            var productosFiltrados = productos
+                .Where(p => p.IdCategoria == idCategoria)
+                .ToList();
             flpInventario.Controls.Clear();
             foreach (var producto in productosFiltrados)
             {
@@ -282,8 +229,8 @@ namespace Punto_Venta
                 but.Text = producto.Nombre;
                 but.Tag = new
                 {
-                    IdInventario =producto.IdInventario,
-                    Nombre= producto.Nombre,
+                    IdInventario = producto.IdInventario,
+                    Nombre = producto.Nombre,
                     Precio = producto.Precio,
                     Comanda = producto.Comanda,
                 };
@@ -291,7 +238,6 @@ namespace Punto_Venta
                 flpInventario.Controls.Add(but);
             }
         }
-
         private void AgregarProducto(object sender, EventArgs e)
         {
             using (frmCantidad ori = new frmCantidad())
@@ -307,13 +253,12 @@ namespace Punto_Venta
                     string comentario = ori.comentario;
                     bool comanda = tag.Comanda;
                     string idExtra = "";
-                    DgvPedidoprevio.Rows.Add(id, cantidad, nombre, precio, (cantidad*precio), "X", comentario, comanda, idExtra);
-                    total += cantidad*precio;
+                    DgvPedidoprevio.Rows.Add(id, cantidad, nombre, precio, (cantidad * precio), "X", comentario, comanda, idExtra);
+                    total += cantidad * precio;
                     LblTotal.Text = $"{total:C}";
                 }
             }
         }
-
         private void Pizzas(object sender, EventArgs e)
         {
             using (frmPizzas pi = new frmPizzas())
@@ -323,8 +268,8 @@ namespace Punto_Venta
                     if (pi.tipo == "MITAD")
                     {
                         //ESTRUCTURA DE IDES EXTRAS: CANTIDAD1,ID1;CANTIDAD2,ID2;...
-                        string ides = "1,"+pi.id1+";1," +pi.id2+";1," + pi.idMasa+";";
-                        DgvPedidoprevio.Rows.Add("P"+pi.id1, "1", pi.nombre, pi.precio, pi.precio, pi.comentarios, "1", ides);
+                        string ides = "1," + pi.id1 + ";1," + pi.id2 + ";1," + pi.idMasa + ";";
+                        DgvPedidoprevio.Rows.Add("P" + pi.id1, "1", pi.nombre, pi.precio, pi.precio, pi.comentarios, "1", ides);
                         //SEPARAR IDES
                         //string[] ids = ides.Split(';');
                         //foreach (var word in ids)
@@ -334,7 +279,7 @@ namespace Punto_Venta
                         total += Convert.ToDouble(Convert.ToString(pi.precio));
                         for (int i = 0; i < pi.dataGridView1.RowCount; i++)
                         {
-                            DgvPedidoprevio.Rows.Add(pi.dataGridView1[0, i].Value.ToString(), pi.dataGridView1[1, i].Value.ToString(), pi.dataGridView1[2, i].Value.ToString(), pi.dataGridView1[3, i].Value.ToString(), pi.dataGridView1[4, i].Value.ToString(), pi.dataGridView1[5, i].Value.ToString(), "1","");
+                            DgvPedidoprevio.Rows.Add(pi.dataGridView1[0, i].Value.ToString(), pi.dataGridView1[1, i].Value.ToString(), pi.dataGridView1[2, i].Value.ToString(), pi.dataGridView1[3, i].Value.ToString(), pi.dataGridView1[4, i].Value.ToString(), pi.dataGridView1[5, i].Value.ToString(), "1", "");
                             total += Convert.ToDouble(pi.dataGridView1[4, i].Value.ToString());
                         }
                     }
@@ -342,12 +287,12 @@ namespace Punto_Venta
                     {
                         for (int i = 0; i < pi.DgvPedidoprevio.RowCount; i++)
                         {
-                            DgvPedidoprevio.Rows.Add(pi.DgvPedidoprevio[0, i].Value.ToString(), pi.DgvPedidoprevio[1, i].Value.ToString(), pi.DgvPedidoprevio[2, i].Value.ToString(), pi.DgvPedidoprevio[3, i].Value.ToString(), pi.DgvPedidoprevio[3, i].Value.ToString(), pi.DgvPedidoprevio[4, i].Value.ToString(), "1","1," + pi.idMasa+";");
+                            DgvPedidoprevio.Rows.Add(pi.DgvPedidoprevio[0, i].Value.ToString(), pi.DgvPedidoprevio[1, i].Value.ToString(), pi.DgvPedidoprevio[2, i].Value.ToString(), pi.DgvPedidoprevio[3, i].Value.ToString(), pi.DgvPedidoprevio[3, i].Value.ToString(), pi.DgvPedidoprevio[4, i].Value.ToString(), "1", "1," + pi.idMasa + ";");
                             total += Convert.ToDouble(pi.DgvPedidoprevio[3, i].Value.ToString());
                         }
                         for (int i = 0; i < pi.dataGridView1.RowCount; i++)
                         {
-                            DgvPedidoprevio.Rows.Add(pi.dataGridView1[0, i].Value.ToString(), pi.dataGridView1[1, i].Value.ToString(), pi.dataGridView1[2, i].Value.ToString(), pi.dataGridView1[3, i].Value.ToString(), pi.dataGridView1[4, i].Value.ToString(), pi.dataGridView1[5, i].Value.ToString(), "1","");
+                            DgvPedidoprevio.Rows.Add(pi.dataGridView1[0, i].Value.ToString(), pi.dataGridView1[1, i].Value.ToString(), pi.dataGridView1[2, i].Value.ToString(), pi.dataGridView1[3, i].Value.ToString(), pi.dataGridView1[4, i].Value.ToString(), pi.dataGridView1[5, i].Value.ToString(), "1", "");
                             total += Convert.ToDouble(pi.dataGridView1[4, i].Value.ToString());
                         }
                     }
@@ -356,7 +301,6 @@ namespace Punto_Venta
                 }
             }
         }
-
         private void Combos(object sender, EventArgs e)
         {
             using (frmSeleccionarCombo pi = new frmSeleccionarCombo())
@@ -365,36 +309,18 @@ namespace Punto_Venta
                 {
                     total += Convert.ToDouble(Convert.ToString(pi.total));
                     //ESTRUCTURA DE IDES EXTRAS: CANTIDAD1,ID1;CANTIDAD2,ID2;CANTIDADn,IDn...
-                    string ides="";
+                    string ides = "";
                     for (int i = 0; i < pi.DgvPedidoprevio.RowCount; i++)
                     {
-                        string idCombo = pi.DgvPedidoprevio[0,i].Value.ToString();
+                        string idCombo = pi.DgvPedidoprevio[0, i].Value.ToString();
                         double cantCombo = Convert.ToDouble(pi.DgvPedidoprevio[1, i].Value.ToString()) * Convert.ToDouble(pi.cantidad);
                         ides += cantCombo + "," + idCombo + ";";
                     }
-                    DgvPedidoprevio.Rows.Add(pi.id, pi.cantidad, pi.nombre, pi.precio, pi.total, pi.comentario, "1",ides);
+                    DgvPedidoprevio.Rows.Add(pi.id, pi.cantidad, pi.nombre, pi.precio, pi.total, pi.comentario, "1", ides);
                 }
                 LblTotal.Text = String.Format("{0:0.00}", total);
-            }      
-        }
-        
-        
-        public string separarIdes(string id)
-        {
-            string[] ids = id.Split(';');
-            string resultado = "";
-            foreach (var word in ids)
-            {
-                string[] ids2 = word.Split(',');
-                for (int i = 0; i < ids2.Length-1; i=i+2)
-                {
-                    resultado += ids2[0] + " : " + ids2[1] + "\n";
-                }
             }
-            return resultado;
         }
-
-
         private bool ordenVacia()
         {
             if (1 > DgvPedidoprevio.RowCount)
@@ -410,11 +336,10 @@ namespace Punto_Venta
             else
                 return false;
         }
-
         private void llevar()
         {
             utilidadTotal = 0;
-             total = 0;
+            total = 0;
             for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
             {
                 double compra = Convert.ToDouble(DgvPedidoprevio[8, i].Value.ToString());
@@ -422,7 +347,7 @@ namespace Punto_Venta
                 double piezas = Convert.ToDouble(DgvPedidoprevio[1, i].Value.ToString());
                 double utilidad = (venta - compra) * piezas;
                 utilidadTotal += utilidad;
-                
+
                 //cmd = new OleDbCommand("insert into ventas(idProducto,Cantidad,Producto,Comentarios,Precio,Total,Folio,Fecha,Estatus,Subcategoria,Utilidad) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + lblFolio.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COBRADO','" + subcategoria + "','"+utilidad+"');", conectar);
                 cmd.ExecuteNonQuery();
                 string ide = "";
@@ -432,7 +357,7 @@ namespace Punto_Venta
                 cmd.ExecuteNonQuery();
                 total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
             }
-            cmd = new OleDbCommand("insert into folios(Folio,ModalidadVenta,Estatus,idCliente,Fecha,Colonia,Monto,FormaPago, Utilidad) values ('" + lblFolio.Text + "','P/LLEVAR','COBRADO','" + idCliente + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblColonia.Text + "','" + total + "','Efectivo','"+utilidadTotal+"');", conectar);
+            cmd = new OleDbCommand("insert into folios(Folio,ModalidadVenta,Estatus,idCliente,Fecha,Colonia,Monto,FormaPago, Utilidad) values ('" + lblFolio.Text + "','P/LLEVAR','COBRADO','" + idCliente + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblColonia.Text + "','" + total + "','Efectivo','" + utilidadTotal + "');", conectar);
             cmd.ExecuteNonQuery();
             cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('VENTA FOLIO: " + lblFolio.Text + "'," + total + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
             cmd.ExecuteNonQuery();
@@ -452,7 +377,6 @@ namespace Punto_Venta
                 pd.Print();
             }
         }
-
         private void enMesa()
         {
             for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
@@ -464,11 +388,10 @@ namespace Punto_Venta
                 string ide = "";
                 if (DgvPedidoprevio[7, i].Value.ToString().Length > 0)
                     ide = DgvPedidoprevio[7, i].Value.ToString();
-                cmd = new OleDbCommand("insert into ArticulosMesa(id,cantidad,producto,precio,total,Comentario,Mesa,Estatus,ids,Utilidad) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + CmbMesa.SelectedValue + "','COCINA','" + ide + "','"+ utilidad + "');", conectar);
+                cmd = new OleDbCommand("insert into ArticulosMesa(id,cantidad,producto,precio,total,Comentario,Mesa,Estatus,ids,Utilidad) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + CmbMesa.SelectedValue + "','COCINA','" + ide + "','" + utilidad + "');", conectar);
                 cmd.ExecuteNonQuery();
             }
         }
-
         private void domicilio()
         {
             utilidadTotal = 0;
@@ -484,100 +407,120 @@ namespace Punto_Venta
                 cmd.ExecuteNonQuery();
                 total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
             }
-            cmd = new OleDbCommand("insert into folios(Folio,ModalidadVenta,Estatus,idCliente,Fecha,Colonia,Monto,FormaPago,Utilidad) values ('" + lblFolio.Text + "','REPARTO','COCINA','" + idCliente + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblColonia.Text + "','" + total + "','Efectivo','"+utilidadTotal+"');", conectar);
+            cmd = new OleDbCommand("insert into folios(Folio,ModalidadVenta,Estatus,idCliente,Fecha,Colonia,Monto,FormaPago,Utilidad) values ('" + lblFolio.Text + "','REPARTO','COCINA','" + idCliente + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblColonia.Text + "','" + total + "','Efectivo','" + utilidadTotal + "');", conectar);
             cmd.ExecuteNonQuery();
+        }
+        public void TicketComanda(List<(string Cantidad, string Descripcion, string Comentario)> itemsComanda)
+        {
+
+            Ticket ticket = new Ticket();
+            ticket.FontSize = 10;
+            ticket.MaxCharDescription = 26;
+            //Llevar
+            if (tabControl1.SelectedIndex == 2)
+            {
+                ticket.AddHeaderLine("Folio: " + lblFolio.Text);
+                ticket.AddHeaderLine(" ");
+                ticket.AddHeaderLine("****PARA LLEVAR****");
+                ticket.AddHeaderLine(" ");
+                ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
+                //llevar();
+            }
+            //mesa
+            else if (tabControl1.SelectedIndex == 0)
+            {
+                ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
+                ticket.AddHeaderLine(" ");
+                ticket.AddHeaderLine("****MESA " + CmbMesa.Text + "****");
+                ticket.AddHeaderLine(" ");
+                //enMesa();
+            }
+            //domicilio
+            else if (tabControl1.SelectedIndex == 1)
+            {
+                ticket.AddHeaderLine("Folio: " + lblFolio.Text);
+                ticket.AddHeaderLine(" ");
+                ticket.AddHeaderLine("****ENTREGA A DOMICILIO****");
+                ticket.AddHeaderLine("Folio: " + lblFolio.Text);
+                ticket.AddHeaderLine("Cliente: " + LblNombre.Text);
+                //domicilio();
+            }
+            ticket.AddHeaderLine("MESERO:" + lblMesero.Text);
+            ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
+            foreach (var (cantidad, descripcion, comentario) in itemsComanda)
+            {
+                Console.WriteLine($"Cantidad: {cantidad}, Descripción: {descripcion}, Comentario: {comentario}");
+                ticket.AddItem(cantidad, descripcion + comentario, "");
+            }
+
+            ticket.PrintTicket(Conexion.impresora2);
         }
         private void BtnEntregar_Click(object sender, EventArgs e)
         {
-            if (!ordenVacia())            
+            if (!ordenVacia())
             {
                 BtnEntregar.Visible = false;
-                if (Conexion.lugar == "TERRAZA")
-                    lblFolio.Text = "T" + String.Format("{0:0000}", suma);
-                else if (Conexion.lugar == "COCINA")
-                    lblFolio.Text = "V" + String.Format("{0:0000}", suma);
-                Ticket ticket = new Ticket();
-                ticket.FontSize = 10;
-                ticket.MaxCharDescription = 26;
-                //Llevar
-                if (tabControl1.SelectedIndex == 2)
+                var listado = new List<(string, string, string)>();
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    ticket.AddHeaderLine("Folio: " + lblFolio.Text);
-                    ticket.AddHeaderLine(" ");
-                    ticket.AddHeaderLine("****PARA LLEVAR****");
-                    ticket.AddHeaderLine(" ");
-                    ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-                    llevar();
+                    conectar.Open();
+                    if (checkBox3.Checked)
+                    {
+                        using (SqlCommand cmd2 = new SqlCommand("UPDATE MESAS SET Estatus = 'COCINA' WHERE IdMesa = @IdMesa;", conectar))
+                        {
+                            cmd2.Parameters.AddWithValue("@IdMesa", idMesa);
+
+                            cmd2.ExecuteNonQuery();
+                        }
+
+
+                    }
+                    else if (idMesa != 0)
+                    {
+                        using (SqlCommand cmd2 = new SqlCommand("DELETE FROM MESAS WHERE Estatus = 'NUEVA';", conectar))
+                        {
+                            cmd2.ExecuteNonQuery();
+                        }
+
+                    }
                 }
-                //mesa
-                else if (tabControl1.SelectedIndex == 0)
-                {
-                    ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-                    ticket.AddHeaderLine(" ");
-                    ticket.AddHeaderLine("****MESA " + CmbMesa.Text + "****");
-                    ticket.AddHeaderLine(" ");
-                    enMesa();
-                }
-                //domicilio
-                else if (tabControl1.SelectedIndex == 1)
-                {
-                    ticket.AddHeaderLine("Folio: " + lblFolio.Text);
-                    ticket.AddHeaderLine(" ");
-                    ticket.AddHeaderLine("****ENTREGA A DOMICILIO****");
-                    ticket.AddHeaderLine("Folio: " + lblFolio.Text);
-                    ticket.AddHeaderLine("Cliente: " + LblNombre.Text);
-                    domicilio();
-                }
-                ticket.AddHeaderLine("MESERO:" + lblMesero.Text);
-                ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
+                if (!checkBox3.Checked)
+                    idMesa = (int)CmbMesa.SelectedValue;
                 for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
                 {
-                    string comentario = " ";
-                    if(DgvPedidoprevio[5, i].Value.ToString().Length>0)
+                    string cantidad = DgvPedidoprevio.Rows[i].Cells["Cantidad"].Value.ToString();
+                    string descripcion = DgvPedidoprevio.Rows[i].Cells["Prod"].Value.ToString();
+                    string comentario = DgvPedidoprevio.Rows[i].Cells["Comentario"].Value.ToString();
+                    string idInventario = DgvPedidoprevio.Rows[i].Cells["Aidi"].Value.ToString();
+                    listado.Add((cantidad, descripcion, comentario));
+                    using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                     {
-                        comentario+=":" + DgvPedidoprevio[5, i].Value.ToString();
-                    }
-                    ticket.AddItem(DgvPedidoprevio[1, i].Value.ToString(), DgvPedidoprevio[2, i].Value.ToString() + comentario , "");
-                    string ide = "";
-                    if (DgvPedidoprevio[0, i].Value.ToString().Substring(0, 1) == "C")
-                    {
-                        if (DgvPedidoprevio[7, i].Value.ToString().Length > 0)
+                        conectar.Open();
+
+                        string insertFolioQuery = "INSERT INTO ArticulosMesa (IdInventario, Cantidad, Total,Comentario,IdMesa, IdMesero, FechaHora, Estatus) " +
+                                                  "VALUES (@IdInventario, @Cantidad, @Total, @Comentario, @IdMesa, @IdMesero, GETDATE(),@Estatus); ";
+
+                        using (SqlCommand cmd = new SqlCommand(insertFolioQuery, conectar))
                         {
-                            ide = DgvPedidoprevio[7, i].Value.ToString();
-                            string[] ids = ide.Split(';');
-                            string RESULT = "";
-                            foreach (var word in ids)
-                            {
-                                string[] ids2 = word.Split(',');
-                                for (int i2 = 0; i2 < ids2.Length - 1; i2 = i2 + 2)
-                                {
-                                    cmd = new OleDbCommand("SELECT Id,Nombre FROM Inventario where Id=" + ids2[1] + ";", conectar);
-                                    OleDbDataReader reader = cmd.ExecuteReader();
-                                    while (reader.Read())
-                                    {
-                                        ticket.AddItem(ids2[0], reader[1].ToString() + "", "");
-                                        RESULT += ids2[0] + " : " + reader[1].ToString() + "\n";
-                                    }
-                                }
-                            }
+                            cmd.Parameters.AddWithValue("@IdInventario", idInventario);
+                            cmd.Parameters.AddWithValue("@Cantidad", cantidad);
+                            cmd.Parameters.AddWithValue("@Total", total);
+                            cmd.Parameters.AddWithValue("@Comentario", comentario);
+                            cmd.Parameters.AddWithValue("@IdMesa", idMesa);
+                            cmd.Parameters.AddWithValue("@IdMesero", idMesero);
+                            cmd.Parameters.AddWithValue("@Estatus", "COCINA");
+                            cmd.ExecuteNonQuery();
                         }
-                    }                       
+                    }
                 }
-                //ticket.PrintTicket(Conexion.impresora2);
-                if (mesaNueva)
-                {
-                    cmd = new OleDbCommand("UPDATE Mesas SET IdMesero='" + idMesero + "',Mesero='" + lblMesero.Text + "' where Id=" + CmbMesa.SelectedValue + ";", conectar);
-                    cmd.ExecuteNonQuery();  
-                }
+                
+                TicketComanda(listado);
                 this.Close();
                 MessageBox.Show("SE HA REALIZADO LA ORDEN CON EXITO!", "ORDEN REALIZADA", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 frmPedido pedo = new frmPedido();
                 pedo.Show();
             }
         }
-
-
-
         private double RecalcularTotal
         {
             get
@@ -590,12 +533,9 @@ namespace Punto_Venta
                 return total;
             }
         }
-
-        
-        //ELIMINAR DESDE BOTON
         private void button2_Click(object sender, EventArgs e)
         {
-            if(DgvPedidoprevio.RowCount>0)
+            if (DgvPedidoprevio.RowCount > 0)
             {
                 DgvPedidoprevio.Rows.RemoveAt(DgvPedidoprevio.CurrentRow.Index);
                 LblTotal.Text = $"{RecalcularTotal:C}";
@@ -614,8 +554,6 @@ namespace Punto_Venta
                 groupBox1.Visible = true;
             }
         }
-
-        
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             if (tabControl1.SelectedIndex == 1)
@@ -678,7 +616,7 @@ namespace Punto_Venta
                 posicion += 50;
                 e.Graphics.DrawLine(new Pen(Color.Black), 1, posicion, 2, posicion);
             }
-            if (tabControl1.SelectedIndex == 2)            
+            if (tabControl1.SelectedIndex == 2)
             {
                 int posicion = 10;
                 //RESIZE
@@ -731,7 +669,6 @@ namespace Punto_Venta
                 e.Graphics.DrawLine(new Pen(Color.Black), 1, posicion, 2, posicion);
             }
         }
-
         private void DgvPedidoprevio_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == DgvPedidoprevio.Columns["btnEliminar"].Index && e.RowIndex >= 0)
@@ -740,8 +677,6 @@ namespace Punto_Venta
                 LblTotal.Text = $"{RecalcularTotal:C}";
             }
         }
-
-        //BUSCAR CLIENTES
         private void tabPage2_MouseClick(object sender, MouseEventArgs e)
         {
             using (frmBuscarClientes ori = new frmBuscarClientes())
@@ -760,7 +695,43 @@ namespace Punto_Venta
                     lblColonia.Text = ori.Colonia;
                     lblColonia.Visible = true;
                 }
-                
+
+            }
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox3.Checked)
+            {
+                if(!mesaNueva)
+                {
+                    using (frmAgregarMesas ori = new frmAgregarMesas())
+                    {
+                        ori.IdMesero = idMesero;
+                        if (ori.ShowDialog() == DialogResult.OK)
+                        {
+                            idMesa = ori.IdMesa;
+                            lblMesa.Text = ori.Mesa;
+                            lblMesa.Visible = true;
+                            CmbMesa.Visible = false;
+                            mesaNueva = true;
+                        }
+                        else
+                        {
+                            checkBox3.Checked = false;
+                        }
+                    }
+                }
+                else
+                {
+                    lblMesa.Visible = true;
+                    CmbMesa.Visible = false;
+                }
+            }
+            else
+            {
+                lblMesa.Visible = false;
+                CmbMesa.Visible = true;
             }
         }
     }

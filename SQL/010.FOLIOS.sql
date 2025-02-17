@@ -10,7 +10,8 @@ CREATE TABLE Folios (
     Total NUMERIC(17,2),
     Descuento NUMERIC(17,2),
 	Utilidad NUMERIC(17,2),
-
+	IdMesa INT,
+	FOREIGN KEY (IdMesa) REFERENCES MESAS(IdMesa)
     --FOREIGN KEY (IdCliente) REFERENCES Clientes(IdCliente) 
 );
 IF OBJECT_ID('ArticulosFolio', 'U') IS NOT NULL

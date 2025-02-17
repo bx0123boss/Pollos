@@ -185,9 +185,8 @@ namespace Punto_Venta
             {
                 conectar.Open();
 
-                // 1. Insertar en la tabla Folios y obtener el último IdFolio
-                string insertFolioQuery = "INSERT INTO Folios (ModalidadVenta, Estatus, idCliente, FechaHora, Total, Descuento, Utilidad) " +
-                                          "VALUES (@ModalidadVenta, @Estatus, @idCliente, @FechaHora, @Total, @Descuento,@Utilidad); " +
+                string insertFolioQuery = "INSERT INTO Folios (ModalidadVenta, Estatus, idCliente, FechaHora, Total, Descuento, Utilidad, IdMesa) " +
+                                          "VALUES (@ModalidadVenta, @Estatus, @idCliente, @FechaHora, @Total, @Descuento,@Utilidad, @IdMesa); " +
                                           "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
 
                 using (SqlCommand cmd = new SqlCommand(insertFolioQuery, conectar))
@@ -197,13 +196,13 @@ namespace Punto_Venta
                     cmd.Parameters.AddWithValue("@idCliente", idCliente == 0 ? (object)DBNull.Value : idCliente);
                     cmd.Parameters.AddWithValue("@FechaHora", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Total", total);
-                    cmd.Parameters.AddWithValue("@Total", descuento);
+                    cmd.Parameters.AddWithValue("@Descuento", descuento);
                     cmd.Parameters.AddWithValue("@Utilidad", 20.00);
+                    cmd.Parameters.AddWithValue("@IdMesa", lblID.Text);
 
                     // Ejecutar la inserción y obtener el último ID insertado
                     int lastIdFolio = Convert.ToInt32(cmd.ExecuteScalar());
 
-                    // 2. Insertar en la tabla ArticulosFolio usando el último IdFolio
                     string insertArticuloQuery = "INSERT INTO ArticulosFolio (IdInventario, IdFolio, Cantidad, Comentario, Total, IdExtra) " +
                                                   "VALUES (@IdProducto, @IdFolio, @Cantidad, @Comentario, @Total, @IdExtra);";
 
