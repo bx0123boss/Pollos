@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using LibPrintTicket;
 using System.Globalization;
+using System.Data.SqlClient;
 
 
 namespace Punto_Venta
@@ -20,29 +21,40 @@ namespace Punto_Venta
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
         OleDbDataAdapter da;
         OleDbCommand cmd;
-        public int idMesero = 0;
-        double total;
+        public string idMesero;
+        public double total, utilidad;
         public string usuario = "";
+        public string IdMesa;
+
         public frmVentaDetallada()
         {
             InitializeComponent();
+            this.MinimumSize = new Size(750, 650);
         }
 
         private void frmVentaDetallada_Load(object sender, EventArgs e)
         {
-            ds = new DataSet();
-            conectar.Open();
-            da = new OleDbDataAdapter("select * from ventas where folio='" + lblFolio.Text + "';", conectar);
-            da.Fill(ds, "Id");
-            dataGridView1.DataSource = ds.Tables["Id"];
-
-            dataGridView1.Columns[0].Visible = false;
-
-            for (int i = 0; i < dataGridView1.RowCount; i++)
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                total += Convert.ToSingle(dataGridView1[6, i].Value.ToString(), CultureInfo.CreateSpecificCulture("es-ES"));
+                conectar.Open();
+                DataSet ds = new DataSet();
+                string query = @"SELECT A.IdArticulosFolio, A.Cantidad, B.Nombre, B.Precio, A.Total, A.Comentario 
+                                FROM ArticulosFolio A
+                                INNER JOIN INVENTARIO B ON A.IdInventario = B.IdInventario
+                                WHERE IdFolio = @Folio;";
+
+                using (SqlDataAdapter da = new SqlDataAdapter(query, conectar))
+                {
+                    da.SelectCommand.Parameters.AddWithValue("@Folio", lblFolio.Text);
+                    da.Fill(ds, "IdFolio");
+                    dataGridView1.DataSource = ds.Tables["IdFolio"];
+                    dataGridView1.Columns[0].Visible = false;
+                }
             }
-            lblMonto.Text = "" + total;
+            dataGridView1.Columns[0].Visible = false;
+            lblMonto.Text = $"{total:C}";
+            lblUtilidad.Text = $"{utilidad:C}";
+
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -85,12 +97,10 @@ namespace Punto_Venta
 
         private void button2_Click(object sender, EventArgs e)
         {
-            cmd = new OleDbCommand("update folios set Estatus='CANCELADO' Where Folio='" + lblFolio.Text + "'", conectar);
+            /*
+            cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('CANCELACION DE FOLIO: " + lblFolio.Text + ", por: "+usuario+"',-" + total + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','CANCELADO');", conectar);
             cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('CANCELACION DE FOLIO: " + lblFolio.Text + ", por: "+usuario+"',-" +lblMonto.Text + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','CANCELADO');", conectar);
-            cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("update ventas set Estatus='CANCELADO' Where Folio='" + lblFolio.Text + "'", conectar);
-            cmd.ExecuteNonQuery();  
+            
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
 
@@ -106,19 +116,58 @@ namespace Punto_Venta
                 cmd = new OleDbCommand("INSERT INTO ArticulosCancelados(Cantidad, Producto, Comentario, Mesa, Fecha, Mesero, Cancelo) VALUES ('" + dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString() + "','" + dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString() + "','','"+lblFolio.Text+"','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblMesero.Text + "','" + usuario + "');", conectar);
                 cmd.ExecuteNonQuery();
             }
+            */
             double ventas = 0;
             int mesas = 0;
-            cmd = new OleDbCommand("select * from Usuarios where Id=" + idMesero + ";", conectar);
-            OleDbDataReader reader2 = cmd.ExecuteReader();
-            if (reader2.Read())
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                ventas = Convert.ToDouble(reader2[4].ToString());
-                mesas = Convert.ToInt32(reader2[5].ToString());
+                conectar.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT Ventas, Mesas FROM Usuarios WHERE IdUsuario = @IdMesero;", conectar))
+                {
+                    cmd.Parameters.AddWithValue("@IdMesero", idMesero);
+
+                    using (SqlDataReader sqlDataReader = cmd.ExecuteReader())
+                    {
+                        if (sqlDataReader.Read())
+                        {
+                            ventas = Convert.ToDouble(sqlDataReader["Ventas"]);
+                            mesas = Convert.ToInt32(sqlDataReader["Mesas"]);
+                        }
+                    }
+                    ventas -= total;
+                    mesas--;
+                    //insertar en corte
+                    using (SqlCommand cmd2 = new SqlCommand("UPDATE folios set Estatus='CANCELADO' Where IdFolio = @IdFolio;", conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@IdFolio", lblFolio.Text);
+
+                        cmd2.ExecuteNonQuery();
+                    }
+                    using (SqlCommand cmd2 = new SqlCommand("UPDATE Usuarios SET Ventas = @Ventas, Mesas = @Mesas WHERE IdUsuario = @IdMesero;", conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@Ventas", ventas);
+                        cmd2.Parameters.AddWithValue("@Mesas", mesas);
+                        cmd2.Parameters.AddWithValue("@IdMesero", idMesero);
+
+                        cmd2.ExecuteNonQuery();
+                    }
+                    using (SqlCommand cmd2 = new SqlCommand("UPDATE MESAS SET Estatus = 'CANCELADO' WHERE IdMesa = @IdMesa;", conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@IdMesa", IdMesa);
+
+                        cmd2.ExecuteNonQuery();
+                    }
+                    using (SqlCommand cmd2 = new SqlCommand("UPDATE ArticulosMesa SET Estatus = 'CANCELADO' WHERE IdMesa = @IdMesa;", conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@IdMesa", IdMesa);
+
+                        cmd2.ExecuteNonQuery();
+                    }
+
+
+                }
+
             }
-            ventas -= total;
-            mesas--;
-            cmd = new OleDbCommand("UPDATE Usuarios SET Ventas='" + ventas + "',Mesas='"+mesas+"' where Id=" + idMesero + ";", conectar);
-            cmd.ExecuteNonQuery();
             MessageBox.Show("ORDEN CANCELADA CON EXITO", "Comanda General", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
             this.Close();

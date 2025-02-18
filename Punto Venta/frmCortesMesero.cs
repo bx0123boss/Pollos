@@ -45,7 +45,7 @@ namespace Punto_Venta
             try
             {
                 frmVentaDetallada detalles = new frmVentaDetallada();
-                detalles.idMesero = Convert.ToInt32(dataGridView1[4, dataGridView1.CurrentRow.Index].Value.ToString());
+                detalles.idMesero = dataGridView1[4, dataGridView1.CurrentRow.Index].Value.ToString();
                 detalles.lblMesero.Text = dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString();
                 detalles.lblFolio.Text = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
                 detalles.lblFecha.Text = dataGridView1[8, dataGridView1.CurrentRow.Index].Value.ToString();
