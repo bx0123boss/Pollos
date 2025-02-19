@@ -235,18 +235,6 @@
     <Compile Include="frmCobros.Designer.cs">
       <DependentUpon>frmCobros.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmComanda.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmComanda.Designer.cs">
-      <DependentUpon>frmComanda.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmComandaGeneral.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmComandaGeneral.Designer.cs">
-      <DependentUpon>frmComandaGeneral.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmCombos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -397,12 +385,6 @@
     <Compile Include="frmPedido.Designer.cs">
       <DependentUpon>frmPedido.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmPedidoRealizado.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmPedidoRealizado.Designer.cs">
-      <DependentUpon>frmPedidoRealizado.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmPizzas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -450,12 +432,6 @@
     </Compile>
     <Compile Include="frmTipoDetallada.Designer.cs">
       <DependentUpon>frmTipoDetallada.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmTipoVenta.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmTipoVenta.Designer.cs">
-      <DependentUpon>frmTipoVenta.cs</DependentUpon>
     </Compile>
     <Compile Include="frmUsuarios.cs">
       <SubType>Form</SubType>
@@ -561,12 +537,6 @@
     <EmbeddedResource Include="frmCobros.resx">
       <DependentUpon>frmCobros.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmComanda.resx">
-      <DependentUpon>frmComanda.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmComandaGeneral.resx">
-      <DependentUpon>frmComandaGeneral.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmCombos.resx">
       <DependentUpon>frmCombos.cs</DependentUpon>
     </EmbeddedResource>
@@ -642,9 +612,6 @@
     <EmbeddedResource Include="frmPedido.resx">
       <DependentUpon>frmPedido.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPedidoRealizado.resx">
-      <DependentUpon>frmPedidoRealizado.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmPizzas.resx">
       <DependentUpon>frmPizzas.cs</DependentUpon>
     </EmbeddedResource>
@@ -668,9 +635,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmTipoDetallada.resx">
       <DependentUpon>frmTipoDetallada.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmTipoVenta.resx">
-      <DependentUpon>frmTipoVenta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUsuarios.resx">
       <DependentUpon>frmUsuarios.cs</DependentUpon>

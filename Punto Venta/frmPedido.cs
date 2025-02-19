@@ -463,6 +463,14 @@ namespace Punto_Venta
                 var listado = new List<(string, string, string)>();
                 using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
+                    if (checkBox3.Checked ==false && CmbMesa.SelectedValue != null)
+                        idMesa = (int)CmbMesa.SelectedValue;
+                    else if(CmbMesa.SelectedValue == null && checkBox3.Checked == false)
+                    {
+                        BtnEntregar.Visible = true;
+                        MessageBox.Show("NO SE HA SELECCIONADO MESA", "Alto!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     conectar.Open();
                     if (checkBox3.Checked)
                     {
@@ -484,8 +492,6 @@ namespace Punto_Venta
 
                     }
                 }
-                if (!checkBox3.Checked)
-                    idMesa = (int)CmbMesa.SelectedValue;
                 for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
                 {
                     string cantidad = DgvPedidoprevio.Rows[i].Cells["Cantidad"].Value.ToString();

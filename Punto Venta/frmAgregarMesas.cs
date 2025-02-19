@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.OleDb;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Punto_Venta
@@ -33,7 +25,7 @@ namespace Punto_Venta
                 using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
                     conectar.Open();
-                    using (SqlCommand cmd = new SqlCommand("SELECT Nombre FROM Mesas WHERE Nombre = @Nombre;", conectar))
+                    using (SqlCommand cmd = new SqlCommand("SELECT Nombre FROM Mesas WHERE Nombre = @Nombre AND Estatus = 'COCINA';", conectar))
                     {
                         cmd.Parameters.AddWithValue("@Nombre", txtNombre.Text);
 

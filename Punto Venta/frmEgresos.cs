@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
 using LibPrintTicket;
+using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
     public partial class frmEgresos : Form
     {
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbCommand cmd;
+       
         public string usuario;
         public frmEgresos()
         {
@@ -24,11 +16,20 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
-            conectar.Open();
             try
             {
-                cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('SALIDA POR CONCEPTO: " + txtConcepto.Text + "',-" + txtIngreso.Text + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
-                cmd.ExecuteNonQuery();
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    conectar.Open();
+                    string query = @"INSERT INTO CORTE (Concepto, Total,FechaHora,FormaPago) VALUES
+                                    (@Concepto, @Total, GETDATE(), 'EFECTIVO')";
+                    using (SqlCommand cmd2 = new SqlCommand(query, conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@Concepto", $"SALIDA DE EFECTIVO: {txtConcepto.Text}");
+                        cmd2.Parameters.AddWithValue("@Total", "-"+txtIngreso.Text);
+                        cmd2.ExecuteNonQuery();
+                    }
+                }
                 Ticket ticket2 = new Ticket();
                 ticket2.MaxChar = 35;
                 ticket2.MaxCharDescription = 22;
@@ -44,7 +45,6 @@ namespace Punto_Venta
             {
 
             }
-            conectar.Close();
             this.Close();
         }
 

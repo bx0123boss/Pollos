@@ -59,6 +59,7 @@
             this.button190.Text = "OCUPADA";
             this.toolTip1.SetToolTip(this.button190, "Ocupado");
             this.button190.UseVisualStyleBackColor = false;
+            this.button190.Visible = false;
             // 
             // button200
             // 
@@ -74,6 +75,7 @@
             this.button200.Text = "DISPONIBLE";
             this.toolTip1.SetToolTip(this.button200, "Disponible");
             this.button200.UseVisualStyleBackColor = false;
+            this.button200.Visible = false;
             // 
             // flowBotones
             // 
@@ -113,6 +115,7 @@
             this.button1.Text = "REPARTO";
             this.toolTip1.SetToolTip(this.button1, "Ocupado");
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Visible = false;
             // 
             // button3
             // 
@@ -127,13 +130,13 @@
             this.button3.Text = "RUTA";
             this.toolTip1.SetToolTip(this.button3, "Ocupado");
             this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Visible = false;
             // 
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(804, 236);
+            this.button4.Location = new System.Drawing.Point(804, 12);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(134, 45);
             this.button4.TabIndex = 65;

@@ -1589,8 +1589,6 @@ C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmCate
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmClaveVendendor.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmClientes.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmCobros.resources
-C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmComanda.resources
-C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmComandaGeneral.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmCombos.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmComentarios.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmCompras.resources
@@ -1616,7 +1614,6 @@ C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmInve
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmMesasOcupadas.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmOrigen.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmPedido.resources
-C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmPedidoRealizado.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmPizzas.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmPlatillos.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmPrincipal.resources
@@ -1625,7 +1622,6 @@ C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmRepo
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmReporteVentasProducto.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmSeleccionarCombo.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmTipoDetallada.resources
-C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmTipoVenta.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmUsuarios.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmVentaDetallada.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmVerCompra.resources

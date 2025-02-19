@@ -16,6 +16,7 @@ CREATE TABLE Cortes (
     Concepto VARCHAR(150),
     Total NUMERIC(9,2),
     FormaPago VARCHAR(25),
+	FechaHora DATETIME,
     IdHistorialCortes INT,
     FOREIGN KEY (IdHistorialCortes) REFERENCES HistorialCortes(IdHistorialCortes)
 );
@@ -28,6 +29,17 @@ CREATE TABLE Corte (
     Total NUMERIC(9,2),
     FechaHora DATETIME,
     FormaPago VARCHAR(25)
+);
+
+IF OBJECT_ID('CortesMeseros', 'U') IS NOT NULL
+    DROP TABLE CortesMeseros;
+CREATE TABLE CortesMeseros (
+    IdCortesMeseros INT IDENTITY(1,1) PRIMARY KEY,
+	IdHistorialCortes INT,
+    Mesero VARCHAR(30),
+    Ventas NUMERIC(17,2),
+    Mesas INT,
+	FOREIGN KEY (IdHistorialCortes) REFERENCES HistorialCortes(IdHistorialCortes)
 );
 
 COMMIT TRANSACTION;

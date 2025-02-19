@@ -152,7 +152,7 @@ namespace Punto_Venta
                 cobrar.print = data.Impresion == "True" ? "1" : "0";
                 cobrar.lblPersonas.Text = data.CantPersonas;
                 cobrar.Show();
-                
+                this.Close();
             
             }
 
@@ -213,12 +213,6 @@ namespace Punto_Venta
             frmArticulosCancelados ar = new frmArticulosCancelados();
             ar.ShowDialog();
             this.Close();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            frmComandaGeneral com = new frmComandaGeneral();
-            com.ShowDialog();
         }
 
         private void button4_Click(object sender, EventArgs e)

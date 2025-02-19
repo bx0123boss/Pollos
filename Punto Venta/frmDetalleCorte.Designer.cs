@@ -36,6 +36,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDetalleCorte));
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -92,7 +93,7 @@
             this.lblMonto.ForeColor = System.Drawing.Color.White;
             this.lblMonto.Location = new System.Drawing.Point(574, 120);
             this.lblMonto.Name = "lblMonto";
-            this.lblMonto.Size = new System.Drawing.Size(60, 64);
+            this.lblMonto.Size = new System.Drawing.Size(59, 64);
             this.lblMonto.TabIndex = 41;
             this.lblMonto.Text = "0";
             // 
@@ -236,7 +237,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(1042, 508);
+            this.ClientSize = new System.Drawing.Size(1042, 530);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.label2);
@@ -247,6 +248,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblFecha);
             this.Controls.Add(this.dataGridView1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmDetalleCorte";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Detalle Corte";

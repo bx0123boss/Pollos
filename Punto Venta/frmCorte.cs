@@ -11,6 +11,8 @@ using System.Data.OleDb;
 using LibPrintTicket;
 using System.Globalization;
 using System.Drawing.Printing;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
@@ -28,33 +30,32 @@ namespace Punto_Venta
         public frmCorte()
         {
             InitializeComponent();
+            this.MinimumSize = new Size(800, 775);
         }
 
         private void frmCorte_Load(object sender, EventArgs e)
         {
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                DataSet ds = new DataSet();
+                using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM CORTE", conectar))
+                {
+                    da.Fill(ds, "Id");
+                    dgvCorte.DataSource = ds.Tables["Id"];
+                    dgvCorte.Columns[0].Visible = false;
+                }
+                ds = new DataSet();
+                using (SqlDataAdapter da = new SqlDataAdapter("select IdUsuario,Usuario As Mesero,Ventas, Mesas as MesasAtentidas from Usuarios;", conectar))
+                {
+                    da.Fill(ds, "Id");
+                    dataGridView4.DataSource = ds.Tables["Id"];
+                    dataGridView4.Columns[0].Visible = false;
+                }
+            }
 
-            ds = new DataSet();
-            conectar.Open();
-            da = new OleDbDataAdapter("select * from corte ORDER BY Id Desc;", conectar);
-            da.Fill(ds, "Id");
-            dgvCorte.DataSource = ds.Tables["Id"];
-            dgvCorte.Columns[0].Visible = false;
 
-            ds = new DataSet();
-            da = new OleDbDataAdapter("SELECT TOP 100 Sum(ventas.Cantidad) AS CantidadVendidos, ventas.Subcategoria, Sum(ventas.Total) AS SumaDeTotal from ventas where Fecha >=#" + DateTime.Now.ToString("dd/MM/yyyy") + " 00:00:00# and Fecha <=#" + DateTime.Now.ToString("dd/MM/yyyy") + " 23:59:59# AND Estatus = 'COBRADO' GROUP BY Ventas.Subcategoria ORDER BY 2 DESC;", conectar); 
-            da.Fill(ds, "Id");
-            dataGridView1.DataSource = ds.Tables["Id"];
-
-            ds = new DataSet();
-            da = new OleDbDataAdapter("SELECT invent.idArticulo, invent.articulo AS Nombre, invent.entrada, invent.salida, Articulos.cantidad as Actual FROM invent, Articulos WHERE invent.idArticulo = Articulos.id;", conectar);
-            da.Fill(ds, "Id");
-            dataGridView2.DataSource = ds.Tables["Id"];
-
-            ds = new DataSet();
-            da = new OleDbDataAdapter("select Id,Usuario,('$' + Ventas) as Ventas, Mesas as Mesas_Atendidas from Usuarios;", conectar);
-            da.Fill(ds, "Id");
-            dataGridView4.DataSource = ds.Tables["Id"];
-            dataGridView4.Columns[0].Visible = false;
+            dgvCorte.Columns["Total"].DefaultCellStyle.Format = "N2";
+            dataGridView4.Columns["Ventas"].DefaultCellStyle.Format = "N2";
 
             for (int i = 0; i < dgvCorte.RowCount; i++)
             {
@@ -87,33 +88,12 @@ namespace Punto_Venta
             //{
             //tarjeta += Convert.ToSingle(dataGridView3[2, i].Value.ToString(), CultureInfo.CreateSpecificCulture("es-ES"));
             //} 
-            string mas2 = String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", mas);
-            string menos2 = String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", (menos * -1));
-            string masmenos = String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", (mas + menos + credito));
-            lblEntrada.Text = "$" + mas2;
-            lblSalida.Text = "$" + menos2;
-            lblCorte.Text = "$" + masmenos;
-            lblCredito.Text = "$" + credito;
+           
+            lblEntrada.Text = $"{mas:C}";
+            lblSalida.Text = $"{menos:C}";
+            lblCorte.Text = $"{(mas + menos):C}";
+            lblCredito.Text = $"{credito:C}";
 
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-            for (int i = 0; i < dgvCorte.RowCount; i++)
-            {
-                if (Convert.ToDouble(dgvCorte[2, i].Value.ToString()) < 0)
-                {
-                    menos += Convert.ToSingle(dgvCorte[2, i].Value.ToString(), CultureInfo.CreateSpecificCulture("es-ES"));
-
-                }
-                else if (Convert.ToDouble(dgvCorte[2, i].Value.ToString()) > 0)
-                    mas += Convert.ToSingle(dgvCorte[2, i].Value.ToString(), CultureInfo.CreateSpecificCulture("es-ES"));
-            }
-            lblEntrada.Text = "$" + mas;
-            lblSalida.Text = "$" + (menos * -1);
-            lblCorte.Text = "$" + (mas + menos);
-            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -123,72 +103,84 @@ namespace Punto_Venta
 
         public void corteTicket()
         {
-
-            button1.Hide();
+            int idInsertado;
             Ticket ticket = new Ticket();
             ticket.MaxChar = 35;
             ticket.MaxCharDescription = 22;
             ticket.FontSize = 8;
             ticket.AddHeaderLine("********  CORTE DE CAJA  *******");
             ticket.AddSubHeaderLine("FECHA Y HORA:" + anoSQL);
-            cmd = new OleDbCommand("INSERT INTO histocortes(Monto,Fecha) VALUES ('" + lblCorte.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "');", conectar);
-            cmd.ExecuteNonQuery();
-            string idInsertado = "";
-            cmd = new OleDbCommand("select @@IDENTITY;", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                idInsertado = reader[0].ToString();
-            }
-            ticket.AddSubHeaderLine("FOLIO: " + idInsertado);
-            for (int i = 0; i < dataGridView4.RowCount; i++)
-            {
-                string cadena = dataGridView4[2, i].Value.ToString().Substring(1);
-                cmd = new OleDbCommand("INSERT INTO MesaDet(IdCorte,Mesero,Ventas,Mesas) VALUES ('" + idInsertado + "','" + dataGridView4[1, i].Value.ToString() + "','" + cadena + "','" + dataGridView4[3, i].Value.ToString() + "');", conectar);
-                cmd.ExecuteNonQuery();
-            }
-            cmd = new OleDbCommand("delete from corte where 1;", conectar);
-            cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("delete from Credito where 1;", conectar);
-            //cmd.ExecuteNonQuery();
-            MessageBox.Show("Corte relizado con exito", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            cmd = new OleDbCommand("UPDATE inicio set inicio='0' Where id=1;", conectar);
-            cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("UPDATE Usuarios set Ventas='0',Mesas='0';", conectar);
-            cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("delete from invent where 1;", conectar);
-            cmd.ExecuteNonQuery();
-            for (int i = 0; i < dgvCorte.RowCount; i++)
-            {
-                cmd = new OleDbCommand("insert into Cortes(Concepto,Monto,idCorte) Values('" + dgvCorte[1, i].Value.ToString() + "','" + dgvCorte[2, i].Value.ToString() + "','" + idInsertado + "');", conectar);
-                cmd.ExecuteNonQuery();
-                ticket.AddItem("1", dgvCorte[1, i].Value.ToString(), "   $" + dgvCorte[2, i].Value.ToString());
-            }
+                conectar.Open();
+                string query = @"INSERT INTO HistorialCortes (Monto,FechaHora) VALUES (@Monto, GETDATE());
+                                SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
+                using (SqlCommand cmd2 = new SqlCommand(query, conectar))
+                {
+                    cmd2.Parameters.AddWithValue("@Monto", $"{(mas + menos)}");
+                    idInsertado = Convert.ToInt32(cmd2.ExecuteScalar());
+                }
+                ticket.AddSubHeaderLine("FOLIO: " + idInsertado);
+                for (int i = 0; i < dataGridView4.RowCount; i++)
+                {
+                    query = @"INSERT INTO CortesMeseros(IdHistorialCortes,Mesero,Ventas,Mesas) VALUES (@IdCorte,@Mesero,@Ventas,@Mesas);";
+                    using (SqlCommand cmd2 = new SqlCommand(query, conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@IdCorte", idInsertado);
+                        cmd2.Parameters.AddWithValue("@Mesero", dataGridView4.Rows[i].Cells["Mesero"].Value?.ToString());
+                        cmd2.Parameters.AddWithValue("@Ventas", dataGridView4.Rows[i].Cells["Ventas"].Value?.ToString());
+                        cmd2.Parameters.AddWithValue("@Mesas", dataGridView4.Rows[i].Cells["MesasAtentidas"].Value?.ToString());
+                        cmd2.ExecuteNonQuery();
+                    }
+                }
+                for (int i = 0; i < dgvCorte.RowCount; i++)
+                {
+                    query = @"INSERT INTO CORTES(Concepto,Total, FormaPago,FechaHora, IdHistorialCortes) VALUES (@Concepto,@Total,@FormaPago,@FechaHora, @IdHistorialCortes);";
+                    using (SqlCommand cmd2 = new SqlCommand(query, conectar))
+                    {
+                        
+                        cmd2.Parameters.AddWithValue("@Concepto", dgvCorte.Rows[i].Cells["Concepto"].Value?.ToString());
+                        cmd2.Parameters.AddWithValue("@Total", dgvCorte.Rows[i].Cells["Total"].Value?.ToString());
+                        cmd2.Parameters.AddWithValue("@FormaPago", dgvCorte.Rows[i].Cells["FormaPago"].Value?.ToString());
+                        DateTime fechaHora = (DateTime)dgvCorte.Rows[i].Cells["FechaHora"].Value;
+                        cmd2.Parameters.AddWithValue("@FechaHora", fechaHora);
+                        cmd2.Parameters.AddWithValue("@IdHistorialCortes", idInsertado);
+                        cmd2.ExecuteNonQuery();
+                    }
+                    ticket.AddItem("1", dgvCorte[1, i].Value.ToString(), "   $" + dgvCorte[2, i].Value.ToString());
 
+                }
+                using (SqlCommand cmd2 = new SqlCommand("UPDATE Usuarios set Ventas=0,Mesas=0;", conectar))
+                {
+                    cmd2.ExecuteNonQuery();
+                }
+                using (SqlCommand cmd2 = new SqlCommand("DELETE FROM CORTE;", conectar))
+                {
+                    cmd2.ExecuteNonQuery();
+                }
+                using (SqlCommand cmd2 = new SqlCommand("UPDATE inicio set inicio='0' Where id=1;", conectar))
+                {
+                    cmd2.ExecuteNonQuery();
+                }
+                using (SqlCommand cmd2 = new SqlCommand("UPDATE Usuarios set Ventas=0,Mesas=0;", conectar))
+                {
+                    cmd2.ExecuteNonQuery();
+                }
+               
+               
+                    
+            }
             ticket.AddTotal("Entradas", lblEntrada.Text);
             ticket.AddTotal("Salidas", lblSalida.Text);
             ticket.AddTotal("Total", lblCorte.Text);
             ticket.PrintTicket(Conexion.impresora);
+            MessageBox.Show("Corte relizado con exito", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            //Ticket ticket2 = new Ticket();
-            //ticket2.MaxChar = 35;
-            //ticket2.MaxCharDescription = 22;
-            //ticket2.FontSize = 8;
-            //ticket2.AddHeaderLine("********  PRODUCTOS VENDIDOS  *******");
-            //ticket2.AddSubHeaderLine("FECHA Y HORA:"+ anoSQL);
-            //ticket2.AddSubHeaderLine("FOLIO: " + idInsertado);
-            //for (int i = 0; i < dataGridView1.RowCount; i++)
-            //{
-            //    ticket2.AddItem(dataGridView1[0, i].Value.ToString(), dataGridView1[1, i].Value.ToString(), "   $" + dataGridView1[2, i].Value.ToString());
-            //}
-            //ticket2.PrintTicket(Conexion.impresora);
             this.Close();
         }
 
         public void corte()
         {
-
-            button1.Hide();
             
             string anoSQL = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
             cmd = new OleDbCommand("INSERT INTO histocortes(Monto,Fecha) VALUES ('" + lblCorte.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "');", conectar);
@@ -297,26 +289,16 @@ namespace Punto_Venta
             posicion += 15;                       
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-           
-        }
-
         private void button3_Click(object sender, EventArgs e)
         {
             try
             {
                 frmCortesMesero cor = new frmCortesMesero();
-                cor.idMesero = dataGridView4[0, dataGridView4.CurrentRow.Index].Value.ToString();
-                cor.lblMonto.Text = dataGridView4[2, dataGridView4.CurrentRow.Index].Value.ToString();
-                cor.lblMesas.Text = dataGridView4[3, dataGridView4.CurrentRow.Index].Value.ToString();
-                cor.Text = "Corte de: " + dataGridView4[1, dataGridView4.CurrentRow.Index].Value.ToString();
-                cor.nombre = dataGridView4[1, dataGridView4.CurrentRow.Index].Value.ToString();
+                cor.idMesero = dataGridView4.CurrentRow.Cells["IdUsuario"].Value.ToString();
+                cor.lblMonto.Text = dataGridView4.CurrentRow.Cells["Ventas"].Value.ToString();
+                cor.lblMesas.Text = dataGridView4.CurrentRow.Cells["MesasAtentidas"].Value.ToString();
+                cor.Text = "Corte de: " + dataGridView4.CurrentRow.Cells["Usuario"].Value.ToString();
+                cor.nombre = dataGridView4.CurrentRow.Cells["Usuario"].Value.ToString();
                 cor.Show();
                 this.Close();
             }
@@ -324,12 +306,6 @@ namespace Punto_Venta
             {
                 MessageBox.Show("Tiene que seleccionar un MESERO antes", "Corte de caja", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void lblCredito_Click(object sender, EventArgs e)
-        {
-            
-
         }
     }
 }

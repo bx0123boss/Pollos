@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using System.Data.OleDb;
 using System.IO;
-using System.Diagnostics;
 using System.Net.Mail;
 using System.Data.SqlClient;
 
@@ -296,17 +289,6 @@ namespace Punto_Venta
                 //return false;
 
             }
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-            //0 cant, 1 producto, 2 precioUni, 3 precioTotal
-            List<string[]> DatosTicket = new List<string[]>();
-            DatosTicket.Add(new string[] { "1", "PAPA ATUN", "115", "115" });
-            DatosTicket.Add(new string[] { "1", "MINI LIGTH", "50", "50" });
-            DatosTicket.Add(new string[] { "2", "MINI COCTEL", "65", "130" });
-            TicketJaegersoftRestaurante ticket = new TicketJaegersoftRestaurante("V0047", "01", "Brandon", 295, DatosTicket);
-            ticket.imprimir();
         }
     }
 }

@@ -17,10 +17,6 @@ namespace Punto_Venta
 {
     public partial class frmVentaDetallada : Form
     {
-        private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
         public string idMesero;
         public double total, utilidad;
         public string usuario = "";
@@ -83,14 +79,13 @@ namespace Punto_Venta
                 string item = dataGridView1[2, i].Value.ToString();
 
                 ticket.AddItem(String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", item), producto, "$" + String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", lol));
-                    
-                //ticket.AddItem(dataGridView1[2, i].Value.ToString(), producto, "$" + lol);
+
 
             }
 
-               ticket.AddTotal("TOTAL", String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}",lblMonto.Text));
-               ticket.AddFooterLine("  ¡GRACIAS POR SU PREFERENCIA!");
-               ticket.PrintTicket("print");
+            ticket.AddTotal("TOTAL", String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", lblMonto.Text));
+            ticket.AddFooterLine("  ¡GRACIAS POR SU PREFERENCIA!");
+            ticket.PrintTicket("print");
             //ticket.PrintTicket("print");
             //ticket.PrintTicket("EPSON TM-T20II Receipt");
         }
@@ -136,7 +131,15 @@ namespace Punto_Venta
                     }
                     ventas -= total;
                     mesas--;
-                    //insertar en corte
+                    string query = @"INSERT INTO CORTE (Concepto, Total,FechaHora,FormaPago) VALUES
+                                    (@Concepto, @Total, GETDATE(), 'CANCELADO')";
+                    using (SqlCommand cmd2 = new SqlCommand(query, conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@Concepto", $"Cancelacion de folio: {lblFolio.Text} por {usuario}");
+                        cmd2.Parameters.AddWithValue("@Total", total * -1);
+                        cmd2.ExecuteNonQuery();
+                    }
+
                     using (SqlCommand cmd2 = new SqlCommand("UPDATE folios set Estatus='CANCELADO' Where IdFolio = @IdFolio;", conectar))
                     {
                         cmd2.Parameters.AddWithValue("@IdFolio", lblFolio.Text);

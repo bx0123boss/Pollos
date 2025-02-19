@@ -1,39 +1,23 @@
 ﻿using System;
-using LibPrintTicket;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing.Printing;
 using System.Windows.Forms;
-using System.IO;
-using System.Data.OleDb;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Punto_Venta
 {
     public partial class frmCobros : Form
     {
-        private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
         double iva;
         double descuento;
         double total = 0;
-        int suma = 0;
-        string folio = "";
         string tipoUser = "";
         public int idMesero = 0;
         public string print = "";
         public int idCliente = 0;
+        private int folio;
 
         public frmCobros()
         {
@@ -159,24 +143,6 @@ namespace Punto_Venta
 
 
         }
-        public string obtenerSubcategoria(string id)
-        {
-            string subcategoria = "";
-            try
-            {
-                cmd = new OleDbCommand("select subcategoria from Inventario where Id=" + id + ";", conectar);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    subcategoria = reader[0].ToString();
-                }
-            }
-            catch
-            {
-
-            }
-            return subcategoria;
-        }
         private void button2_Click(object sender, EventArgs e)
         {
             double ventas = 0;
@@ -220,6 +186,16 @@ namespace Punto_Venta
                             cmd2.ExecuteNonQuery();
                         }
                     }
+                    string query = @"INSERT INTO CORTE (Concepto, Total,FechaHora,FormaPago) VALUES
+                                    (@Concepto, @Total, GETDATE(), 'EFECTIVO')";
+                    using (SqlCommand cmd2 = new SqlCommand(query, conectar))
+                    {
+                        cmd2.Parameters.AddWithValue("@Concepto", $"VENTA DE FOLIO: {lastIdFolio}");
+                        cmd2.Parameters.AddWithValue("@Total", total);
+                        cmd2.ExecuteNonQuery();
+                    }
+                    folio = lastIdFolio;
+
                 }
                 using (SqlCommand cmd = new SqlCommand("SELECT Ventas, Mesas FROM Usuarios WHERE IdUsuario = @IdMesero;", conectar))
                 {
@@ -258,8 +234,7 @@ namespace Punto_Venta
 
                         cmd2.ExecuteNonQuery();
                     }
-
-
+                  
                 }
 
 
@@ -272,6 +247,8 @@ namespace Punto_Venta
                 imprimir();
             }
             MessageBox.Show("EL COBRO SE HA REALIZADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            frmMesasOcupadas mesa = new frmMesasOcupadas();
+            mesa.Show();
             this.Close();
         }
 
@@ -441,6 +418,7 @@ namespace Punto_Venta
                             string[] ids2 = word.Split(',');
                             for (int i2 = 0; i2 < ids2.Length - 1; i2 = i2 + 2)
                             {
+                                /*
                                 cmd = new OleDbCommand("SELECT Id,Nombre FROM Inventario where Id=" + ids2[1] + ";", conectar);
                                 OleDbDataReader reader = cmd.ExecuteReader();
                                 while (reader.Read())
@@ -465,6 +443,7 @@ namespace Punto_Venta
                                     posicion += 20;
                                     RESULT += ids2[0] + " : " + reader[1].ToString() + "\n";
                                 }
+                                */
                             }
                         }
                     }

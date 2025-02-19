@@ -50,6 +50,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.lblUtilidad = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblEstatus = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -169,7 +171,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 179);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 211);
             this.dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
@@ -179,7 +181,7 @@
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridView1.Size = new System.Drawing.Size(549, 431);
+            this.dataGridView1.Size = new System.Drawing.Size(549, 417);
             this.dataGridView1.TabIndex = 16;
             // 
             // label5
@@ -319,12 +321,42 @@
             this.lblUtilidad.TabIndex = 34;
             this.lblUtilidad.Text = "0";
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(438, 159);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(123, 25);
+            this.label4.TabIndex = 35;
+            this.label4.Text = "ESTATUS:";
+            // 
+            // lblEstatus
+            // 
+            this.lblEstatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblEstatus.AutoSize = true;
+            this.lblEstatus.BackColor = System.Drawing.Color.Transparent;
+            this.lblEstatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEstatus.ForeColor = System.Drawing.Color.White;
+            this.lblEstatus.Location = new System.Drawing.Point(567, 159);
+            this.lblEstatus.Name = "lblEstatus";
+            this.lblEstatus.Size = new System.Drawing.Size(25, 25);
+            this.lblEstatus.TabIndex = 36;
+            this.lblEstatus.Text = "0";
+            // 
             // frmVentaDetallada
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1021, 640);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblEstatus);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.lblUtilidad);
             this.Controls.Add(this.button2);
@@ -371,5 +403,7 @@
         public System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.Label lblUtilidad;
+        private System.Windows.Forms.Label label4;
+        public System.Windows.Forms.Label lblEstatus;
     }
 }

@@ -49,9 +49,10 @@
             // 
             // txtIngreso
             // 
+            this.txtIngreso.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtIngreso.Location = new System.Drawing.Point(183, 124);
             this.txtIngreso.Name = "txtIngreso";
-            this.txtIngreso.Size = new System.Drawing.Size(128, 20);
+            this.txtIngreso.Size = new System.Drawing.Size(128, 22);
             this.txtIngreso.TabIndex = 8;
             this.txtIngreso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtIngreso_KeyPress);
             // 
@@ -69,6 +70,7 @@
             // txtConcepto
             // 
             this.txtConcepto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtConcepto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtConcepto.Location = new System.Drawing.Point(100, 12);
             this.txtConcepto.Multiline = true;
             this.txtConcepto.Name = "txtConcepto";

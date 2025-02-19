@@ -40,11 +40,8 @@
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button13 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,7 +51,7 @@
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(283, 484);
+            this.button1.Location = new System.Drawing.Point(293, 482);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(224, 115);
             this.button1.TabIndex = 0;
@@ -120,7 +117,7 @@
             this.button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button6.ForeColor = System.Drawing.Color.White;
-            this.button6.Location = new System.Drawing.Point(52, 234);
+            this.button6.Location = new System.Drawing.Point(51, 253);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(455, 102);
             this.button6.TabIndex = 6;
@@ -147,7 +144,7 @@
             this.button9.BackColor = System.Drawing.Color.Black;
             this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button9.ForeColor = System.Drawing.Color.White;
-            this.button9.Location = new System.Drawing.Point(53, 484);
+            this.button9.Location = new System.Drawing.Point(51, 484);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(224, 115);
             this.button9.TabIndex = 10;
@@ -161,7 +158,7 @@
             this.button10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button10.ForeColor = System.Drawing.Color.White;
-            this.button10.Location = new System.Drawing.Point(282, 351);
+            this.button10.Location = new System.Drawing.Point(293, 361);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(224, 115);
             this.button10.TabIndex = 11;
@@ -175,7 +172,7 @@
             this.button11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button11.ForeColor = System.Drawing.Color.White;
-            this.button11.Location = new System.Drawing.Point(52, 351);
+            this.button11.Location = new System.Drawing.Point(51, 361);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(224, 115);
             this.button11.TabIndex = 12;
@@ -192,22 +189,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 18;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_1);
-            // 
-            // button13
-            // 
-            this.button13.BackColor = System.Drawing.Color.Black;
-            this.button13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button13.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button13.ForeColor = System.Drawing.Color.White;
-            this.button13.Location = new System.Drawing.Point(582, 85);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(100, 87);
-            this.button13.TabIndex = 19;
-            this.button13.Text = "Comanda";
-            this.button13.UseVisualStyleBackColor = false;
-            this.button13.Visible = false;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // button12
             // 
@@ -237,28 +218,6 @@
             this.button14.UseVisualStyleBackColor = false;
             this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
-            // button15
-            // 
-            this.button15.Location = new System.Drawing.Point(0, 0);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(75, 23);
-            this.button15.TabIndex = 24;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.Black;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(554, 605);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(455, 102);
-            this.button3.TabIndex = 23;
-            this.button3.Text = "Compras";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Visible = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click_1);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -266,11 +225,8 @@
             this.BackColor = System.Drawing.Color.DarkOrange;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1362, 741);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button15);
             this.Controls.Add(this.button14);
             this.Controls.Add(this.button12);
-            this.Controls.Add(this.button13);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
@@ -288,7 +244,6 @@
             this.Text = "Menu Principal";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPrincipal_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPrincipal_FormClosed);
             this.Load += new System.EventHandler(this.frmPrincipal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -309,10 +264,7 @@
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button14;
-        private System.Windows.Forms.Button button15;
-        private System.Windows.Forms.Button button3;
     }
 }

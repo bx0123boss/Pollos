@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
-using System.Globalization;
 using System.Data.SqlClient;
 
 
@@ -26,9 +18,8 @@ namespace Punto_Venta
         {
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                conectar.Open(); // Abrir la conexión
+                conectar.Open();
 
-                // Verificar si el producto ya existe
                 using (SqlCommand cmdVerificar = new SqlCommand("SELECT Nombre FROM Productos WHERE Nombre = @Nombre;", conectar))
                 {
                     cmdVerificar.Parameters.AddWithValue("@Nombre", txtProducto.Text);
@@ -38,12 +29,11 @@ namespace Punto_Venta
                         if (reader.Read())
                         {
                             MessageBox.Show("Ya existe un producto con este nombre.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return; // Salir si el producto ya existe
+                            return;
                         }
                     }
                 }
 
-                // Insertar el nuevo producto
                 using (SqlCommand cmdInsertar = new SqlCommand(
                     "INSERT INTO Productos (Nombre, Cantidad, Medida, IdOrigen, Precio, Limite) " +
                     "VALUES (@Nombre, @Cantidad, @Medida, @IdOrigen, @Precio, @Limite);", conectar))
@@ -56,21 +46,17 @@ namespace Punto_Venta
                     cmdInsertar.Parameters.AddWithValue("@Precio", Convert.ToDecimal(txtPrecio.Text)); // Convertir a decimal
                     cmdInsertar.Parameters.AddWithValue("@Limite", Convert.ToDecimal(txtLimite.Text)); // Convertir a decimal
 
-                    // Ejecutar la consulta
                     cmdInsertar.ExecuteNonQuery();
 
-                    // Mostrar mensaje de éxito
                     MessageBox.Show("Se ha agregado el producto correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Abrir el formulario de inventario
                     frmInventario invent = new frmInventario();
-                   
+
                     invent.Show();
 
-                    // Cerrar el formulario actual
                     this.Close();
                 }
-            } // La conexión se cierra automáticamente aquí
+            }
         }
 
         private void frmAgregarInventario_Load(object sender, EventArgs e)
@@ -79,10 +65,8 @@ namespace Punto_Venta
             {
                 conectar.Open();
 
-                // Crear un DataTable para almacenar los resultados
                 DataTable dt = new DataTable();
 
-                // Crear el comando SQL
                 using (SqlCommand cmd = new SqlCommand("SELECT * FROM Origen;", conectar))
                 {
                     // Crear el adaptador de datos

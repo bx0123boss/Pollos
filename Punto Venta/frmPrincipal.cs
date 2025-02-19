@@ -50,7 +50,6 @@ namespace Punto_Venta
             conectar.Open();
             if (Conexion.lugar.Equals("TERRAZA"))
             {
-                button3.Visible = false;
                 button9.Visible = false;
                 button1.Visible = false;
                 button7.Visible = false;
@@ -64,7 +63,6 @@ namespace Punto_Venta
             }
             else if (lblUser.Text == "VENTAS")
             {
-                button3.Visible = true;
                 button6.Visible = false;
                 button11.Visible = false;
                 button10.Visible = false;
@@ -227,39 +225,19 @@ namespace Punto_Venta
         private void button7_Click(object sender, EventArgs e)
         {
             frmCorte corte = new frmCorte();
-            //if (lblUser.Text == "VENTAS")
-            //{
-            //    cmd = new OleDbCommand("select Id,Usuario,Ventas,Mesas from Usuarios where Id="+id+";", conectar);
-            //    OleDbDataReader reader = cmd.ExecuteReader();
-            //    if (reader.Read())
-            //    {
+            corte.usuario = lblUser.Text;
+            cmd = new OleDbCommand("select count(*) from temp;", conectar);
+            int valor = int.Parse(cmd.ExecuteScalar().ToString());
+            if (valor == 0)
+            {
 
-            //        frmCortesMesero cor = new frmCortesMesero();
-            //        cor.idMesero = reader[0].ToString();
-            //        cor.lblMonto.Text = reader[2].ToString();
-            //        cor.lblMesas.Text = reader[3].ToString();
-            //        cor.Text = "Corte de: " + reader[1].ToString();
-            //        cor.nombre = reader[1].ToString();                    
-            //        cor.Show();                 
-            //    }
-            //}
-            //else
-            //{
-                corte.usuario = lblUser.Text;
-                cmd = new OleDbCommand("select count(*) from temp;", conectar);
-                int valor = int.Parse(cmd.ExecuteScalar().ToString());
-                if (valor == 0)
-                {
-                    
-                    corte.ShowDialog();
-                }
-                else
-                {
-                    corte.button1.Visible = false;
-                    corte.ShowDialog();
-                    MessageBox.Show("AUN NO HA ACTUALIZADO EL INVENTARIO, FAVOR DE ACTUALIZAR", "ALERTA!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
-            //}
+                corte.ShowDialog();
+            }
+            else
+            {
+                corte.ShowDialog();
+                MessageBox.Show("AUN NO HA ACTUALIZADO EL INVENTARIO, FAVOR DE ACTUALIZAR", "ALERTA!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -310,8 +288,25 @@ namespace Punto_Venta
 
         private void button10_Click(object sender, EventArgs e)
         {
-            frmHistoCortes histo = new frmHistoCortes();
-            histo.ShowDialog();
+            bool abierto = false;
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm.GetType() == typeof(frmTipoDetallada))
+                {
+                    abierto = true;
+                    frm.BringToFront();
+                }
+            }
+            if (!abierto)
+            {
+                frmHistoCortes histo = new frmHistoCortes
+                {
+                    MinimizeBox = false
+                };
+                histo.Show();
+            }
+           
+            
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -343,7 +338,7 @@ namespace Punto_Venta
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://192.168.0.15/projects/carta4.php"); 
+            //System.Diagnostics.Process.Start("http://192.168.0.15/projects/carta4.php"); 
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -371,17 +366,6 @@ namespace Punto_Venta
 
         }
 
-        private void button13_Click(object sender, EventArgs e)
-        {
-            frmComandaGeneral com = new frmComandaGeneral();
-            com.ShowDialog();
-        }
-
-        private void frmPrincipal_FormClosed(object sender, FormClosedEventArgs e)
-        {
-           
-        }
-
         private void button14_Click(object sender, EventArgs e)
         {
             bool abierto = false;
@@ -405,16 +389,5 @@ namespace Punto_Venta
         }
 
 
-        private void pictureBox1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button3_Click_1(object sender, EventArgs e)
-        {
-            frmCompras com = new frmCompras();
-            com.usuario = usuario;
-            com.Show();
-        }
     }
 }
