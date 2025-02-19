@@ -16,9 +16,6 @@ namespace Punto_Venta
 {
     public partial class frmReporteVentasProducto : Form
     {
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        private DataSet ds;
-        OleDbDataAdapter da;
         string anoSQL = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();            
         public frmReporteVentasProducto()
         {

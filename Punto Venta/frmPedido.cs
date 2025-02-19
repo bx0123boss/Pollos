@@ -56,7 +56,7 @@ namespace Punto_Venta
 
             cargarMesas();
             cargarCategoriasAutomatico();
-
+            cargarCombo();
 
             using (frmClaveVendendor ori = new frmClaveVendendor())
             {
@@ -70,7 +70,33 @@ namespace Punto_Venta
             }
             
         }
-
+        public void cargarCombo()
+        {
+           
+            Button butC = new Button();
+            butC.FlatStyle = FlatStyle.Flat;
+            butC.FlatAppearance.BorderSize = 0;
+            butC.Font = new System.Drawing.Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
+            butC.BackColor = System.Drawing.ColorTranslator.FromHtml("#654321");
+            butC.ForeColor = Color.FromName("White");
+            butC.Size = new System.Drawing.Size(104, 56);
+            butC.Text = "COMBOS";
+            butC.Click += new EventHandler(this.Combos);
+            flpCategorias.Controls.Add(butC);
+        }
+        public void cargarPizzas()
+        {
+            Button butP = new Button();
+            butP.FlatStyle = FlatStyle.Flat;
+            butP.FlatAppearance.BorderSize = 0;
+            butP.Font = new System.Drawing.Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
+            butP.BackColor = System.Drawing.ColorTranslator.FromHtml("#ff8000");
+            butP.ForeColor = Color.FromName("White");
+            butP.Size = new System.Drawing.Size(104, 56);
+            butP.Text = "PIZZA";
+            butP.Click += new EventHandler(this.Pizzas);
+            flpCategorias.Controls.Add(butP);
+        }
         private void cargarCategoriasAutomatico()
         {
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
@@ -90,7 +116,7 @@ namespace Punto_Venta
                         but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
                         but.BackColor = System.Drawing.ColorTranslator.FromHtml($"#{reader["Color"].ToString()}");
                         but.ForeColor = Color.FromName(reader["Letra"].ToString());
-                        but.Size = new System.Drawing.Size(135, 70);
+                        but.Size = new System.Drawing.Size(104, 56);
                         but.Text = reader[1].ToString();
                         but.Click += new EventHandler(this.CambiarCategoria);
                         but.Tag = new
@@ -316,7 +342,7 @@ namespace Punto_Venta
                         double cantCombo = Convert.ToDouble(pi.DgvPedidoprevio[1, i].Value.ToString()) * Convert.ToDouble(pi.cantidad);
                         ides += cantCombo + "," + idCombo + ";";
                     }
-                    DgvPedidoprevio.Rows.Add(pi.id, pi.cantidad, pi.nombre, pi.precio, pi.total, pi.comentario, "1", ides);
+                    DgvPedidoprevio.Rows.Add(pi.id, pi.cantidad, pi.nombre, pi.precio, pi.total, "X", pi.comentario, "1", ides);
                 }
                 LblTotal.Text = String.Format("{0:0.00}", total);
             }

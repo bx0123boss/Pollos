@@ -63,6 +63,8 @@ namespace Punto_Venta
                 dataGridView1.Columns["Precio"].DefaultCellStyle.Format = "N2";
                 dataGridView1.Columns["Total"].DefaultCellStyle.Format = "N2";
                 dataGridView1.Columns[0].Visible = false;
+                dataGridView1.Columns["Ids"].Visible = false;
+                dataGridView1.Columns[1].Visible = false;
                 lblTotal.Text = $"{RecalcularTotal:C}";
             }
 
@@ -271,7 +273,7 @@ namespace Punto_Venta
                                     cmd.Parameters.AddWithValue("@Comentario", com.Comentario);
                                     cmd.Parameters.AddWithValue("@Estatus", "CANCELADO");
                                     cmd.Parameters.AddWithValue("@IdUsuarioCancelo", idMesero);
-                                    cmd.Parameters.AddWithValue("@IdArticulosMesa", dataGridView1[0, dataGridView1.CurrentRow.Index].Value);
+                                    cmd.Parameters.AddWithValue("@IdArticulosMesa", dataGridView1[1, dataGridView1.CurrentRow.Index].Value);
 
                                     cmd.ExecuteNonQuery();
                                 }

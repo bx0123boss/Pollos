@@ -119,28 +119,6 @@ namespace Punto_Venta
              
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            bool abierto = false;
-            foreach (Form frm in Application.OpenForms)
-            {
-                if (frm.GetType() == typeof(frmCambiarMesa))
-                {
-                    abierto = true;
-                    frm.BringToFront();
-                }
-            }
-            if (abierto)
-            {
-
-            }
-            else
-            {
-                frmCambiarMesa mesa = new frmCambiarMesa();
-                mesa.ShowDialog();
-            } 
-           
-        }
 
         private void button4_Click(object sender, EventArgs e)
         {
@@ -240,29 +218,6 @@ namespace Punto_Venta
             }
         }
 
-        private void button8_Click(object sender, EventArgs e)
-        {
-            bool abierto = false;
-            foreach (Form frm in Application.OpenForms)
-            {
-                if (frm.GetType() == typeof(frmMesasOcupadas))
-                {
-                    abierto = true;
-                    frm.BringToFront();
-                }
-            }
-            if (abierto)
-            {
-
-            }
-            else
-            {
-                frmMesasOcupadas mesa = new frmMesasOcupadas();
-                mesa.ShowDialog();
-            } 
-           
-        }
-
         private void button9_Click(object sender, EventArgs e)
         {
             bool abierto = false;
@@ -303,7 +258,7 @@ namespace Punto_Venta
                 {
                     MinimizeBox = false
                 };
-                histo.Show();
+                histo.ShowDialog();
             }
            
             
@@ -332,7 +287,7 @@ namespace Punto_Venta
                 };
                 det.usuario = lblUser.Text;
                 
-                det.Show();
+                det.ShowDialog();
             }
         }
 

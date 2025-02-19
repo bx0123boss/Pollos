@@ -21,6 +21,7 @@ namespace Punto_Venta
         public frmInventario()
         {
             InitializeComponent();
+            this.MinimumSize = new Size(538, 709);
         }
 
         private void frmInventario_Load(object sender, EventArgs e)

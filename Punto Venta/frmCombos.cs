@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,10 +14,6 @@ namespace Punto_Venta
 {
     public partial class frmCombos : Form
     {
-        private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
         public frmCombos()
         {
             InitializeComponent();
@@ -24,19 +21,26 @@ namespace Punto_Venta
 
         private void frmCombos_Load(object sender, EventArgs e)
         {
-            ds = new DataSet();
-            conectar.Open();
-            da = new OleDbDataAdapter("select * from Promos order by Nombre;", conectar);
-            da.Fill(ds, "Id");
-            dataGridView1.DataSource = ds.Tables["Id"];
-            dataGridView1.Columns[0].Visible = false;
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
+                DataSet ds = new DataSet();
+                using (SqlDataAdapter da = new SqlDataAdapter("SELECT * from Promos ORDER BY NOMBRE;", conectar))
+                {
+                    da.Fill(ds, "Productos");
+                }
+                dataGridView1.DataSource = ds.Tables["Productos"];
+                if (dataGridView1.Columns.Count > 0)
+                {
+                    dataGridView1.Columns[0].Visible = false;
+                }
+            }
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             frmAgregarPromo prom = new frmAgregarPromo();
             prom.Show();
-            this.Close();
+            //this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -45,10 +49,17 @@ namespace Punto_Venta
             {
                 frmAgregarPromo agg = new frmAgregarPromo();
                 agg.id = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-                agg.txtNombre.Text = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
-                agg.txtPrecio.Text = dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString();
+                agg.txtNombre.Text = dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString();
+                agg.txtPrecio.Text = dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString();
+                agg.cbLunes.Checked = bool.Parse(dataGridView1[4, dataGridView1.CurrentRow.Index].Value.ToString());
+                agg.cbMartes.Checked = bool.Parse(dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString());
+                agg.cbMiercoles.Checked = bool.Parse(dataGridView1[6, dataGridView1.CurrentRow.Index].Value.ToString());
+                agg.cbJueves.Checked = bool.Parse(dataGridView1[7, dataGridView1.CurrentRow.Index].Value.ToString());
+                agg.cbViernes.Checked = bool.Parse(dataGridView1[8, dataGridView1.CurrentRow.Index].Value.ToString());
+                agg.cbSabado.Checked = bool.Parse(dataGridView1[9, dataGridView1.CurrentRow.Index].Value.ToString());
+                agg.cbDomingo.Checked = bool.Parse(dataGridView1[10, dataGridView1.CurrentRow.Index].Value.ToString());
                 agg.Show();
-                this.Close();
+                //this.Close();
             }catch(Exception ex)
             {
                 MessageBox.Show("Tiene que seleccionar un combo antes", "Reporte de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -57,19 +68,71 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("¿Esta seguro de elimiar la promocion?", "Alto!", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("¿Estás seguro de eliminar el Producto?", "Alto!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dialogResult == DialogResult.Yes)
             {
-                cmd = new OleDbCommand("delete from promos where Id='" + dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString() + "';", conectar);
-                cmd.ExecuteNonQuery();
-                cmd = new OleDbCommand("delete from ArticulosPromos where IdPromo='" + dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString() + "';", conectar);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Se ha eliminado la promocion con exito", "ELIMINADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ds = new DataSet();
-                da = new OleDbDataAdapter("select * from Promos order by Nombre;", conectar);
-                da.Fill(ds, "Id");
-                dataGridView1.DataSource = ds.Tables["Id"];
-                dataGridView1.Columns[0].Visible = false;
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    conectar.Open();
+                    using (SqlCommand cmd = new SqlCommand("DELETE FROM Promos WHERE IdPromo = @Id;", conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", dataGridView1[0, dataGridView1.CurrentRow.Index].Value);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("DELETE FROM ArticulosPromo WHERE IdPromo = @Id;", conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", dataGridView1[0, dataGridView1.CurrentRow.Index].Value);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Se ha eliminado la promoción con éxito", "Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * from Promos ORDER BY NOMBRE;", conectar))
+                    {
+                        da.Fill(ds, "Productos");
+                    }
+                    dataGridView1.DataSource = ds.Tables["Productos"];
+                    if (dataGridView1.Columns.Count > 0)
+                    {
+                        dataGridView1.Columns[0].Visible = false;
+                    }
+                }
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                DataSet ds = new DataSet();
+                if (textBox1.Text != "")
+                {   
+                    using (SqlDataAdapter da = new SqlDataAdapter(
+                        "SELECT * FROM Promos WHERE Nombre LIKE @Nombre ORDER BY NOMBRE;",
+                    conectar))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@Nombre", "%" + textBox1.Text + "%");
+                        da.Fill(ds, "Productos");
+                    }
+                    dataGridView1.DataSource = ds.Tables["Productos"];
+                    dataGridView1.Columns[0].Visible = false;
+                    
+
+                }
+                else
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT * from Promos ORDER BY NOMBRE;", conectar))
+                    {
+                        da.Fill(ds, "Productos");
+                    }
+                    dataGridView1.DataSource = ds.Tables["Productos"];
+                    if (dataGridView1.Columns.Count > 0)
+                    {
+                        dataGridView1.Columns[0].Visible = false;
+                    }
+                }
             }
         }
     }

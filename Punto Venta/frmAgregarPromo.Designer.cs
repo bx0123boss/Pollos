@@ -28,16 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAgregarPromo));
             this.txtPrecio = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.dgvInventario = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.DgvPedidoprevio = new System.Windows.Forms.DataGridView();
-            this.Canti = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
@@ -49,9 +54,13 @@
             this.cbMiercoles = new System.Windows.Forms.CheckBox();
             this.cbMartes = new System.Windows.Forms.CheckBox();
             this.cbLunes = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).BeginInit();
+            this.IdSubcategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Canti = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvInventario = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPedidoprevio)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).BeginInit();
             this.SuspendLayout();
             // 
             // txtPrecio
@@ -78,7 +87,7 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(6, 41);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 16);
+            this.label4.Size = new System.Drawing.Size(56, 16);
             this.label4.TabIndex = 29;
             this.label4.Text = "Precio:";
             // 
@@ -89,34 +98,20 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(3, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 16);
+            this.label1.Size = new System.Drawing.Size(70, 16);
             this.label1.TabIndex = 28;
             this.label1.Text = "Nombre: ";
             // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(656, 647);
+            this.button2.Location = new System.Drawing.Point(866, 647);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(285, 44);
+            this.button2.Size = new System.Drawing.Size(114, 44);
             this.button2.TabIndex = 30;
             this.button2.Text = "Guardar";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // dgvInventario
-            // 
-            this.dgvInventario.AllowUserToAddRows = false;
-            this.dgvInventario.AllowUserToDeleteRows = false;
-            this.dgvInventario.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvInventario.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvInventario.BackgroundColor = System.Drawing.Color.White;
-            this.dgvInventario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvInventario.Location = new System.Drawing.Point(6, 127);
-            this.dgvInventario.Name = "dgvInventario";
-            this.dgvInventario.ReadOnly = true;
-            this.dgvInventario.Size = new System.Drawing.Size(461, 516);
-            this.dgvInventario.TabIndex = 31;
             // 
             // button1
             // 
@@ -136,32 +131,38 @@
             // DgvPedidoprevio
             // 
             this.DgvPedidoprevio.AllowUserToAddRows = false;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DgvPedidoprevio.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DgvPedidoprevio.BackgroundColor = System.Drawing.Color.GhostWhite;
             this.DgvPedidoprevio.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgvPedidoprevio.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DgvPedidoprevio.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvPedidoprevio.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.IdSubcategoria,
             this.Canti,
             this.Prod});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgvPedidoprevio.DefaultCellStyle = dataGridViewCellStyle3;
             this.DgvPedidoprevio.GridColor = System.Drawing.SystemColors.ButtonHighlight;
             this.DgvPedidoprevio.Location = new System.Drawing.Point(531, 127);
             this.DgvPedidoprevio.Name = "DgvPedidoprevio";
-            this.DgvPedidoprevio.Size = new System.Drawing.Size(461, 516);
+            this.DgvPedidoprevio.Size = new System.Drawing.Size(451, 516);
             this.DgvPedidoprevio.TabIndex = 38;
             this.DgvPedidoprevio.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPedidoprevio_CellEndEdit);
             this.DgvPedidoprevio.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DgvPedidoprevio_CellValidating);
-            // 
-            // Canti
-            // 
-            this.Canti.HeaderText = "Cant";
-            this.Canti.Name = "Canti";
-            this.Canti.Width = 50;
-            // 
-            // Prod
-            // 
-            this.Prod.HeaderText = "Producto";
-            this.Prod.Name = "Prod";
-            this.Prod.ReadOnly = true;
-            this.Prod.Width = 175;
             // 
             // txtBuscar
             // 
@@ -179,7 +180,7 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(6, 102);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 16);
+            this.label2.Size = new System.Drawing.Size(59, 16);
             this.label2.TabIndex = 40;
             this.label2.Text = "Buscar:";
             // 
@@ -190,7 +191,7 @@
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(473, 599);
+            this.button3.Location = new System.Drawing.Point(473, 177);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(52, 44);
             this.button3.TabIndex = 41;
@@ -209,7 +210,7 @@
             this.groupBox1.Controls.Add(this.cbLunes);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox1.Location = new System.Drawing.Point(464, 12);
+            this.groupBox1.Location = new System.Drawing.Point(452, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(528, 62);
             this.groupBox1.TabIndex = 65;
@@ -300,32 +301,99 @@
             this.cbLunes.Text = "Lunes";
             this.cbLunes.UseVisualStyleBackColor = true;
             // 
+            // IdSubcategoria
+            // 
+            this.IdSubcategoria.HeaderText = "Id";
+            this.IdSubcategoria.Name = "IdSubcategoria";
+            this.IdSubcategoria.Visible = false;
+            // 
+            // Canti
+            // 
+            this.Canti.HeaderText = "Cant";
+            this.Canti.Name = "Canti";
+            this.Canti.Width = 90;
+            // 
+            // Prod
+            // 
+            this.Prod.HeaderText = "Producto";
+            this.Prod.Name = "Prod";
+            this.Prod.ReadOnly = true;
+            this.Prod.Width = 320;
+            // 
+            // dgvInventario
+            // 
+            this.dgvInventario.AllowUserToAddRows = false;
+            this.dgvInventario.AllowUserToDeleteRows = false;
+            this.dgvInventario.AllowUserToOrderColumns = true;
+            this.dgvInventario.AllowUserToResizeColumns = false;
+            this.dgvInventario.AllowUserToResizeRows = false;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgvInventario.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvInventario.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvInventario.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvInventario.BackgroundColor = System.Drawing.Color.White;
+            this.dgvInventario.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvInventario.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvInventario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvInventario.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dgvInventario.Location = new System.Drawing.Point(15, 127);
+            this.dgvInventario.Name = "dgvInventario";
+            this.dgvInventario.ReadOnly = true;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvInventario.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.dgvInventario.Size = new System.Drawing.Size(452, 564);
+            this.dgvInventario.TabIndex = 66;
+            // 
             // frmAgregarPromo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(1006, 703);
+            this.ClientSize = new System.Drawing.Size(992, 703);
+            this.Controls.Add(this.dgvInventario);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.txtBuscar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.dgvInventario);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.txtPrecio);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.DgvPedidoprevio);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAgregarPromo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Agregar Promo";
             this.Load += new System.EventHandler(this.frmAgregarPromo_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPedidoprevio)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -338,15 +406,12 @@
         public System.Windows.Forms.Label label4;
         public System.Windows.Forms.Label label1;
         public System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataGridView dgvInventario;
         public System.Windows.Forms.Button button1;
         public System.Windows.Forms.DataGridView DgvPedidoprevio;
         public System.Windows.Forms.TextBox txtBuscar;
         public System.Windows.Forms.Label label2;
         public System.Windows.Forms.Button button3;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Canti;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Prod;
         public System.Windows.Forms.CheckBox cbDomingo;
         public System.Windows.Forms.CheckBox cbSabado;
         public System.Windows.Forms.CheckBox cbViernes;
@@ -354,5 +419,9 @@
         public System.Windows.Forms.CheckBox cbMiercoles;
         public System.Windows.Forms.CheckBox cbMartes;
         public System.Windows.Forms.CheckBox cbLunes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdSubcategoria;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Canti;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Prod;
+        private System.Windows.Forms.DataGridView dgvInventario;
     }
 }

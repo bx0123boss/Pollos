@@ -1,65 +1,63 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Office.Interop.Excel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Punto_Venta
 {
     public partial class frmAgregarPromo : Form
     {
-        private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
-        int suma;
         public string id;
         bool lunes, martes, miercoles, jueves, viernes, sabado, domingo;
         public frmAgregarPromo()
         {
             InitializeComponent();
         }
-        public void obtenerYSumar()
-        {
-            cmd = new OleDbCommand("select Numero from Folio where Folio='Combo';", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                suma = Convert.ToInt32(Convert.ToString(reader[0].ToString()));
-            }
-        }
-
-        public void obtenerYSumar2()
-        {
-            suma = suma + 1;
-            cmd = new OleDbCommand("UPDATE Folio set Numero=" + suma + " where Folio='Combo';", conectar);
-            cmd.ExecuteNonQuery();
-        }        
 
         private void frmAgregarPromo_Load(object sender, EventArgs e)
         {
-            conectar.Open();
-            if (id != null)
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                cmd = new OleDbCommand("select * from ArticulosPromos where IdPromo='"+id+"';", conectar);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                conectar.Open();
+                DataSet ds = new DataSet();
+                using (SqlDataAdapter da = new SqlDataAdapter("SELECT IdSubcategoria,Nombre from SUBCATEGORIAS ORDER BY NOMBRE;", conectar))
                 {
-                    DgvPedidoprevio.Rows.Add(reader[2].ToString(), reader[3].ToString());
-                    
+                    da.Fill(ds, "Productos");
+                    dgvInventario.DataSource = ds.Tables["Productos"];
                 }
-                this.Text = "Editar";
-                
+                if (dgvInventario.Columns.Count > 0)
+                {
+                    dgvInventario.Columns[0].Visible = false;
+                }
+                if (id != null)
+                {
+                    string Query = @"SELECT * FROM ArticulosPromo A
+                                        INNER JOIN SUBCATEGORIAS B ON A.IdSubcategoria= B.IdSubcategoria WHERE IdPromo = @Id;";
+                    using (SqlCommand cmd = new SqlCommand(Query, conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", id);
+                        using (SqlDataReader sqlReader = cmd.ExecuteReader())
+                        {
+                            while (sqlReader.Read())
+                            {
+                                DgvPedidoprevio.Rows.Add(sqlReader["IdSubcategoria"].ToString(), sqlReader["Cantidad"].ToString(), sqlReader["Nombre"].ToString());
+                            }
+                        }
+                    }
+                    this.Text = "Editar";
+
+                }
             }
-            ds = new DataSet();
-            da = new OleDbDataAdapter("select id,Nombre from Subcategoria ORDER BY Nombre;", conectar);
-            da.Fill(ds, "Id");
-            dgvInventario.DataSource = ds.Tables["Id"];
         }
 
         private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
@@ -69,8 +67,7 @@ namespace Punto_Venta
                 e.Handled = true;
             }
 
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            if ((e.KeyChar == '.') && ((sender as System.Windows.Forms.TextBox).Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
             }
@@ -78,35 +75,18 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //if (this.Text == "Editar")
-            //{
-            //    bool ya = false;
-            //    string nombre = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
-            //    for (int i = 0; i < dgvEditar.RowCount; i++)
-            //    {
-            //        if (nombre == dgvEditar[3, i].Value.ToString())
-            //            ya = true;
-            //    }
-            //    if (ya)
-            //        MessageBox.Show("No puedes poner varias veces la subcategoria, solo cambia la cantidad", "Alto", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    else
-            //        dgvEditar.Rows.Add("1","1","1", nombre);
-            //}
-            //else
-            //{
-                bool ya = false;
-                string nombre = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
-                for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
-                {
-                    if (nombre == DgvPedidoprevio[1, i].Value.ToString())
-                        ya = true;
-                }
-                if (ya)
-                    MessageBox.Show("No puedes poner varias veces la subcategoria, solo cambia la cantidad", "Alto", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else
-                    DgvPedidoprevio.Rows.Add("1", nombre);
-            //}
-
+            bool ya = false;
+            string nombre = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
+            string id = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
+            for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
+            {
+                if (nombre == DgvPedidoprevio[1, i].Value.ToString())
+                    ya = true;
+            }
+            if (ya)
+                MessageBox.Show("No puedes poner varias veces la subcategoria, solo cambia la cantidad", "Alto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                DgvPedidoprevio.Rows.Add(id, "1", nombre);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -123,24 +103,45 @@ namespace Punto_Venta
 
         private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            if (txtBuscar.Text != "")
             {
-                if (txtBuscar.Text != "")
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    ds = new DataSet();
-                    da = new OleDbDataAdapter("select id,Nombre from subcategoria where Nombre LIKE '%" + txtBuscar.Text + "%' ORDER BY Nombre;", conectar);
-                    da.Fill(ds, "Id");
-                    dgvInventario.DataSource = ds.Tables["Id"];
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter(
+                        "SELECT IdSubcategoria,Nombre from SUBCATEGORIAS " +
+                        "WHERE Nombre LIKE @Nombre ORDER BY NOMBRE;",
+                    conectar))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@Nombre", "%" + txtBuscar.Text + "%");
+                        da.Fill(ds, "Productos");
+                    }
+                    dgvInventario.DataSource = ds.Tables["Productos"];
+                    if (dgvInventario.Columns.Count > 0)
+                    {
+                        dgvInventario.Columns[0].Visible = false;
+                    }
                 }
-                else
+            }
+            else
+            {
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    ds = new DataSet();
-                    da = new OleDbDataAdapter("select id,Nombre from Subcategoria ORDER BY Nombre;", conectar);
-                    da.Fill(ds, "Id");
-                    dgvInventario.DataSource = ds.Tables["Id"];
+                    conectar.Open();
+                    DataSet ds = new DataSet();
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT IdSubcategoria,Nombre from SUBCATEGORIAS ORDER BY NOMBRE;", conectar))
+                    {
+                        da.Fill(ds, "Productos");
+                    }
+                    dgvInventario.DataSource = ds.Tables["Productos"];
+                    if (dgvInventario.Columns.Count > 0)
+                    {
+                        dgvInventario.Columns[0].Visible = false;
+                    }
                 }
             }
         }
+
 
         private void DgvPedidoprevio_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -165,50 +166,95 @@ namespace Punto_Venta
         {
             if (txtNombre.Text != "" && txtPrecio.Text != "" && DgvPedidoprevio.RowCount > 0)
             {
-                lunes = cbLunes.Checked;
-                martes = cbMartes.Checked;
-                miercoles = cbMiercoles.Checked;
-                jueves = cbJueves.Checked;
-                viernes = cbViernes.Checked;
-                sabado = cbSabado.Checked;
-                domingo = cbDomingo.Checked;
-                string upadd = "";
-                if (this.Text == "Editar")
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    upadd = "actualizado";
-                    cmd = new OleDbCommand("delete from ArticulosPromos where IdPromo='" + id + "';", conectar);
-                    cmd.ExecuteNonQuery();
-                    cmd = new OleDbCommand("UPDATE Promos set Nombre='" + txtNombre.Text + "',Precio='" + txtPrecio.Text + "', Lunes=" + lunes + ",Martes=" + martes + ",Miércoles=" + miercoles + ",Jueves=" + jueves + ",Viernes=" + viernes + ", Sábado=" + sabado + ",Domingo=" + domingo + " where Id='" + id + "';", conectar);
-                    cmd.ExecuteNonQuery();
-                    for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
+                    lunes = cbLunes.Checked;
+                    martes = cbMartes.Checked;
+                    miercoles = cbMiercoles.Checked;
+                    jueves = cbJueves.Checked;
+                    viernes = cbViernes.Checked;
+                    sabado = cbSabado.Checked;
+                    domingo = cbDomingo.Checked;
+                    string upadd = "";
+                    conectar.Open();
+                    if (this.Text == "Editar")
                     {
-
-                        string Cantidad = DgvPedidoprevio[0, i].Value.ToString();
-                        string Nombre = DgvPedidoprevio[1, i].Value.ToString();
-                        cmd = new OleDbCommand("INSERT INTO ArticulosPromos(IdPromo, Cantidad, Nombre) VALUES ('" + id + "'," + Cantidad + ",'" + Nombre + "');", conectar);
-                        cmd.ExecuteNonQuery();
+                        upadd = "actualizado";
+                        using (SqlCommand cmd = new SqlCommand("DELETE FROM ArticulosPromo WHERE IdPromo = @Id;", conectar))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", id);
+                            cmd.ExecuteNonQuery();
+                        }
+                        using (SqlCommand cmd = new SqlCommand("UPDATE Promos set Nombre = @Nombre, Precio = @Precio, Lunes= @Lunes,Martes=@Martes,Miercoles=@Miercoles,Jueves=@Jueves,Viernes=@Viernes,Sabado=@Sabado,Domingo=@Domingo  WHERE IdPromo = @Id;", conectar))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", id);
+                            cmd.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                            cmd.Parameters.AddWithValue("@Precio", txtPrecio.Text);
+                            cmd.Parameters.AddWithValue("@Lunes", lunes);
+                            cmd.Parameters.AddWithValue("@Martes", martes);
+                            cmd.Parameters.AddWithValue("@Miercoles", miercoles);
+                            cmd.Parameters.AddWithValue("@Jueves", jueves);
+                            cmd.Parameters.AddWithValue("@Viernes", viernes);
+                            cmd.Parameters.AddWithValue("@Sabado", sabado);
+                            cmd.Parameters.AddWithValue("@Domingo", domingo);
+                            cmd.ExecuteNonQuery();
+                        }
+                        for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
+                        {
+                            string query = @"INSERT INTO ArticulosPromo (IdPromo, IdSubcategoria, Cantidad) 
+                                        VALUES(@IdPromo, @IdSubcategoria, @Cantidad);";
+                            using (SqlCommand cmd = new SqlCommand(query, conectar))
+                            {
+                                string Cantidad = DgvPedidoprevio[1, i].Value.ToString();
+                                string ID = DgvPedidoprevio[0, i].Value.ToString();
+                                cmd.Parameters.AddWithValue("@IdPromo", id);
+                                cmd.Parameters.AddWithValue("@IdSubcategoria", ID);
+                                cmd.Parameters.AddWithValue("@Cantidad", Cantidad);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
                     }
-                }
-                else
-                {
-                    upadd = "agregado";
-                    obtenerYSumar();
-                    cmd = new OleDbCommand("INSERT INTO Promos VALUES ('C" + suma + "','" + txtNombre.Text + "'," + txtPrecio.Text + "," + lunes + "," + martes + "," + miercoles + "," + jueves + "," + viernes + "," + sabado + "," + domingo + ");", conectar);
-                    cmd.ExecuteNonQuery();
-                    for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
+                    else
                     {
-
-                        string Cantidad = DgvPedidoprevio[0, i].Value.ToString();
-                        string Nombre = DgvPedidoprevio[1, i].Value.ToString();
-                        cmd = new OleDbCommand("INSERT INTO ArticulosPromos(IdPromo, Cantidad, Nombre) VALUES ('C" + suma + "'," + Cantidad + ",'" + Nombre + "');", conectar);
-                        cmd.ExecuteNonQuery();
+                        upadd = "agregado";
+                        string query = "INSERT INTO Promos (Nombre, Precio, Lunes,Martes,Miercoles,Jueves,Viernes,Sabado,Domingo) " +
+                                                 "VALUES (@Nombre, @Precio, @Lunes,@Martes,@Miercoles,@Jueves,@Viernes,@Sabado,@Domingo); " +
+                                                 "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
+                        int lastIdFolio;
+                        using (SqlCommand cmd = new SqlCommand(query, conectar))
+                        {
+                            // Usar parámetros para evitar SQL Injection
+                            cmd.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                            cmd.Parameters.AddWithValue("@Precio", txtPrecio.Text);
+                            cmd.Parameters.AddWithValue("@Lunes", lunes);
+                            cmd.Parameters.AddWithValue("@Martes", martes);
+                            cmd.Parameters.AddWithValue("@Miercoles", miercoles);
+                            cmd.Parameters.AddWithValue("@Jueves", jueves);
+                            cmd.Parameters.AddWithValue("@Viernes", viernes);
+                            cmd.Parameters.AddWithValue("@Sabado", sabado);
+                            cmd.Parameters.AddWithValue("@Domingo", domingo);
+                            lastIdFolio = Convert.ToInt32(cmd.ExecuteScalar());
+                        }
+                        for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
+                        {
+                            query = @"INSERT INTO ArticulosPromo (IdPromo, IdSubcategoria, Cantidad) 
+                                        VALUES(@IdPromo, @IdSubcategoria, @Cantidad);";
+                            using (SqlCommand cmd = new SqlCommand(query, conectar))
+                            {
+                                string Cantidad = DgvPedidoprevio[1, i].Value.ToString();
+                                string ID= DgvPedidoprevio[0, i].Value.ToString();
+                                cmd.Parameters.AddWithValue("@IdPromo", lastIdFolio);
+                                cmd.Parameters.AddWithValue("@IdSubcategoria", ID);
+                                cmd.Parameters.AddWithValue("@Cantidad", Cantidad);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
                     }
-                    obtenerYSumar2();                   
+                    MessageBox.Show("Se ha " + upadd + " la promoción correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    frmCombos com = new frmCombos();
+                    com.Show();
+                    this.Close();
                 }
-                MessageBox.Show("Se ha "+upadd+" la promoción correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                frmCombos com = new frmCombos();
-                com.Show();
-                this.Close();
             }
             else
                 MessageBox.Show("FALTAN DATOS PARA COMPLETAR LA PROMOCION", "Alto", MessageBoxButtons.OK, MessageBoxIcon.Error);
