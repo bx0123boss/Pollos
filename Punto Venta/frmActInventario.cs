@@ -110,7 +110,7 @@ namespace Punto_Venta
                     }
                 }catch(Exception ex)
                 {
-
+                    Console.WriteLine(ex.ToString());
                 }
             }
             /*

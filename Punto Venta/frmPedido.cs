@@ -35,8 +35,6 @@ namespace Punto_Venta
         OleDbCommand cmd;
         public String Usuario;
         double total = 0;
-        int suma = 0;
-        string categoria = "";
         bool mesaNueva = false;
         int idMesa = 0;
         private double utilidadTotal;
@@ -567,6 +565,10 @@ namespace Punto_Venta
         }
         private void button2_Click(object sender, EventArgs e)
         {
+            if (DgvPedidoprevio.CurrentRow == null)
+            {
+                return;
+            }
             if (DgvPedidoprevio.RowCount > 0)
             {
                 DgvPedidoprevio.Rows.RemoveAt(DgvPedidoprevio.CurrentRow.Index);

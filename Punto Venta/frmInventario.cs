@@ -71,6 +71,10 @@ namespace Punto_Venta
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (dgvInventario.CurrentRow == null)
+            {
+                return;
+            }
             frmEditarInventario edita = new frmEditarInventario();
             edita.txtID.Text = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtProducto.Text = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
@@ -85,6 +89,10 @@ namespace Punto_Venta
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (dgvInventario.CurrentRow == null)
+            {
+                return;
+            }
             DialogResult dialogResult = MessageBox.Show("¿Estás seguro de eliminar el Producto?", "Alto!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dialogResult == DialogResult.Yes)
             {

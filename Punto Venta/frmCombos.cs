@@ -64,6 +64,7 @@ namespace Punto_Venta
                 this.Close();
             }catch(Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 MessageBox.Show("Tiene que seleccionar un combo antes", "Reporte de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

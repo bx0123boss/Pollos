@@ -49,6 +49,10 @@ namespace Punto_Venta
 
         private void button4_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.CurrentRow == null)
+            {
+                return;
+            }
             frmVerCompra detalles = new frmVerCompra();
             detalles.lblUser.Text = dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString();
             detalles.id = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();

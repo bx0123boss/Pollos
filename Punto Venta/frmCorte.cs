@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using LibPrintTicket;
-using System.Globalization;
 using System.Drawing.Printing;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Data.SqlClient;
 
 namespace Punto_Venta
@@ -21,12 +14,8 @@ namespace Punto_Venta
         double mas = 0;
         double menos = 0;
         double credito = 0;
-        private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
-        public string usuario="";
-        string anoSQL = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();            
+        public string usuario = "";
+        string anoSQL = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
         public frmCorte()
         {
             InitializeComponent();
@@ -59,10 +48,10 @@ namespace Punto_Venta
 
             for (int i = 0; i < dgvCorte.RowCount; i++)
             {
-                if (dgvCorte[4, i].Value.ToString() == "Efectivo" )
+                if (dgvCorte[4, i].Value.ToString() == "Efectivo")
                 {
                     if (Convert.ToDouble(dgvCorte[2, i].Value.ToString()) > 0)
-                    {                        
+                    {
                         mas += Convert.ToDouble(dgvCorte[2, i].Value.ToString());
                     }
                     else if (Convert.ToDouble(dgvCorte[2, i].Value.ToString()) < 0)
@@ -73,11 +62,11 @@ namespace Punto_Venta
                     credito += Convert.ToDouble(dgvCorte[2, i].Value.ToString());
                 }
                 else if (Convert.ToDouble(dgvCorte[2, i].Value.ToString()) > 0)
-                    {
-                        mas += Convert.ToDouble(dgvCorte[2, i].Value.ToString());
-                    }
-                    else if (Convert.ToDouble(dgvCorte[2, i].Value.ToString()) < 0)
-                        menos += Convert.ToDouble(dgvCorte[2, i].Value.ToString());
+                {
+                    mas += Convert.ToDouble(dgvCorte[2, i].Value.ToString());
+                }
+                else if (Convert.ToDouble(dgvCorte[2, i].Value.ToString()) < 0)
+                    menos += Convert.ToDouble(dgvCorte[2, i].Value.ToString());
 
             }
             //if (usuario=="VENTAS")
@@ -88,7 +77,7 @@ namespace Punto_Venta
             //{
             //tarjeta += Convert.ToSingle(dataGridView3[2, i].Value.ToString(), CultureInfo.CreateSpecificCulture("es-ES"));
             //} 
-           
+
             lblEntrada.Text = $"{mas:C}";
             lblSalida.Text = $"{menos:C}";
             lblCorte.Text = $"{(mas + menos):C}";
@@ -138,7 +127,7 @@ namespace Punto_Venta
                     query = @"INSERT INTO CORTES(Concepto,Total, FormaPago,FechaHora, IdHistorialCortes) VALUES (@Concepto,@Total,@FormaPago,@FechaHora, @IdHistorialCortes);";
                     using (SqlCommand cmd2 = new SqlCommand(query, conectar))
                     {
-                        
+
                         cmd2.Parameters.AddWithValue("@Concepto", dgvCorte.Rows[i].Cells["Concepto"].Value?.ToString());
                         cmd2.Parameters.AddWithValue("@Total", dgvCorte.Rows[i].Cells["Total"].Value?.ToString());
                         cmd2.Parameters.AddWithValue("@FormaPago", dgvCorte.Rows[i].Cells["FormaPago"].Value?.ToString());
@@ -166,9 +155,9 @@ namespace Punto_Venta
                 {
                     cmd2.ExecuteNonQuery();
                 }
-               
-               
-                    
+
+
+
             }
             ticket.AddTotal("Entradas", lblEntrada.Text);
             ticket.AddTotal("Salidas", lblSalida.Text);
@@ -203,7 +192,7 @@ namespace Punto_Venta
             printPrvDlg.Document = pd;
             printdlg.Document = pd;
             pd.Print();
-           
+
         }
 
 
@@ -216,7 +205,7 @@ namespace Punto_Venta
             //LOGO
             posicion += 200;
             e.Graphics.DrawString("*****  INVENTARIO  *****", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-            posicion += 20;            
+            posicion += 20;
             e.Graphics.DrawString("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
             posicion += 30;
             //Titulo Columna
@@ -232,7 +221,7 @@ namespace Punto_Venta
             {
 
                 string producto = dataGridView2[1, i].Value.ToString();
-                string en= dataGridView2[2, i].Value.ToString();
+                string en = dataGridView2[2, i].Value.ToString();
                 string s = dataGridView2[3, i].Value.ToString();
                 string a = dataGridView2[4, i].Value.ToString();
                 if (producto.Length > 28)
@@ -240,7 +229,7 @@ namespace Punto_Venta
                     producto = producto.Substring(0, 27);
                 }
 
-                e.Graphics.DrawString(producto+"", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(1, posicion));
+                e.Graphics.DrawString(producto + "", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(1, posicion));
                 e.Graphics.DrawString(en, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(180, posicion));
                 e.Graphics.DrawString(s, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(215, posicion), sf);
                 e.Graphics.DrawString(a, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(245, posicion), sf);
@@ -251,12 +240,17 @@ namespace Punto_Venta
             //e.Graphics.DrawLine(new Pen(Color.Red), 260, posiColumn - 5, 260, posicion + 10);
             //e.Graphics.DrawLine(new Pen(Color.Red), 220, posiColumn - 5, 220, posicion + 10);
             //e.Graphics.DrawLine(new Pen(Color.Red), 190, posiColumn - 5, 190, posicion + 10);
-            posicion += 15;                       
+            posicion += 15;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            try
+            if (dataGridView1.CurrentRow == null)
+            {
+                MessageBox.Show("Tiene que seleccionar un MESERO antes", "Corte de caja", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
             {
                 frmCortesMesero cor = new frmCortesMesero();
                 cor.idMesero = dataGridView4.CurrentRow.Cells["IdUsuario"].Value.ToString();
@@ -267,10 +261,7 @@ namespace Punto_Venta
                 cor.Show();
                 this.Close();
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Tiene que seleccionar un MESERO antes", "Corte de caja", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
         }
     }
 }

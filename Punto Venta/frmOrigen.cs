@@ -57,6 +57,10 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.CurrentRow == null)
+            {
+                return;
+            }
             DialogResult dialogResult = MessageBox.Show("¿Estás seguro de eliminar el Origen?", "Alto!", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {

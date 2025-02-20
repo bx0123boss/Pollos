@@ -40,6 +40,10 @@ namespace Punto_Venta
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.CurrentRow == null)
+            {
+                return;
+            }
             frmEditarPass edit = new frmEditarPass();
             edit.id = Convert.ToInt32(dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString());
             edit.Show();
@@ -48,7 +52,10 @@ namespace Punto_Venta
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            if (dataGridView1.CurrentRow == null)
+            {
+                return;
+            }
             if (dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString() == "Administrador")
             {
                 MessageBox.Show("No se puede eliminar al Administrador del sistema", "Alto!", MessageBoxButtons.OK, MessageBoxIcon.Error);

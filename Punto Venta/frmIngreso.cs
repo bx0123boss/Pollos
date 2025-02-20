@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Data.OleDb;
 using LibPrintTicket;
 using System.Data.SqlClient;
 

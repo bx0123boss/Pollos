@@ -20,7 +20,6 @@ namespace Punto_Venta
         string idPromo = "";
         string nombrePromo = "";
         double precioPromo = 0;
-        string categoria = "";
         string idArtPromos = "";
         string subFiltrar = "";
         public string id { get; set; }

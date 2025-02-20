@@ -193,18 +193,6 @@
     <Compile Include="frmBusquedaArticulo.Designer.cs">
       <DependentUpon>frmBusquedaArticulo.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmCambiarMesa.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmCambiarMesa.Designer.cs">
-      <DependentUpon>frmCambiarMesa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmCambio.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmCambio.Designer.cs">
-      <DependentUpon>frmCambio.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmCantidad.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -515,12 +503,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBusquedaArticulo.resx">
       <DependentUpon>frmBusquedaArticulo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmCambiarMesa.resx">
-      <DependentUpon>frmCambiarMesa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmCambio.resx">
-      <DependentUpon>frmCambio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCantidad.resx">
       <DependentUpon>frmCantidad.cs</DependentUpon>

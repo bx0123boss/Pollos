@@ -99,6 +99,7 @@
             this.dgvCorte.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCorte.Location = new System.Drawing.Point(12, 57);
             this.dgvCorte.Name = "dgvCorte";
+            this.dgvCorte.ReadOnly = true;
             this.dgvCorte.Size = new System.Drawing.Size(629, 461);
             this.dgvCorte.TabIndex = 0;
             // 
@@ -375,6 +376,7 @@
             this.dataGridView4.DefaultCellStyle = dataGridViewCellStyle15;
             this.dataGridView4.Location = new System.Drawing.Point(12, 567);
             this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.ReadOnly = true;
             this.dataGridView4.Size = new System.Drawing.Size(629, 162);
             this.dataGridView4.TabIndex = 16;
             // 

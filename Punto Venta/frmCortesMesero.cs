@@ -48,6 +48,10 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.CurrentRow == null)
+            {
+                return;
+            }
             try
             {
                 frmVentaDetallada detalles = new frmVentaDetallada();

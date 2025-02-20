@@ -1582,8 +1582,6 @@ C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmArma
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmArticulosCancelados.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmBuscarClientes.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmBusquedaArticulo.resources
-C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmCambiarMesa.resources
-C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmCambio.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmCantidad.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmCategorias.resources
 C:\Users\Admin\Documents\GitHub\Pollos\Punto Venta\obj\Debug\Punto_Venta.frmClaveVendendor.resources

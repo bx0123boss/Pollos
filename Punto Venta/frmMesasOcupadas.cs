@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 
@@ -202,12 +196,6 @@ namespace Punto_Venta
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            frmCambiarMesa me = new frmCambiarMesa();
-            me.ShowDialog();
-            this.Close();
-        }
 
         private void button1_Click_1(object sender, EventArgs e)
         {

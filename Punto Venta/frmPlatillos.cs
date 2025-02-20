@@ -64,6 +64,10 @@ namespace Punto_Venta
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (dgvInventario.CurrentRow == null)
+            {
+                return;
+            }
             frmAgregarPlatillo platillo = new frmAgregarPlatillo();
            
             platillo.Text = "Editar Platillo";
@@ -84,6 +88,10 @@ namespace Punto_Venta
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (dgvInventario.CurrentRow == null)
+            {
+                return;
+            }
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();

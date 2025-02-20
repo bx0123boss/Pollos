@@ -15,8 +15,6 @@ namespace Punto_Venta
     class TicketJaegersoftRestaurante
     {
        
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
         private string folio;
         private string mesa;
         private string mesero;

@@ -81,12 +81,6 @@ namespace Punto_Venta
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-            frmInventario act = new frmInventario();
-            act.Show();
-            this.Hide();
-        }
 
         private void txtContraseña_KeyPress(object sender, KeyPressEventArgs e)
         {

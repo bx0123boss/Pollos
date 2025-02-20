@@ -100,7 +100,6 @@
             this.toolTip1.SetToolTip(this.button2, "Cambiar Mesas");
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Visible = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -143,6 +142,7 @@
             this.button4.Text = "Agregar Mesas";
             this.toolTip1.SetToolTip(this.button4, "Cambiar Mesas");
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // lblMesero
