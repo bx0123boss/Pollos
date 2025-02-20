@@ -12,7 +12,8 @@ namespace Punto_Venta
     {
         //funcional con main
         public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Jaeger Soft\FastFood.accdb; Jet OLEDB:Database Password=yolo1234@";
-
+        //public static string CadConSql = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Jaeger Soft\FastFood.mdf;Integrated Security=True";
+        //public static string CadConSql = @"Server=DESKTOP-UCR1IUV\SQLEXPRESS;AttachDbFilename=C:\Jaeger Soft\FastFood.mdf;Database=FastFood;Integrated Security=True;";
         public static string CadConSql = @"Server=DESKTOP-UCR1IUV\SQLEXPRESS;Database=FastFood;Integrated Security=True;";
         //public static string CadConSql = @"Server=BRANDON-PC\SQLEXPRESS;Database=FastFood;Integrated Security=True;";
         //public static string CadCon = @"Server=localhost;Database=FastFood;User Id=sa;Password=yolo1234@;";

@@ -22,6 +22,8 @@ namespace Punto_Venta
         public frmAgregarPromo()
         {
             InitializeComponent();
+            this.MinimumSize = new Size(1008, 742);
+            this.MaximumSize = new Size(1008, 742);
         }
 
         private void frmAgregarPromo_Load(object sender, EventArgs e)

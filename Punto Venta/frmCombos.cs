@@ -17,6 +17,8 @@ namespace Punto_Venta
         public frmCombos()
         {
             InitializeComponent();
+            this.MinimumSize = new Size(890, 697);
+            this.MaximumSize= new Size(890, 697);
         }
 
         private void frmCombos_Load(object sender, EventArgs e)
@@ -39,8 +41,8 @@ namespace Punto_Venta
         private void button2_Click(object sender, EventArgs e)
         {
             frmAgregarPromo prom = new frmAgregarPromo();
-            prom.Show();
-            //this.Close();
+            prom.ShowDialog();
+            this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -58,8 +60,8 @@ namespace Punto_Venta
                 agg.cbViernes.Checked = bool.Parse(dataGridView1[8, dataGridView1.CurrentRow.Index].Value.ToString());
                 agg.cbSabado.Checked = bool.Parse(dataGridView1[9, dataGridView1.CurrentRow.Index].Value.ToString());
                 agg.cbDomingo.Checked = bool.Parse(dataGridView1[10, dataGridView1.CurrentRow.Index].Value.ToString());
-                agg.Show();
-                //this.Close();
+                agg.ShowDialog();
+                this.Close();
             }catch(Exception ex)
             {
                 MessageBox.Show("Tiene que seleccionar un combo antes", "Reporte de Ventas", MessageBoxButtons.OK, MessageBoxIcon.Error);

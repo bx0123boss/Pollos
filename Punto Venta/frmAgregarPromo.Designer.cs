@@ -43,6 +43,9 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.DgvPedidoprevio = new System.Windows.Forms.DataGridView();
+            this.IdSubcategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Canti = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
@@ -54,9 +57,6 @@
             this.cbMiercoles = new System.Windows.Forms.CheckBox();
             this.cbMartes = new System.Windows.Forms.CheckBox();
             this.cbLunes = new System.Windows.Forms.CheckBox();
-            this.IdSubcategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Canti = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvInventario = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPedidoprevio)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -163,6 +163,25 @@
             this.DgvPedidoprevio.TabIndex = 38;
             this.DgvPedidoprevio.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPedidoprevio_CellEndEdit);
             this.DgvPedidoprevio.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DgvPedidoprevio_CellValidating);
+            // 
+            // IdSubcategoria
+            // 
+            this.IdSubcategoria.HeaderText = "Id";
+            this.IdSubcategoria.Name = "IdSubcategoria";
+            this.IdSubcategoria.Visible = false;
+            // 
+            // Canti
+            // 
+            this.Canti.HeaderText = "Cant";
+            this.Canti.Name = "Canti";
+            this.Canti.Width = 90;
+            // 
+            // Prod
+            // 
+            this.Prod.HeaderText = "Producto";
+            this.Prod.Name = "Prod";
+            this.Prod.ReadOnly = true;
+            this.Prod.Width = 320;
             // 
             // txtBuscar
             // 
@@ -301,25 +320,6 @@
             this.cbLunes.Text = "Lunes";
             this.cbLunes.UseVisualStyleBackColor = true;
             // 
-            // IdSubcategoria
-            // 
-            this.IdSubcategoria.HeaderText = "Id";
-            this.IdSubcategoria.Name = "IdSubcategoria";
-            this.IdSubcategoria.Visible = false;
-            // 
-            // Canti
-            // 
-            this.Canti.HeaderText = "Cant";
-            this.Canti.Name = "Canti";
-            this.Canti.Width = 90;
-            // 
-            // Prod
-            // 
-            this.Prod.HeaderText = "Producto";
-            this.Prod.Name = "Prod";
-            this.Prod.ReadOnly = true;
-            this.Prod.Width = 320;
-            // 
             // dgvInventario
             // 
             this.dgvInventario.AllowUserToAddRows = false;
@@ -330,9 +330,6 @@
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgvInventario.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.dgvInventario.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvInventario.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvInventario.BackgroundColor = System.Drawing.Color.White;
             this.dgvInventario.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
