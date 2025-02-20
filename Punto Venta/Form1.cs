@@ -43,7 +43,7 @@ namespace Punto_Venta
         }
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.facebook.com/jaegersoft/"); 
+            System.Diagnostics.Process.Start("https://www.facebook.com/jaegersoft/");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -78,7 +78,7 @@ namespace Punto_Venta
                     txtUser.Text = "";
                 }
             }
-            
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -97,68 +97,58 @@ namespace Punto_Venta
         }
         public void entrar()
         {
-
-
-            if (txtUser.Text == "" && txtContraseña.Text == "@TUGFA")
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                frmPrincipal principal = new frmPrincipal();
-                principal.Show();
-                this.Hide();
-            }
-            else
-            {
-                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                conectar.Open();
+                using (SqlCommand cmd = new SqlCommand("select * from inicio where id=1;", conectar))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    conectar.Open();
-                    using (SqlCommand cmd = new SqlCommand("select * from inicio where id=1;", conectar))
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        if (Convert.ToString(reader["inicio"].ToString()) == "0")
                         {
-                            if (Convert.ToString(reader["inicio"].ToString()) == "0")
+                            string aut = Autentica();
+                            if (aut != "ERROR")
                             {
-                                string aut = Autentica();
-                                if (aut != "ERROR")
-                                {
-                                    frmAbrirCaja caja = new frmAbrirCaja();
-                                    caja.usuario = aut;
-                                    caja.id = idMesero;
-                                    caja.nombre = usuario;
-                                    caja.Show();
-                                    this.Hide();
-                                }
-                                else
-                                {
-                                    MessageBox.Show("El usuario y/o contraseña no son valids,\nFavor de introducirlas nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    txtUser.Text = "";
-                                    txtContraseña.Clear();
-                                    txtContraseña.Focus();
-                                }
+                                frmAbrirCaja caja = new frmAbrirCaja();
+                                caja.usuario = aut;
+                                caja.id = idMesero;
+                                caja.nombre = usuario;
+                                caja.Show();
+                                this.Hide();
                             }
                             else
                             {
-                                string aut = Autentica();
-                                if (aut != "ERROR")
-                                {
-                                    frmPrincipal principal = new frmPrincipal();
-                                    principal.id = idMesero;
-                                    principal.lblUser.Text = aut;
-                                    principal.usuario = usuario;
-                                    principal.Show();
-                                    this.Hide();
-                                }
-                                else
-                                {
-                                    MessageBox.Show("El usuario y/o contraseña no son valids,\nFavor de introducirlas nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    txtUser.Text = "";
-                                    txtContraseña.Clear();
-                                    txtContraseña.Focus();
-                                }
+                                MessageBox.Show("El usuario y/o contraseña no son valids,\nFavor de introducirlas nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                txtUser.Text = "";
+                                txtContraseña.Clear();
+                                txtContraseña.Focus();
+                            }
+                        }
+                        else
+                        {
+                            string aut = Autentica();
+                            if (aut != "ERROR")
+                            {
+                                frmPrincipal principal = new frmPrincipal();
+                                principal.id = idMesero;
+                                principal.lblUser.Text = aut;
+                                principal.usuario = usuario;
+                                principal.Show();
+                                this.Hide();
+                            }
+                            else
+                            {
+                                MessageBox.Show("El usuario y/o contraseña no son valids,\nFavor de introducirlas nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                txtUser.Text = "";
+                                txtContraseña.Clear();
+                                txtContraseña.Focus();
                             }
                         }
                     }
                 }
             }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -190,7 +180,7 @@ namespace Punto_Venta
         {
 
             string From = ""; //de quien procede, puede ser un alias
-            string To= "";  //a quien vamos a enviar el mail
+            string To = "";  //a quien vamos a enviar el mail
             string Message;  //mensaje
             string Subject; //asunto
             List<string> Archivo = new List<string>(); //lista de archivos a enviar

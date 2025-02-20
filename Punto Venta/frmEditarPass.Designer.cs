@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEditarPass));
             this.button1 = new System.Windows.Forms.Button();
             this.txtPass2 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -95,8 +96,10 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtPass);
             this.Controls.Add(this.label3);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmEditarPass";
-            this.Text = "frmEditarPass";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Editar Contraseña";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmEditarPass_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

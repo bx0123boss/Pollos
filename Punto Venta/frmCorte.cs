@@ -179,42 +179,6 @@ namespace Punto_Venta
             this.Close();
         }
 
-        public void corte()
-        {
-            
-            string anoSQL = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
-            cmd = new OleDbCommand("INSERT INTO histocortes(Monto,Fecha) VALUES ('" + lblCorte.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "');", conectar);
-            cmd.ExecuteNonQuery();
-            string idInsertado = "";
-            cmd = new OleDbCommand("select @@IDENTITY;", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                idInsertado = reader[0].ToString();
-            }
-            for (int i = 0; i < dataGridView4.RowCount; i++)
-            {
-                string cadena = dataGridView4[2, i].Value.ToString().Substring(1);
-                cmd = new OleDbCommand("INSERT INTO MesaDet(IdCorte,Mesero,Ventas,Mesas) VALUES ('" + idInsertado + "','" + dataGridView4[1, i].Value.ToString() + "','" + cadena + "','" + dataGridView4[3, i].Value.ToString() + "');", conectar);
-                cmd.ExecuteNonQuery();
-            }
-            cmd = new OleDbCommand("delete from corte where 1;", conectar);
-            cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("delete from Credito where 1;", conectar);
-            //cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("UPDATE inicio set inicio='0' Where id=1;", conectar);
-            cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("UPDATE Usuarios set Ventas='0',Mesas='0';", conectar);
-            cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("delete from invent where 1;", conectar);
-            cmd.ExecuteNonQuery();
-            for (int i = 0; i < dgvCorte.RowCount; i++)
-            {
-                cmd = new OleDbCommand("insert into Cortes(Concepto,Monto,idCorte) Values('" + dgvCorte[1, i].Value.ToString() + "','" + dgvCorte[2, i].Value.ToString() + "','" + idInsertado + "');", conectar);
-                cmd.ExecuteNonQuery();
-            }
-            this.Close();
-        }
         private void button2_Click(object sender, EventArgs e)
         {
             Ticket ticket2 = new Ticket();
@@ -241,6 +205,7 @@ namespace Punto_Venta
             pd.Print();
            
         }
+
 
         private void printDocument1_PrintPage_1(object sender, PrintPageEventArgs e)
         {
@@ -297,8 +262,8 @@ namespace Punto_Venta
                 cor.idMesero = dataGridView4.CurrentRow.Cells["IdUsuario"].Value.ToString();
                 cor.lblMonto.Text = dataGridView4.CurrentRow.Cells["Ventas"].Value.ToString();
                 cor.lblMesas.Text = dataGridView4.CurrentRow.Cells["MesasAtentidas"].Value.ToString();
-                cor.Text = "Corte de: " + dataGridView4.CurrentRow.Cells["Usuario"].Value.ToString();
-                cor.nombre = dataGridView4.CurrentRow.Cells["Usuario"].Value.ToString();
+                cor.Text = "Corte de: " + dataGridView4.CurrentRow.Cells["Mesero"].Value.ToString();
+                cor.nombre = dataGridView4.CurrentRow.Cells["Mesero"].Value.ToString();
                 cor.Show();
                 this.Close();
             }

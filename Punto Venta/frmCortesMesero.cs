@@ -1,23 +1,15 @@
 ﻿using LibPrintTicket;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Punto_Venta
 {
     public partial class frmCortesMesero : Form
     {
-        private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbDataAdapter da;
         public string idMesero = "";
         public string nombre = "";
         public frmCortesMesero()
@@ -52,7 +44,6 @@ namespace Punto_Venta
                     dataGridView1.Columns["Utilidad"].DefaultCellStyle.Format = "N2";
                 }
             }
-            da = new OleDbDataAdapter("Select * from folios where Estatus='COBRADO' and Vehiculo='" + idMesero + "' and Fecha >=#" + dateTimePicker1.Value.Month.ToString() + "/" + dateTimePicker1.Value.Day.ToString() + "/" + dateTimePicker1.Value.Year.ToString() + " 00:00:00# and Fecha <=#" + dateTimePicker1.Value.Month.ToString() + "/" + dateTimePicker1.Value.Day.ToString() + "/" + dateTimePicker1.Value.Year.ToString() + " 23:59:59#;", conectar);
         }
 
         private void button1_Click(object sender, EventArgs e)
