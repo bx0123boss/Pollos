@@ -52,7 +52,7 @@ namespace Punto_Venta
 
                     frmInventario invent = new frmInventario();
 
-                    invent.Show();
+                    invent.ShowDialog();
 
                     this.Close();
                 }

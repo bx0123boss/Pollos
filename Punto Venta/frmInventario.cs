@@ -65,7 +65,7 @@ namespace Punto_Venta
         private void button1_Click(object sender, EventArgs e)
         {
             frmAgregarInventario add = new frmAgregarInventario();
-            add.Show();
+            add.ShowDialog();
             this.Close();
         }
 
@@ -140,7 +140,7 @@ namespace Punto_Venta
         private void button5_Click(object sender, EventArgs e)
         {
             frmPlatillos platillo = new frmPlatillos();
-            platillo.Show();
+            platillo.ShowDialog();
             this.Close();
         }
 

@@ -1434,6 +1434,8 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox1.ForeColor = System.Drawing.Color.White;
             this.checkBox1.Location = new System.Drawing.Point(383, 5);
@@ -1487,7 +1489,6 @@
             this.Name = "frmAgregarPlatillo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Agregar Platillo";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmAgregarPlatillo_FormClosing);
             this.Load += new System.EventHandler(this.frmAgregarPlatillo_Load);
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();

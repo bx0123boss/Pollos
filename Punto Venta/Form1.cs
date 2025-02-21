@@ -108,7 +108,7 @@ namespace Punto_Venta
                                 caja.usuario = aut;
                                 caja.id = idMesero;
                                 caja.nombre = usuario;
-                                caja.Show();
+                                caja.ShowDialog();
                                 this.Hide();
                             }
                             else

@@ -9,8 +9,6 @@ using LibPrintTicket;
 using System.Globalization;
 using System.Drawing.Printing;
 using System.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using Button = System.Windows.Forms.Button;
 
 namespace Punto_Venta
 {
@@ -24,6 +22,7 @@ namespace Punto_Venta
             public double Precio { get; set; }
             public bool Comanda { get; set; }
             public string Color { get; set; }
+            public string Letra { get; set; }
         }
         List<ProductoInventario> productos;
         private DataSet ds;
@@ -38,7 +37,7 @@ namespace Punto_Venta
         bool mesaNueva = false;
         int idMesa = 0;
         private double utilidadTotal;
-
+        int categoriaSeleccionada = 0;
         public frmPedido()
         {
             InitializeComponent();
@@ -55,6 +54,7 @@ namespace Punto_Venta
             cargarMesas();
             cargarCategoriasAutomatico();
             cargarCombo();
+            cargarBotonTodos();
 
             using (frmClaveVendendor ori = new frmClaveVendendor())
             {
@@ -70,16 +70,34 @@ namespace Punto_Venta
         }
         public void cargarCombo()
         {
-           
+
             Button butC = new Button();
             butC.FlatStyle = FlatStyle.Flat;
             butC.FlatAppearance.BorderSize = 0;
-            butC.Font = new System.Drawing.Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
-            butC.BackColor = System.Drawing.ColorTranslator.FromHtml("#654321");
+            butC.Font = new Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
+            butC.BackColor = ColorTranslator.FromHtml("#654321");
             butC.ForeColor = Color.FromName("White");
-            butC.Size = new System.Drawing.Size(104, 56);
+            butC.Size = new Size(104, 56);
             butC.Text = "COMBOS";
             butC.Click += new EventHandler(this.Combos);
+            flpCategorias.Controls.Add(butC);
+        }
+        public void cargarBotonTodos()
+        {
+
+            Button butC = new Button();
+            butC.FlatStyle = FlatStyle.Flat;
+            butC.FlatAppearance.BorderSize = 0;
+            butC.Font = new Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
+            butC.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+            butC.ForeColor = Color.FromName("Black");
+            butC.Size = new Size(104, 56);
+            butC.Text = "TODOS";
+            butC.Tag = new
+            {
+                Id = "0",
+            };
+            butC.Click += new EventHandler(this.CambiarCategoria);
             flpCategorias.Controls.Add(butC);
         }
         public void cargarPizzas()
@@ -87,10 +105,10 @@ namespace Punto_Venta
             Button butP = new Button();
             butP.FlatStyle = FlatStyle.Flat;
             butP.FlatAppearance.BorderSize = 0;
-            butP.Font = new System.Drawing.Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
-            butP.BackColor = System.Drawing.ColorTranslator.FromHtml("#ff8000");
+            butP.Font = new Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
+            butP.BackColor = ColorTranslator.FromHtml("#ff8000");
             butP.ForeColor = Color.FromName("White");
-            butP.Size = new System.Drawing.Size(104, 56);
+            butP.Size = new Size(104, 56);
             butP.Text = "PIZZA";
             butP.Click += new EventHandler(this.Pizzas);
             flpCategorias.Controls.Add(butP);
@@ -111,10 +129,10 @@ namespace Punto_Venta
                         Button but = new Button();
                         but.FlatStyle = FlatStyle.Flat;
                         but.FlatAppearance.BorderSize = 0;
-                        but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                        but.BackColor = System.Drawing.ColorTranslator.FromHtml($"#{reader["Color"].ToString()}");
+                        but.Font = new Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
+                        but.BackColor = ColorTranslator.FromHtml($"#{reader["Color"].ToString()}");
                         but.ForeColor = Color.FromName(reader["Letra"].ToString());
-                        but.Size = new System.Drawing.Size(104, 56);
+                        but.Size = new Size(104, 56);
                         but.Text = reader[1].ToString();
                         but.Click += new EventHandler(this.CambiarCategoria);
                         but.Tag = new
@@ -133,10 +151,11 @@ namespace Punto_Venta
                 Button but = new Button();
                 but.FlatStyle = FlatStyle.Flat;
                 but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = System.Drawing.ColorTranslator.FromHtml($"#{producto.Color}");
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.Size = new System.Drawing.Size(135, 70);
+                but.Font = new Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
+                but.BackColor = ColorTranslator.FromHtml($"#{producto.Color}");
+                but.ForeColor = Color.FromName(producto.Letra);
+                but.Font = new Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
+                but.Size = new Size(135, 70);
                 but.Text = producto.Nombre;
                 but.Tag = new
                 {
@@ -207,7 +226,7 @@ namespace Punto_Venta
             {
                 conectar.Open();
 
-                string query = @"SELECT A.IdInventario, A.IdCategoria, A.Nombre, A.Precio, A.Comanda, B.Color
+                string query = @"SELECT A.IdInventario, A.IdCategoria, A.Nombre, A.Precio, A.Comanda, B.Color, B.Letra
                                 FROM INVENTARIO A
                                 INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria;";
 
@@ -224,6 +243,7 @@ namespace Punto_Venta
                             Precio = Convert.ToDouble(reader["Precio"]),
                             Comanda = Convert.ToBoolean(reader["Comanda"]),
                             Color = reader["Color"].ToString(),
+                            Letra = reader["Letra"].ToString(),
                         });
                     }
                 }
@@ -231,25 +251,33 @@ namespace Punto_Venta
 
             return productos;
         }
-        private void CambiarCategoria(object sender, EventArgs e)
+        private void CambiarCategoria(object sender, EventArgs e)   
         {
             Button boton = sender as Button;
             var tag = boton.Tag as dynamic;
             int idCategoria = int.Parse(tag.Id);
-            // Filtrar los productos por IdCategoria usando LINQ
+            if (categoriaSeleccionada == idCategoria)
+                return;
+            categoriaSeleccionada = idCategoria;
             var productosFiltrados = productos
-                .Where(p => p.IdCategoria == idCategoria)
-                .ToList();
+                   .Where(p => p.IdCategoria == idCategoria)
+                   .ToList();
+            // Filtrar los productos por IdCategoria usando LINQ
+            if (idCategoria == 0)
+            {
+                productosFiltrados = productos
+                    .ToList();
+            }
             flpInventario.Controls.Clear();
             foreach (var producto in productosFiltrados)
             {
                 Button but = new Button();
                 but.FlatStyle = FlatStyle.Flat;
                 but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = System.Drawing.ColorTranslator.FromHtml($"#{producto.Color}");
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.Size = new System.Drawing.Size(135, 70);
+                but.Font = new Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
+                but.BackColor = ColorTranslator.FromHtml($"#{producto.Color}");
+                but.ForeColor = Color.FromName(producto.Letra);
+                but.Size = new Size(135, 70);
                 but.Text = producto.Nombre;
                 but.Tag = new
                 {
@@ -522,6 +550,7 @@ namespace Punto_Venta
                     string descripcion = DgvPedidoprevio.Rows[i].Cells["Prod"].Value.ToString();
                     string comentario = DgvPedidoprevio.Rows[i].Cells["Comentario"].Value.ToString();
                     string idInventario = DgvPedidoprevio.Rows[i].Cells["Aidi"].Value.ToString();
+                    string totalArticulo = DgvPedidoprevio.Rows[i].Cells["Tot"].Value.ToString();
                     listado.Add((cantidad, descripcion, comentario));
                     using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                     {
@@ -534,7 +563,7 @@ namespace Punto_Venta
                         {
                             cmd.Parameters.AddWithValue("@IdInventario", idInventario);
                             cmd.Parameters.AddWithValue("@Cantidad", cantidad);
-                            cmd.Parameters.AddWithValue("@Total", total);
+                            cmd.Parameters.AddWithValue("@Total", totalArticulo);
                             cmd.Parameters.AddWithValue("@Comentario", comentario);
                             cmd.Parameters.AddWithValue("@IdMesa", idMesa);
                             cmd.Parameters.AddWithValue("@IdMesero", idMesero);
@@ -588,7 +617,7 @@ namespace Punto_Venta
                 groupBox1.Visible = true;
             }
         }
-        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
         {
             if (tabControl1.SelectedIndex == 1)
             {

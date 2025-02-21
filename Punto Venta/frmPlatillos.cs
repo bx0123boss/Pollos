@@ -58,7 +58,7 @@ namespace Punto_Venta
         {
             frmAgregarPlatillo platillo = new frmAgregarPlatillo();
             platillo.Text = "Agregar Platillo";
-            platillo.Show();
+            platillo.ShowDialog();
             this.Close();
         }
 
@@ -81,7 +81,7 @@ namespace Punto_Venta
                 platillo.checkBox1.Checked = true;
             }
            
-            platillo.Show();
+            platillo.ShowDialog();
             this.Close();
 
         }

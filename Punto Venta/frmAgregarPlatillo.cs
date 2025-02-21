@@ -463,11 +463,7 @@ namespace Punto_Venta
                 
             }
         }
-        private void frmAgregarPlatillo_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            frmPlatillos platillo = new frmPlatillos();           
-            platillo.Show();
-        }
+       
         private void txtCantidad_TextChanged(object sender, EventArgs e)
         {
             try

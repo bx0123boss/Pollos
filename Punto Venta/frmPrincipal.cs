@@ -194,7 +194,7 @@ namespace Punto_Venta
                 {
                     frmInventario inventario = new frmInventario();
                     inventario.usuario = usuario;
-                    inventario.Show();
+                    inventario.ShowDialog();
                 }
             } 
          
@@ -339,7 +339,7 @@ namespace Punto_Venta
             else
             {
                 frmUsuarios mesa = new frmUsuarios();
-                mesa.Show();
+                mesa.ShowDialog();
             }             
         }
 
