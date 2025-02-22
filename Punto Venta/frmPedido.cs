@@ -515,7 +515,21 @@ namespace Punto_Venta
                 var listado = new List<(string, string, string)>();
                 using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    if (checkBox3.Checked ==false && CmbMesa.SelectedValue != null)
+                    conectar.Open();
+                    if (tabControl1.SelectedIndex == 1)
+                    {
+                        string query = "INSERT INTO Mesas (Nombre, IdMesero,Impresion,Estatus, IdCliente) " +
+                                           "VALUES ('Domicilio " + (LblNombre.Text.Length > 20 ? LblNombre.Text.Substring(0, 20) : LblNombre.Text) + "', @IdMesero, 0, @Estatus, @IdCliente);" +
+                                             "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
+                        using (SqlCommand cmd = new SqlCommand(query, conectar))
+                        {
+                            cmd.Parameters.AddWithValue("@IdMesero", idMesero);
+                            cmd.Parameters.AddWithValue("@Estatus", "COCINA");
+                            cmd.Parameters.AddWithValue("@IdCliente", idCliente);
+                            idMesa = Convert.ToInt32(cmd.ExecuteScalar());
+                        }
+                    }
+                    else if (checkBox3.Checked ==false && CmbMesa.SelectedValue != null)
                         idMesa = (int)CmbMesa.SelectedValue;
                     else if(CmbMesa.SelectedValue == null && checkBox3.Checked == false)
                     {
@@ -523,7 +537,8 @@ namespace Punto_Venta
                         MessageBox.Show("NO SE HA SELECCIONADO MESA", "Alto!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    conectar.Open();
+                    
+                    
                     if (checkBox3.Checked)
                     {
                         using (SqlCommand cmd2 = new SqlCommand("UPDATE MESAS SET Estatus = 'COCINA' WHERE IdMesa = @IdMesa;", conectar))

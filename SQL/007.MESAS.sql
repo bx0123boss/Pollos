@@ -8,7 +8,8 @@ CREATE TABLE MESAS (
     IdMesero INT FOREIGN KEY REFERENCES USUARIOS(IdUsuario),
 	CantidadPersonas INT,
     Impresion BIT,
-	Estatus VARCHAR(15)
+	Estatus VARCHAR(15),
+	IdCliente INT FOREIGN KEY REFERENCES Clientes(IdCliente),
 );
 COMMIT TRANSACTION;
 

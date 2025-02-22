@@ -33,7 +33,7 @@ namespace Punto_Venta
                 // Consulta para obtener las mesas
                 string query = @"SELECT A.IdMesa, A.Nombre, B.Usuario AS Mesero, A.CantidadPersonas, A.Impresion, A.IdMesero
                                     FROM MESAS A INNER JOIN  USUARIOS B ON A.IdMesero = B.IdUsuario
-                                    WHERE A.Estatus = 'COCINA'
+                                    WHERE A.Estatus = 'COCINA' AND IdCliente IS NULL
                                     ORDER BY Nombre";
 
                 using (SqlCommand cmd = new SqlCommand(query, conectar))
@@ -52,13 +52,50 @@ namespace Punto_Venta
                         but.Click += new EventHandler(this.Myevent); // Asignar evento Click
                         but.MouseHover += new EventHandler(this.Myevent2); // Asignar evento MouseHover
                         but.BackColor = Color.SkyBlue;
-                        but.Tag = new { 
-                                        Id = reader["IdMesa"].ToString(), 
-                                        Nombre = reader["Nombre"].ToString(), 
-                                        Impresion = reader["Impresion"].ToString(), 
-                                        IdMesero = reader["IdMesero"].ToString(),
-                                        Mesero = reader["Mesero"].ToString(),
-                                        CantPersonas = reader["CantidadPersonas"].ToString(),
+                        but.Tag = new
+                        {
+                            Id = reader["IdMesa"].ToString(),
+                            Nombre = reader["Nombre"].ToString(),
+                            Impresion = reader["Impresion"].ToString(),
+                            IdMesero = reader["IdMesero"].ToString(),
+                            Mesero = reader["Mesero"].ToString(),
+                            CantPersonas = reader["CantidadPersonas"].ToString(),
+                        };
+
+                        // Agregar el botón al FlowLayoutPanel
+                        flowBotones.Controls.Add(but);
+                    }
+                }
+
+                query = @"SELECT A.IdMesa, A.Nombre, B.Usuario AS Mesero, A.CantidadPersonas, A.Impresion, A.IdMesero, A.IdCliente
+                                    FROM MESAS A INNER JOIN  USUARIOS B ON A.IdMesero = B.IdUsuario
+                                    WHERE A.Estatus = 'COCINA' AND IdCliente IS NOT NULL
+                                    ORDER BY Nombre";
+
+                using (SqlCommand cmd = new SqlCommand(query, conectar))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Recorrer los resultados de la consulta
+                    while (reader.Read())
+                    {
+                        // Crear un botón para la mesa
+                        Button but = new Button();
+                        but.FlatStyle = FlatStyle.Flat;
+                        but.FlatAppearance.BorderSize = 0;
+                        but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 16, FontStyle.Bold);
+                        but.Size = new System.Drawing.Size(135, 80);
+                        but.Text = reader["Nombre"].ToString(); // Asignar el nombre de la mesa al botón
+                        but.Click += new EventHandler(this.Myevent); // Asignar evento Click
+                        but.MouseHover += new EventHandler(this.Myevent2); // Asignar evento MouseHover
+                        but.BackColor = Color.YellowGreen;
+                        but.Tag = new
+                        {
+                            Id = reader["IdMesa"].ToString(),
+                            Nombre = reader["Nombre"].ToString(),
+                            Impresion = reader["Impresion"].ToString(),
+                            IdMesero = reader["IdMesero"].ToString(),
+                            Mesero = reader["Mesero"].ToString(),
+                            IdCliente =int.Parse(reader["IdCliente"].ToString()),
                         };
 
                         // Agregar el botón al FlowLayoutPanel
@@ -68,57 +105,7 @@ namespace Punto_Venta
             }
 
         }
-        public void cargarFolios()
-        {
-            ds = new DataSet();
-            da = new OleDbDataAdapter("select * from folios where Estatus='COCINA';", conectar);
-            da.Fill(ds, "Id");
-            dataGridView1.DataSource = ds.Tables["Id"];
-            for (int i = 0; i < dataGridView1.RowCount; i++)
-            {
-                string id = dataGridView1[0, i].Value.ToString();
-                Button but2 = new Button();
-                but2.FlatStyle = FlatStyle.Flat;
-                but2.FlatAppearance.BorderSize = 0;
-                but2.Font = new System.Drawing.Font(new FontFamily("Calibri"), 16, FontStyle.Bold);
-                //but.BackColor = Color.Aqua;
-                but2.Size = new System.Drawing.Size(135, 80);
-                but2.Text = dataGridView1[0, i].Value.ToString();
-                //but2.Click += new EventHandler(this.Myevent);
-                but2.Click += new EventHandler(this.Myevent3);
-                flowBotones.Controls.Add(but2);
-                but2.BackColor = Color.Orange;
-
-            }
-        }
-
-        public void cargarRuta()
-        {
-            ds = new DataSet();
-            da = new OleDbDataAdapter("select * from folios where Estatus='RUTA';", conectar);
-            da.Fill(ds, "Id");
-            dataGridView2.DataSource = ds.Tables["Id"];
-            for (int i = 0; i < dataGridView2.RowCount; i++)
-            {
-                string id = dataGridView2[0, i].Value.ToString();
-                Button but2 = new Button();
-                but2.FlatStyle = FlatStyle.Flat;
-                but2.FlatAppearance.BorderSize = 0;
-                but2.Font = new System.Drawing.Font(new FontFamily("Calibri"), 16, FontStyle.Bold);
-                //but.BackColor = Color.Aqua;
-                but2.Size = new System.Drawing.Size(135, 80);
-                but2.Text = dataGridView2[0, i].Value.ToString();
-                //but2.Click += new EventHandler(this.Myevent);
-                but2.Click += new EventHandler(this.Myevent4);
-                flowBotones.Controls.Add(but2);
-                but2.BackColor = Color.Sienna;
-                but2.Visible = true;
-            }
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
+       
         private void Myevent(object sender, EventArgs e)
         {
             Button boton = sender as Button;
@@ -144,7 +131,10 @@ namespace Punto_Venta
                 cobrar.lblMesero.Text = data.Mesero;
                 cobrar.idMesero = int.Parse(data.IdMesero);
                 cobrar.print = data.Impresion == "True" ? "1" : "0";
-                cobrar.lblPersonas.Text = data.CantPersonas;
+                if (boton.BackColor == Color.SkyBlue)
+                    cobrar.lblPersonas.Text = data.CantPersonas;
+                else
+                    cobrar.idCliente = data.IdCliente;
                 this.Close();
                 cobrar.ShowDialog();
                

@@ -40,10 +40,6 @@
             this.button4 = new System.Windows.Forms.Button();
             this.lblMesero = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // button190
@@ -85,7 +81,7 @@
             this.flowBotones.AutoScroll = true;
             this.flowBotones.Location = new System.Drawing.Point(12, 12);
             this.flowBotones.Name = "flowBotones";
-            this.flowBotones.Size = new System.Drawing.Size(786, 465);
+            this.flowBotones.Size = new System.Drawing.Size(786, 558);
             this.flowBotones.TabIndex = 57;
             // 
             // button2
@@ -168,39 +164,14 @@
             this.label37.TabIndex = 59;
             this.label37.Text = "Mesero:";
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(46, 498);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(466, 176);
-            this.dataGridView1.TabIndex = 61;
-            this.dataGridView1.Visible = false;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(536, 489);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(473, 147);
-            this.dataGridView2.TabIndex = 63;
-            this.dataGridView2.Visible = false;
-            // 
             // frmMesasOcupadas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(950, 489);
+            this.ClientSize = new System.Drawing.Size(950, 582);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.lblMesero);
             this.Controls.Add(this.label37);
@@ -208,14 +179,11 @@
             this.Controls.Add(this.flowBotones);
             this.Controls.Add(this.button190);
             this.Controls.Add(this.button200);
-            this.Controls.Add(this.dataGridView1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMesasOcupadas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mesas Ocupadas";
             this.Load += new System.EventHandler(this.frmMesasOcupadas_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,9 +197,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         public System.Windows.Forms.Label lblMesero;
         public System.Windows.Forms.Label label37;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
     }
