@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
 using Microsoft.Office.Interop.Excel;
 using System.Data.SqlClient;
 
@@ -15,8 +9,6 @@ namespace Punto_Venta
 {
     public partial class frmInventario : Form
     {
-       
-        bool loaded = false;
         public string usuario;
         public frmInventario()
         {
@@ -59,7 +51,6 @@ namespace Punto_Venta
                 }
 
             }
-            loaded = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -83,7 +74,7 @@ namespace Punto_Venta
             edita.origen = dgvInventario[4, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtPrecio.Text = dgvInventario[5, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtLimite.Text = dgvInventario[6, dgvInventario.CurrentRow.Index].Value.ToString();
-            edita.Show();
+            edita.ShowDialog();
             this.Close();
         }
 

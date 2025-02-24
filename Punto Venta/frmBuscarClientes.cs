@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -14,9 +8,6 @@ namespace Punto_Venta
 {
     public partial class frmBuscarClientes : Form
     {
-        private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbDataAdapter da;
         public string Id { get; set; }
         public string Nombre { get; set; }
         public string Direccion { get; set; }
@@ -27,6 +18,8 @@ namespace Punto_Venta
         public frmBuscarClientes()
         {
             InitializeComponent();
+            this.MinimumSize = new System.Drawing.Size(883, 548);
+            this.MaximumSize = new System.Drawing.Size(883, 548);
         }
 
         private void frmBuscarClientes_Load(object sender, EventArgs e)

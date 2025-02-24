@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Data.OleDb;
 using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
     public partial class frmMesasOcupadas : Form
     {
-        private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
         public frmMesasOcupadas()
         {
             InitializeComponent();
@@ -21,8 +15,6 @@ namespace Punto_Venta
         private void frmMesasOcupadas_Load(object sender, EventArgs e)
         {
             cargarMesas();
-            //cargarFolios();
-            //cargarRuta();
         }
         public void cargarMesas()
         {
@@ -149,49 +141,6 @@ namespace Punto_Venta
             Button boton = sender as Button;
             var data = (dynamic)boton.Tag;
             lblMesero.Text = data.Mesero;
-        }
-
-        private void Myevent3(object sender, EventArgs e)
-        {
-            cmd = new OleDbCommand("select idCliente from folios where Folio='" + (sender as Button).Text + "';", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                frmEntregarCocina cobrar = new frmEntregarCocina();
-                cobrar.idCliente = reader[0].ToString();
-                cobrar.lblFolio2.Text = (sender as Button).Text;
-                cobrar.lblFolio.Text = (sender as Button).Text;
-                cobrar.ShowDialog();
-                this.Close();
-            }
-        }
-
-        private void Myevent4(object sender, EventArgs e)
-        {
-            cmd = new OleDbCommand("select * from folios where Folio='" + (sender as Button).Text + "';", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                frmEntregarRuta entrega = new frmEntregarRuta();
-                entrega.idCliente = reader[3].ToString();
-                entrega.lblFolio.Text = reader[0].ToString();
-                entrega.lblVehiculo.Text = reader[4].ToString();
-                entrega.lblChofer.Text = reader[5].ToString();
-                entrega.lblCambio.Text = "$" + reader[6].ToString();
-                entrega.cambio = Convert.ToDouble(reader[6].ToString());
-                entrega.lblFecha.Text = reader[8].ToString();
-                entrega.lblFechaRuta.Text = reader[9].ToString();
-                entrega.ShowDialog();
-                this.Close();
-            }
-        }
-
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            frmArticulosCancelados ar = new frmArticulosCancelados();
-            ar.ShowDialog();
-            this.Close();
         }
 
         private void button4_Click(object sender, EventArgs e)

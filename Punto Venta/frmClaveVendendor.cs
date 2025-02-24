@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Punto_Venta
 {
     public partial class frmClaveVendendor : Form
     {
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbCommand cmd;
         public int Id { get; set; }
         public string Mesero { get; set; }
         public string Tipo { get; set; }
@@ -31,7 +22,6 @@ namespace Punto_Venta
 
         private void frmClaveVendendor_Load(object sender, EventArgs e)
         {
-            conectar.Open();
             // Obtener el tamaño del formulario
             int formWidth = this.ClientSize.Width;
             int formHeight = this.ClientSize.Height;

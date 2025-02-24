@@ -15,15 +15,12 @@ namespace Punto_Venta
 {
     public partial class frmAgregarCliente : Form
     {
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbCommand cmd;
         public int id;
         public string Nombre { get; set; }
 
         public frmAgregarCliente()
         {
             InitializeComponent();
-            conectar.Open();
         }
 
         private void button2_Click(object sender, EventArgs e)

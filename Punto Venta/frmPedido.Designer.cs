@@ -675,7 +675,6 @@
             this.rbMesa.TabStop = true;
             this.rbMesa.Text = "MESA";
             this.rbMesa.UseVisualStyleBackColor = false;
-            this.rbMesa.CheckedChanged += new System.EventHandler(this.rbMesa_CheckedChanged);
             // 
             // rbDomicilo
             // 
@@ -689,7 +688,6 @@
             this.rbDomicilo.TabIndex = 26;
             this.rbDomicilo.Text = "DOMICILIO";
             this.rbDomicilo.UseVisualStyleBackColor = false;
-            this.rbDomicilo.CheckedChanged += new System.EventHandler(this.rbDomicilo_CheckedChanged);
             // 
             // rbRapido
             // 
@@ -705,7 +703,6 @@
             this.rbRapido.TabStop = true;
             this.rbRapido.Text = "RAPIDO";
             this.rbRapido.UseVisualStyleBackColor = false;
-            this.rbRapido.CheckedChanged += new System.EventHandler(this.rbRapido_CheckedChanged);
             // 
             // groupBox1
             // 

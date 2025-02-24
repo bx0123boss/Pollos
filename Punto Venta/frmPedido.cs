@@ -4,7 +4,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using System.Data.OleDb;
 using LibPrintTicket;
 using System.Globalization;
 using System.Drawing.Printing;
@@ -25,13 +24,8 @@ namespace Punto_Venta
             public string Letra { get; set; }
         }
         List<ProductoInventario> productos;
-        private DataSet ds;
         int idMesero = 0;
         string idCliente;
-        string modalidad;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
         public String Usuario;
         double total = 0;
         bool mesaNueva = false;
@@ -46,7 +40,6 @@ namespace Punto_Venta
         }
         private void frmPedido_Load(object sender, EventArgs e)
         {
-            conectar.Open();
             DgvPedidoprevio.Columns["Pre"].DefaultCellStyle.Format = "N2";
             DgvPedidoprevio.Columns["Tot"].DefaultCellStyle.Format = "N2";
             productos = ObtenerProductosDesdeBD();
@@ -183,39 +176,6 @@ namespace Punto_Venta
                     CmbMesa.DataSource = dt;
                 }
             }
-        }
-        private void rbRapido_CheckedChanged(object sender, EventArgs e)
-        {
-            CmbMesa.Visible = false;
-            idCliente = "";
-            modalidad = "RAPIDO";
-        }
-        private void rbDomicilo_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbDomicilo.Checked)
-            {
-                CmbMesa.Visible = false;
-                using (frmBuscarClientes ori = new frmBuscarClientes())
-                {
-                    if (ori.ShowDialog() == DialogResult.OK)
-                    {
-                        LblNombre.Text = ori.Nombre;
-                        LblDomicilio.Text = ori.Direccion;
-                        LblTelefono.Text = ori.Telefono;
-                        LblReferencia.Text = ori.Referencia;
-                        idCliente = ori.Id;
-                        lblColonia.Text = ori.Colonia;
-                        modalidad = "DOMICILIO";
-                    }
-                }
-            }
-
-        }
-        private void rbMesa_CheckedChanged(object sender, EventArgs e)
-        {
-            idCliente = "";
-            CmbMesa.Visible = true;
-            modalidad = "MESA";
         }
         public List<ProductoInventario> ObtenerProductosDesdeBD()
         {
@@ -387,80 +347,6 @@ namespace Punto_Venta
             }
             else
                 return false;
-        }
-        private void llevar()
-        {
-            utilidadTotal = 0;
-            total = 0;
-            for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
-            {
-                double compra = Convert.ToDouble(DgvPedidoprevio[8, i].Value.ToString());
-                double venta = Convert.ToDouble(DgvPedidoprevio[3, i].Value.ToString());
-                double piezas = Convert.ToDouble(DgvPedidoprevio[1, i].Value.ToString());
-                double utilidad = (venta - compra) * piezas;
-                utilidadTotal += utilidad;
-
-                //cmd = new OleDbCommand("insert into ventas(idProducto,Cantidad,Producto,Comentarios,Precio,Total,Folio,Fecha,Estatus,Subcategoria,Utilidad) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + lblFolio.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COBRADO','" + subcategoria + "','"+utilidad+"');", conectar);
-                cmd.ExecuteNonQuery();
-                string ide = "";
-                if (DgvPedidoprevio[7, i].Value.ToString().Length > 0)
-                    ide = DgvPedidoprevio[7, i].Value.ToString();
-                cmd = new OleDbCommand("insert into temp(id,cantidad, producto, precio, total,ide) values ('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "'," + DgvPedidoprevio[3, i].Value.ToString() + ",'" + DgvPedidoprevio[4, i].Value.ToString() + "','" + ide + "');", conectar);
-                cmd.ExecuteNonQuery();
-                total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
-            }
-            cmd = new OleDbCommand("insert into folios(Folio,ModalidadVenta,Estatus,idCliente,Fecha,Colonia,Monto,FormaPago, Utilidad) values ('" + lblFolio.Text + "','P/LLEVAR','COBRADO','" + idCliente + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblColonia.Text + "','" + total + "','Efectivo','" + utilidadTotal + "');", conectar);
-            cmd.ExecuteNonQuery();
-            cmd = new OleDbCommand("INSERT INTO corte (concepto, total,fecha,FormaPago) VALUES ('VENTA FOLIO: " + lblFolio.Text + "'," + total + ",'" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','Efectivo');", conectar);
-            cmd.ExecuteNonQuery();
-            int width = 420;
-            int height = 540;
-            printDocument1.PrinterSettings.DefaultPageSettings.PaperSize = new PaperSize("", width, height);
-            PrintDocument pd = new PrintDocument();
-            pd.PrintPage += new PrintPageEventHandler(this.printDocument1_PrintPage);
-            PrintDialog printdlg = new PrintDialog();
-            PrintPreviewDialog printPrvDlg = new PrintPreviewDialog();
-            printPrvDlg.Document = pd;
-            printdlg.Document = pd;
-            pd.Print();
-            DialogResult dialogResult = MessageBox.Show("¿Imprimir otro ticket?", "Alto!", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                pd.Print();
-            }
-        }
-        private void enMesa()
-        {
-            for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
-            {
-                double compra = Convert.ToDouble(DgvPedidoprevio[8, i].Value.ToString());
-                double venta = Convert.ToDouble(DgvPedidoprevio[3, i].Value.ToString());
-                double piezas = Convert.ToDouble(DgvPedidoprevio[1, i].Value.ToString());
-                double utilidad = (venta - compra) * piezas;
-                string ide = "";
-                if (DgvPedidoprevio[7, i].Value.ToString().Length > 0)
-                    ide = DgvPedidoprevio[7, i].Value.ToString();
-                cmd = new OleDbCommand("insert into ArticulosMesa(id,cantidad,producto,precio,total,Comentario,Mesa,Estatus,ids,Utilidad) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + CmbMesa.SelectedValue + "','COCINA','" + ide + "','" + utilidad + "');", conectar);
-                cmd.ExecuteNonQuery();
-            }
-        }
-        private void domicilio()
-        {
-            utilidadTotal = 0;
-            total = 0;
-            for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
-            {
-                double compra = Convert.ToDouble(DgvPedidoprevio[8, i].Value.ToString());
-                double venta = Convert.ToDouble(DgvPedidoprevio[3, i].Value.ToString());
-                double piezas = Convert.ToDouble(DgvPedidoprevio[1, i].Value.ToString());
-                double utilidad = (venta - compra) * piezas;
-                utilidadTotal += utilidad;
-                //cmd = new OleDbCommand("insert into ventas(idProducto,Cantidad,Producto,Comentarios,Precio,Total,Folio,Fecha,Estatus,ide,Subcategoria,Utilidad) values('" + DgvPedidoprevio[0, i].Value.ToString() + "','" + DgvPedidoprevio[1, i].Value.ToString() + "','" + DgvPedidoprevio[2, i].Value.ToString() + "','" + DgvPedidoprevio[5, i].Value.ToString() + "','" + DgvPedidoprevio[3, i].Value.ToString() + "','" + DgvPedidoprevio[4, i].Value.ToString() + "','" + lblFolio.Text + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','COCINA','" + DgvPedidoprevio[7, i].Value.ToString() + "','" + subcategoria + "','"+utilidad+"');", conectar);
-                cmd.ExecuteNonQuery();
-                total += Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
-            }
-            cmd = new OleDbCommand("insert into folios(Folio,ModalidadVenta,Estatus,idCliente,Fecha,Colonia,Monto,FormaPago,Utilidad) values ('" + lblFolio.Text + "','REPARTO','COCINA','" + idCliente + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + lblColonia.Text + "','" + total + "','Efectivo','" + utilidadTotal + "');", conectar);
-            cmd.ExecuteNonQuery();
         }
         public void TicketComanda(List<(string Cantidad, string Descripcion, string Comentario)> itemsComanda)
         {

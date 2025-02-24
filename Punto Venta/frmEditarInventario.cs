@@ -44,8 +44,6 @@ namespace Punto_Venta
             }
 
             MessageBox.Show("Se ha actualizado el producto correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            frmInventario invent = new frmInventario();
-            invent.Show();
             this.Close();
         }
 
