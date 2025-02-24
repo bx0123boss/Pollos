@@ -21,6 +21,7 @@ namespace Punto_Venta
         public double total, utilidad;
         public string usuario = "";
         public string IdMesa;
+        public string idCliente ="0";
 
         public frmVentaDetallada()
         {
@@ -45,6 +46,28 @@ namespace Punto_Venta
                     da.Fill(ds, "IdFolio");
                     dataGridView1.DataSource = ds.Tables["IdFolio"];
                     dataGridView1.Columns[0].Visible = false;
+                }
+                if (idCliente != "0")
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM Clientes WHERE IdCliente= @IdCliente;", conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@IdCliente", idCliente);
+
+                        using (SqlDataReader sqlDataReader = cmd.ExecuteReader())
+                        {
+                            if (sqlDataReader.Read())
+                            {
+                                lblNombre.Text = sqlDataReader["Nombre"].ToString();
+                                string telefono = sqlDataReader["Telefono"].ToString();
+                                string telefonoFormateado = $"({telefono.Substring(0, 3)}) {telefono.Substring(3, 3)}-{telefono.Substring(6, 4)}";
+                                lblTelefono.Text = telefonoFormateado;
+                                lblDirección.Text = sqlDataReader["Direccion"].ToString();
+                                lblColonia.Text = sqlDataReader["Colonia"].ToString();
+                                gbClientes.Visible = true;
+                            }
+                        }
+
+                    }
                 }
             }
             dataGridView1.Columns[0].Visible = false;

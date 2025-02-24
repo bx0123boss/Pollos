@@ -22,21 +22,21 @@ namespace Punto_Venta
         {
             frmReporteVentas ventas = new frmReporteVentas();
             ventas.usuario = usuario;
-            ventas.Show();
+            ventas.ShowDialog();
             this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             frmReporteVentasProducto ventas = new frmReporteVentasProducto();
-            ventas.Show();
+            ventas.ShowDialog();
             this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             frmArticulosCancelados art = new frmArticulosCancelados();
-            art.Show();
+            art.ShowDialog();
             this.Close();
 
         }

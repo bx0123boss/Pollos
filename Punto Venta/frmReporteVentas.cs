@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Newtonsoft.Json;
+
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace Punto_Venta
             {
                 conectar.Open();
                 DataSet ds = new DataSet();
-                string query = @"SELECT a.IdFolio, A.ModalidadVenta, A.Estatus, ISNULL(A.IdCliente,0) AS IdCliente, A.FechaHora, A.Total, A.Descuento, A.Utilidad, B.Nombre AS Mesa, B.CantidadPersonas, C.Usuario AS Mesero, A.IdMesa, B.IdMesero
+                string query = @"SELECT a.IdFolio, A.ModalidadVenta, A.Estatus, ISNULL(A.IdCliente,0) AS IdCliente, A.FechaHora, A.Total, A.Descuento, A.Utilidad, B.Nombre AS Mesa, ISNULL(CAST(B.CantidadPersonas AS VARCHAR), 'N/A') AS CantidadPersonas, C.Usuario AS Mesero, A.IdMesa, B.IdMesero
                                    FROM Folios A
                                    INNER JOIN MESAS B ON A.IdMesa = B.IdMesa
                                    INNER JOIN USUARIOS C ON B.IdMesero = C.IdUsuario
@@ -40,6 +40,9 @@ namespace Punto_Venta
                     da.Fill(ds, "IdFolio");
                     dataGridView1.DataSource = ds.Tables["IdFolio"];
                     dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns["IdCliente"].Visible = false;
+                    dataGridView1.Columns["IdMesero"].Visible = false;
+                    dataGridView1.Columns["IdMesa"].Visible = false;
                     dataGridView1.Columns["Total"].DefaultCellStyle.Format = "N2";
                     dataGridView1.Columns["Descuento"].DefaultCellStyle.Format = "N2";
                     dataGridView1.Columns["Utilidad"].DefaultCellStyle.Format = "N2";
@@ -63,13 +66,14 @@ namespace Punto_Venta
                 detalles.total = Convert.ToDouble(dataGridView1.CurrentRow.Cells["Total"].Value.ToString());
                 detalles.usuario = usuario;
                 detalles.utilidad = Convert.ToDouble(dataGridView1.CurrentRow.Cells["Utilidad"].Value.ToString());
+                detalles.idCliente = dataGridView1.CurrentRow.Cells["IdCliente"].Value.ToString();
                 detalles.lblEstatus.Text = dataGridView1.CurrentRow.Cells["Estatus"].Value.ToString();
                 if (dataGridView1.CurrentRow.Cells["Estatus"].Value.ToString() == "CANCELADO")
                 {
                     detalles.button2.Hide();
                 }
-                detalles.Show();
-                //this.Close();
+                detalles.ShowDialog();
+                this.Close();
             }
             catch 
             {
@@ -84,7 +88,7 @@ namespace Punto_Venta
             {
                 conectar.Open();
                 DataSet ds = new DataSet();
-                string query = @"SELECT a.IdFolio, A.ModalidadVenta, A.Estatus, ISNULL(A.IdCliente,0) AS IdCliente, A.FechaHora, A.Total, A.Descuento, A.Utilidad, B.Nombre AS Mesa, B.CantidadPersonas, C.Usuario AS Mesero,  A.IdMesa,  B.IdMesero
+                string query = @"SELECT a.IdFolio, A.ModalidadVenta, A.Estatus, ISNULL(A.IdCliente,0) AS IdCliente, A.FechaHora, A.Total, A.Descuento, A.Utilidad, B.Nombre AS Mesa, ISNULL(CAST(B.CantidadPersonas AS VARCHAR), 'N/A') AS CantidadPersonas, C.Usuario AS Mesero,  A.IdMesa,  B.IdMesero
                                    FROM Folios A
                                    INNER JOIN MESAS B ON A.IdMesa = B.IdMesa
                                    INNER JOIN USUARIOS C ON B.IdMesero = C.IdUsuario
@@ -98,6 +102,9 @@ namespace Punto_Venta
                     da.Fill(ds, "IdFolio");
                     dataGridView1.DataSource = ds.Tables["IdFolio"];
                     dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns["IdCliente"].Visible = false;
+                    dataGridView1.Columns["IdMesero"].Visible = false;
+                    dataGridView1.Columns["IdMesa"].Visible = false;
                     dataGridView1.Columns["Total"].DefaultCellStyle.Format = "N2";
                     dataGridView1.Columns["Descuento"].DefaultCellStyle.Format = "N2";
                     dataGridView1.Columns["Utilidad"].DefaultCellStyle.Format = "N2";

@@ -60,8 +60,18 @@
             this.lblDescuento = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbClientes = new System.Windows.Forms.GroupBox();
+            this.lblTelefono = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lblNombre = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.lblColonia = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.lblDirección = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.gbClientes.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblID
@@ -123,7 +133,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(12, 441);
+            this.label2.Location = new System.Drawing.Point(12, 458);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 34);
             this.label2.TabIndex = 5;
@@ -431,12 +441,130 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Descuento";
             // 
+            // gbClientes
+            // 
+            this.gbClientes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gbClientes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gbClientes.Controls.Add(this.lblColonia);
+            this.gbClientes.Controls.Add(this.label14);
+            this.gbClientes.Controls.Add(this.lblDirección);
+            this.gbClientes.Controls.Add(this.label16);
+            this.gbClientes.Controls.Add(this.lblTelefono);
+            this.gbClientes.Controls.Add(this.label12);
+            this.gbClientes.Controls.Add(this.label8);
+            this.gbClientes.Controls.Add(this.lblNombre);
+            this.gbClientes.ForeColor = System.Drawing.Color.White;
+            this.gbClientes.Location = new System.Drawing.Point(12, 404);
+            this.gbClientes.Name = "gbClientes";
+            this.gbClientes.Size = new System.Drawing.Size(624, 55);
+            this.gbClientes.TabIndex = 32;
+            this.gbClientes.TabStop = false;
+            this.gbClientes.Text = "Datos de Cliente:";
+            this.gbClientes.Visible = false;
+            // 
+            // lblTelefono
+            // 
+            this.lblTelefono.AutoSize = true;
+            this.lblTelefono.BackColor = System.Drawing.Color.Transparent;
+            this.lblTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTelefono.ForeColor = System.Drawing.Color.White;
+            this.lblTelefono.Location = new System.Drawing.Point(82, 36);
+            this.lblTelefono.Name = "lblTelefono";
+            this.lblTelefono.Size = new System.Drawing.Size(17, 18);
+            this.lblTelefono.TabIndex = 36;
+            this.lblTelefono.Text = "0";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(0, 36);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(79, 18);
+            this.label8.TabIndex = 35;
+            this.label8.Text = "Teléfono:";
+            // 
+            // lblNombre
+            // 
+            this.lblNombre.AutoSize = true;
+            this.lblNombre.BackColor = System.Drawing.Color.Transparent;
+            this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombre.ForeColor = System.Drawing.Color.White;
+            this.lblNombre.Location = new System.Drawing.Point(79, 18);
+            this.lblNombre.Name = "lblNombre";
+            this.lblNombre.Size = new System.Drawing.Size(17, 18);
+            this.lblNombre.TabIndex = 34;
+            this.lblNombre.Text = "0";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.White;
+            this.label12.Location = new System.Drawing.Point(0, 18);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(73, 18);
+            this.label12.TabIndex = 33;
+            this.label12.Text = "Nombre:";
+            // 
+            // lblColonia
+            // 
+            this.lblColonia.AutoSize = true;
+            this.lblColonia.BackColor = System.Drawing.Color.Transparent;
+            this.lblColonia.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblColonia.ForeColor = System.Drawing.Color.White;
+            this.lblColonia.Location = new System.Drawing.Point(425, 34);
+            this.lblColonia.Name = "lblColonia";
+            this.lblColonia.Size = new System.Drawing.Size(17, 18);
+            this.lblColonia.TabIndex = 40;
+            this.lblColonia.Text = "0";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.White;
+            this.label14.Location = new System.Drawing.Point(357, 34);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(71, 18);
+            this.label14.TabIndex = 39;
+            this.label14.Text = "Colonia:";
+            // 
+            // lblDirección
+            // 
+            this.lblDirección.AutoSize = true;
+            this.lblDirección.BackColor = System.Drawing.Color.Transparent;
+            this.lblDirección.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDirección.ForeColor = System.Drawing.Color.White;
+            this.lblDirección.Location = new System.Drawing.Point(425, 16);
+            this.lblDirección.Name = "lblDirección";
+            this.lblDirección.Size = new System.Drawing.Size(17, 18);
+            this.lblDirección.TabIndex = 38;
+            this.lblDirección.Text = "0";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.BackColor = System.Drawing.Color.Transparent;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.White;
+            this.label16.Location = new System.Drawing.Point(343, 16);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(85, 18);
+            this.label16.TabIndex = 37;
+            this.label16.Text = "Dirección:";
+            // 
             // frmCobros
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(934, 578);
+            this.Controls.Add(this.gbClientes);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblDescuento);
             this.Controls.Add(this.label10);
@@ -469,6 +597,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.gbClientes.ResumeLayout(false);
+            this.gbClientes.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -504,5 +634,14 @@
         private System.Windows.Forms.Label lblDescuento;
         public System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbClientes;
+        public System.Windows.Forms.Label lblColonia;
+        public System.Windows.Forms.Label label14;
+        public System.Windows.Forms.Label lblDirección;
+        public System.Windows.Forms.Label label16;
+        public System.Windows.Forms.Label lblTelefono;
+        public System.Windows.Forms.Label label12;
+        public System.Windows.Forms.Label label8;
+        public System.Windows.Forms.Label lblNombre;
     }
 }

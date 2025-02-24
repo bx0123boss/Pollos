@@ -58,7 +58,28 @@ namespace Punto_Venta
                     da.SelectCommand.Parameters.AddWithValue("@Mesa", $"{lblID.Text}");
                     da.Fill(ds, "Articulos"); // Cambia "Id" por "Origen" para mayor claridad
                 }
+                if (idCliente != 0)
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM Clientes WHERE IdCliente= @IdCliente;", conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@IdCliente", idCliente);
 
+                        using (SqlDataReader sqlDataReader = cmd.ExecuteReader())
+                        {
+                            if (sqlDataReader.Read())
+                            {
+                                lblNombre.Text = sqlDataReader["Nombre"].ToString();
+                                string telefono = sqlDataReader["Telefono"].ToString();
+                                string telefonoFormateado = $"({telefono.Substring(0, 3)}) {telefono.Substring(3, 3)}-{telefono.Substring(6, 4)}";
+                                lblTelefono.Text = telefonoFormateado;
+                                lblDirección.Text = sqlDataReader["Direccion"].ToString();
+                                lblColonia.Text = sqlDataReader["Colonia"].ToString();
+                                gbClientes.Visible = true;
+                            }
+                        }
+
+                    }
+                }
                 dataGridView1.DataSource = ds.Tables["Articulos"];
                 dataGridView1.Columns["Precio"].DefaultCellStyle.Format = "N2";
                 dataGridView1.Columns["Total"].DefaultCellStyle.Format = "N2";
@@ -159,7 +180,7 @@ namespace Punto_Venta
 
                 using (SqlCommand cmd = new SqlCommand(insertFolioQuery, conectar))
                 {
-                    cmd.Parameters.AddWithValue("@ModalidadVenta", "MESA");
+                    cmd.Parameters.AddWithValue("@ModalidadVenta", idCliente == 0 ? "MESA" : "DOMICILIO");
                     cmd.Parameters.AddWithValue("@Estatus", "COBRADO");
                     cmd.Parameters.AddWithValue("@idCliente", idCliente == 0 ? (object)DBNull.Value : idCliente);
                     cmd.Parameters.AddWithValue("@FechaHora", DateTime.Now);
@@ -249,8 +270,8 @@ namespace Punto_Venta
                 imprimir();
             }
             MessageBox.Show("EL COBRO SE HA REALIZADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            frmMesasOcupadas mesa = new frmMesasOcupadas();
-            mesa.Show();
+            //frmMesasOcupadas mesa = new frmMesasOcupadas();
+            //mesa.Show();
             this.Close();
         }
 
