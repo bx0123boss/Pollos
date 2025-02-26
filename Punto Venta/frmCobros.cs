@@ -13,6 +13,7 @@ namespace Punto_Venta
         double iva;
         double descuento;
         double total = 0;
+        double precioVenta = 0;
         string tipoUser = "";
         public int idMesero = 0;
         public string print = "";
@@ -28,10 +29,12 @@ namespace Punto_Venta
         {
             get
             {
+                precioVenta = 0;
                 total = 0;
                 for (int i = 0; i < dataGridView1.RowCount; i++)
                 {
                     total += Convert.ToDouble(dataGridView1.Rows[i].Cells["Total"].Value);
+                    precioVenta += Convert.ToDouble(dataGridView1.Rows[i].Cells["CostoTotal"].Value);
                 }
                 return total - descuento;
             }
@@ -47,7 +50,7 @@ namespace Punto_Venta
                 DataSet ds = new DataSet();
                 string query = @"
                     SELECT 
-                    A.IdInventario, A.IdArticulosMesa, A.Cantidad,B.Nombre, B.Precio, A.Total,A.FechaHora, A.Comentario, '0' AS Ids
+                    A.IdInventario, A.IdArticulosMesa, A.Cantidad,B.Nombre, B.Precio, A.Total,A.FechaHora, A.Comentario, '0' AS Ids, B.CostoTotal
                     FROM ArticulosMesa A
                     INNER JOIN INVENTARIO B ON A.IdInventario = B.IdInventario
                     WHERE A.IdUsuarioCancelo IS NULL 
@@ -84,6 +87,7 @@ namespace Punto_Venta
                 dataGridView1.Columns["Precio"].DefaultCellStyle.Format = "N2";
                 dataGridView1.Columns["Total"].DefaultCellStyle.Format = "N2";
                 dataGridView1.Columns[0].Visible = false;
+                dataGridView1.Columns["Ids"].Visible = false;
                 dataGridView1.Columns["Ids"].Visible = false;
                 dataGridView1.Columns[1].Visible = false;
                 lblTotal.Text = $"{RecalcularTotal:C}";
@@ -180,13 +184,19 @@ namespace Punto_Venta
 
                 using (SqlCommand cmd = new SqlCommand(insertFolioQuery, conectar))
                 {
-                    cmd.Parameters.AddWithValue("@ModalidadVenta", idCliente == 0 ? "MESA" : "DOMICILIO");
+                    string modalidadVenta;
+                    if (lblMesa.Text == "Para llevar")
+                        modalidadVenta = "PARA LLEVAR";
+                    else if (idCliente == 0)
+                        modalidadVenta = "MESA";
+                    else modalidadVenta = "DOMICILIO";
+                    cmd.Parameters.AddWithValue("@ModalidadVenta", modalidadVenta);
                     cmd.Parameters.AddWithValue("@Estatus", "COBRADO");
                     cmd.Parameters.AddWithValue("@idCliente", idCliente == 0 ? (object)DBNull.Value : idCliente);
                     cmd.Parameters.AddWithValue("@FechaHora", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Total", total);
                     cmd.Parameters.AddWithValue("@Descuento", descuento);
-                    cmd.Parameters.AddWithValue("@Utilidad", 20.00);
+                    cmd.Parameters.AddWithValue("@Utilidad", (total -descuento - precioVenta));
                     cmd.Parameters.AddWithValue("@IdMesa", lblID.Text);
 
                     // Ejecutar la inserción y obtener el último ID insertado

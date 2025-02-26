@@ -387,8 +387,8 @@ namespace Punto_Venta
             ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
             foreach (var (cantidad, descripcion, comentario) in itemsComanda)
             {
-                Console.WriteLine($"Cantidad: {cantidad}, Descripción: {descripcion}, Comentario: {comentario}");
-                ticket.AddItem(cantidad, descripcion + comentario, "");
+                //Console.WriteLine($"Cantidad: {cantidad}, Descripción: {descripcion}, Comentario: {comentario}");
+                ticket.AddItem(cantidad, descripcion +": "+ comentario, "");
             }
 
             ticket.PrintTicket(Conexion.impresora2);
@@ -404,6 +404,7 @@ namespace Punto_Venta
                     conectar.Open();
                     if (tabControl1.SelectedIndex == 1)
                     {
+                        //domicilio
                         string query = "INSERT INTO Mesas (Nombre, IdMesero,Impresion,Estatus, IdCliente) " +
                                            "VALUES ('Domicilio " + (LblNombre.Text.Length > 20 ? LblNombre.Text.Substring(0, 20) : LblNombre.Text) + "', @IdMesero, 0, @Estatus, @IdCliente);" +
                                              "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
@@ -414,6 +415,20 @@ namespace Punto_Venta
                             cmd.Parameters.AddWithValue("@IdCliente", idCliente);
                             idMesa = Convert.ToInt32(cmd.ExecuteScalar());
                         }
+                    }
+                    else if(tabControl1.SelectedIndex == 2)
+                    {
+                        //llevar
+                        string query = "INSERT INTO Mesas (Nombre, IdMesero,Impresion,Estatus) " +
+                                          "VALUES ('Para llevar', @IdMesero, 0, @Estatus);" +
+                                            "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
+                        using (SqlCommand cmd = new SqlCommand(query, conectar))
+                        {
+                            cmd.Parameters.AddWithValue("@IdMesero", idMesero);
+                            cmd.Parameters.AddWithValue("@Estatus", "COCINA");
+                            idMesa = Convert.ToInt32(cmd.ExecuteScalar());
+                        }
+
                     }
                     else if (checkBox3.Checked ==false && CmbMesa.SelectedValue != null)
                         idMesa = (int)CmbMesa.SelectedValue;
@@ -475,10 +490,28 @@ namespace Punto_Venta
                 }
                 
                 TicketComanda(listado);
-                this.Close();
+               
                 MessageBox.Show("SE HA REALIZADO LA ORDEN CON EXITO!", "ORDEN REALIZADA", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                frmPedido pedo = new frmPedido();
-                pedo.Show();
+                if (tabControl1.SelectedIndex == 2)
+                {
+                    frmCobros cobrar = new frmCobros();
+                    cobrar.lblID.Text = idMesa.ToString();
+                    cobrar.lblMesa.Text = "Para llevar";
+                    cobrar.lblMesero.Text = lblMesero.Text;
+                    cobrar.idMesero = idMesero;
+                    cobrar.print = "0";
+                    cobrar.lblPersonas.Text = "N/A";
+                    cobrar.FormBorderStyle = FormBorderStyle.None;
+                    cobrar.ShowDialog();
+                    this.Close();
+                }
+                else
+                {
+                    frmPedido pedo = new frmPedido();
+                    pedo.Show();
+                    this.Close();
+                }
+                
             }
         }
         private double RecalcularTotal
