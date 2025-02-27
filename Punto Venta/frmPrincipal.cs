@@ -13,9 +13,6 @@ namespace Punto_Venta
 {
     public partial class frmPrincipal : Form
     {
-
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbCommand cmd;
         public int id;
         public string usuario = "Administrador";
         public frmPrincipal()
@@ -34,34 +31,13 @@ namespace Punto_Venta
         {
             try
             {
+                pictureBox1.Image = Image.FromFile("C:\\Jaeger Soft\\logo2.png");
                 this.BackgroundImage = Image.FromFile("C:\\Jaeger Soft\\w2.jpg");
-                pictureBox1.Image = Image.FromFile("C:\\Jaeger Soft\\logo2.jpg");
             }
             catch
             {
             }
-            try
-            {
-                pictureBox1.Image = Image.FromFile("C:\\Jaeger Soft\\logo2.png");
-            }
-            catch 
-            {
-            }
-            conectar.Open();
-            if (Conexion.lugar.Equals("TERRAZA"))
-            {
-                button9.Visible = false;
-                button1.Visible = false;
-                button7.Visible = false;
-                button2.Visible = false;
-                button4.Visible = false;
-                button5.Visible = false;
-                button6.Visible = false;
-                button11.Visible = false;
-                button10.Visible = false;
-                button14.Visible = false;
-            }
-            else if (lblUser.Text == "VENTAS")
+            if (lblUser.Text == "VENTAS")
             {
                 button6.Visible = false;
                 button11.Visible = false;
@@ -90,11 +66,7 @@ namespace Punto_Venta
                     frm.BringToFront();
                 }
             }
-            if (abierto)
-            {
-                
-            }
-            else
+            if (!abierto)
             {
                 frmMesasOcupadas mesa = new frmMesasOcupadas();
                 mesa.ShowDialog();
@@ -131,16 +103,12 @@ namespace Punto_Venta
                     frm.BringToFront();
                 }
             }
-            if (abierto)
-            {
-
-            }
-            else
+            if (!abierto)
             {
                 frmIngreso mesa = new frmIngreso();
                 mesa.usuario = usuario;
                 mesa.ShowDialog();
-            } 
+            }
            
         }
 
@@ -155,16 +123,12 @@ namespace Punto_Venta
                     frm.BringToFront();
                 }
             }
-            if (abierto)
-            {
-
-            }
-            else
+            if (!abierto)
             {
                 frmEgresos mesa = new frmEgresos();
                 mesa.usuario = usuario;
                 mesa.ShowDialog();
-            } 
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -178,25 +142,12 @@ namespace Punto_Venta
                     abierto = true;
                 }
             }
-            if (abierto)
+            if (!abierto)
             {
-
+                frmInventario inventario = new frmInventario();
+                inventario.usuario = usuario;
+                inventario.ShowDialog();
             }
-            else
-            {
-                if (lblUser.Text == "invitado")
-                {
-                    frmInventarioFisico fisico = new frmInventarioFisico();
-                    fisico.invitado = false;
-                    fisico.Show();
-                }
-                else
-                {
-                    frmInventario inventario = new frmInventario();
-                    inventario.usuario = usuario;
-                    inventario.ShowDialog();
-                }
-            } 
          
         }
 
@@ -204,18 +155,7 @@ namespace Punto_Venta
         {
             frmCorte corte = new frmCorte();
             corte.usuario = lblUser.Text;
-            cmd = new OleDbCommand("select count(*) from temp;", conectar);
-            int valor = int.Parse(cmd.ExecuteScalar().ToString());
-            if (valor == 0)
-            {
-
-                corte.ShowDialog();
-            }
-            else
-            {
-                corte.ShowDialog();
-                MessageBox.Show("AUN NO HA ACTUALIZADO EL INVENTARIO, FAVOR DE ACTUALIZAR", "ALERTA!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
+            corte.ShowDialog();
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -229,15 +169,11 @@ namespace Punto_Venta
                     frm.BringToFront();
                 }
             }
-            if (abierto)
-            {
-
-            }
-            else
+            if (!abierto)
             {
                 frmActInventario mesa = new frmActInventario();
                 mesa.ShowDialog();
-            } 
+            }
             
         }
 
@@ -275,18 +211,14 @@ namespace Punto_Venta
                     frm.BringToFront();
                 }
             }
-            if (abierto)
-            {
-
-            }
-            else
+            if (!abierto)
             {
                 frmTipoDetallada det = new frmTipoDetallada
                 {
                     MinimizeBox = false
                 };
                 det.usuario = lblUser.Text;
-                
+
                 det.ShowDialog();
             }
         }
@@ -307,18 +239,12 @@ namespace Punto_Venta
                     frm.BringToFront();
                 }
             }
-            if (abierto)
-            {
-
-            }
-            else
+            if (!abierto)
             {
                 frmPedido p = new frmPedido();
                 p.Usuario = lblUser.Text;
                 p.ShowDialog();
-            } 
-            
-
+            }
         }
 
         private void button14_Click(object sender, EventArgs e)
@@ -332,17 +258,12 @@ namespace Punto_Venta
                     frm.BringToFront();
                 }
             }
-            if (abierto)
-            {
-
-            }
-            else
+            if (!abierto)
             {
                 frmUsuarios mesa = new frmUsuarios();
                 mesa.ShowDialog();
-            }             
+            }        
         }
-
 
     }
 }

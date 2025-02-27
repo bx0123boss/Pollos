@@ -99,11 +99,11 @@
             this.LblTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LblTotal.AutoSize = true;
             this.LblTotal.BackColor = System.Drawing.Color.Black;
-            this.LblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F);
+            this.LblTotal.Font = new System.Drawing.Font("Calibri", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblTotal.ForeColor = System.Drawing.Color.White;
-            this.LblTotal.Location = new System.Drawing.Point(185, 506);
+            this.LblTotal.Location = new System.Drawing.Point(152, 508);
             this.LblTotal.Name = "LblTotal";
-            this.LblTotal.Size = new System.Drawing.Size(119, 46);
+            this.LblTotal.Size = new System.Drawing.Size(112, 49);
             this.LblTotal.TabIndex = 47;
             this.LblTotal.Text = "00.00";
             // 
@@ -112,11 +112,11 @@
             this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label11.AutoSize = true;
             this.label11.BackColor = System.Drawing.Color.Black;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F);
+            this.label11.Font = new System.Drawing.Font("Calibri", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
             this.label11.Location = new System.Drawing.Point(3, 506);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(170, 46);
+            this.label11.Size = new System.Drawing.Size(143, 49);
             this.label11.TabIndex = 45;
             this.label11.Text = "TOTAL: ";
             // 
@@ -337,6 +337,7 @@
             this.lblMesero.Size = new System.Drawing.Size(23, 25);
             this.lblMesero.TabIndex = 77;
             this.lblMesero.Text = "0";
+            this.lblMesero.Click += new System.EventHandler(this.lblMesero_Click);
             // 
             // label15
             // 

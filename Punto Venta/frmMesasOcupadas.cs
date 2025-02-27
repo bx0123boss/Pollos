@@ -22,7 +22,6 @@ namespace Punto_Venta
             {
                 conectar.Open();
 
-                // Consulta para obtener las mesas
                 string query = @"SELECT A.IdMesa, A.Nombre, B.Usuario AS Mesero, A.CantidadPersonas, A.Impresion, A.IdMesero
                                     FROM MESAS A INNER JOIN  USUARIOS B ON A.IdMesero = B.IdUsuario
                                     WHERE A.Estatus = 'COCINA' AND IdCliente IS NULL
@@ -31,18 +30,16 @@ namespace Punto_Venta
                 using (SqlCommand cmd = new SqlCommand(query, conectar))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    // Recorrer los resultados de la consulta
                     while (reader.Read())
                     {
-                        // Crear un botón para la mesa
                         Button but = new Button();
                         but.FlatStyle = FlatStyle.Flat;
                         but.FlatAppearance.BorderSize = 0;
                         but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 16, FontStyle.Bold);
                         but.Size = new System.Drawing.Size(135, 80);
-                        but.Text = reader["Nombre"].ToString(); // Asignar el nombre de la mesa al botón
-                        but.Click += new EventHandler(this.Myevent); // Asignar evento Click
-                        but.MouseHover += new EventHandler(this.Myevent2); // Asignar evento MouseHover
+                        but.Text = reader["Nombre"].ToString(); 
+                        but.Click += new EventHandler(this.Myevent); 
+                        but.MouseHover += new EventHandler(this.Myevent2); 
                         but.BackColor = Color.SkyBlue;
                         but.Tag = new
                         {
@@ -143,11 +140,5 @@ namespace Punto_Venta
             lblMesero.Text = data.Mesero;
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            frmAgregarMesas add = new frmAgregarMesas();
-            add.Show();
-            this.Close();
-        }
     }
 }

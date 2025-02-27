@@ -41,7 +41,7 @@ namespace Punto_Venta
         private void button2_Click(object sender, EventArgs e)
         {
             frmAgregarPromo prom = new frmAgregarPromo();
-            prom.ShowDialog();
+            prom.Show();
             this.Close();
         }
 

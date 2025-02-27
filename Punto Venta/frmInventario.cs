@@ -45,10 +45,7 @@ namespace Punto_Venta
                 cmbOrigen.ValueMember = "IdOrigen";
                 cmbOrigen.DataSource = dt;
 
-                if (usuario == "Administrador")
-                {
-                    button10.Visible = true;
-                }
+               
 
             }
         }
@@ -337,7 +334,7 @@ namespace Punto_Venta
         private void button12_Click(object sender, EventArgs e)
         {
             frmCombos com = new frmCombos();
-            com.Show();
+            com.ShowDialog();
             this.Close();
         }
 

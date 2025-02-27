@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,10 +14,8 @@ namespace Punto_Venta
 {
     public partial class frmSeleccionarCombo : Form
     {
-        private DataSet ds;
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
+        private DataSet ds = new DataSet();
+        SqlDataAdapter da;
         string idPromo = "";
         string nombrePromo = "";
         double precioPromo = 0;
@@ -33,25 +32,32 @@ namespace Punto_Venta
             InitializeComponent();
         }
 
-       
+
 
         private void frmSeleccionarCombo_Load(object sender, EventArgs e)
         {
-            Random random = new Random();
-            conectar.Open();
-            //ds = new DataSet();
-            //da = new OleDbDataAdapter("select Id,Nombre,Precio,Subcategoria from Inventario WHERE NOT Subcategoria='' ORDER BY Nombre;", conectar);
-            //da.Fill(ds, "Id");
-            //dataGridView1.DataSource = ds.Tables["Id"];
-            ds = new DataSet();
-            da = new OleDbDataAdapter("select * from Promos where " + DateTime.Now.ToString("dddd") + "=True ORDER BY Nombre;", conectar);
-            da.Fill(ds, "Id");
-            dgvInventario.DataSource = ds.Tables["Id"];
-            dgvInventario.Columns[0].Visible = false;
+            Random random = new Random(); 
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                try
+                {
+                    conectar.Open();
+                    
+                    string diaSemana = DateTime.Now.ToString("dddd");
+                    string query = "SELECT * FROM Promos WHERE " + diaSemana + " = 1 ORDER BY Nombre;";
+                    SqlDataAdapter da = new SqlDataAdapter(query, conectar);
+                    da.Fill(ds, "Promos");
+                    dgvInventario.DataSource = ds.Tables["Promos"];
+                    //dgvInventario.Columns[0].Visible = false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
             articulosPromo(dgvInventario[0, 0].Value.ToString());
             dgvInventario.Rows[0].Selected = true;
-            //lenar prueba
-            foreach (DataRow row in ds.Tables["Id"].Rows)
+            foreach (DataRow row in ds.Tables["Promos"].Rows)
             {
                 // Generar valores aleatorios para los componentes de color
                 int red = random.Next(256);    // Valores entre 0 y 255 (256 excluido)
@@ -62,10 +68,9 @@ namespace Punto_Venta
                 Color randomColor = Color.FromArgb(red, green, blue);
 
                 StringBuilder sb = new StringBuilder();
-                string id = Convert.ToString(row[0]); // Suponiendo que el primer campo es de tipo entero (Id)
-                string nombre = row[1].ToString(); // Suponiendo que el segundo campo es de tipo cadena (Nombre)
-                double precio = Convert.ToDouble(row[2]); // Suponiendo que el tercer campo es de tipo decimal (Precio)
-                                                         //crear boton
+                string id = Convert.ToString(row["IdPromo"]); 
+                string nombre = row["Nombre"].ToString(); 
+                double precio = Convert.ToDouble(row["Precio"]); 
                 Button but = new Button();
                 but.FlatStyle = FlatStyle.Flat;
                 but.FlatAppearance.BorderSize = 0;
@@ -74,28 +79,26 @@ namespace Punto_Venta
                 //but.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFFFF");
                 but.ForeColor = Color.FromName("White");
                 but.Size = new System.Drawing.Size(104, 56);
-                but.Text = row[1].ToString();
+                but.Text = row["Nombre"].ToString();
                 but.Tag = new Tuple<string, string, double>(id, nombre, precio);
-                sb.Append(nombre+"\n");
+                sb.Append(nombre + "\n");
                 sb.Append($"Precio: ${precio} \nSe vende:");
-                sb.Append(row["Lunes"].ToString() == "True" ? " Lunes" : "");
-                sb.Append(row["Martes"].ToString() == "True" ? ", Martes" : "");
-                sb.Append(row["Miércoles"].ToString() == "True" ? ", Miércoles" : "");
-                sb.Append(row["Jueves"].ToString() == "True" ? ", Jueves" : "");
-                sb.Append(row["Viernes"].ToString() == "True" ? ", Viernes" : "");
-                sb.Append(row["Sábado"].ToString() == "True" ? ", Sábado" : "");
-                sb.Append(row["Domingo"].ToString() == "True" ? ", Domingo" : "");
+                sb.Append(row["Lunes"].ToString() == "1" ? " Lunes" : "");
+                sb.Append(row["Martes"].ToString() == "1" ? ", Martes" : "");
+                sb.Append(row["Miercoles"].ToString() == "1" ? ", Miércoles" : "");
+                sb.Append(row["Jueves"].ToString() == "1" ? ", Jueves" : "");
+                sb.Append(row["Viernes"].ToString() == "1" ? ", Viernes" : "");
+                sb.Append(row["Sabado"].ToString() == "1" ? ", Sábado" : "");
+                sb.Append(row["Domingo"].ToString() == "1" ? ", Domingo" : "");
                 toolTip1.SetToolTip(but, sb.ToString());
                 flowLayoutPanel2.Controls.Add(but);
                 but.Click += new EventHandler(this.botonPromos);
-                // Acceder a los valores de cada columna por índice
-
             }
         }
 
         private void botonPromos(object sender, EventArgs e)
         {
-           
+
             if ((sender as Button).Tag is Tuple<string, string, double> tupla)
             {
                 idPromo = tupla.Item1;
@@ -109,7 +112,7 @@ namespace Punto_Venta
                     idArtPromos = idPromo;
                 }
             }
-            
+
         }
         private void dgvInventario_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -136,22 +139,44 @@ namespace Punto_Venta
         }
         private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            if (e.KeyChar == Convert.ToChar(Keys.Enter)) // Verificar si se presionó Enter
             {
-                if (txtBuscar.Text != "")
-                    da = new OleDbDataAdapter("select Id,Nombre,Precio,Subcategoria from Inventario WHERE Nombre LIKE '%" + txtBuscar.Text + "%' ORDER BY Nombre;", conectar);                
-                else
-                    da = new OleDbDataAdapter("select Id,Nombre,Precio,Subcategoria from Inventario ORDER BY Nombre;", conectar);
-                ds = new DataSet();
-                da.Fill(ds, "Id");
-                dataGridView1.DataSource = ds.Tables["Id"];
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    try
+                    {
+                        conectar.Open();
+                        string query;
+                        if (txtBuscar.Text != "")
+                        {
+                            query = "SELECT Id, Nombre, Precio, Subcategoria FROM Inventario WHERE Nombre LIKE @Buscar ORDER BY Nombre;";
+                        }
+                        else
+                        {
+                            query = "SELECT Id, Nombre, Precio, Subcategoria FROM Inventario ORDER BY Nombre;";
+                        }
+                        da = new SqlDataAdapter(query, conectar);
+                        if (txtBuscar.Text != "")
+                        {
+                            da.SelectCommand.Parameters.AddWithValue("@Buscar", "%" + txtBuscar.Text + "%");
+                        }
+                        ds = new DataSet();
+                        da.Fill(ds, "Inventario");
+                        dataGridView1.DataSource = ds.Tables["Inventario"];
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                }
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             try
-            {                
+            {
                 comparaCategorias();
                 if (todoOK())
                 {
@@ -161,14 +186,15 @@ namespace Punto_Venta
                     precio = precioPromo;
                     total = precioPromo * Convert.ToDouble(cantidad);
                     comentario = txtComentario.Text;
-                    this.DialogResult = System.Windows.Forms.DialogResult.OK;                           
+                    this.DialogResult = System.Windows.Forms.DialogResult.OK;
                 }
                 else
                 {
                     MessageBox.Show("FALTAN ELEMENTOS DEL COMBO, FAVOR DE CHECAR", "ALTO", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch {
+            catch
+            {
                 MessageBox.Show("NO HA SELECCIONADO COMBO", "ALTO", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //MessageBox.Show("Error " + ex.ToString(), "Alto", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -179,10 +205,10 @@ namespace Punto_Venta
 
         }
 
-        
 
-       
-        public void comparaCategorias() 
+
+
+        public void comparaCategorias()
         {
             for (int x = 0; x < dgvPromo.RowCount; x++)
             {
@@ -197,9 +223,9 @@ namespace Punto_Venta
                     if (categoria == dgvPromo[1, x].Value.ToString())
                     {
                         double cantidadPromo = Convert.ToDouble(dgvPromo[3, x].Value.ToString());
-                        double cantidadActual = cantidadPromo - cantidad;                       
+                        double cantidadActual = cantidadPromo - cantidad;
                         dgvPromo[3, x].Value = cantidadActual;
-                       
+
                         //break;
                     }
                 }
@@ -209,7 +235,7 @@ namespace Punto_Venta
             {
                 dgvPromo[2, x].Value = false;
             }
-                for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
+            for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
             {
                 string categoria = DgvPedidoprevio[3, i].Value.ToString();
                 double cantidad = Convert.ToDouble(DgvPedidoprevio[1, i].Value.ToString());
@@ -238,44 +264,55 @@ namespace Punto_Venta
         }
         public void articulosPromo(string id)
         {
-            
-                string Articulos = "";
-                cmd = new OleDbCommand("SELECT * FROM ArticulosPromos where IdPromo='" + id + "';", conectar);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    Articulos += reader[2].ToString() + ":" + reader[3].ToString() + "\n";
-                    dgvPromo.Rows.Add(reader[2].ToString(), reader[3].ToString(), false, reader[2].ToString());
 
-                    Button but = new Button();
-                    but.FlatStyle = FlatStyle.Flat;
-                    but.FlatAppearance.BorderSize = 0;
-                    but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                    but.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFFFF");
-                    but.ForeColor = Color.FromName("RED");
-                    but.Size = new System.Drawing.Size(350, 30);
-                    but.Text = reader[2].ToString() + " - " + reader[3].ToString();
-                    but.Tag = new Tuple<string, double, string>(reader[1].ToString(), Convert.ToDouble(reader[2]), reader[3].ToString());
-                    but.Click += new EventHandler(this.filtroBoton);
-                    flowLayoutPanel1.Controls.Add(but);
-                    //categoria = (sender as Button).Text;
+            string Articulos = "";
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
+                string query = @"SELECT A.IdArticulosPromo, A.IdSubcategoria,A.Cantidad,B.Nombre
+                                        FROM ArticulosPromo A
+                                        INNER JOIN SUBCATEGORIAS B ON A.IdSubcategoria = B.IdSubcategoria
+                                        WHERE IdPromo = @IdPromo";
+                using (SqlCommand cmd = new SqlCommand(query, conectar))
+                {
+                    cmd.Parameters.AddWithValue("@IdPromo", id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Articulos += reader["Cantidad"].ToString() + ":" + reader["Nombre"].ToString() + "\n";
+                            dgvPromo.Rows.Add(reader["Cantidad"].ToString(), reader["Nombre"].ToString(), false, reader["Cantidad"].ToString());
+
+                            Button but = new Button();
+                            but.FlatStyle = FlatStyle.Flat;
+                            but.FlatAppearance.BorderSize = 0;
+                            but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
+                            but.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFFFF");
+                            but.ForeColor = Color.FromName("RED");
+                            but.Size = new System.Drawing.Size(350, 30);
+                            but.Text = reader["Cantidad"].ToString() + " - " + reader["Nombre"].ToString();
+                            but.Tag = new Tuple<string, double, string>(id, Convert.ToDouble(reader["Cantidad"]), reader["Nombre"].ToString());
+                            but.Click += new EventHandler(this.filtroBoton);
+                            flowLayoutPanel1.Controls.Add(but);
+                        }
+                    }
                 }
-            //MessageBox.Show(Articulos, "La promoción incluye:");
+            }
         }
         public bool todoOK()
         {
-            bool ok=true;
-           
+            bool ok = true;
+
             for (int i = 0; i < dgvPromo.RowCount; i++)
             {
                 int cantidad = Convert.ToInt32(dgvPromo[3, i].Value.ToString());
-                if (dgvPromo[2, i].Value.ToString() == "False"  || cantidad != 0)
+                if (dgvPromo[2, i].Value.ToString() == "False" || cantidad != 0)
                 {
                     ok = false;
                     break;
                 }
             }
-            if (DgvPedidoprevio.RowCount==0)
+            if (DgvPedidoprevio.RowCount == 0)
             {
                 ok = false;
             }
@@ -316,29 +353,42 @@ namespace Punto_Venta
                 double cantidad = Convert.ToDouble(DgvPedidoprevio[0, DgvPedidoprevio.CurrentRow.Index].Value.ToString());
                 comparaCategorias();
             }
-            catch 
+            catch
             {
                 MessageBox.Show("Solo puedes introducir números", "Alto", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                DgvPedidoprevio.Rows[e.RowIndex].Cells[1].Value = "1"; 
+                DgvPedidoprevio.Rows[e.RowIndex].Cells[1].Value = "1";
                 comparaCategorias();
             }
         }
 
         private void dgvPromo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            filtrar(dgvPromo[1, dgvPromo.CurrentRow.Index].Value.ToString());            
+            filtrar(dgvPromo[1, dgvPromo.CurrentRow.Index].Value.ToString());
         }
         public void filtrar(string subcategoria)
         {
+            DataSet ds = new DataSet();
             if (subFiltrar != subcategoria)
             {
                 Random random = new Random();
                 flowLayoutPanel3.Controls.Clear();
-                da = new OleDbDataAdapter("select Id,Nombre,Precio,Subcategoria from Inventario WHERE Subcategoria='" + subcategoria + "' ORDER BY Nombre;", conectar);
-                ds = new DataSet();
-                da.Fill(ds, "Id");
-                dataGridView1.DataSource = ds.Tables["Id"];
-                foreach (DataRow row in ds.Tables["Id"].Rows)
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    conectar.Open();
+                    string query = @"SELECT B.IdSubcategoria, A.Nombre, A.Precio, B.Nombre as Subcategoria 
+                                        FROM Inventario A 
+                                        INNER JOIN SUBCATEGORIAS B ON A.IdSubcategoria = B.IdSubcategoria
+                                        WHERE B.Nombre = @Subcategoria ORDER BY Nombre;";
+                    using (SqlDataAdapter da = new SqlDataAdapter(query, conectar))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@Subcategoria", subcategoria);
+                        
+                        da.Fill(ds, "Inventario"); 
+                        dataGridView1.DataSource = ds.Tables["Inventario"];
+                    }
+                }
+                
+                foreach (DataRow row in ds.Tables["Inventario"].Rows)
                 {
                     int red = random.Next(256);    // Valores entre 0 y 255 (256 excluido)
                     int green = random.Next(256);

@@ -30,7 +30,6 @@ namespace Punto_Venta
         double total = 0;
         bool mesaNueva = false;
         int idMesa = 0;
-        private double utilidadTotal;
         int categoriaSeleccionada = 0;
         public frmPedido()
         {
@@ -108,6 +107,7 @@ namespace Punto_Venta
         }
         private void cargarCategoriasAutomatico()
         {
+            flpCategorias.Controls.Clear();
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
@@ -503,16 +503,33 @@ namespace Punto_Venta
                     cobrar.lblPersonas.Text = "N/A";
                     cobrar.FormBorderStyle = FormBorderStyle.None;
                     cobrar.ShowDialog();
-                    this.Close();
+                    ReiniciarForm();
                 }
                 else
                 {
-                    frmPedido pedo = new frmPedido();
-                    pedo.Show();
-                    this.Close();
+                    ReiniciarForm();
                 }
                 
             }
+        }
+        private void ReiniciarForm()
+        {
+            BtnEntregar.Visible = true;
+            tabControl1.SelectedIndex = 0;
+            checkBox3.Checked = false;
+            lblMesa.Text = "0";
+            idMesero = 0;
+            idCliente = null;
+            DgvPedidoprevio.Rows.Clear();
+            LblTotal.Text = $"{RecalcularTotal:C}";
+            mesaNueva = false;
+            idMesa = 0;
+            cargarMesas(); 
+            Button botonFicticio = new Button();
+            var tag = new { Id = "0" }; 
+            botonFicticio.Tag = tag; 
+            CambiarCategoria(botonFicticio, EventArgs.Empty);
+            
         }
         private double RecalcularTotal
         {
@@ -729,6 +746,20 @@ namespace Punto_Venta
             {
                 lblMesa.Visible = false;
                 CmbMesa.Visible = true;
+            }
+        }
+
+        private void lblMesero_Click(object sender, EventArgs e)
+        {
+            using (frmClaveVendendor ori = new frmClaveVendendor())
+            {
+                if (ori.ShowDialog() == DialogResult.OK)
+                {
+                    idMesero = ori.Id;
+                    lblMesero.Text = ori.Mesero;
+                }
+                else
+                    this.Close();
             }
         }
     }
