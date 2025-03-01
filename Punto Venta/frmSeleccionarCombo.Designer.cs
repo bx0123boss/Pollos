@@ -110,7 +110,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(966, 562);
+            this.button2.Location = new System.Drawing.Point(966, 588);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(453, 44);
             this.button2.TabIndex = 44;
@@ -172,6 +172,7 @@
             // DgvPedidoprevio
             // 
             this.DgvPedidoprevio.AllowUserToAddRows = false;
+            this.DgvPedidoprevio.AllowUserToDeleteRows = false;
             this.DgvPedidoprevio.BackgroundColor = System.Drawing.Color.GhostWhite;
             this.DgvPedidoprevio.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DgvPedidoprevio.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -185,7 +186,7 @@
             this.DgvPedidoprevio.GridColor = System.Drawing.SystemColors.ButtonHighlight;
             this.DgvPedidoprevio.Location = new System.Drawing.Point(966, 68);
             this.DgvPedidoprevio.Name = "DgvPedidoprevio";
-            this.DgvPedidoprevio.Size = new System.Drawing.Size(453, 416);
+            this.DgvPedidoprevio.Size = new System.Drawing.Size(453, 438);
             this.DgvPedidoprevio.TabIndex = 50;
             this.DgvPedidoprevio.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPedidoprevio_CellEndEdit);
             // 
@@ -343,7 +344,7 @@
             // txtComentario
             // 
             this.txtComentario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtComentario.Location = new System.Drawing.Point(1055, 490);
+            this.txtComentario.Location = new System.Drawing.Point(1055, 512);
             this.txtComentario.Multiline = true;
             this.txtComentario.Name = "txtComentario";
             this.txtComentario.Size = new System.Drawing.Size(364, 66);
@@ -354,7 +355,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(967, 493);
+            this.label7.Location = new System.Drawing.Point(966, 512);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(90, 16);
             this.label7.TabIndex = 58;
@@ -416,7 +417,7 @@
             this.flowLayoutPanel3.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(384, 68);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(517, 538);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(517, 564);
             this.flowLayoutPanel3.TabIndex = 63;
             // 
             // checkBox3

@@ -12,6 +12,8 @@ CREATE TABLE ArticulosMesa (
     IdMesero INT FOREIGN KEY REFERENCES USUARIOS(IdUsuario),
     FechaHora DATETIME,
     Estatus VARCHAR(15),
-    IdUsuarioCancelo INT FOREIGN KEY REFERENCES USUARIOS(IdUsuario)
+    IdUsuarioCancelo INT FOREIGN KEY REFERENCES USUARIOS(IdUsuario),
+	Ids VARCHAR(50),
+	IdPromo INT
 );
 COMMIT TRANSACTION;

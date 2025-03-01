@@ -8,6 +8,7 @@ using LibPrintTicket;
 using System.Globalization;
 using System.Drawing.Printing;
 using System.Data.SqlClient;
+using System.Data.OleDb;
 
 namespace Punto_Venta
 {
@@ -330,7 +331,7 @@ namespace Punto_Venta
                     }
                     DgvPedidoprevio.Rows.Add(pi.id, pi.cantidad, pi.nombre, pi.precio, pi.total, "X", pi.comentario, "1", ides);
                 }
-                LblTotal.Text = String.Format("{0:0.00}", total);
+                LblTotal.Text = $"{RecalcularTotal:C}";
             }
         }
         private bool ordenVacia()
@@ -348,9 +349,9 @@ namespace Punto_Venta
             else
                 return false;
         }
-        public void TicketComanda(List<(string Cantidad, string Descripcion, string Comentario)> itemsComanda)
+        public void TicketComanda(List<(string id,string Cantidad, string Descripcion, string Comentario, string ides)> itemsComanda)
         {
-
+            string RESULT = "";
             Ticket ticket = new Ticket();
             ticket.FontSize = 10;
             ticket.MaxCharDescription = 26;
@@ -385,12 +386,42 @@ namespace Punto_Venta
             }
             ticket.AddHeaderLine("MESERO:" + lblMesero.Text);
             ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-            foreach (var (cantidad, descripcion, comentario) in itemsComanda)
+            foreach (var (id,cantidad, descripcion, comentario, ide) in itemsComanda)
             {
-                //Console.WriteLine($"Cantidad: {cantidad}, Descripción: {descripcion}, Comentario: {comentario}");
                 ticket.AddItem(cantidad, descripcion +": "+ comentario, "");
-            }
+                if (id.Substring(0, 1) == "C")
+                {
+                    string[] ids = ide.Split(';');
+                    
+                    foreach (var word in ids)
+                    {
+                        string[] ids2 = word.Split(',');
+                        for (int i2 = 0; i2 < ids2.Length - 1; i2 = i2 + 2)
+                        {
+                            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                            {
+                                conectar.Open();
 
+                                string query = @"SELECT Nombre FROM Inventario WHERE IdInventario = @IdInventario";
+
+                                using (SqlCommand cmd = new SqlCommand(query, conectar))
+                                {
+                                    cmd.Parameters.AddWithValue("@IdInventario", ids2[1]);
+                                    using (SqlDataReader reader = cmd.ExecuteReader())
+                                    {
+                                        while (reader.Read())
+                                        {
+                                            ticket.AddItem(ids2[0], reader[0].ToString() + "", "");
+                                            RESULT += ids2[0] + " : " + reader[0].ToString() + "\n";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //MessageBox.Show(RESULT);
             ticket.PrintTicket(Conexion.impresora2);
         }
         private void BtnEntregar_Click(object sender, EventArgs e)
@@ -398,7 +429,7 @@ namespace Punto_Venta
             if (!ordenVacia())
             {
                 BtnEntregar.Visible = false;
-                var listado = new List<(string, string, string)>();
+                var listado = new List<(string,string, string, string, string)>();
                 using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
                     conectar.Open();
@@ -462,28 +493,43 @@ namespace Punto_Venta
                 }
                 for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
                 {
+                    string id = DgvPedidoprevio.Rows[i].Cells["Aidi"].Value.ToString();
                     string cantidad = DgvPedidoprevio.Rows[i].Cells["Cantidad"].Value.ToString();
                     string descripcion = DgvPedidoprevio.Rows[i].Cells["Prod"].Value.ToString();
                     string comentario = DgvPedidoprevio.Rows[i].Cells["Comentario"].Value.ToString();
                     string idInventario = DgvPedidoprevio.Rows[i].Cells["Aidi"].Value.ToString();
                     string totalArticulo = DgvPedidoprevio.Rows[i].Cells["Tot"].Value.ToString();
-                    listado.Add((cantidad, descripcion, comentario));
+                    string ides = DgvPedidoprevio.Rows[i].Cells["idExtra"].Value.ToString();
+                    listado.Add((id, cantidad, descripcion, comentario, ides));
                     using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                     {
                         conectar.Open();
 
-                        string insertFolioQuery = "INSERT INTO ArticulosMesa (IdInventario, Cantidad, Total,Comentario,IdMesa, IdMesero, FechaHora, Estatus) " +
-                                                  "VALUES (@IdInventario, @Cantidad, @Total, @Comentario, @IdMesa, @IdMesero, GETDATE(),@Estatus); ";
+                        string insertFolioQuery = "INSERT INTO ArticulosMesa (IdInventario, Cantidad, Total,Comentario,IdMesa, IdMesero, FechaHora, Estatus,Ids, IdPromo) " +
+                                                  "VALUES (@IdInventario, @Cantidad, @Total, @Comentario, @IdMesa, @IdMesero, GETDATE(),@Estatus, @Ids, @IdPromo); ";
 
                         using (SqlCommand cmd = new SqlCommand(insertFolioQuery, conectar))
                         {
-                            cmd.Parameters.AddWithValue("@IdInventario", idInventario);
+                            if (idInventario.Substring(0, 1) == "C")
+                            {
+                                cmd.Parameters.AddWithValue("@IdInventario", 0);
+                                cmd.Parameters.AddWithValue("@Ids", ides);
+                                cmd.Parameters.AddWithValue("@IdPromo", idInventario.Substring(1, idInventario.Length-1));
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@IdInventario", idInventario);
+                                cmd.Parameters.AddWithValue("@Ids", (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@IdPromo", (object)DBNull.Value);
+                            }
                             cmd.Parameters.AddWithValue("@Cantidad", cantidad);
                             cmd.Parameters.AddWithValue("@Total", totalArticulo);
                             cmd.Parameters.AddWithValue("@Comentario", comentario);
                             cmd.Parameters.AddWithValue("@IdMesa", idMesa);
                             cmd.Parameters.AddWithValue("@IdMesero", idMesero);
                             cmd.Parameters.AddWithValue("@Estatus", "COCINA");
+                           
+
                             cmd.ExecuteNonQuery();
                         }
                     }

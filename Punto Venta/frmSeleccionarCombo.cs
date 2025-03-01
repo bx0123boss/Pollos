@@ -17,6 +17,7 @@ namespace Punto_Venta
         private DataSet ds = new DataSet();
         SqlDataAdapter da;
         string idPromo = "";
+        string CodigoPromo = "";
         string nombrePromo = "";
         double precioPromo = 0;
         string idArtPromos = "";
@@ -69,6 +70,7 @@ namespace Punto_Venta
 
                 StringBuilder sb = new StringBuilder();
                 string id = Convert.ToString(row["IdPromo"]); 
+                string codigoPromo= Convert.ToString(row["CodigoPromo"]);
                 string nombre = row["Nombre"].ToString(); 
                 double precio = Convert.ToDouble(row["Precio"]); 
                 Button but = new Button();
@@ -80,7 +82,7 @@ namespace Punto_Venta
                 but.ForeColor = Color.FromName("White");
                 but.Size = new System.Drawing.Size(104, 56);
                 but.Text = row["Nombre"].ToString();
-                but.Tag = new Tuple<string, string, double>(id, nombre, precio);
+                but.Tag = new Tuple<string, string,string, double>(id, codigoPromo,nombre, precio);
                 sb.Append(nombre + "\n");
                 sb.Append($"Precio: ${precio} \nSe vende:");
                 sb.Append(row["Lunes"].ToString() == "1" ? " Lunes" : "");
@@ -99,15 +101,16 @@ namespace Punto_Venta
         private void botonPromos(object sender, EventArgs e)
         {
 
-            if ((sender as Button).Tag is Tuple<string, string, double> tupla)
+            if ((sender as Button).Tag is Tuple<string, string, string, double> tupla)
             {
                 idPromo = tupla.Item1;
+                CodigoPromo = tupla.Item2;
                 if (idArtPromos != idPromo)
                 {
                     dgvPromo.Rows.Clear();
                     flowLayoutPanel1.Controls.Clear();
-                    nombrePromo = tupla.Item2;
-                    precioPromo = tupla.Item3;
+                    nombrePromo = tupla.Item3;
+                    precioPromo = tupla.Item4;
                     articulosPromo(idPromo);
                     idArtPromos = idPromo;
                 }
@@ -180,7 +183,7 @@ namespace Punto_Venta
                 comparaCategorias();
                 if (todoOK())
                 {
-                    id = idPromo;
+                    id = CodigoPromo;
                     nombre = nombrePromo;
                     cantidad = lblCant.Text;
                     precio = precioPromo;
@@ -375,7 +378,7 @@ namespace Punto_Venta
                 using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
                     conectar.Open();
-                    string query = @"SELECT B.IdSubcategoria, A.Nombre, A.Precio, B.Nombre as Subcategoria 
+                    string query = @"SELECT A.IdInventario, A.Nombre, A.Precio, B.Nombre as Subcategoria 
                                         FROM Inventario A 
                                         INNER JOIN SUBCATEGORIAS B ON A.IdSubcategoria = B.IdSubcategoria
                                         WHERE B.Nombre = @Subcategoria ORDER BY Nombre;";
