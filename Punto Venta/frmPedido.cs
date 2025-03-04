@@ -564,7 +564,6 @@ namespace Punto_Venta
             tabControl1.SelectedIndex = 0;
             checkBox3.Checked = false;
             lblMesa.Text = "0";
-            idMesero = 0;
             idCliente = null;
             DgvPedidoprevio.Rows.Clear();
             LblTotal.Text = $"{RecalcularTotal:C}";

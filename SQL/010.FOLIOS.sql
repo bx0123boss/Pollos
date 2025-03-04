@@ -25,6 +25,7 @@ CREATE TABLE ArticulosFolio (
     Comentario VARCHAR(250),
     Total NUMERIC(8,2),
     IdExtra VARCHAR(25),
+	IdPromo INT
     FOREIGN KEY (IdFolio) REFERENCES Folios(IdFolio),
     FOREIGN KEY (IdInventario) REFERENCES Inventario(IdInventario) 
 );

@@ -1,12 +1,6 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
 
@@ -24,12 +18,21 @@ namespace Punto_Venta
             InitializeComponent();
             conectar.Open();
         }
+        private void frmActInventario_Load(object sender, EventArgs e)
+        {
+            ds = new DataSet();
+            da = new OleDbDataAdapter("select * from temp;", conectar);
+            da.Fill(ds, "Id");
+            dgvMesa.DataSource = ds.Tables["Id"];
+            dgvMesa.Columns[0].Visible = false;
+            dgvMesa.Columns[5].Visible = false;
 
+        }
         private void button1_Click(object sender, EventArgs e)
         {                        
                     for (int i = 0; i < dgvMesa.RowCount; i++)
                     {
-                        if (dgvMesa[6, i].Value.ToString().Length > 0)
+                        if (dgvMesa.Rows[i].Cells["Ids"].Value.ToString().Length > 0)
                         {
                             //MessageBox.Show(dgvMesa[0, i].Value.ToString().Substring(0, 1));
                             if (dgvMesa[0, i].Value.ToString().Substring(0, 1) == "C" || dgvMesa[0, i].Value.ToString().Substring(0, 1) == "P")
@@ -162,15 +165,6 @@ namespace Punto_Venta
 
 
         }
-        private void frmActInventario_Load(object sender, EventArgs e)
-        {
-            ds = new DataSet();
-            da = new OleDbDataAdapter("select * from temp;", conectar);
-            da.Fill(ds, "Id");
-            dgvMesa.DataSource = ds.Tables["Id"];
-            dgvMesa.Columns[0].Visible = false;
-            dgvMesa.Columns[5].Visible = false;
-
-        }
+       
     }
 }

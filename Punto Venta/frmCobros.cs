@@ -50,9 +50,18 @@ namespace Punto_Venta
                 DataSet ds = new DataSet();
                 string query = @"
                     SELECT 
-                    A.IdInventario, A.IdArticulosMesa, A.Cantidad,B.Nombre, B.Precio, A.Total,A.FechaHora, A.Comentario, '0' AS Ids, B.CostoTotal
+                    A.IdInventario, A.IdArticulosMesa, A.Cantidad, 
+                    CASE 
+                        WHEN A.IdInventario = 0 THEN P.Nombre 
+                        ELSE B.Nombre 
+                    END AS Nombre,
+                    CASE 
+                        WHEN A.IdInventario = 0 THEN P.Precio 
+                        ELSE B.Precio 
+                    END AS Precio, A.Total, A.Total,A.FechaHora, A.Comentario, A.Ids, B.CostoTotal, A.IdPromo
                     FROM ArticulosMesa A
                     INNER JOIN INVENTARIO B ON A.IdInventario = B.IdInventario
+                    LEFT JOIN Promos P ON A.IdPromo = P.IdPromo
                     WHERE A.IdUsuarioCancelo IS NULL 
                     AND A.Estatus = 'COCINA'
                     AND A.IdMesa = @Mesa";
@@ -87,8 +96,7 @@ namespace Punto_Venta
                 dataGridView1.Columns["Precio"].DefaultCellStyle.Format = "N2";
                 dataGridView1.Columns["Total"].DefaultCellStyle.Format = "N2";
                 dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Columns["Ids"].Visible = false;
-                dataGridView1.Columns["Ids"].Visible = false;
+                //dataGridView1.Columns["Ids"].Visible = false;
                 dataGridView1.Columns[1].Visible = false;
                 lblTotal.Text = $"{RecalcularTotal:C}";
             }
@@ -202,11 +210,17 @@ namespace Punto_Venta
                     // Ejecutar la inserción y obtener el último ID insertado
                     int lastIdFolio = Convert.ToInt32(cmd.ExecuteScalar());
 
-                    string insertArticuloQuery = "INSERT INTO ArticulosFolio (IdInventario, IdFolio, Cantidad, Comentario, Total, IdExtra) " +
-                                                  "VALUES (@IdProducto, @IdFolio, @Cantidad, @Comentario, @Total, @IdExtra);";
+                   
 
                     for (int i = 0; i < dataGridView1.RowCount; i++)
                     {
+                        string insertArticuloQuery = "INSERT INTO ArticulosFolio (IdInventario, IdFolio, Cantidad, Comentario, Total, IdExtra, IdPromo) " +
+                                                 "VALUES (@IdProducto, @IdFolio, @Cantidad, @Comentario, @Total, @IdExtra, @IdPromo);";
+                        string ide = null;
+                        if (dataGridView1.Rows[i].Cells["Ids"].Value.ToString().Length > 0)
+                        {
+                            ide = dataGridView1.Rows[i].Cells["Ids"].Value?.ToString();
+                        }
                         using (SqlCommand cmd2 = new SqlCommand(insertArticuloQuery, conectar))
                         {
                             cmd2.Parameters.AddWithValue("@IdProducto", dataGridView1.Rows[i].Cells["IdInventario"].Value);
@@ -214,7 +228,23 @@ namespace Punto_Venta
                             cmd2.Parameters.AddWithValue("@Cantidad", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Cantidad"].Value));
                             cmd2.Parameters.AddWithValue("@Comentario", dataGridView1.Rows[i].Cells["Comentario"].Value?.ToString());
                             cmd2.Parameters.AddWithValue("@Total", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Total"].Value));
-                            cmd2.Parameters.AddWithValue("@IdExtra", dataGridView1.Rows[i].Cells["Ids"].Value?.ToString());
+                            cmd2.Parameters.AddWithValue("@IdExtra", (object)ide ?? DBNull.Value);
+                            cmd2.Parameters.AddWithValue("@IdPromo",
+                                                                    dataGridView1.Rows[i].Cells["IdInventario"].Value?.ToString() == "0"
+                                                                        ? DBNull.Value
+                                                                        : (object)dataGridView1.Rows[i].Cells["IdPromo"].Value ?? DBNull.Value
+                                                                );
+                            cmd2.ExecuteNonQuery();
+                        }
+                        insertArticuloQuery = @"INSERT INTO tempInventario(id,cantidad, ide) 
+                                            values (@id, @cantidad, @ide);";
+                        using (SqlCommand cmd2 = new SqlCommand(insertArticuloQuery, conectar))
+                        {
+                            cmd2.Parameters.AddWithValue("@id", dataGridView1.Rows[i].Cells["IdInventario"].Value?.ToString() == "0" 
+                                                                                ? dataGridView1.Rows[i].Cells["IdPromo"].Value 
+                                                                                : dataGridView1.Rows[i].Cells["IdInventario"].Value);
+                            cmd2.Parameters.AddWithValue("@cantidad", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Cantidad"].Value));
+                            cmd2.Parameters.AddWithValue("@ide", (object)ide ?? DBNull.Value);
 
                             cmd2.ExecuteNonQuery();
                         }
@@ -267,6 +297,7 @@ namespace Punto_Venta
 
                         cmd2.ExecuteNonQuery();
                     }
+
                   
                 }
 
