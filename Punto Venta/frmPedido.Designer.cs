@@ -36,13 +36,18 @@
             this.label11 = new System.Windows.Forms.Label();
             this.BtnEntregar = new System.Windows.Forms.Button();
             this.DgvPedidoprevio = new System.Windows.Forms.DataGridView();
-            this.lblFolio = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.Aidi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Pre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tot = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Comentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Comanda = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idExtra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button2 = new System.Windows.Forms.Button();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.dgvMesas = new System.Windows.Forms.DataGridView();
             this.lblMesero = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.CmbMesa = new System.Windows.Forms.ComboBox();
@@ -72,26 +77,11 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.rbMesa = new System.Windows.Forms.RadioButton();
-            this.rbDomicilo = new System.Windows.Forms.RadioButton();
-            this.rbRapido = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.Aidi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Pre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tot = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Comentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Comanda = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idExtra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPedidoprevio)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMesas)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // LblTotal
@@ -99,11 +89,11 @@
             this.LblTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LblTotal.AutoSize = true;
             this.LblTotal.BackColor = System.Drawing.Color.Black;
-            this.LblTotal.Font = new System.Drawing.Font("Calibri", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblTotal.Font = new System.Drawing.Font("Microsoft JhengHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblTotal.ForeColor = System.Drawing.Color.White;
-            this.LblTotal.Location = new System.Drawing.Point(152, 508);
+            this.LblTotal.Location = new System.Drawing.Point(152, 552);
             this.LblTotal.Name = "LblTotal";
-            this.LblTotal.Size = new System.Drawing.Size(112, 49);
+            this.LblTotal.Size = new System.Drawing.Size(86, 35);
             this.LblTotal.TabIndex = 47;
             this.LblTotal.Text = "00.00";
             // 
@@ -112,11 +102,11 @@
             this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label11.AutoSize = true;
             this.label11.BackColor = System.Drawing.Color.Black;
-            this.label11.Font = new System.Drawing.Font("Calibri", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Font = new System.Drawing.Font("Microsoft JhengHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(3, 506);
+            this.label11.Location = new System.Drawing.Point(3, 550);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(143, 49);
+            this.label11.Size = new System.Drawing.Size(116, 35);
             this.label11.TabIndex = 45;
             this.label11.Text = "TOTAL: ";
             // 
@@ -124,11 +114,11 @@
             // 
             this.BtnEntregar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnEntregar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BtnEntregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.BtnEntregar.Font = new System.Drawing.Font("Microsoft JhengHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnEntregar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.BtnEntregar.Location = new System.Drawing.Point(976, 508);
+            this.BtnEntregar.Location = new System.Drawing.Point(995, 552);
             this.BtnEntregar.Name = "BtnEntregar";
-            this.BtnEntregar.Size = new System.Drawing.Size(144, 60);
+            this.BtnEntregar.Size = new System.Drawing.Size(213, 60);
             this.BtnEntregar.TabIndex = 44;
             this.BtnEntregar.Text = "ENTREGAR";
             this.BtnEntregar.UseVisualStyleBackColor = false;
@@ -177,68 +167,87 @@
             this.DgvPedidoprevio.Location = new System.Drawing.Point(612, 266);
             this.DgvPedidoprevio.Name = "DgvPedidoprevio";
             this.DgvPedidoprevio.ReadOnly = true;
-            this.DgvPedidoprevio.Size = new System.Drawing.Size(508, 233);
+            this.DgvPedidoprevio.Size = new System.Drawing.Size(596, 277);
             this.DgvPedidoprevio.TabIndex = 37;
             this.DgvPedidoprevio.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPedidoprevio_CellClick);
             // 
-            // lblFolio
+            // Aidi
             // 
-            this.lblFolio.AutoSize = true;
-            this.lblFolio.BackColor = System.Drawing.Color.White;
-            this.lblFolio.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.lblFolio.ForeColor = System.Drawing.Color.Black;
-            this.lblFolio.Location = new System.Drawing.Point(25, 210);
-            this.lblFolio.Name = "lblFolio";
-            this.lblFolio.Size = new System.Drawing.Size(64, 25);
-            this.lblFolio.TabIndex = 56;
-            this.lblFolio.Text = "label5";
-            this.lblFolio.Visible = false;
+            this.Aidi.HeaderText = "Id";
+            this.Aidi.Name = "Aidi";
+            this.Aidi.ReadOnly = true;
+            this.Aidi.Visible = false;
             // 
-            // checkBox1
+            // Cantidad
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.BackColor = System.Drawing.Color.White;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.checkBox1.Location = new System.Drawing.Point(52, 27);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(228, 26);
-            this.checkBox1.TabIndex = 63;
-            this.checkBox1.Text = "Agregar a folio existente:";
-            this.checkBox1.UseVisualStyleBackColor = false;
-            this.checkBox1.Visible = false;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.Cantidad.HeaderText = "Cant";
+            this.Cantidad.Name = "Cantidad";
+            this.Cantidad.ReadOnly = true;
+            this.Cantidad.Width = 50;
             // 
-            // checkBox2
+            // Prod
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.ForeColor = System.Drawing.Color.White;
-            this.checkBox2.Location = new System.Drawing.Point(12, 7);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(105, 28);
-            this.checkBox2.TabIndex = 66;
-            this.checkBox2.Text = "Botones";
-            this.checkBox2.UseVisualStyleBackColor = false;
-            this.checkBox2.Visible = false;
+            this.Prod.HeaderText = "Producto";
+            this.Prod.Name = "Prod";
+            this.Prod.ReadOnly = true;
+            this.Prod.Width = 125;
+            // 
+            // Pre
+            // 
+            this.Pre.HeaderText = "Precio";
+            this.Pre.Name = "Pre";
+            this.Pre.ReadOnly = true;
+            this.Pre.Width = 70;
+            // 
+            // Tot
+            // 
+            this.Tot.HeaderText = "Total";
+            this.Tot.Name = "Tot";
+            this.Tot.ReadOnly = true;
+            this.Tot.Width = 70;
+            // 
+            // btnEliminar
+            // 
+            this.btnEliminar.HeaderText = "Eliminar";
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.ReadOnly = true;
+            this.btnEliminar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnEliminar.Width = 90;
+            // 
+            // Comentario
+            // 
+            this.Comentario.HeaderText = "Comentario";
+            this.Comentario.Name = "Comentario";
+            this.Comentario.ReadOnly = true;
+            this.Comentario.Width = 150;
+            // 
+            // Comanda
+            // 
+            this.Comanda.HeaderText = "Comanda";
+            this.Comanda.Name = "Comanda";
+            this.Comanda.ReadOnly = true;
+            this.Comanda.Visible = false;
+            // 
+            // idExtra
+            // 
+            this.idExtra.HeaderText = "idExtra";
+            this.idExtra.Name = "idExtra";
+            this.idExtra.ReadOnly = true;
+            this.idExtra.Visible = false;
             // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.button2.Font = new System.Drawing.Font("Microsoft JhengHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button2.Location = new System.Drawing.Point(901, 508);
+            this.button2.Location = new System.Drawing.Point(920, 552);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(69, 60);
             this.button2.TabIndex = 59;
             this.button2.Text = "X";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // printDocument1
-            // 
-            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
             // printPreviewDialog1
             // 
@@ -249,18 +258,6 @@
             this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
-            // 
-            // dgvMesas
-            // 
-            this.dgvMesas.AllowUserToAddRows = false;
-            this.dgvMesas.AllowUserToDeleteRows = false;
-            this.dgvMesas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMesas.Location = new System.Drawing.Point(399, 92);
-            this.dgvMesas.Name = "dgvMesas";
-            this.dgvMesas.ReadOnly = true;
-            this.dgvMesas.Size = new System.Drawing.Size(42, 20);
-            this.dgvMesas.TabIndex = 75;
-            this.dgvMesas.Visible = false;
             // 
             // lblMesero
             // 
@@ -303,9 +300,9 @@
             this.flpCategorias.AutoScroll = true;
             this.flpCategorias.BackColor = System.Drawing.Color.Black;
             this.flpCategorias.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.flpCategorias.Location = new System.Drawing.Point(384, 8);
+            this.flpCategorias.Location = new System.Drawing.Point(388, 8);
             this.flpCategorias.Name = "flpCategorias";
-            this.flpCategorias.Size = new System.Drawing.Size(738, 247);
+            this.flpCategorias.Size = new System.Drawing.Size(826, 247);
             this.flpCategorias.TabIndex = 1;
             // 
             // flpInventario
@@ -317,7 +314,7 @@
             this.flpInventario.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.flpInventario.Location = new System.Drawing.Point(12, 266);
             this.flpInventario.Name = "flpInventario";
-            this.flpInventario.Size = new System.Drawing.Size(594, 234);
+            this.flpInventario.Size = new System.Drawing.Size(594, 278);
             this.flpInventario.TabIndex = 0;
             // 
             // Id
@@ -481,7 +478,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 8);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(370, 166);
@@ -599,144 +596,19 @@
             this.label1.TabIndex = 46;
             this.label1.Text = "PEDIDO PARA LLEVAR";
             // 
-            // rbMesa
-            // 
-            this.rbMesa.AutoSize = true;
-            this.rbMesa.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.rbMesa.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.rbMesa.ForeColor = System.Drawing.SystemColors.Control;
-            this.rbMesa.Location = new System.Drawing.Point(255, 24);
-            this.rbMesa.Name = "rbMesa";
-            this.rbMesa.Size = new System.Drawing.Size(88, 29);
-            this.rbMesa.TabIndex = 27;
-            this.rbMesa.TabStop = true;
-            this.rbMesa.Text = "MESA";
-            this.rbMesa.UseVisualStyleBackColor = false;
-            // 
-            // rbDomicilo
-            // 
-            this.rbDomicilo.AutoSize = true;
-            this.rbDomicilo.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.rbDomicilo.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbDomicilo.ForeColor = System.Drawing.SystemColors.Control;
-            this.rbDomicilo.Location = new System.Drawing.Point(119, 23);
-            this.rbDomicilo.Name = "rbDomicilo";
-            this.rbDomicilo.Size = new System.Drawing.Size(134, 29);
-            this.rbDomicilo.TabIndex = 26;
-            this.rbDomicilo.Text = "DOMICILIO";
-            this.rbDomicilo.UseVisualStyleBackColor = false;
-            // 
-            // rbRapido
-            // 
-            this.rbRapido.AutoSize = true;
-            this.rbRapido.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.rbRapido.Checked = true;
-            this.rbRapido.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.rbRapido.ForeColor = System.Drawing.SystemColors.Control;
-            this.rbRapido.Location = new System.Drawing.Point(12, 24);
-            this.rbRapido.Name = "rbRapido";
-            this.rbRapido.Size = new System.Drawing.Size(105, 29);
-            this.rbRapido.TabIndex = 25;
-            this.rbRapido.TabStop = true;
-            this.rbRapido.Text = "RAPIDO";
-            this.rbRapido.UseVisualStyleBackColor = false;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.BackColor = System.Drawing.Color.Black;
-            this.groupBox1.Controls.Add(this.rbRapido);
-            this.groupBox1.Controls.Add(this.rbDomicilo);
-            this.groupBox1.Controls.Add(this.rbMesa);
-            this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(12, 5);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(332, 73);
-            this.groupBox1.TabIndex = 50;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "DESTINO VENTA";
-            this.groupBox1.Visible = false;
-            // 
-            // Aidi
-            // 
-            this.Aidi.HeaderText = "Id";
-            this.Aidi.Name = "Aidi";
-            this.Aidi.ReadOnly = true;
-            // 
-            // Cantidad
-            // 
-            this.Cantidad.HeaderText = "Cant";
-            this.Cantidad.Name = "Cantidad";
-            this.Cantidad.ReadOnly = true;
-            this.Cantidad.Width = 50;
-            // 
-            // Prod
-            // 
-            this.Prod.HeaderText = "Producto";
-            this.Prod.Name = "Prod";
-            this.Prod.ReadOnly = true;
-            this.Prod.Width = 125;
-            // 
-            // Pre
-            // 
-            this.Pre.HeaderText = "Precio";
-            this.Pre.Name = "Pre";
-            this.Pre.ReadOnly = true;
-            this.Pre.Width = 70;
-            // 
-            // Tot
-            // 
-            this.Tot.HeaderText = "Total";
-            this.Tot.Name = "Tot";
-            this.Tot.ReadOnly = true;
-            this.Tot.Width = 70;
-            // 
-            // btnEliminar
-            // 
-            this.btnEliminar.HeaderText = "Eliminar";
-            this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.ReadOnly = true;
-            this.btnEliminar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.btnEliminar.Width = 90;
-            // 
-            // Comentario
-            // 
-            this.Comentario.HeaderText = "Comentario";
-            this.Comentario.Name = "Comentario";
-            this.Comentario.ReadOnly = true;
-            this.Comentario.Width = 150;
-            // 
-            // Comanda
-            // 
-            this.Comanda.HeaderText = "Comanda";
-            this.Comanda.Name = "Comanda";
-            this.Comanda.ReadOnly = true;
-            this.Comanda.Visible = false;
-            // 
-            // idExtra
-            // 
-            this.idExtra.HeaderText = "idExtra";
-            this.idExtra.Name = "idExtra";
-            this.idExtra.ReadOnly = true;
-            this.idExtra.Visible = false;
-            // 
             // frmPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1134, 575);
+            this.ClientSize = new System.Drawing.Size(1222, 619);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.flpCategorias);
-            this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.DgvPedidoprevio);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.lblFolio);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.LblTotal);
             this.Controls.Add(this.BtnEntregar);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.dgvMesas);
             this.Controls.Add(this.flpInventario);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmPedido";
@@ -744,7 +616,6 @@
             this.Text = "Pedido";
             this.Load += new System.EventHandler(this.frmPedido_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DgvPedidoprevio)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMesas)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -752,8 +623,6 @@
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -765,13 +634,9 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button BtnEntregar;
         public System.Windows.Forms.DataGridView DgvPedidoprevio;
-        private System.Windows.Forms.Label lblFolio;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Button button2;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
-        private System.Windows.Forms.DataGridView dgvMesas;
         private System.Windows.Forms.Label lblMesero;
         private System.Windows.Forms.Label label15;
         public System.Windows.Forms.ComboBox CmbMesa;
@@ -796,10 +661,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.RadioButton rbMesa;
-        private System.Windows.Forms.RadioButton rbDomicilo;
-        private System.Windows.Forms.RadioButton rbRapido;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblMesa;

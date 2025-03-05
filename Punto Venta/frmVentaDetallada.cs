@@ -35,9 +35,18 @@ namespace Punto_Venta
             {
                 conectar.Open();
                 DataSet ds = new DataSet();
-                string query = @"SELECT A.IdArticulosFolio, A.Cantidad, B.Nombre, B.Precio, A.Total, A.Comentario 
+                string query = @"SELECT A.IdArticulosFolio, A.Cantidad,
+                                CASE 
+                                    WHEN A.IdInventario = 0 THEN P.Nombre 
+                                    ELSE B.Nombre 
+                                END AS Nombre,
+                                CASE 
+                                    WHEN A.IdInventario = 0 THEN P.Precio 
+                                    ELSE B.Precio 
+                                END AS Precio, A.Total, A.Comentario 
                                 FROM ArticulosFolio A
                                 INNER JOIN INVENTARIO B ON A.IdInventario = B.IdInventario
+                                LEFT JOIN Promos P ON A.IdPromo = P.IdPromo
                                 WHERE IdFolio = @Folio;";
 
                 using (SqlDataAdapter da = new SqlDataAdapter(query, conectar))

@@ -7,7 +7,7 @@ namespace Punto_Venta
         static string nombrePC = Environment.MachineName;
 
         public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Jaeger Soft\FastFood.accdb; Jet OLEDB:Database Password=yolo1234@";
-        public static string CadConSql = $@"Server={nombrePC}\SQLEXPRESS;Database=FastFood;Integrated Security=True;";
+        public static string CadConSql = $@"Server={nombrePC}\SQLEXPRESS;Database=FastFood;Integrated Security=True;MultipleActiveResultSets=True;";
 
         //public static string CadConSql = @"Server=DESKTOP-UCR1IUV\SQLEXPRESS;Database=FastFood;Integrated Security=True;";
         //public static string CadConSql = @"Server=BRANDON-PC\SQLEXPRESS;Database=FastFood;Integrated Security=True;";

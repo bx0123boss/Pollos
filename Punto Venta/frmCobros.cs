@@ -49,19 +49,39 @@ namespace Punto_Venta
                 conectar.Open();
                 DataSet ds = new DataSet();
                 string query = @"
-                    SELECT 
-                    A.IdInventario, A.IdArticulosMesa, A.Cantidad, 
-                    CASE 
-                        WHEN A.IdInventario = 0 THEN P.Nombre 
-                        ELSE B.Nombre 
-                    END AS Nombre,
-                    CASE 
-                        WHEN A.IdInventario = 0 THEN P.Precio 
-                        ELSE B.Precio 
-                    END AS Precio, A.Total, A.Total,A.FechaHora, A.Comentario, A.Ids, B.CostoTotal, A.IdPromo
+                   SELECT 
+                        A.IdInventario, 
+                        A.IdArticulosMesa, 
+                        A.Cantidad, 
+                        CASE 
+                            WHEN A.IdInventario = 0 THEN P.Nombre 
+                            ELSE B.Nombre 
+                        END AS Nombre,
+                        CASE 
+                            WHEN A.IdInventario = 0 THEN P.Precio 
+                            ELSE B.Precio 
+                        END AS Precio, 
+                        A.Total,
+                        A.FechaHora, 
+                        A.Comentario, 
+                        A.Ids, 
+                        CASE 
+                            WHEN A.Ids IS NOT NULL THEN ISNULL(SumCostoTotal.SumCosto, 0) -- Usar la sumatoria calculada
+                            ELSE B.CostoTotal -- Usar el CostoTotal normal
+                        END AS CostoTotal, 
+                        A.IdPromo
                     FROM ArticulosMesa A
                     INNER JOIN INVENTARIO B ON A.IdInventario = B.IdInventario
                     LEFT JOIN Promos P ON A.IdPromo = P.IdPromo
+                    OUTER APPLY (
+                        -- Extraer IdProducto desde A.Ids y calcular la sumatoria de CostoTotal
+                        SELECT SUM(I.CostoTotal) AS SumCosto
+                        FROM dbo.SplitString(A.Ids, ';') S
+                        CROSS APPLY (
+                            SELECT CAST(SUBSTRING(S.Value, CHARINDEX(',', S.Value) + 1, LEN(S.Value)) AS INT) AS IdProducto
+                        ) AS Productos
+                        INNER JOIN INVENTARIO I ON Productos.IdProducto = I.IdInventario
+                    ) AS SumCostoTotal
                     WHERE A.IdUsuarioCancelo IS NULL 
                     AND A.Estatus = 'COCINA'
                     AND A.IdMesa = @Mesa";
@@ -96,7 +116,9 @@ namespace Punto_Venta
                 dataGridView1.Columns["Precio"].DefaultCellStyle.Format = "N2";
                 dataGridView1.Columns["Total"].DefaultCellStyle.Format = "N2";
                 dataGridView1.Columns[0].Visible = false;
-                //dataGridView1.Columns["Ids"].Visible = false;
+                dataGridView1.Columns["Ids"].Visible = false;
+                dataGridView1.Columns["IdPromo"].Visible = false;
+                dataGridView1.Columns["CostoTotal"].Visible = false;
                 dataGridView1.Columns[1].Visible = false;
                 lblTotal.Text = $"{RecalcularTotal:C}";
             }
@@ -231,8 +253,8 @@ namespace Punto_Venta
                             cmd2.Parameters.AddWithValue("@IdExtra", (object)ide ?? DBNull.Value);
                             cmd2.Parameters.AddWithValue("@IdPromo",
                                                                     dataGridView1.Rows[i].Cells["IdInventario"].Value?.ToString() == "0"
-                                                                        ? DBNull.Value
-                                                                        : (object)dataGridView1.Rows[i].Cells["IdPromo"].Value ?? DBNull.Value
+                                                                        ? (object)dataGridView1.Rows[i].Cells["IdPromo"].Value ?? DBNull.Value
+                                                                        : DBNull.Value
                                                                 );
                             cmd2.ExecuteNonQuery();
                         }

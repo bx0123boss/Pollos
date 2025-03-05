@@ -358,8 +358,6 @@ namespace Punto_Venta
             //Llevar
             if (tabControl1.SelectedIndex == 2)
             {
-                ticket.AddHeaderLine("Folio: " + lblFolio.Text);
-                ticket.AddHeaderLine(" ");
                 ticket.AddHeaderLine("****PARA LLEVAR****");
                 ticket.AddHeaderLine(" ");
                 ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
@@ -377,10 +375,7 @@ namespace Punto_Venta
             //domicilio
             else if (tabControl1.SelectedIndex == 1)
             {
-                ticket.AddHeaderLine("Folio: " + lblFolio.Text);
-                ticket.AddHeaderLine(" ");
                 ticket.AddHeaderLine("****ENTREGA A DOMICILIO****");
-                ticket.AddHeaderLine("Folio: " + lblFolio.Text);
                 ticket.AddHeaderLine("Cliente: " + LblNombre.Text);
                 //domicilio();
             }
@@ -560,6 +555,14 @@ namespace Punto_Venta
         }
         private void ReiniciarForm()
         {
+            #region domicilio
+            lblColonia.Text = "";
+            LblTelefono.Text = "";
+            LblDomicilio.Text = "";
+            LblReferencia.Text = "";
+            LblNombre.Text = "";
+            idCliente = "0";
+            #endregion
             BtnEntregar.Visible = true;
             tabControl1.SelectedIndex = 0;
             checkBox3.Checked = false;
@@ -598,134 +601,6 @@ namespace Punto_Venta
             {
                 DgvPedidoprevio.Rows.RemoveAt(DgvPedidoprevio.CurrentRow.Index);
                 LblTotal.Text = $"{RecalcularTotal:C}";
-            }
-        }
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox1.Checked)
-            {
-                lblFolio.Visible = false;
-                groupBox1.Visible = false;
-            }
-            else
-            {
-                lblFolio.Visible = true;
-                groupBox1.Visible = true;
-            }
-        }
-        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
-        {
-            if (tabControl1.SelectedIndex == 1)
-            {
-                int posicion = 10;
-                //RESIZE
-                Image logo = Image.FromFile("C:\\Jaeger Soft\\logo.jpg");
-                e.Graphics.DrawImage(logo, new PointF(1, 10));
-                //LOGO
-                posicion += 180;
-                e.Graphics.DrawString("********  NOTA DE CONSUMO  ********", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 20;
-                e.Graphics.DrawString("Cliente: " + LblNombre.Text, new Font("Arial", 8, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 20;
-                e.Graphics.DrawString("Telefono: " + LblTelefono.Text, new Font("Arial", 8, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 20;
-                e.Graphics.DrawString("Domicilio: " + LblDomicilio.Text, new Font("Arial", 8, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 20;
-                e.Graphics.DrawString("Referencia: " + LblReferencia.Text, new Font("Arial", 8, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 20;
-                e.Graphics.DrawString("FOLIO DE VENTA: " + lblFolio.Text, new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 20;
-                e.Graphics.DrawString("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 50;
-                //Titulo Columna
-                e.Graphics.DrawString("Cant   Producto        P.Unit  Importe", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 20;
-                e.Graphics.DrawLine(new Pen(Color.Black), 1, posicion, 420, posicion);
-                posicion += 10;
-                //Lista de Productos
-                StringFormat sf = new StringFormat();
-                sf.Alignment = StringAlignment.Far;
-                for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
-                {
-
-                    double precio = Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
-                    string producto = DgvPedidoprevio[2, i].Value.ToString();
-                    double cant = Convert.ToDouble(DgvPedidoprevio[1, i].Value.ToString());
-                    string item = cant.ToString("0.00", CultureInfo.InvariantCulture);
-                    string pre = precio.ToString("00.00", CultureInfo.InvariantCulture);
-                    double precioUni = Convert.ToDouble(DgvPedidoprevio[3, i].Value.ToString());
-                    string uni = precioUni.ToString("00.00", CultureInfo.InvariantCulture);
-                    if (producto.Length > 15)
-                    {
-                        producto = producto.Substring(0, 15);
-                    }
-
-                    e.Graphics.DrawString(item, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(1, posicion));
-                    e.Graphics.DrawString(producto, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(40, posicion));
-                    e.Graphics.DrawString(uni, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(210, posicion), sf);
-                    e.Graphics.DrawString(String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", precio), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(280, posicion), sf);
-                    posicion += 20;
-                }
-                double to = Convert.ToDouble(LblTotal.Text);
-                string toty = String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", to);
-                e.Graphics.DrawLine(new Pen(Color.Black), 210, posicion + 10, 420, posicion + 10);
-
-                posicion += 15;
-                e.Graphics.DrawString("TOTAL: $" + toty, new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new Point(280, posicion), sf);
-                posicion += 50;
-                e.Graphics.DrawLine(new Pen(Color.Black), 1, posicion, 2, posicion);
-            }
-            if (tabControl1.SelectedIndex == 2)
-            {
-                int posicion = 10;
-                //RESIZE
-                Image logo = Image.FromFile("C:\\Jaeger Soft\\logo.jpg");
-                e.Graphics.DrawImage(logo, new PointF(1, 10));
-                //LOGO
-                posicion += 200;
-                e.Graphics.DrawString("********  NOTA DE CONSUMO  ********", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 20;
-                e.Graphics.DrawString("FOLIO DE VENTA: " + lblFolio.Text, new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 20;
-                e.Graphics.DrawString("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 50;
-                //Titulo Columna
-                e.Graphics.DrawString("Cant   Producto        P.Unit  Importe", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
-                posicion += 20;
-                e.Graphics.DrawLine(new Pen(Color.Black), 1, posicion, 420, posicion);
-                posicion += 10;
-                //Lista de Productos
-                StringFormat sf = new StringFormat();
-                sf.Alignment = StringAlignment.Far;
-                for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
-                {
-
-                    double precio = Convert.ToDouble(DgvPedidoprevio[4, i].Value.ToString());
-                    string producto = DgvPedidoprevio[2, i].Value.ToString();
-                    double cant = Convert.ToDouble(DgvPedidoprevio[1, i].Value.ToString());
-                    string item = cant.ToString("0.00", CultureInfo.InvariantCulture);
-                    string pre = precio.ToString("00.00", CultureInfo.InvariantCulture);
-                    double precioUni = Convert.ToDouble(DgvPedidoprevio[3, i].Value.ToString());
-                    string uni = precioUni.ToString("00.00", CultureInfo.InvariantCulture);
-                    if (producto.Length > 15)
-                    {
-                        producto = producto.Substring(0, 15);
-                    }
-
-                    e.Graphics.DrawString(item, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(1, posicion));
-                    e.Graphics.DrawString(producto, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(40, posicion));
-                    e.Graphics.DrawString(uni, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(210, posicion), sf);
-                    e.Graphics.DrawString(String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", precio), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(280, posicion), sf);
-                    posicion += 20;
-                }
-                double to = Convert.ToDouble(LblTotal.Text);
-                string toty = String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", to);
-                e.Graphics.DrawLine(new Pen(Color.Black), 210, posicion + 10, 420, posicion + 10);
-
-                posicion += 15;
-                e.Graphics.DrawString("TOTAL: $" + toty, new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new Point(280, posicion), sf);
-                posicion += 50;
-                e.Graphics.DrawLine(new Pen(Color.Black), 1, posicion, 2, posicion);
             }
         }
         private void DgvPedidoprevio_CellClick(object sender, DataGridViewCellEventArgs e)

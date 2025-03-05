@@ -3,7 +3,7 @@ IF OBJECT_ID('tempInventario', 'U') IS NOT NULL
 	--(id,cantidad, producto, precio, total,ide)
 CREATE TABLE tempInventario (
 	IdTempInventario INT IDENTITY(1,1) PRIMARY KEY,
-    id INT,
+    id VARCHAR (30),
 	cantidad numeric (17,5),
 	ide VARCHAR (30)
 );
