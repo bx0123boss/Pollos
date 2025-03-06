@@ -14,10 +14,11 @@ namespace Punto_Venta
 
         private void frmMesasOcupadas_Load(object sender, EventArgs e)
         {
-            cargarMesas();
+            CargarMesas();
         }
-        public void cargarMesas()
+        public void CargarMesas()
         {
+            flowBotones.Controls.Clear();
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
@@ -108,26 +109,24 @@ namespace Punto_Venta
                     frm.BringToFront();
                 }
             }
-            if (abierto)
+            if (!abierto)
             {
-
-            }
-            else
-            {
-                frmCobros cobrar = new frmCobros();
-                cobrar.lblID.Text = data.Id;
-                cobrar.lblMesa.Text = (sender as Button).Text;
-                cobrar.lblMesero.Text = data.Mesero;
-                cobrar.idMesero = int.Parse(data.IdMesero);
-                cobrar.print = data.Impresion == "True" ? "1" : "0";
-                if (boton.BackColor == Color.SkyBlue)
-                    cobrar.lblPersonas.Text = data.CantPersonas;
-                else
-                    cobrar.idCliente = data.IdCliente;
-                this.Close();
-                cobrar.ShowDialog();
-               
-            
+                using (frmCobros cobrar = new frmCobros())
+                {
+                    cobrar.lblID.Text = data.Id;
+                    cobrar.lblMesa.Text = (sender as Button).Text;
+                    cobrar.lblMesero.Text = data.Mesero;
+                    cobrar.idMesero = int.Parse(data.IdMesero);
+                    cobrar.print = data.Impresion == "True" ? "1" : "0";
+                    if (boton.BackColor == Color.SkyBlue)
+                        cobrar.lblPersonas.Text = data.CantPersonas;
+                    else
+                        cobrar.idCliente = data.IdCliente;
+                    if (cobrar.ShowDialog() == DialogResult.OK)
+                    {
+                        CargarMesas();
+                    }
+                }
             }
 
 

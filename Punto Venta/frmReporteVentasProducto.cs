@@ -30,14 +30,25 @@ namespace Punto_Venta
                 conectar.Open();
                 DataSet ds = new DataSet();
                 string query = @"SELECT TOP 100 
-                                    Sum(A.Cantidad) AS CantidadVendidos, 
-                                    C.Nombre, Sum(A.Total) AS SumaDeTotal 
+                                   Sum(A.Cantidad) AS CantidadVendidos, 
+									CASE
+                                     WHEN A.IdInventario = 0 THEN P.Nombre 
+									 ELSE C.Nombre 
+									 END AS Nombre,
+									 CASE 
+										 WHEN A.IdInventario = 0 THEN P.Precio 
+										 ELSE C.Precio 
+									 END AS Precio,
+									Sum(A.Total) AS Total 
                                     from ArticulosFolio A
                                     INNER JOIN Folios B ON A.IdFolio = B.IdFolio
                                     INNER JOIN INVENTARIO C ON C.IdInventario = A.IdInventario
+									LEFT JOIN Promos P ON A.IdPromo = P.IdPromo
                                     WHERE 
                                     B.Estatus = 'COBRADO' 
-                                   AND FechaHora >= @StartDate AND FechaHora <= @EndDate GROUP BY A.IdInventario, C.Nombre;";
+									
+                                   AND FechaHora >= @StartDate AND FechaHora <= @EndDate 
+                                   GROUP BY A.IdInventario, C.Nombre,P.Nombre, P.Precio, C.Precio;";
 
                 using (SqlDataAdapter da = new SqlDataAdapter(query, conectar))
                 {
@@ -57,14 +68,25 @@ namespace Punto_Venta
                 conectar.Open();
                 DataSet ds = new DataSet();
                 string query = @"SELECT TOP 100 
-                                    Sum(A.Cantidad) AS CantidadVendidos, 
-                                    C.Nombre, Sum(A.Total) AS SumaDeTotal 
+                                   Sum(A.Cantidad) AS CantidadVendidos, 
+									CASE
+                                     WHEN A.IdInventario = 0 THEN P.Nombre 
+									 ELSE C.Nombre 
+									 END AS Nombre,
+									 CASE 
+										 WHEN A.IdInventario = 0 THEN P.Precio 
+										 ELSE C.Precio 
+									 END AS Precio,
+									Sum(A.Total) AS Total 
                                     from ArticulosFolio A
                                     INNER JOIN Folios B ON A.IdFolio = B.IdFolio
                                     INNER JOIN INVENTARIO C ON C.IdInventario = A.IdInventario
+									LEFT JOIN Promos P ON A.IdPromo = P.IdPromo
                                     WHERE 
                                     B.Estatus = 'COBRADO' 
-                                   AND FechaHora >= @StartDate AND FechaHora <= @EndDate GROUP BY A.IdInventario, C.Nombre;";
+									
+                                   AND FechaHora >= @StartDate AND FechaHora <= @EndDate 
+                                   GROUP BY A.IdInventario, C.Nombre,P.Nombre, P.Precio, C.Precio;";
 
                 using (SqlDataAdapter da = new SqlDataAdapter(query, conectar))
                 {

@@ -21,7 +21,7 @@ namespace Punto_Venta
         public double total, utilidad;
         public string usuario = "";
         public string IdMesa;
-        public string idCliente ="0";
+        public string idCliente = "0";
 
         public frmVentaDetallada()
         {
@@ -35,7 +35,7 @@ namespace Punto_Venta
             {
                 conectar.Open();
                 DataSet ds = new DataSet();
-                string query = @"SELECT A.IdArticulosFolio, A.Cantidad,
+                string query = @"SELECT A.IdInventario, A.IdArticulosFolio, A.Cantidad,
                                 CASE 
                                     WHEN A.IdInventario = 0 THEN P.Nombre 
                                     ELSE B.Nombre 
@@ -43,7 +43,7 @@ namespace Punto_Venta
                                 CASE 
                                     WHEN A.IdInventario = 0 THEN P.Precio 
                                     ELSE B.Precio 
-                                END AS Precio, A.Total, A.Comentario 
+                                END AS Precio, A.Total, A.Comentario , A.IdExtra as Ids, A.IdPromo
                                 FROM ArticulosFolio A
                                 INNER JOIN INVENTARIO B ON A.IdInventario = B.IdInventario
                                 LEFT JOIN Promos P ON A.IdPromo = P.IdPromo
@@ -55,6 +55,9 @@ namespace Punto_Venta
                     da.Fill(ds, "IdFolio");
                     dataGridView1.DataSource = ds.Tables["IdFolio"];
                     dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns["IdArticulosFolio"].Visible = false;
+                    dataGridView1.Columns["Ids"].Visible = false;
+                    dataGridView1.Columns["IdPromo"].Visible = false;
                 }
                 if (idCliente != "0")
                 {
@@ -118,8 +121,6 @@ namespace Punto_Venta
             ticket.AddTotal("TOTAL", String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", lblMonto.Text));
             ticket.AddFooterLine("  ¡GRACIAS POR SU PREFERENCIA!");
             ticket.PrintTicket("print");
-            //ticket.PrintTicket("print");
-            //ticket.PrintTicket("EPSON TM-T20II Receipt");
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -172,10 +173,9 @@ namespace Punto_Venta
                         cmd2.ExecuteNonQuery();
                     }
 
-                    using (SqlCommand cmd2 = new SqlCommand("UPDATE folios set Estatus='CANCELADO' Where IdFolio = @IdFolio;", conectar))
+                    using (SqlCommand cmd2 = new SqlCommand("UPDATE Folios set Estatus='CANCELADO', Utilidad = 0 Where IdFolio = @IdFolio;", conectar))
                     {
                         cmd2.Parameters.AddWithValue("@IdFolio", lblFolio.Text);
-
                         cmd2.ExecuteNonQuery();
                     }
                     using (SqlCommand cmd2 = new SqlCommand("UPDATE Usuarios SET Ventas = @Ventas, Mesas = @Mesas WHERE IdUsuario = @IdMesero;", conectar))
@@ -198,13 +198,31 @@ namespace Punto_Venta
 
                         cmd2.ExecuteNonQuery();
                     }
+                    for (int i = 0; i < dataGridView1.RowCount; i++)
+                    {
+                        string ide = null;
+                        if (dataGridView1.Rows[i].Cells["Ids"].Value.ToString().Length > 0)
+                        {
+                            ide = dataGridView1.Rows[i].Cells["Ids"].Value?.ToString();
+                        }
+                        string insertArticuloQuery = @"INSERT INTO tempInventario(id,cantidad, ide) 
+                                            values (@id, @cantidad, @ide);";
+                        using (SqlCommand cmd2 = new SqlCommand(insertArticuloQuery, conectar))
+                        {
+                            cmd2.Parameters.AddWithValue("@id", dataGridView1.Rows[i].Cells["IdInventario"].Value?.ToString() == "0"
+                                                                                ? dataGridView1.Rows[i].Cells["IdPromo"].Value
+                                                                                : dataGridView1.Rows[i].Cells["IdInventario"].Value);
+                            cmd2.Parameters.AddWithValue("@cantidad", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Cantidad"].Value) * -1);
+                            cmd2.Parameters.AddWithValue("@ide", (object)ide ?? DBNull.Value);
+
+                            cmd2.ExecuteNonQuery();
+                        }
+                    }
 
 
                 }
-
             }
             MessageBox.Show("ORDEN CANCELADA CON EXITO", "Comanda General", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-
             this.Close();
         }
     }

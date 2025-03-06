@@ -210,7 +210,6 @@
             this.checkBox1.TabIndex = 11;
             this.checkBox1.Text = "PAGO CON TARJETA";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Visible = false;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // dataGridView1

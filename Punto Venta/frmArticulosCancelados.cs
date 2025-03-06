@@ -32,11 +32,19 @@ namespace Punto_Venta
                 DataSet ds = new DataSet();
                 string query = @"SELECT 
                                     A.Cantidad, 
-                                    C.Nombre AS Producto,
+                                    CASE 
+                                    WHEN A.IdInventario = 0 THEN P.Nombre 
+                                    ELSE C.Nombre 
+                                    END AS Nombre,
+                                    CASE 
+                                        WHEN A.IdInventario = 0 THEN P.Precio 
+                                        ELSE C.Precio 
+                                    END AS Precio,
                                     A.Total,
                                     B.Usuario AS Mesero,
                                     A.Comentario
                                     from ArticulosMesa A
+									 LEFT JOIN Promos P ON A.IdPromo = P.IdPromo
                                     LEFT JOIN USUARIOS B ON B.IdUsuario  =A.IdUsuarioCancelo
                                     INNER JOIN INVENTARIO C ON C.IdInventario = A.IdInventario
                                     WHERE A.Estatus = 'CANCELADO'
@@ -61,11 +69,19 @@ namespace Punto_Venta
                 DataSet ds = new DataSet();
                 string query = @"SELECT 
                                     A.Cantidad, 
-                                    C.Nombre AS Producto,
+                                    CASE 
+                                    WHEN A.IdInventario = 0 THEN P.Nombre 
+                                    ELSE C.Nombre 
+                                    END AS Nombre,
+                                    CASE 
+                                        WHEN A.IdInventario = 0 THEN P.Precio 
+                                        ELSE C.Precio 
+                                    END AS Precio,
                                     A.Total,
                                     B.Usuario AS Mesero,
                                     A.Comentario
                                     from ArticulosMesa A
+									 LEFT JOIN Promos P ON A.IdPromo = P.IdPromo
                                     LEFT JOIN USUARIOS B ON B.IdUsuario  =A.IdUsuarioCancelo
                                     INNER JOIN INVENTARIO C ON C.IdInventario = A.IdInventario
                                     WHERE A.Estatus = 'CANCELADO'

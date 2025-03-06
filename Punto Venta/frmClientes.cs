@@ -135,6 +135,7 @@ namespace Punto_Venta
                 add.txtTelefono.Text = dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString();
                 add.txtDireccion.Text = dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString();
                 add.txtReferencia.Text = dataGridView1[4, dataGridView1.CurrentRow.Index].Value.ToString();
+                add.txtColonia.Text = dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString();
                 if (add.ShowDialog() == DialogResult.OK)
                 {
                     using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))

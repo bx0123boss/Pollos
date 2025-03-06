@@ -325,7 +325,7 @@ namespace Punto_Venta
 
 
             }
-            if (print == "1")
+            if (print == "0")
                 imprimir();
             DialogResult dialogResult = MessageBox.Show("¿Imprimir otro ticket?", "Alto!", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
@@ -335,7 +335,8 @@ namespace Punto_Venta
             MessageBox.Show("EL COBRO SE HA REALIZADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
             //frmMesasOcupadas mesa = new frmMesasOcupadas();
             //mesa.Show();
-            this.Close();
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            //this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
