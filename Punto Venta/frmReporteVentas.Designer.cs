@@ -49,6 +49,7 @@
             this.label1.Size = new System.Drawing.Size(265, 24);
             this.label1.TabIndex = 7;
             this.label1.Text = "Elegir Fecha de busqueda:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // dateTimePicker1
             // 

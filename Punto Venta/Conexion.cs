@@ -7,6 +7,7 @@ namespace Punto_Venta
         static string nombrePC = Environment.MachineName;
 
         public static string CadCon = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Jaeger Soft\FastFood.accdb; Jet OLEDB:Database Password=yolo1234@";
+        public static string CadConRestaurantSoft = $@"Server={nombrePC}\SQLEXPRESS;Database=softrestaurant10;Integrated Security=True;MultipleActiveResultSets=True;";
         public static string CadConSql = $@"Server={nombrePC}\SQLEXPRESS;Database=FastFood;Integrated Security=True;MultipleActiveResultSets=True;";
 
         //public static string CadConSql = @"Server=DESKTOP-UCR1IUV\SQLEXPRESS;Database=FastFood;Integrated Security=True;";
@@ -30,7 +31,7 @@ namespace Punto_Venta
 
 
         //public static string empresa = "CAZADORES";
-        public static string empresa = "CERQUITA";
+        public static string empresa = "PLAYA";
         public static string[] datosTicket = new string[] { "PIZZAS ANGELOTTI", "", "", "" };
         public static string[] pieDeTicket = new string[] { "   *GRACIAS POR SU PREFERENCIA*", "            Visitanos en Facebook:", "Pizzas Angelotti" };
         public static string Font = "";

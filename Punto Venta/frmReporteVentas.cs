@@ -112,5 +112,14 @@ namespace Punto_Venta
             art.Show();
             this.Close();
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            if(Conexion.empresa == "PLAYA")
+            {
+                frmAjustarFolios ajustar = new frmAjustarFolios();
+                ajustar.ShowDialog();
+            }
+        }
     }
 }

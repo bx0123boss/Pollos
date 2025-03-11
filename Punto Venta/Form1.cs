@@ -274,5 +274,31 @@ namespace Punto_Venta
 
             }
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            string[] encabezados = new string[] { "PIZZAS ANGELOTTI", "", "", "" };
+            string[] pieDePagina = new string[] { "   *GRACIAS POR SU PREFERENCIA*", "            Visitanos en Facebook:", "Pizzas Angelotti" };
+            string logoPath = @"C:\Jaeger Soft\logo.jpg";
+
+            List<Producto> productos = new List<Producto>
+            {
+                new Producto { Nombre = "Pizza Margarita", Cantidad = 1, PrecioUnitario = 10.50, Total = 10.50 },
+                new Producto { Nombre = "Refresco", Cantidad = 2, PrecioUnitario = 1.50, Total = 3.00 }
+            };
+
+            string folio = "12345";
+            string mesa = "Mesa 1";
+            string mesero = "Juan Pérez";
+            double total = 13.50;
+
+            TicketPrinter ticketPrinter = new TicketPrinter(encabezados, pieDePagina, logoPath, productos, folio, mesa, mesero, total);
+
+            // Imprimir en la impresora predeterminada
+            ticketPrinter.ImprimirTicket();
+
+            // Imprimir en una segunda impresora (especificar el nombre de la impresora)
+            // ticketPrinter.ImprimirTicket("Nombre de la segunda impresora");
+        }
     }
 }

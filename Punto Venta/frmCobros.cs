@@ -505,32 +505,42 @@ namespace Punto_Venta
                             string[] ids2 = word.Split(',');
                             for (int i2 = 0; i2 < ids2.Length - 1; i2 = i2 + 2)
                             {
-                                /*
-                                cmd = new OleDbCommand("SELECT Id,Nombre FROM Inventario where Id=" + ids2[1] + ";", conectar);
-                                OleDbDataReader reader = cmd.ExecuteReader();
-                                while (reader.Read())
+                                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                                 {
-                                    precio = 0;
-                                    producto = reader[1].ToString();
-                                    cant = Convert.ToDouble(ids2[0]);
-                                    item = cant.ToString("0.00", CultureInfo.InvariantCulture);
-                                    pre = precio.ToString("00.00", CultureInfo.InvariantCulture);
-                                    precioUni = 0;
-                                    uni = precioUni.ToString("00.00", CultureInfo.InvariantCulture);
-                                    double cantCombo = Convert.ToDouble(dataGridView1[1, i].Value.ToString()) * cant;
-                                    if (producto.Length > 20)
+                                    conectar.Open();
+                                    using (SqlCommand cmd = new SqlCommand("SELECT IdInventario,Nombre FROM Inventario where IdInventario= @IdCliente;", conectar))
                                     {
-                                        producto = producto.Substring(0, 20);
+                                        cmd.Parameters.AddWithValue("@IdCliente", ids2[1]);
+
+                                        using (SqlDataReader sqlDataReader = cmd.ExecuteReader())
+                                        {
+                                            while (sqlDataReader.Read())
+                                            {
+                                                precio = 0;
+                                                producto = sqlDataReader[1].ToString();
+                                                cant = Convert.ToDouble(ids2[0]);
+                                                item = cant.ToString("0.00", CultureInfo.InvariantCulture);
+                                                pre = precio.ToString("00.00", CultureInfo.InvariantCulture);
+                                                precioUni = 0;
+                                                uni = precioUni.ToString("00.00", CultureInfo.InvariantCulture);
+                                                double cantCombo = Convert.ToDouble(dataGridView1[1, i].Value.ToString()) * cant;
+                                                if (producto.Length > 20)
+                                                {
+                                                    producto = producto.Substring(0, 20);
+                                                }
+
+                                                e.Graphics.DrawString(item, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(1, posicion));
+                                                e.Graphics.DrawString(producto, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(40, posicion));
+                                                e.Graphics.DrawString(uni, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(230, posicion), sf);
+                                                e.Graphics.DrawString(String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", precio), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(280, posicion), sf);
+                                                posicion += 20;
+                                                RESULT += ids2[0] + " : " + sqlDataReader[1].ToString() + "\n";
+                                            }
+                                        }
+
                                     }
 
-                                    e.Graphics.DrawString(item, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(1, posicion));
-                                    e.Graphics.DrawString(producto, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(40, posicion));
-                                    e.Graphics.DrawString(uni, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(230, posicion), sf);
-                                    e.Graphics.DrawString(String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", precio), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(280, posicion), sf);
-                                    posicion += 20;
-                                    RESULT += ids2[0] + " : " + reader[1].ToString() + "\n";
                                 }
-                                */
                             }
                         }
                     }
