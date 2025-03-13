@@ -36,18 +36,34 @@ namespace Punto_Venta
         {
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConRestaurantSoft))
             {
+                DataTable dt = new DataTable();
+
                 conectar.Open();
-                string query = @"SELECT 
-                                    SUM(total) AS suma_total,
-                                    COUNT(folio) AS cantidad_folios
-                                FROM 
-                                    cheques
-                                WHERE pagado = 1 AND fecha >= @StartDate AND fecha <= @EndDate";
+                string query = @"SELECT * FROM turnos
+                                WHERE cierre >= @StartDate AND cierre <= @EndDate";
                 using (SqlCommand cmd = new SqlCommand(query, conectar))
                 {
                     cmd.Parameters.AddWithValue("@StartDate", dateTimePicker1.Value.Date);
-                    cmd.Parameters.AddWithValue("@EndDate", dateTimePicker1.Value.Date.AddDays(1).AddSeconds(-1));
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    cmd.Parameters.AddWithValue("@EndDate", dateTimePicker2.Value.Date.AddDays(1).AddSeconds(-1));
+
+                    // Construir la consulta SQL con los valores de los parámetros
+                    string debugQuery = query;
+                    foreach (SqlParameter p in cmd.Parameters)
+                    {
+                        debugQuery = debugQuery.Replace(p.ParameterName, $"'{p.Value.ToString()}'");
+                    }
+
+                    // Imprimir la consulta en la consola
+                    Console.WriteLine("Consulta SQL:");
+                    Console.WriteLine(debugQuery);
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                    comboBox1.DisplayMember = "idturno";
+                    comboBox1.ValueMember = "idturnointerno";
+                    comboBox1.DataSource = dt;
+                    /*using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -55,7 +71,7 @@ namespace Punto_Venta
                             total = decimal.Parse(reader["suma_total"].ToString());
                         }
 
-                    }
+                    }*/
                     lblTotal.Text = $"{total:C}";
                     lblFolios.Text = numFolios.ToString();
                 }
@@ -67,7 +83,7 @@ namespace Punto_Venta
             // Obtener la lista de productos desde la base de datos
             List<Producto> productos = ObtenerProductosDesdeBaseDeDatos();
 
-            
+
             List<Folio> folios = new List<Folio>();
 
             Random random = new Random();
@@ -159,6 +175,34 @@ namespace Punto_Venta
             }
 
             return productos;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConRestaurantSoft))
+            {
+                DataTable dt = new DataTable();
+
+                conectar.Open();
+                string query = @"SELECT * FROM turnos
+                                WHERE idturnointerno
+
+                            >= @StartDate AND cierre <= @EndDate";
+                using (SqlCommand cmd = new SqlCommand(query, conectar))
+                {
+                    cmd.Parameters.AddWithValue("@StartDate", dateTimePicker1.Value.Date);
+                    cmd.Parameters.AddWithValue("@EndDate", dateTimePicker2.Value.Date.AddDays(1).AddSeconds(-1));
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            numFolios = int.Parse(reader["cantidad_folios"].ToString());
+                            total = decimal.Parse(reader["suma_total"].ToString());
+                        }
+
+                    }
+                }
+            }
         }
     }
 }

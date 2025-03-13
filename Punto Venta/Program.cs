@@ -26,7 +26,7 @@ namespace Punto_Venta
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new frmAjustarFolios());
+                    Application.Run(new Form1());
                 }
             }
         }
