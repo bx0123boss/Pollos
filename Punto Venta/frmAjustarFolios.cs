@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,6 +21,10 @@ namespace Punto_Venta
         {
             public int Id { get; set; }
             public List<Producto> Productos { get; set; } = new List<Producto>();
+            public DateTime fechaHora { get; set; }
+            public DateTime FechaHora { get; set; }
+            public int NoPersonas { get; set; }
+            public string Mesa { get; set; }
             public decimal Total => Productos.Sum(p => p.Precio);
         }
         public class Producto
@@ -134,7 +139,42 @@ namespace Punto_Venta
                 Console.WriteLine();
             }
         }
-        private void InsertarEnBaseJaegersoft(List<dynamic> folios)
+        private List<Folio> ObtenerFoliosDesdeBaseDeDatos()
+        {
+            List<Folio> folios = new List<Folio>();
+
+            // Consulta SQL para obtener los folios
+            string query = "SELECT folio, cierre, nopersonas, mesa FROM cheques " +
+                "WHERE pagado = 1 and fecha>= @StartDate and fecha<= @EndDate";
+
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConRestaurantSoft))
+            {
+                conectar.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conectar))
+                {
+                    cmd.Parameters.AddWithValue("@StartDate", fechaInicio);
+                    cmd.Parameters.AddWithValue("@EndDate", fechaFin);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Folio folio = new Folio
+                            {
+                                Id = reader.GetInt32(0),
+                                FechaHora = reader.GetDateTime(1),
+                                NoPersonas = reader.GetInt32(2),
+                                Mesa = reader.GetString(3)
+                            };
+                            folios.Add(folio);
+                        }
+                    }
+                }
+
+                return folios;
+            }
+        }
+        private void InsertarEnBaseJaegersoft(List<Folio> folios)
         {
             // Asumo que ya tienes una conexión configurada
             using (SqlConnection connection = new SqlConnection(Conexion.CadConSql))
@@ -145,16 +185,15 @@ namespace Punto_Venta
                 {
                     // Insertar el folio en la tabla Folios
                     string insertFolioQuery = @"
-                INSERT INTO Folios (ModalidadVenta, Estatus, IdCliente, FechaHora, Total, Descuento, Utilidad, IdMesa)
-                VALUES (@ModalidadVenta, @Estatus, @IdCliente, @FechaHora, @Total, @Descuento, @Utilidad, @IdMesa);
+                INSERT INTO Folios (ModalidadVenta, Estatus, FechaHora, Total, Descuento, Utilidad, IdMesa)
+                VALUES (@ModalidadVenta, @Estatus, @FechaHora, @Total, @Descuento, @Utilidad, @IdMesa);
                 SELECT SCOPE_IDENTITY();"; // Obtener el IdFolio generado
 
                     using (SqlCommand folioCommand = new SqlCommand(insertFolioQuery, connection))
                     {
-                        folioCommand.Parameters.AddWithValue("@ModalidadVenta", folio.ModalidadVenta);
-                        folioCommand.Parameters.AddWithValue("@Estatus", folio.Estatus);
-                        folioCommand.Parameters.AddWithValue("@IdCliente", folio.IdCliente);
-                        folioCommand.Parameters.AddWithValue("@FechaHora", folio.FechaHora);
+                        folioCommand.Parameters.AddWithValue("@ModalidadVenta", "MESA");
+                        folioCommand.Parameters.AddWithValue("@Estatus", "COBRADO");
+                        folioCommand.Parameters.AddWithValue("@FechaHora", folio.fechaHora);
                         folioCommand.Parameters.AddWithValue("@Total", folio.Total);
                         folioCommand.Parameters.AddWithValue("@Descuento", folio.Descuento);
                         folioCommand.Parameters.AddWithValue("@Utilidad", folio.Utilidad);
