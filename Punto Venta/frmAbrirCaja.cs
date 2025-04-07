@@ -44,8 +44,6 @@ namespace Punto_Venta
                 }
                 else
                 {
-
-                    conectar.Open();
                     string query = @"INSERT INTO CORTE (Concepto, Total,FechaHora,FormaPago) VALUES
                                     ('APERTURA DE CAJA', @Total, GETDATE(), 'EFECTIVO')";
                     using (SqlCommand cmd2 = new SqlCommand(query, conectar))

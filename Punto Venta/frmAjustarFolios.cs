@@ -188,7 +188,7 @@ namespace Punto_Venta
                 INSERT INTO Folios (ModalidadVenta, Estatus, FechaHora, Total, Descuento, Utilidad, IdMesa)
                 VALUES (@ModalidadVenta, @Estatus, @FechaHora, @Total, @Descuento, @Utilidad, @IdMesa);
                 SELECT SCOPE_IDENTITY();"; // Obtener el IdFolio generado
-
+                    /*
                     using (SqlCommand folioCommand = new SqlCommand(insertFolioQuery, connection))
                     {
                         folioCommand.Parameters.AddWithValue("@ModalidadVenta", "MESA");
@@ -223,6 +223,7 @@ namespace Punto_Venta
                             }
                         }
                     }
+                    */
                 }
             }
         }
