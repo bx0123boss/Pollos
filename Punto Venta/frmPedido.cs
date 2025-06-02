@@ -189,7 +189,7 @@ namespace Punto_Venta
 
                 string query = @"SELECT A.IdInventario, A.IdCategoria, A.Nombre, A.Precio, A.Comanda, B.Color, B.Letra
                                 FROM INVENTARIO A
-                                INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria;";
+                                INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria WHERE A.Estatus = 1;";
 
                 using (SqlCommand cmd = new SqlCommand(query, conectar))
                 using (SqlDataReader reader = cmd.ExecuteReader())

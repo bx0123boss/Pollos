@@ -32,7 +32,7 @@ namespace Punto_Venta
                     " FROM Inventario A  " +
                     " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
                     " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria "+
-                    "ORDER BY A.Nombre;", conectar))
+                    "WHERE Estatus = 1 ORDER BY A.Nombre;", conectar))
                 {
                     da.Fill(ds, "Id");
                     dgvInventario.DataSource = ds.Tables["Id"];
@@ -96,7 +96,7 @@ namespace Punto_Venta
             {
                 conectar.Open();
 
-                using (SqlCommand cmd2 = new SqlCommand("DELETE FROM INVENTARIO WHERE IdInventario = @Id;", conectar))
+                using (SqlCommand cmd2 = new SqlCommand("UPDATE INVENTARIO SET Estatus = 0 WHERE IdInventario = @Id;", conectar))
                 {
                     cmd2.Parameters.AddWithValue("@Id", dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString());
                     cmd2.ExecuteNonQuery();
@@ -108,7 +108,7 @@ namespace Punto_Venta
                     " FROM Inventario A  " +
                     " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
                     " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
-                    "ORDER BY A.Nombre;", conectar))
+                    "WHERE Estatus = 1 ORDER BY A.Nombre;", conectar))
                 {
                     DataSet ds = new DataSet();
                     da.Fill(ds, "Id");
@@ -135,7 +135,7 @@ namespace Punto_Venta
                     " FROM Inventario A  " +
                     " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
                     " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
-                    "ORDER BY A.Nombre;", conectar))
+                    "WHERE A.Estatus = 1 ORDER BY A.Nombre;", conectar))
                     {
                         da.Fill(ds, "Id");
                     }
@@ -146,7 +146,7 @@ namespace Punto_Venta
                     " FROM Inventario A  " +
                     " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
                     " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
-                    " WHERE A.Nombre LIKE @Nombre ORDER BY A.Nombre;", conectar))
+                    " WHERE A.Estatus = 1  AND A.Nombre LIKE @Nombre ORDER BY A.Nombre;", conectar))
                     {
                         da.SelectCommand.Parameters.AddWithValue("@Nombre", $"%{textBox1.Text}%");
                         da.Fill(ds, "Id");
@@ -175,7 +175,7 @@ namespace Punto_Venta
                     " FROM Inventario A  " +
                     " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
                     " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
-                    " WHERE B.IdCategoria = @Categoria ORDER BY Nombre;", conectar))
+                    " WHERE A.Estatus = 1 AND B.IdCategoria = @Categoria ORDER BY Nombre;", conectar))
                     {
                         da.SelectCommand.Parameters.AddWithValue("@Categoria", comboBox2.SelectedValue);
                         da.Fill(ds, "Id");
@@ -187,7 +187,7 @@ namespace Punto_Venta
                      " FROM Inventario A  " +
                      " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
                      " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
-                     "ORDER BY A.Nombre;", conectar))
+                     "WHERE A.Estatus = 1 ORDER BY A.Nombre;", conectar))
                     {
                         da.Fill(ds, "Id");
                     }

@@ -152,11 +152,11 @@ namespace Punto_Venta
                         string query;
                         if (txtBuscar.Text != "")
                         {
-                            query = "SELECT Id, Nombre, Precio, Subcategoria FROM Inventario WHERE Nombre LIKE @Buscar ORDER BY Nombre;";
+                            query = "SELECT Id, Nombre, Precio, Subcategoria FROM Inventario WHERE Nombre AND Estatus = 1 LIKE @Buscar ORDER BY Nombre;";
                         }
                         else
                         {
-                            query = "SELECT Id, Nombre, Precio, Subcategoria FROM Inventario ORDER BY Nombre;";
+                            query = "SELECT Id, Nombre, Precio, Subcategoria FROM Inventario WHERE Estatus = 1 ORDER BY Nombre;";
                         }
                         da = new SqlDataAdapter(query, conectar);
                         if (txtBuscar.Text != "")
@@ -381,7 +381,7 @@ namespace Punto_Venta
                     string query = @"SELECT A.IdInventario, A.Nombre, A.Precio, B.Nombre as Subcategoria 
                                         FROM Inventario A 
                                         INNER JOIN SUBCATEGORIAS B ON A.IdSubcategoria = B.IdSubcategoria
-                                        WHERE B.Nombre = @Subcategoria ORDER BY Nombre;";
+                                        WHERE A.Estatus = 1 AND B.Nombre = @Subcategoria ORDER BY Nombre;";
                     using (SqlDataAdapter da = new SqlDataAdapter(query, conectar))
                     {
                         da.SelectCommand.Parameters.AddWithValue("@Subcategoria", subcategoria);
