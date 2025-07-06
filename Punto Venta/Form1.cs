@@ -277,24 +277,35 @@ namespace Punto_Venta
 
         private void label1_Click(object sender, EventArgs e)
         {
-            string[] encabezados = new string[] { "PIZZAS ANGELOTTI", "", "", "" };
-            string[] pieDePagina = new string[] { "   *GRACIAS POR SU PREFERENCIA*", "            Visitanos en Facebook:", "Pizzas Angelotti" };
+            string[] encabezados = new string[] {   "        TERESA REYES HERNANDEZ", 
+                                                    "  Av. Cuauhtémoc No. 501 Col. Centro",
+                                                    "   Tels. 231 31 2 0176 y 231 31 223 33", 
+                                                    "             Whatsapp 222 586 60 60", 
+                                                    "           Teziutlán, Pue. C.P. 73800", 
+                                                    "             R.F.C. REHT4908096N1" };
+            string[] pieDePagina = new string[] { "ESTO NO ES UN COMPROBANTE FISCAL", "      **GRACIAS POR SU COMPRA**" };
             string logoPath = @"C:\Jaeger Soft\logo.jpg";
 
             List<Producto> productos = new List<Producto>
             {
-                new Producto { Nombre = "Pizza Margarita", Cantidad = 1, PrecioUnitario = 10.50, Total = 10.50 },
-                new Producto { Nombre = "Refresco", Cantidad = 2, PrecioUnitario = 1.50, Total = 3.00 }
+                new Producto { Nombre = "VR38952 ", Cantidad = 0, PrecioUnitario = 10.50, Total = 12.18 },
+                new Producto { Nombre = "VR38953", Cantidad = 0, PrecioUnitario = 10.50, Total = 12.18 },
+                new Producto { Nombre = "VR38954", Cantidad = 0, PrecioUnitario = 10.50, Total = 12.18 },
+                new Producto { Nombre = "VR38955", Cantidad = 0, PrecioUnitario = 10.50, Total = 12.18 },
             };
 
             string folio = "12345";
-            string mesa = "Mesa 1";
-            string mesero = "Juan Pérez";
-            double total = 13.50;
+            string mesa = "";
+            string mesero = "";
+            double total = 48.72;
+            Dictionary<string, double> _totales = new Dictionary<string, double>();
+            _totales.Add("Total", total);
+            _totales.Add("Tarjeta", total/2);
+            _totales.Add("Retiros", total / 1.20);
+            _totales.Add("Efectivo", 50);
+            _totales.Add("Cambio", 48.72-50);
+            TicketPrinter ticketPrinter = new TicketPrinter(encabezados, pieDePagina, logoPath, productos, folio, mesa, mesero, total, true, _totales);
 
-            TicketPrinter ticketPrinter = new TicketPrinter(encabezados, pieDePagina, logoPath, productos, folio, mesa, mesero, total);
-
-            // Imprimir en la impresora predeterminada
             ticketPrinter.ImprimirTicket();
 
             // Imprimir en una segunda impresora (especificar el nombre de la impresora)

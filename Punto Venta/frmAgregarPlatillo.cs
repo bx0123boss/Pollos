@@ -362,13 +362,13 @@ namespace Punto_Venta
                 idProducto3, CantidadProducto3, idProducto4, CantidadProducto4, idProducto5, 
                 CantidadProducto5, idProducto6, CantidadProducto6, idProducto7, CantidadProducto7, 
                 idProducto8, CantidadProducto8, idProducto9, CantidadProducto9, idProducto10, 
-                CantidadProducto10, IdCategoria, CostoTotal, Comanda, IdSubCategoria
+                CantidadProducto10, IdCategoria, CostoTotal, Comanda, IdSubCategoria, Estatus
             ) VALUES (
                 @Nombre, @Precio, @idProducto1, @CantidadProducto1, @idProducto2, @CantidadProducto2, 
                 @idProducto3, @CantidadProducto3, @idProducto4, @CantidadProducto4, @idProducto5, 
                 @CantidadProducto5, @idProducto6, @CantidadProducto6, @idProducto7, @CantidadProducto7, 
                 @idProducto8, @CantidadProducto8, @idProducto9, @CantidadProducto9, @idProducto10, 
-                @CantidadProducto10, @Categoria, @CostoTotal, @Comanda, @SubCategoria
+                @CantidadProducto10, @Categoria, @CostoTotal, @Comanda, @SubCategoria, 1
             );";
                    
 

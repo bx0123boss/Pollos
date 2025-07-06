@@ -366,8 +366,6 @@ namespace Punto_Venta
             //mesa
             else if (tabControl1.SelectedIndex == 0)
             {
-                ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-                ticket.AddHeaderLine(" ");
                 ticket.AddHeaderLine("****MESA " + CmbMesa.Text + "****");
                 ticket.AddHeaderLine(" ");
                 //enMesa();

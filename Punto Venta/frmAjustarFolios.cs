@@ -90,14 +90,13 @@ namespace Punto_Venta
             List<Producto> productos = ObtenerProductosDesdeBaseDeDatos();
 
 
-            List<Folio> folios = new List<Folio>();
-            folios = ObtenerFoliosDesdeBaseDeDatos();
+            List<Folio> folios = ObtenerFoliosDesdeBaseDeDatos();
             Random random = new Random();
             decimal montoPorFolio = cantidad / numFolios;
 
-            for (int i = 0; i < numFolios; i++)
+            for (int i = 0; i < folios.Count; i++)
             {
-                Folio folio = new Folio { Id = i + 1 };
+                var folio = folios[i];
                 decimal montoActual = 0;
 
                 while (montoActual < montoPorFolio)
@@ -117,21 +116,28 @@ namespace Punto_Venta
                     montoActual += producto.Precio;
                 }
 
-                folios.Add(folio);
             }
 
             // Ajustar el último folio para que la suma total sea exacta
             decimal sumaTotal = folios.Sum(f => f.Total);
+            decimal diferencia = 0;
             if (sumaTotal != cantidad)
             {
-                var diferencia = cantidad - sumaTotal;
-                folios.Last().Productos.Add(new Producto { Nombre = "Ajuste", Precio = diferencia });
+                diferencia = cantidad - sumaTotal;
+                //folios.Last().Productos.Add(new Producto { Nombre = "Ajuste", Precio = diferencia });
             }
             // Mostrar los folios
             InsertarEnBaseJaegersoft(folios);
+            MostrarFoliosEnConsola(folios);
+            GuardarTxt(folios, sumaTotal, diferencia);
+            MessageBox.Show("Se realizó el calculo de folios con éxito","Ajustar Folios",MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void MostrarFoliosEnConsola(List<Folio> folios)
+        {
             foreach (var folio in folios)
             {
-                Console.WriteLine($"Folio {folio.Id}:");
+                Console.WriteLine($"Folio {folio.Id} (Mesa: {folio.Mesa}, Personas: {folio.NoPersonas}, Fecha: {folio.FechaHora}):");
                 foreach (var producto in folio.Productos)
                 {
                     Console.WriteLine($"  {producto.Nombre} - {producto.Precio:C}");
@@ -139,13 +145,12 @@ namespace Punto_Venta
                 Console.WriteLine($"Total: {folio.Total:C}");
                 Console.WriteLine();
             }
-            GuardarTxt(folios);
         }
 
-        private void GuardarTxt(List<Folio> folios)
+        private void GuardarTxt(List<Folio> folios, decimal sumaTotal, decimal diferencia)
         {
             string nombreArchivo = $"Folios_{DateTime.Now:yyyyMMdd_HHmmss}_{comboBox1.Text}.txt";
-            string rutaCarpeta = @"C:\Jaeger Soft";
+            string rutaCarpeta = @"C:\Jaeger Soft\Folios";
             string rutaCompleta = Path.Combine(rutaCarpeta, nombreArchivo);
 
             // Asegurarse de que la carpeta existe
@@ -169,7 +174,8 @@ namespace Punto_Venta
                     writer.WriteLine($"Total: {folio.Total:C}");
                     writer.WriteLine(); // Línea en blanco entre folios
                 }
-
+                writer.WriteLine($"Faltante de las ventas generadas: {diferencia:C}");
+                writer.WriteLine($"Suma total de las ventas: {sumaTotal:C}");
                 writer.WriteLine($"Archivo generado el: {DateTime.Now}");
             }
 
@@ -196,30 +202,17 @@ namespace Punto_Venta
                     {
                         while (reader.Read())
                         {
-                            // Verificación de datos antes de la conversión
-                            var debugInfo = new System.Text.StringBuilder();
-                            debugInfo.AppendLine("Datos obtenidos del reader:");
-
-                            // Verificar cada columna
-                            debugInfo.AppendLine($"folio (pos 0): Tipo={reader.GetFieldType(0)}, Valor={reader[0]}");
-                            debugInfo.AppendLine($"cierre (pos 1): Tipo={reader.GetFieldType(1)}, Valor={reader[1]}");
-                            debugInfo.AppendLine($"nopersonas (pos 2): Tipo={reader.GetFieldType(2)}, Valor={reader[2]}");
-                            debugInfo.AppendLine($"mesa (pos 3): Tipo={reader.GetFieldType(3)}, Valor={reader[3]}");
-
-                            // Mostrar en consola
-                            Console.WriteLine(debugInfo.ToString());
-
-                            // También puedes mostrarlo en un MessageBox
-                            MessageBox.Show(debugInfo.ToString(), "Debug Reader Data");
-
                             Folio folio = new Folio
                             {
-                                Id = reader.GetInt32(0),
+                                Id = Convert.ToInt32(reader[0].ToString()),
                                 FechaHora = reader.GetDateTime(1),
-                                NoPersonas = Convert.ToInt32(reader.GetString(2)),
-                                Mesa = reader.GetString(3)
+                                NoPersonas = Convert.ToInt32(reader[2].ToString()),
+                                Mesa = reader[3].ToString(),
+                                 // Inicializamos la lista de productos
+                                Productos = new List<Producto>()
                             };
                             folios.Add(folio);
+                            
                         }
                     }
                 }
