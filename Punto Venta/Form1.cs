@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
-using System.Windows.Forms;
 using System.IO;
 using System.Net.Mail;
-using System.Data.SqlClient;
+using System.Windows.Forms;
+using Tickets80mm;
 
 namespace Punto_Venta
 {
@@ -295,8 +296,8 @@ namespace Punto_Venta
             };
 
             string folio = "12345";
-            string mesa = "";
-            string mesero = "";
+            string mesa = "Mesa 12";
+            string mesero = "Tilin";
             double total = 48.72;
             Dictionary<string, double> _totales = new Dictionary<string, double>();
             _totales.Add("Total", total);
@@ -304,12 +305,58 @@ namespace Punto_Venta
             _totales.Add("Retiros", total / 1.20);
             _totales.Add("Efectivo", 50);
             _totales.Add("Cambio", 48.72-50);
-            TicketPrinter ticketPrinter = new TicketPrinter(encabezados, pieDePagina, logoPath, productos, folio, mesa, mesero, total, true, _totales);
 
-            ticketPrinter.ImprimirTicket();
+            //TicketPrinter ticketPrinter = new TicketPrinter(encabezados, pieDePagina, logoPath, productos, folio, mesa, mesero, total, true, _totales);
 
+            //ticketPrinter.ImprimirTicket();
+            TicketPrinter ticketPrinter = new TicketPrinter(productos, mesa, mesero);
+            //ticketPrinter.ImprimirComanda();
             // Imprimir en una segunda impresora (especificar el nombre de la impresora)
             // ticketPrinter.ImprimirTicket("Nombre de la segunda impresora");
+
+            var productos2 = new List<Tickets80mm.Producto>
+            {
+                new Tickets80mm.Producto { Nombre = "JUGO DE NARANJA",     Cantidad = 2, Total = 76m },
+                new Tickets80mm.Producto { Nombre = "COPA DE AGUA ESPECIA", Cantidad = 2, Total = 112m }
+            };
+
+            string[] encabezado =
+            {
+        "[B]PLAYA HERMOSA",
+        "[B]DANIEL BAEZ TEMIX",
+        "RFC: BATD931010K37",
+        "SIMON BOLIVAR 10372 VERACRUZ VERACRUZ MEXICO CP",
+        "91918",
+        "LUGAR DE EXPEDICION",
+        "TEL:"
+    };
+
+            string[] pie =
+            {
+        "[B]ESTE NO ES UN COMPROBANTE FISCAL",
+        "[B]PROPINA NO INCLUIDA",
+        "*** SOFT RESTAURANT V10 ***"
+    };
+
+            // CONSTRUCTOR COMPLETO (nota los sufijos: 10f = float)
+            var ticket = new TicketPlaya(
+                productos2,
+                "7A",            // mesa
+                "BRANDON",       // mesero
+                4,               // personas (int)
+                "2",             // orden
+                "30954",         // folio
+                "DANIEL",        // cajero
+                encabezado,
+                pie,
+                DateTime.Now.AddHours(-2),    // apertura
+                DateTime.Now,    // cierre
+                "Courier New",   // fuente monoespaciada
+                10f              // tamaño en puntos (float)
+            );
+
+            // Imprimir (pasa el nombre exacto si quieres fijar la impresora)
+            ticket.ImprimirComanda("print");
         }
     }
 }

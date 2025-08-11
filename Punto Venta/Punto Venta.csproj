@@ -88,6 +88,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TicketJaegersoft">
+      <HintPath>..\..\..\Leo\BRUNO-PERLA-RED\TicketJaegersoft\bin\Debug\net472\TicketJaegersoft.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conexion.cs" />
@@ -439,6 +442,12 @@
     <Compile Include="frmVentaDetallada.Designer.cs">
       <DependentUpon>frmVentaDetallada.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmVentaDetalladaPlaya.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVentaDetalladaPlaya.Designer.cs">
+      <DependentUpon>frmVentaDetalladaPlaya.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmVerCompra.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -457,8 +466,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
-    <Compile Include="TicketJaegersoftRestaurante.cs" />
-    <Compile Include="TicketPrinter.cs" />
+    <Compile Include="TicketPlaya.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -633,6 +641,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmVentaDetallada.resx">
       <DependentUpon>frmVentaDetallada.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVentaDetalladaPlaya.resx">
+      <DependentUpon>frmVentaDetalladaPlaya.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVerCompra.resx">
       <DependentUpon>frmVerCompra.cs</DependentUpon>

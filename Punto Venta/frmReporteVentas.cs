@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Data;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.Security.Cryptography;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Punto_Venta
 {
@@ -16,6 +18,11 @@ namespace Punto_Venta
         }
         private void frmReporteVentas_Load(object sender, EventArgs e)
         {
+            if(Conexion.lugar == "PLAYA")
+            {
+                CargarFoliosPorDia(dateTimePicker1.Value.Date);
+                return;
+            }
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
@@ -44,9 +51,54 @@ namespace Punto_Venta
             }
 
         }
+        private void CargarFoliosPorDia(DateTime dia)
+        {
+            var inicio = dia.Date;       // 00:00 del día elegido
+            var siguiente = inicio.AddDays(1);
 
+            const string sql = @"
+                SELECT 
+                    A.folio, A.numcheque, A.fecha, A.cierre, A.mesa, A.nopersonas, B.nombre AS nombremesero, A.orden, A.total, A.usuariopago
+                FROM cheques A
+                INNER JOIN meseros B ON A.idmesero = B.idmesero 
+
+                WHERE A.Fecha >= @StartDate
+                  AND A.Fecha <  @NextDate
+                    and A.pagado = 1
+                ORDER BY A.Fecha DESC;";
+
+            using (var cn = new SqlConnection(Conexion.CadConRestaurantSoft))
+            using (var cmd = new SqlCommand(sql, cn))
+            using (var da = new SqlDataAdapter(cmd))
+            {
+                cmd.Parameters.Add("@StartDate", SqlDbType.DateTime).Value = inicio;
+                cmd.Parameters.Add("@NextDate", SqlDbType.DateTime).Value = siguiente;
+
+                var ds = new DataSet();
+                da.Fill(ds, "folio");
+
+                dataGridView1.AutoGenerateColumns = true;
+                dataGridView1.DataSource = ds;
+                dataGridView1.DataMember = "folio";
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
+            if(Conexion.empresa == "PLAYA")
+            {
+                frmVentaDetalladaPlaya detalles = new frmVentaDetalladaPlaya();
+                detalles.lblFolio.Text = dataGridView1.CurrentRow.Cells["folio"].Value.ToString();
+                detalles.fechaApertura = dataGridView1.CurrentRow.Cells["fecha"].Value.ToString();
+                detalles.lblFecha.Text = dataGridView1.CurrentRow.Cells["cierre"].Value.ToString();
+                detalles.lblMesero.Text = dataGridView1.CurrentRow.Cells["nombremesero"].Value.ToString();
+                detalles.orden = dataGridView1.CurrentRow.Cells["orden"].Value.ToString();
+                detalles.nopersonas = Convert.ToInt32(dataGridView1.CurrentRow.Cells["nopersonas"].Value.ToString());
+                detalles.lblMesa.Text = dataGridView1.CurrentRow.Cells["mesa"].Value.ToString();
+                detalles.total = Convert.ToDouble(dataGridView1.CurrentRow.Cells["total"].Value.ToString());
+                detalles.usuario = usuario;
+                detalles.ShowDialog();
+                return;
+            }
             try
             {
                 frmVentaDetallada detalles = new frmVentaDetallada();
@@ -78,6 +130,11 @@ namespace Punto_Venta
        
         private void dateTimePicker1_CloseUp(object sender, EventArgs e)
         {
+            if(Conexion.empresa == "PLAYA")
+            {
+                CargarFoliosPorDia(dateTimePicker1.Value.Date);
+                return;
+            }
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
@@ -119,6 +176,42 @@ namespace Punto_Venta
             {
                 frmAjustarFolios ajustar = new frmAjustarFolios();
                 ajustar.ShowDialog();
+            }
+        }
+
+        private void txtFolio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                filtraroFolio();
+            }
+        }
+
+        private void filtraroFolio()
+        {
+
+            const string sql = @"
+                SELECT 
+                    A.folio, A.numcheque, A.fecha, A.cierre, A.mesa, A.nopersonas, B.nombre AS nombremesero, A.orden, A.total, A.usuariopago
+                FROM cheques A
+                INNER JOIN meseros B ON A.idmesero = B.idmesero 
+
+                WHERE A.folio = @Folio
+                    AND A.pagado = 1
+                ORDER BY A.Fecha DESC;";
+
+            using (var cn = new SqlConnection(Conexion.CadConRestaurantSoft))
+            using (var cmd = new SqlCommand(sql, cn))
+            using (var da = new SqlDataAdapter(cmd))
+            {
+                cmd.Parameters.AddWithValue("@Folio", txtFolio.Text);
+
+                var ds = new DataSet();
+                da.Fill(ds, "folio");
+
+                dataGridView1.AutoGenerateColumns = true;
+                dataGridView1.DataSource = ds;
+                dataGridView1.DataMember = "folio";
             }
         }
     }
