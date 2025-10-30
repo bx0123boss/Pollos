@@ -52,5 +52,10 @@ namespace Punto_Venta
             mas.Show();
             this.Close();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

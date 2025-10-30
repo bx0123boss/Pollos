@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Net.Mail;
 using System.Windows.Forms;
 using Tickets80mm;
+using static ComandasReportPdf;
 
 namespace Punto_Venta
 {
@@ -276,87 +278,130 @@ namespace Punto_Venta
             }
         }
 
+
         private void label1_Click(object sender, EventArgs e)
         {
-            string[] encabezados = new string[] {   "        TERESA REYES HERNANDEZ", 
-                                                    "  Av. Cuauhtémoc No. 501 Col. Centro",
-                                                    "   Tels. 231 31 2 0176 y 231 31 223 33", 
-                                                    "             Whatsapp 222 586 60 60", 
-                                                    "           Teziutlán, Pue. C.P. 73800", 
-                                                    "             R.F.C. REHT4908096N1" };
-            string[] pieDePagina = new string[] { "ESTO NO ES UN COMPROBANTE FISCAL", "      **GRACIAS POR SU COMPRA**" };
-            string logoPath = @"C:\Jaeger Soft\logo.jpg";
-
-            List<Producto> productos = new List<Producto>
-            {
-                new Producto { Nombre = "VR38952 ", Cantidad = 0, PrecioUnitario = 10.50, Total = 12.18 },
-                new Producto { Nombre = "VR38953", Cantidad = 0, PrecioUnitario = 10.50, Total = 12.18 },
-                new Producto { Nombre = "VR38954", Cantidad = 0, PrecioUnitario = 10.50, Total = 12.18 },
-                new Producto { Nombre = "VR38955", Cantidad = 0, PrecioUnitario = 10.50, Total = 12.18 },
-            };
-
-            string folio = "12345";
-            string mesa = "Mesa 12";
-            string mesero = "Tilin";
-            double total = 48.72;
-            Dictionary<string, double> _totales = new Dictionary<string, double>();
-            _totales.Add("Total", total);
-            _totales.Add("Tarjeta", total/2);
-            _totales.Add("Retiros", total / 1.20);
-            _totales.Add("Efectivo", 50);
-            _totales.Add("Cambio", 48.72-50);
-
-            //TicketPrinter ticketPrinter = new TicketPrinter(encabezados, pieDePagina, logoPath, productos, folio, mesa, mesero, total, true, _totales);
-
-            //ticketPrinter.ImprimirTicket();
-            TicketPrinter ticketPrinter = new TicketPrinter(productos, mesa, mesero);
-            //ticketPrinter.ImprimirComanda();
-            // Imprimir en una segunda impresora (especificar el nombre de la impresora)
-            // ticketPrinter.ImprimirTicket("Nombre de la segunda impresora");
-
-            var productos2 = new List<Tickets80mm.Producto>
-            {
-                new Tickets80mm.Producto { Nombre = "JUGO DE NARANJA",     Cantidad = 2, Total = 76m },
-                new Tickets80mm.Producto { Nombre = "COPA DE AGUA ESPECIA", Cantidad = 2, Total = 112m }
-            };
-
-            string[] encabezado =
-            {
-        "[B]PLAYA HERMOSA",
-        "[B]DANIEL BAEZ TEMIX",
-        "RFC: BATD931010K37",
-        "SIMON BOLIVAR 10372 VERACRUZ VERACRUZ MEXICO CP",
-        "91918",
-        "LUGAR DE EXPEDICION",
-        "TEL:"
-    };
-
-            string[] pie =
-            {
-        "[B]ESTE NO ES UN COMPROBANTE FISCAL",
-        "[B]PROPINA NO INCLUIDA",
-        "*** SOFT RESTAURANT V10 ***"
-    };
-
-            // CONSTRUCTOR COMPLETO (nota los sufijos: 10f = float)
-            var ticket = new TicketPlaya(
-                productos2,
-                "7A",            // mesa
-                "BRANDON",       // mesero
-                4,               // personas (int)
-                "2",             // orden
-                "30954",         // folio
-                "DANIEL",        // cajero
-                encabezado,
-                pie,
-                DateTime.Now.AddHours(-2),    // apertura
-                DateTime.Now,    // cierre
-                "Courier New",   // fuente monoespaciada
-                10f              // tamaño en puntos (float)
-            );
-
-            // Imprimir (pasa el nombre exacto si quieres fijar la impresora)
-            ticket.ImprimirComanda("print");
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            var hdr = new ReportHeader
+            {
+                Empresa = "WINGS LAS ALITAS",
+                Rfc = "FERIA",
+                Direccion = "FERIA TEZIUTLAN PUEBLA MEXICO  CP",
+                CiudadCpTel = "FERIA, Tel.",
+                Desde = new System.DateTime(2025, 7, 31, 6, 0, 0),
+                Hasta = new System.DateTime(2025, 8, 1, 5, 59, 59),
+                MeseroFiltro = "(TODOS)",
+                FooterNote = "SoftRestaurant® Copyright National Soft "
+            };
+            #region consulta datos
+            var desde = DateTime.Parse("01-01-2025");
+            var hasta = DateTime.Parse("01-01-2025");
+
+            var data = ConsultarComandas(desde, hasta);
+            #endregion
+            using (var sfd = new SaveFileDialog { Filter = "PDF (*.pdf)|*.pdf", FileName = "ReporteComandas.pdf" })
+            {
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    ComandasReportPdf.Generate(hdr, data, sfd.FileName);
+                    MessageBox.Show("PDF generado.");
+                }
+            }
+        }
+
+        public static List<ComandasReportPdf.ComandaRow> ConsultarComandas(DateTime desde, DateTime hasta)
+        {
+            var lista = new List<ComandasReportPdf.ComandaRow>();
+
+            const string sql = @"
+                SELECT 
+                    D.folio                              AS FolioComanda,
+                    D.orden                              AS Orden,
+                    D.fecha                              AS FechaApertura,
+                    D.cierre                             AS FechaCierre,
+                    RIGHT('0'+CAST(D.idmesero AS varchar(2)),2) AS MeseroCuenta, 
+                    RIGHT('0'+CAST(ISNULL(D.idmesero,D.idmesero) AS varchar(2)),2) AS MeseroProd, 
+                    CAST(C.cantidad AS decimal(10,3))    AS Cantidad,
+                    C.hora                                AS FechaCaptura,      
+                    CONCAT(A.idproducto,'-',A.descripcion) AS Producto,
+                    CAST(C.precio AS decimal(10,2))      AS Importe,
+                    CAST(ISNULL(C.descuento,0) AS decimal(10,2)) AS Descuento  
+                FROM productos A
+                JOIN cheqdet  C ON A.idproducto = C.idproducto
+                JOIN cheques  D ON C.foliodet   = D.folio
+                WHERE D.fecha >= @Desde AND D.fecha < @Hasta;";
+
+            using (var cn = new SqlConnection(Conexion.CadConRestaurantSoft))
+            using (var cmd = new SqlCommand(sql, cn))
+            {
+                var start = desde.Date;
+                var next = hasta.Date.AddDays(1);
+
+                cmd.Parameters.Add("@Desde", SqlDbType.DateTime).Value = start;
+                cmd.Parameters.Add("@Hasta", SqlDbType.DateTime).Value = next;
+
+                cn.Open();
+                using (var rd = cmd.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    // Construir mapa nombre→ordinal (case-insensitive)
+                    var ord = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+                    for (int i = 0; i < rd.FieldCount; i++)
+                        ord[rd.GetName(i)] = i;
+
+                    // Función para obtener ordinal validando nombre y dando error claro
+                    int Need(string name)
+                    {
+                        if (!ord.TryGetValue(name, out var idx))
+                        {
+                            // Mensaje útil con columnas disponibles
+                            var cols = string.Join(", ", ord.Keys);
+                            throw new IndexOutOfRangeException(
+                                $"La columna '{name}' no existe en el lector. Columnas disponibles: {cols}");
+                        }
+                        return idx;
+                    }
+
+                    // Resolver una vez todos los índices
+                    int iFolioComanda = Need("FolioComanda");
+                    int iOrden = Need("Orden");
+                    int iFechaApertura = Need("FechaApertura");
+                    int iFechaCierre = Need("FechaCierre");
+                    int iMeseroCuenta = Need("MeseroCuenta");
+                    int iMeseroProd = Need("MeseroProd");
+                    int iCantidad = Need("Cantidad");
+                    int iFechaCaptura = Need("FechaCaptura");
+                    int iProducto = Need("Producto");
+                    int iImporte = Need("Importe");
+                    int iDescuento = Need("Descuento");
+
+                    while (rd.Read())
+                    {
+                        var row = new ComandasReportPdf.ComandaRow
+                        {
+                            FolioComanda = 0l,
+                            FolioCuenta = rd.IsDBNull(iFolioComanda) ? 0L : Convert.ToInt64(rd.GetValue(iFolioComanda)),
+                            Orden = rd.IsDBNull(iOrden) ? 0 : Convert.ToInt32(rd.GetValue(iOrden)),
+                            FechaApertura = rd.IsDBNull(iFechaApertura) ? DateTime.MinValue : rd.GetDateTime(iFechaApertura),
+                            FechaCierre = rd.IsDBNull(iFechaCierre) ? DateTime.MinValue : rd.GetDateTime(iFechaCierre),
+                            MeseroCuenta = rd.IsDBNull(iMeseroCuenta) ? "" : rd.GetString(iMeseroCuenta),
+                            MeseroProd = rd.IsDBNull(iMeseroProd) ? "" : rd.GetString(iMeseroProd),
+                            Cantidad = rd.IsDBNull(iCantidad) ? 0m : Convert.ToDecimal(rd.GetValue(iCantidad), CultureInfo.InvariantCulture),
+                            FechaCaptura = rd.IsDBNull(iFechaCaptura) ? DateTime.MinValue : rd.GetDateTime(iFechaCaptura),
+                            Producto = rd.IsDBNull(iProducto) ? "" : rd.GetString(iProducto),
+                            Importe = rd.IsDBNull(iImporte) ? 0m : Convert.ToDecimal(rd.GetValue(iImporte), CultureInfo.InvariantCulture),
+                            Descuento = rd.IsDBNull(iDescuento) ? 0m : Convert.ToDecimal(rd.GetValue(iDescuento), CultureInfo.InvariantCulture)
+                        };
+
+                        lista.Add(row);
+                    }
+                }
+            }
+
+            return lista;
+        }
+
     }
 }

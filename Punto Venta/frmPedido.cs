@@ -4,11 +4,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using LibPrintTicket;
-using System.Globalization;
-using System.Drawing.Printing;
 using System.Data.SqlClient;
-using System.Data.OleDb;
+using LibPrintTicket;
 
 namespace Punto_Venta
 {

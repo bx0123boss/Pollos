@@ -28,7 +28,7 @@ namespace Punto_Venta
         //public static string Font = "";
         //public static string impresora = "print";
         //public static string impresora2 = "print2";
-        public static string empresa = "PLAYA";
+        public static string empresa = "nuevo";
         public static string[] datosTicket = new string[] {  "" };
         public static string[] pieDeTicket = new string[] { "   *GRACIAS POR SU PREFERENCIA*","" };
         public static string Font = "";
