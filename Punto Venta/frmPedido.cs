@@ -474,9 +474,9 @@ namespace Punto_Venta
                     }
                     else if (idMesa != 0)
                     {
-                        using (SqlCommand cmd2 = new SqlCommand("DELETE FROM MESAS WHERE Estatus = 'NUEVA';", conectar))
+                        using (SqlCommand cmd = new SqlCommand("DELETE AM FROM ArticulosMesa AM INNER JOIN MESAS M ON AM.IdMesa = M.IdMesa WHERE M.Estatus = 'NUEVA';", conectar))
                         {
-                            cmd2.ExecuteNonQuery();
+                            cmd.ExecuteNonQuery();
                         }
 
                     }

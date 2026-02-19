@@ -1,0 +1,365 @@
+﻿@page "/pedido"
+@using FastFoodWeb.Models
+@using Microsoft.Data.SqlClient
+@using System.Data
+@inject IConfiguration Configuration
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<div class="main-container">
+
+    @* --- GRUPO SUPERIOR PEGAGOSO (HEADER + CATEGORÍAS) --- *@
+    @* Al agruparlos, ambos se quedan pegados arriba sin taparse entre sí *@
+    <div class="sticky-header-group">
+
+        @* --- BARRA DE ESTADO Y MODALIDAD --- *@
+        <div class="header-bar">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                    <span class="badge rounded-pill bg-dark">@modalidad</span>
+                    <span class="ms-2 fw-bold text-dark small">Folio: @folioActual</span>
+                </div>
+                <button class="btn btn-light position-relative border shadow-sm" @onclick="ToggleCarrito">
+                    <i class="bi bi-cart3 fs-5"></i>
+                    @if (carrito.Count > 0)
+                    {
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            @carrito.Count
+                        </span>
+                    }
+                </button>
+            </div>
+
+            <div class="modalidad-selector">
+                <button class="@(modalidad == "MESA" ? "active" : "")" @onclick='() => modalidad = "MESA"'>Mesa</button>
+                <button class="@(modalidad == "RAPIDO" ? "active" : "")" @onclick='() => modalidad = "RAPIDO"'>Llevar</button>
+                <button class="@(modalidad == "DOMICILIO" ? "active" : "")" @onclick='() => modalidad = "DOMICILIO"'>Domicilio</button>
+            </div>
+        </div>
+
+        @* --- CATEGORÍAS (2 RENGLONES) --- *@
+        <div class="categories-wrapper">
+            <div class="categories-scroll">
+                @foreach (var cat in categorias)
+                {
+                    bool isSelected = categoriaSeleccionadaId == cat.Id;
+                    string estilo = $"background-color: #{cat.Color}; color: {cat.Letra};";
+                    string claseExtra = isSelected ? "cat-selected" : "cat-normal";
+
+                    <button class="btn-category @claseExtra" style="@estilo"
+                            @onclick="() => CargarProductos(cat.Id)">
+                        @cat.Nombre
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+    @* --- LISTA DE PRODUCTOS --- *@
+    <div class="products-container">
+        @if (productosMostrados.Count == 0)
+        {
+            <div class="text-center mt-5 text-muted">
+                <i class="bi bi-arrow-up-circle fs-1"></i>
+                <p>Selecciona una categoría</p>
+            </div>
+        }
+        else
+        {
+            <div class="row g-2">
+                @foreach (var prod in productosMostrados)
+                {
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="card product-card h-100 border-0 shadow-sm" @onclick="() => AbrirModalCantidad(prod)">
+                            <div class="card-body p-2 d-flex flex-column text-center">
+                                @* Espacio para imagen *@
+                                <div class="img-placeholder rounded-3 mb-2">
+                                    <span class="fs-2">🍔</span>
+                                </div>
+                                <h6 class="card-title text-dark fw-bold mb-1 text-truncate-2 small">@prod.Nombre</h6>
+                                <div class="mt-auto price-tag">
+                                    $@prod.Precio.ToString("N2")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    @* --- BARRA INFERIOR (TOTAL) --- *@
+    <div class="bottom-bar shadow-lg">
+        <div class="d-flex justify-content-between align-items-center w-100">
+            <div class="d-flex flex-column">
+                <span class="small text-muted">Total Orden</span>
+                <span class="fs-4 fw-bolder text-dark">$@total.ToString("N2")</span>
+            </div>
+            <button class="btn btn-primary rounded-pill px-4 fw-bold" disabled="@(carrito.Count == 0)" @onclick="FinalizarOrden">
+                Confirmar <i class="bi bi-check2"></i>
+            </button>
+        </div>
+    </div>
+
+    @if (mostrarCarrito)
+    {
+        <div class="cart-overlay" @onclick="ToggleCarrito">
+            <div class="cart-panel shadow" @onclick:stopPropagation="true">
+                <div class="cart-header bg-light border-bottom p-3 d-flex justify-content-between align-items-center">
+                    <h5 class="m-0 fw-bold">Tu Pedido</h5>
+                    <button class="btn-close" @onclick="ToggleCarrito"></button>
+                </div>
+                <div class="cart-body p-3">
+                    @if (carrito.Count == 0)
+                    {
+                        <p class="text-center text-muted mt-4">Carrito vacío</p>
+                    }
+                    @foreach (var item in carrito)
+                    {
+                        <div class="cart-item d-flex justify-content-between align-items-start mb-3 border-bottom pb-2">
+                            <div class="pe-2">
+                                <div class="fw-bold text-dark">@item.Nombre</div>
+                                <div class="text-muted small mb-1">$@item.Precio.ToString("0.##") x @item.Cantidad.ToString("0.##")</div>
+
+                                @if (!string.IsNullOrWhiteSpace(item.Comentario))
+                                {
+                                    <div class="comentario-carrito">
+                                        <i class="bi bi-chat-left-text me-1"></i>
+                                        <span>"@item.Comentario"</span>
+                                    </div>
+                                }
+                            </div>
+                            <div class="d-flex align-items-center mt-1">
+                                <span class="fw-bold me-3 text-primary">$@((item.Precio * item.Cantidad).ToString("0.##"))</span>
+                                <button class="btn btn-outline-danger btn-sm rounded-circle flex-shrink-0" @onclick="() => EliminarDelCarrito(item)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    @* --- MODAL DE CANTIDAD Y COMENTARIOS --- *@
+    @if (mostrarModal && productoSeleccionado != null)
+    {
+        <div class="modal fade show modal-animado @(cerrandoModal ? "closing" : "")"
+             style="display:block;"
+             tabindex="-1">
+
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header pedido-header">
+                        <h5 class="modal-title">@productoSeleccionado?.Nombre</h5>
+                        <button type="button"
+                                class="btn-cerrar"
+                                @onclick="CerrarModalCantidad">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="modal-body modal-body-flex">
+                        <p class="text-success fw-bold fs-4 mb-3">Precio U: $@productoSeleccionado.Precio.ToString("N2")</p>
+
+                        @* Controles de Cantidad (+ y -) *@
+                        <div class="d-flex justify-content-center align-items-center mb-4">
+                            <button class="btn btn-outline-secondary rounded-circle" style="width: 50px; height: 50px;" @onclick="RestarCantidad">
+                                <i class="bi bi-dash fs-4"></i>
+                            </button>
+
+                            <input type="number" class="form-control text-center mx-3 fw-bold fs-4 border-0 shadow-sm"
+                                   style="width: 80px;" min="1" @bind="cantidadTemporal" />
+
+                            <button class="btn btn-outline-secondary rounded-circle" style="width: 50px; height: 50px;" @onclick="SumarCantidad">
+                                <i class="bi bi-plus fs-4"></i>
+                            </button>
+                        </div>
+
+                        @* Cuadro de Comentarios *@
+                        <div class="comentarios-container">
+                            <label class="comentarios-label">
+                                Comentarios <span>(Opcional)</span>
+                            </label>
+
+                            <textarea class="comentarios-input"
+                                      placeholder="Ej. Sin cebolla, extra aderezo..."
+                                      @bind="comentarioTemporal">
+                            </textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer pedido-footer">
+                        <div class="fw-bold fs-5">
+                            Total: <span class="text-primary">$@((productoSeleccionado.Precio * cantidadTemporal).ToString("N2"))</span>
+                        </div>
+                        <button type="button" class="btn-agregar" @onclick="ConfirmarAgregarAlCarrito">
+                            <i class="bi bi-cart-plus me-1"></i> Agregar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    // --- LÓGICA C# ---
+    // (Exactamente la misma lógica corregida de la respuesta anterior,
+    // asegúrate de mantener los métodos CargarCategorias con int, etc.)
+
+    private string modalidad = "MESA";
+    private string folioActual = "NUEVO";
+    private int categoriaSeleccionadaId = 0;
+    private double total = 0;
+    private bool mostrarCarrito = false;
+    private Producto? productoSeleccionado;
+    private double cantidadTemporal = 1;
+    private string comentarioTemporal = "";
+    private bool mostrarModal = false;
+    private bool cerrandoModal = false;
+
+    private List<Categoria> categorias = new();
+    private List<Producto> productosMostrados = new();
+    private List<ItemCarrito> carrito = new();
+
+    protected override void OnInitialized()
+    {
+        CargarCategorias();
+    }
+    private async Task CerrarModal()
+    {
+        cerrandoModal = true;
+        StateHasChanged();
+
+        await Task.Delay(250); // Debe coincidir con duración CSS
+
+        mostrarModal = false;
+        cerrandoModal = false;
+    }
+    private void CargarCategorias()
+    {
+        categorias.Clear();
+        try
+        {
+            using var con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL"));
+            string sql = "SELECT IdCategoria, Nombre, Color, Letra FROM Categorias WHERE NOT Nombre='MASAS' AND NOT Nombre='MITADES PIZZA'";
+            con.Open();
+            using var cmd = new SqlCommand(sql, con);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                categorias.Add(new Categoria
+                {
+                    Id = Convert.ToInt32(reader["IdCategoria"]),
+                    Nombre = reader["Nombre"].ToString(),
+                    Color = reader["Color"].ToString(),
+                    Letra = reader["Letra"].ToString()
+                });
+            }
+            if (categorias.Count > 0) CargarProductos(categorias[0].Id);
+        }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
+    }
+    private void AbrirModalCantidad(Producto prod)
+    {
+        productoSeleccionado = prod;
+        cantidadTemporal = 1;
+        comentarioTemporal = "";
+        mostrarModal = true;   
+    }
+    private async Task CerrarModalCantidad()
+    {
+        cerrandoModal = true;
+        StateHasChanged();
+
+        await Task.Delay(250);
+
+        mostrarModal = false;
+        cerrandoModal = false;
+        productoSeleccionado = null;
+    }
+
+
+    private void SumarCantidad() => cantidadTemporal++;
+
+    private void RestarCantidad()
+    {
+        if (cantidadTemporal > 1)
+            cantidadTemporal--; 
+        else if (cantidadTemporal > 0.1)
+            cantidadTemporal = 0;
+    }
+    private void ConfirmarAgregarAlCarrito()
+    {
+        if (productoSeleccionado == null || cantidadTemporal <= 0) return;
+
+        // Buscamos si ya existe el MISMO producto con el MISMO comentario
+        var itemExistente = carrito.FirstOrDefault(x =>
+            x.ProductoId == productoSeleccionado.Id &&
+            x.Comentario == comentarioTemporal);
+
+        if (itemExistente != null)
+        {
+            itemExistente.Cantidad += cantidadTemporal;
+        }
+        else
+        {
+            carrito.Add(new ItemCarrito
+            {
+                ProductoId = productoSeleccionado.Id,
+                Nombre = productoSeleccionado.Nombre,
+                Precio = productoSeleccionado.Precio,
+                Cantidad = cantidadTemporal,
+                Costo = productoSeleccionado.CostoTotal,
+                Comentario = comentarioTemporal
+            });
+        }
+
+        CalcularTotal();
+        CerrarModalCantidad();
+    }
+    private void CargarProductos(int idCategoria)
+    {
+        categoriaSeleccionadaId = idCategoria;
+        productosMostrados.Clear();
+        using var con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL"));
+        string sql = "SELECT IdInventario, Nombre, Precio, CostoTotal FROM Inventario WHERE IdCategoria = @cat ORDER BY Nombre";
+        con.Open();
+        using var cmd = new SqlCommand(sql, con);
+        cmd.Parameters.AddWithValue("@cat", idCategoria);
+        using var reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            productosMostrados.Add(new Producto
+            {
+                Id = reader["IdInventario"].ToString(),
+                Nombre = reader["Nombre"].ToString(),
+                Precio = Convert.ToDouble(reader["Precio"]),
+                CostoTotal = reader["CostoTotal"] != DBNull.Value ? Convert.ToDouble(reader["CostoTotal"]) : 0
+            });
+        }
+    }
+
+    private void AgregarAlCarrito(Producto prod)
+    {
+        var item = carrito.FirstOrDefault(x => x.ProductoId == prod.Id);
+        if (item != null) item.Cantidad++;
+        else carrito.Add(new ItemCarrito { ProductoId = prod.Id, Nombre = prod.Nombre, Precio = prod.Precio, Cantidad = 1, Costo = prod.CostoTotal });
+        CalcularTotal();
+    }
+
+    private void EliminarDelCarrito(ItemCarrito item)
+    {
+        carrito.Remove(item);
+        CalcularTotal();
+    }
+
+    private void CalcularTotal() => total = carrito.Sum(x => x.Precio * x.Cantidad);
+    private void ToggleCarrito() => mostrarCarrito = !mostrarCarrito;
+    private void FinalizarOrden() { mostrarCarrito = false; carrito.Clear(); total = 0; }
+
+    public class ItemCarrito { public string ProductoId { get; set; } = ""; public string Nombre { get; set; } = ""; public double Precio { get; set; } public double Cantidad { get; set; } public double Costo { get; set; } public string Comentario { get; set; } = ""; }
+}
