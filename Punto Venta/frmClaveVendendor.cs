@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Punto_Venta
 {
     public partial class frmClaveVendendor : Form
     {
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbCommand cmd;
         public int Id { get; set; }
         public string Mesero { get; set; }
         public string Tipo { get; set; }
@@ -30,7 +22,6 @@ namespace Punto_Venta
 
         private void frmClaveVendendor_Load(object sender, EventArgs e)
         {
-            conectar.Open();
             // Obtener el tamaño del formulario
             int formWidth = this.ClientSize.Width;
             int formHeight = this.ClientSize.Height;
@@ -65,20 +56,33 @@ namespace Punto_Venta
             }
             else
             {
-                cmd = new OleDbCommand("select Id,Usuario,TipoUsuario from Usuarios where Contraseña='" + txtPass.Text + "';", conectar);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    Id = Convert.ToInt32(reader[0].ToString());
-                    Mesero = reader[1].ToString();
-                    Tipo = reader[2].ToString();
-                    this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                    conectar.Open();
+
+                    string query = @"SELECT IdUsuario,Usuario,TipoUsuario FROM USUARIOS WHERE Contraseña = @Contraseña";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Contraseña", txtPass.Text);
+                        using (SqlDataReader readerSQL = cmd.ExecuteReader())
+                        {
+                            if (readerSQL.Read()) // Si hay datos, entra aquí
+                            {
+                                Id = int.Parse(readerSQL["IdUsuario"].ToString());
+                                Mesero = readerSQL["Usuario"].ToString();
+                                Tipo = readerSQL["TipoUsuario"].ToString();
+                                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                            }
+                            else
+                            {
+                                MessageBox.Show("No se encuentra el usuario, favor de verificar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                txtPass.Clear();
+                            }
+                        }
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("No se encuentra el usuario, favor de verificar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtPass.Clear();
-                }
+               
             }
         }
 

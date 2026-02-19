@@ -1,48 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.OleDb;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Punto_Venta
 {
     public partial class frmEditarPass : Form
     {
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbCommand cmd;
         public int id;
 
         public frmEditarPass()
         {
             InitializeComponent();
-            conectar.Open();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (txtPass.Text == txtPass2.Text)
             {
-                cmd = new OleDbCommand("select Usuario from Usuarios where Contraseña='" + txtPass.Text + "';", conectar);
-                OleDbDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    MessageBox.Show("Error en la contraseña, favor de verificar", "Editar Usuario", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtPass.Clear();
-                    txtPass2.Clear();
-                    txtPass.Focus();
-                }
-                else
-                {
-                    cmd = new OleDbCommand("UPDATE Usuarios set Contraseña='" + txtPass.Text + "' where Id=" + id + ";", conectar);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("¡Se ha editado la contraseña con exito!", "Editar Contraseña", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    conectar.Close();
-                    this.Close();
+                    conectar.Open();
+                    string Query = @"SELECT Usuario from Usuarios where Contraseña WHERE IdUsuario = @Id;";
+                    using (SqlCommand cmd = new SqlCommand(Query, conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", id);
+                        using (SqlDataReader sqlReader = cmd.ExecuteReader())
+                        {
+                            if (sqlReader.Read())
+                            {
+                                MessageBox.Show("Error en la contraseña, favor de verificar", "Editar Usuario", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                txtPass.Clear();
+                                txtPass2.Clear();
+                                txtPass.Focus();
+                            }
+                            else
+                            {
+                                using (SqlCommand cmd2 = new SqlCommand("UPDATE Usuarios set Contraseña = @Pass WHERE IdUsuario = @Id;", conectar))
+                                {
+                                    cmd2.Parameters.AddWithValue("@Pass", txtPass.Text);
+                                    cmd2.ExecuteNonQuery();
+
+                                    MessageBox.Show("¡Se ha editado la contraseña con exito!", "Editar Contraseña", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    this.Close();
+                                }
+                            }
+                        }
+                    }
                 }
             }
             else

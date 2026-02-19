@@ -1,0 +1,493 @@
+﻿@page "/mesas"
+@using Microsoft.Data.SqlClient
+@using System.Data
+@using FastFoodWeb.Models
+@inject IConfiguration Configuration
+@inject IJSRuntime JS
+<PageTitle>Gestión de Mesas</PageTitle>
+
+<div class="container pb-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-dark">👩‍🍳 Mesas en Cocina</h2>
+        <p class="text-muted">Visualizando mesas con pedidos activos</p>
+    </div>
+
+    @if (listaMesas == null)
+    {
+        <div class="d-flex justify-content-center mt-5">
+            <div class="spinner-border text-primary" role="status"></div>
+        </div>
+    }
+    else if (listaMesas.Count == 0)
+    {
+        <div class="alert alert-info text-center mt-4">
+            No hay mesas con estatus 'COCINA' actualmente.
+        </div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var mesa in listaMesas)
+            {
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="mesa-card @(mesa.Estatus.ToLower())"
+                         @onclick="() => SeleccionarMesa(mesa)">
+                        <div class="mesa-status-dot"></div>
+                        <div class="mesa-content">
+                            <i class="bi bi-grid-3x3-gap-fill mesa-icon"></i>
+                            <h4 class="mesa-title">@mesa.Nombre</h4>
+                            <span class="mesa-badge">@mesa.Estatus</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@* --- BOTÓN FLOTANTE (FAB) --- *@
+<button class="fab-btn shadow" @onclick="AbrirModal">
+    <i class="bi bi-plus-lg">+</i>
+</button>
+
+@* --- MODAL PARA NUEVA MESA --- *@
+@if (mostrarModal)
+{
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show d-block" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Agregar Nueva Mesa</h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre de la Mesa</label>
+                        <input type="text" class="form-control form-control-lg"
+                               placeholder="Ej: Mesa 10 o Barra 2"
+                               @bind="nuevaMesaNombre" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CerrarModal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" @onclick="GuardarMesa">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@* --- MODAL DETALLE DE MESA --- *@
+@if (mostrarModalDetalle)
+{
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show d-block" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg">
+
+                @* Encabezado con el nombre de la mesa *@
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-receipt-cutoff me-2"></i>
+                        Orden: @mesaSeleccionadaNombre
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="CerrarModalDetalle"></button>
+                </div>
+
+                @* Cuerpo: Lista de Artículos *@
+                <div class="modal-body p-0">
+                    @if (detallesMesa == null)
+                    {
+                        <div class="p-5 text-center">
+                            <div class="spinner-border text-primary" role="status"></div>
+                        </div>
+                    }
+                    else if (detallesMesa.Count == 0)
+                    {
+                        <div class="p-5 text-center text-muted">
+                            <i class="bi bi-cup-hot fs-1"></i>
+                            <p class="mt-2">La mesa está vacía</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover mb-0 align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Cant.</th>
+                                        <th>Producto</th>
+                                        <th>Comentario</th>
+                                        <th class="text-end">Importe</th>
+                                        <th class="text-center">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in detallesMesa)
+                                    {
+                                        <tr>
+                                            <td class="fw-bold">@item.Cantidad.ToString("0.##")</td>
+                                            <td>
+                                                <span class="d-block fw-bold text-dark">@item.NombreProducto</span>
+                                            </td>
+                                            <td class="small text-muted fst-italic">
+                                                @item.Comentario
+                                            </td>
+                                            <td class="text-end text-success fw-bold">
+                                                $@item.Total.ToString("N2")
+                                            </td>
+                                            <td class="text-center">
+                                                @* Botón para eliminar (Cancelar) *@
+                                                <button class="btn btn-outline-danger btn-sm"
+                                                        @onclick="() => EliminarArticulo(item.IdArticulosMesa)">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot class="table-group-divider">
+                                    <tr class="bg-light fw-bold">
+                                        <td colspan="3" class="text-end">TOTAL MESA:</td>
+                                        <td class="text-end fs-5">$@detallesMesa.Sum(x => x.Total).ToString("N2")</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    }
+                </div>
+
+                @* Pie: Botones de acción *@
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" @onclick="CerrarModalDetalle">Cerrar</button>
+                    @if (detallesMesa != null && detallesMesa.Count > 0)
+                    {
+                        <button type="button" class="btn btn-success" @onclick="CerrarModalDetalle">
+                            <i class="bi bi-printer me-2"></i> Imprimir / Cobrar
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@* --- ESTILOS CSS --- *@
+<style>
+    /* ================================
+       DISEÑO MODERNO DE MESAS
+    ================================ */
+
+    .mesa-card {
+        position: relative;
+        height: 170px;
+        border-radius: 18px;
+        background: #ffffff;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+        border: 2px solid transparent;
+    }
+
+        .mesa-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+        }
+
+    /* Contenido interno */
+    .mesa-content {
+        text-align: center;
+    }
+
+    .mesa-icon {
+        font-size: 2.2rem;
+        opacity: 0.8;
+        margin-bottom: 8px;
+    }
+
+    .mesa-title {
+        font-weight: 700;
+        margin-bottom: 6px;
+        font-size: 1.2rem;
+    }
+
+    .mesa-badge {
+        font-size: 0.75rem;
+        padding: 5px 14px;
+        border-radius: 50px;
+        font-weight: 600;
+    }
+
+    /* ================================
+       INDICADOR DE ESTATUS (LED)
+    ================================ */
+
+    .mesa-status-dot {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    /* ================================
+       ESTADO: COCINA
+    ================================ */
+
+    .mesa-card.cocina {
+        background: linear-gradient(135deg, #fff4e5, #ffe5cc);
+        border-color: #ff9800;
+    }
+
+        .mesa-card.cocina .mesa-badge {
+            background-color: #ff5722;
+            color: white;
+        }
+
+        .mesa-card.cocina .mesa-status-dot {
+            background-color: #ff5722;
+            box-shadow: 0 0 12px #ff5722;
+        }
+
+    /* ================================
+       ESTADO: NUEVA
+    ================================ */
+
+    .mesa-card.nueva {
+        background: linear-gradient(135deg, #e3f2fd, #d0e8ff);
+        border-color: #2196f3;
+    }
+
+        .mesa-card.nueva .mesa-badge {
+            background-color: #2196f3;
+            color: white;
+        }
+
+        .mesa-card.nueva .mesa-status-dot {
+            background-color: #2196f3;
+            box-shadow: 0 0 12px #2196f3;
+        }
+
+    /* ================================
+       ESTADO: LIBRE (si luego lo usas)
+    ================================ */
+
+    .mesa-card.libre {
+        background: linear-gradient(135deg, #e8f5e9, #d2f4d3);
+        border-color: #4caf50;
+    }
+
+        .mesa-card.libre .mesa-badge {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .mesa-card.libre .mesa-status-dot {
+            background-color: #4caf50;
+            box-shadow: 0 0 12px #4caf50;
+        }
+
+    /* ================================
+       BOTÓN FAB MEJORADO
+    ================================ */
+
+    .fab-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0d6efd, #0a58ca);
+        color: white;
+        border: none;
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1050;
+        transition: all 0.25s ease;
+        box-shadow: 0 10px 25px rgba(13,110,253,0.4);
+    }
+
+        .fab-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(13,110,253,0.6);
+        }
+
+        .fab-btn:active {
+            transform: scale(0.95);
+        }
+
+</style>
+
+@code {
+    private List<Mesa>? listaMesas;
+    private bool mostrarModal = false;
+    private string nuevaMesaNombre = "";
+    private bool mostrarModalDetalle = false;
+    private int mesaSeleccionadaId = 0;
+    private string mesaSeleccionadaNombre = "";
+    private List<DetallePedido>? detallesMesa;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarMesas();
+    }
+
+    private async Task CargarMesas()
+    {
+        listaMesas = new List<Mesa>();
+        string connectionString = Configuration.GetConnectionString("CadenaSQL");
+
+        using (SqlConnection con = new SqlConnection(connectionString))
+        {
+            // NOTA: He incluido 'LIBRE' en la consulta también para que
+            // cuando crees una mesa nueva (que nace LIBRE), puedas verla en la lista.
+            // Si quieres estrictamente solo COCINA, quita "OR Estatus = 'LIBRE'".
+            string query = "SELECT IdMesa, Nombre, Estatus FROM MESAS WHERE Estatus = 'COCINA' OR Estatus = 'NUEVA' ORDER BY Nombre";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            await con.OpenAsync();
+
+            using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    listaMesas.Add(new Mesa
+                    {
+                        Id = Convert.ToInt32(reader["IdMesa"]), // Basado en 007.MESAS.sql
+                        Nombre = reader["Nombre"].ToString(),
+                        Estatus = reader["Estatus"].ToString()
+                    });
+                }
+            }
+        }
+    }
+
+    private void AbrirModal()
+    {
+        nuevaMesaNombre = "";
+        mostrarModal = true;
+    }
+    private async Task SeleccionarMesa(Mesa mesa) // Cambié int id por el objeto completo
+    {
+        mesaSeleccionadaId = mesa.Id; // Asegúrate de tener Id en tu MesaDTO
+        mesaSeleccionadaNombre = mesa.Nombre;
+        mostrarModalDetalle = true;
+        detallesMesa = null; // Reiniciar lista para mostrar spinner
+
+        await CargarDetalleMesa();
+    }
+
+    private async Task CargarDetalleMesa()
+    {
+        detallesMesa = new List<DetallePedido>();
+        string connectionString = Configuration.GetConnectionString("CadenaSQL");
+
+        using (SqlConnection con = new SqlConnection(connectionString))
+        {
+            // JOIN para obtener el nombre del producto desde INVENTARIO
+            // Usamos IdProducto de ArticulosMesa vs IdInventario
+            string query = @"
+                SELECT
+                    am.IdArticulosMesa,
+                    i.Nombre AS Producto,
+                    am.Cantidad,
+                    am.Total,
+                    am.Comentario
+                FROM ArticulosMesa am
+                INNER JOIN INVENTARIO i ON am.IdInventario = i.IdInventario
+                WHERE am.IdMesa = @IdMesa";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@IdMesa", mesaSeleccionadaId);
+
+            await con.OpenAsync();
+            using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    detallesMesa.Add(new DetallePedido
+                    {
+                        IdArticulosMesa = Convert.ToInt32(reader["IdArticulosMesa"]),
+                        NombreProducto = reader["Producto"].ToString(),
+                        Cantidad = Convert.ToDecimal(reader["Cantidad"]),
+                        Total = Convert.ToDecimal(reader["Total"]),
+                        Comentario = reader["Comentario"].ToString()
+                    });
+                }
+            }
+        }
+    }
+
+    // 2. ELIMINAR ARTÍCULO (Lógica de borrado directo)
+    private async Task EliminarArticulo(int idArticulo)
+    {
+        bool confirmado = await JS.InvokeAsync<bool>("confirm", "¿Seguro que deseas cancelar este artículo?");
+        if (!confirmado) return;
+
+        string connectionString = Configuration.GetConnectionString("CadenaSQL");
+        using (SqlConnection con = new SqlConnection(connectionString))
+        {
+            // Borrado físico como solicitaste
+            string query = "DELETE FROM ArticulosMesa WHERE IdArticulosMesa = @Id";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@Id", idArticulo);
+
+            await con.OpenAsync();
+            await cmd.ExecuteNonQueryAsync();
+        }
+
+        // Recargamos la lista para ver que desapareció
+        await CargarDetalleMesa();
+
+        // Opcional: Si la mesa queda vacía, podrías querer actualizar el estado de la mesa principal
+        // await CargarMesas();
+    }
+
+    private void CerrarModalDetalle()
+    {
+        mostrarModalDetalle = false;
+        // Opcional: Recargar las mesas al cerrar por si cambió el estatus
+        // CargarMesas();
+    }
+
+    // DTO para el detalle
+    public class DetallePedido
+    {
+        public int IdArticulosMesa { get; set; }
+        public string NombreProducto { get; set; } = "";
+        public decimal Cantidad { get; set; }
+        public decimal Total { get; set; }
+        public string Comentario { get; set; } = "";
+    }
+    private void CerrarModal() => mostrarModal = false;
+
+    private async Task GuardarMesa()
+    {
+        if (string.IsNullOrWhiteSpace(nuevaMesaNombre)) return;
+
+        string connectionString = Configuration.GetConnectionString("CadenaSQL");
+        using (SqlConnection con = new SqlConnection(connectionString))
+        {
+            // Insertamos la mesa con estatus 'LIBRE' por defecto
+            string query = "INSERT INTO MESAS (Nombre, Estatus, Mesero) VALUES (@nombre, 'LIBRE', '')";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@nombre", nuevaMesaNombre);
+
+            await con.OpenAsync();
+            await cmd.ExecuteNonQueryAsync();
+        }
+
+        mostrarModal = false;
+        await CargarMesas(); // Recargar la lista para ver la nueva mesa
+    }
+}

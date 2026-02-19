@@ -1,0 +1,516 @@
+﻿/* =====================================================
+   PEDIDO - UI POS LIMPIO Y PROFESIONAL
+   (Compatible con Bootstrap)
+===================================================== */
+
+:host {
+	display: block;
+	background-color: #f4f6f9;
+	font-family: 'Segoe UI', sans-serif;
+}
+
+/* ================================
+   LAYOUT GENERAL
+================================ */
+
+.main-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+/* ================================
+   HEADER STICKY
+================================ */
+
+.sticky-header-group {
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	background: #ffffff;
+	box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+.header-bar {
+	padding: 14px 18px 10px 18px;
+}
+
+	/* Botón carrito (NO rompe Bootstrap) */
+	.header-bar .btn-light {
+		border-radius: 12px;
+		transition: all 0.2s ease;
+	}
+
+		.header-bar .btn-light:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+		}
+
+/* ================================
+   SELECTOR MODALIDAD
+================================ */
+
+.modalidad-selector {
+	margin-top: 8px;
+	background: #eef1f4;
+	border-radius: 14px;
+	padding: 4px;
+	display: flex;
+}
+
+	.modalidad-selector button {
+		flex: 1;
+		border: none;
+		background: transparent;
+		padding: 8px 0;
+		border-radius: 10px;
+		font-weight: 600;
+		font-size: 0.85rem;
+		color: #6c757d;
+		transition: all 0.2s ease;
+	}
+
+		.modalidad-selector button:hover {
+			background: rgba(0,0,0,0.05);
+		}
+
+		.modalidad-selector button.active {
+			background: white;
+			color: #0d6efd;
+			box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+		}
+
+/* ================================
+   CATEGORÍAS
+================================ */
+
+.categories-wrapper {
+	background: white;
+	padding: 12px 0 14px 0;
+	border-top: 1px solid #f1f3f5;
+	border-bottom: 1px solid #e9ecef;
+}
+/* ================================
+   CATEGORÍAS - SCROLL POS ESTABLE
+================================ */
+
+.categories-scroll {
+	display: grid;
+	grid-auto-flow: column; /* Flujo por columnas */
+	grid-template-rows: repeat(2, 1fr); /* 2 filas en móvil */
+	gap: 10px;
+	padding: 0 15px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	scrollbar-width: none;
+}
+
+	.categories-scroll::-webkit-scrollbar {
+		display: none;
+	}
+
+/* PC → 4 filas fijas */
+@media (min-width: 1000px) {
+	.categories-scroll {
+		grid-template-rows: repeat(4, 1fr);
+	}
+}
+
+
+.btn-category {
+	border: none;
+	padding: 8px 18px;
+	border-radius: 30px;
+	font-weight: 600;
+	font-size: 0.75rem;
+	white-space: nowrap;
+	transition: all 0.15s ease;
+	opacity: 0.9;
+}
+
+	.btn-category:hover {
+		transform: translateY(-2px);
+		opacity: 1;
+	}
+
+	.btn-category.cat-selected {
+		transform: scale(1.05);
+		box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+		border: 2px solid #212529;
+	}
+
+/* ================================
+   PRODUCTOS
+================================ */
+
+.products-container {
+	padding: 18px;
+	flex-grow: 1;
+}
+
+.product-card {
+	cursor: pointer;
+	border-radius: 18px;
+	transition: all 0.18s ease;
+	background: white;
+	border: 1px solid rgba(0,0,0,0.05);
+}
+
+	.product-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+	}
+
+	.product-card:active {
+		transform: scale(0.96);
+	}
+
+.img-placeholder {
+	background: linear-gradient(135deg, #f1f3f5, #e9ecef);
+	height: 85px;
+	border-radius: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.text-truncate-2 {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	min-height: 2.4em;
+	line-height: 1.2;
+}
+
+.price-tag {
+	margin-top: 10px;
+	font-weight: 800;
+	font-size: 0.9rem;
+	color: #198754;
+}
+
+/* ================================
+   BOTTOM BAR
+================================ */
+
+.bottom-bar {
+	position: sticky;
+	bottom: 0;
+	z-index: 1000;
+	background: white;
+	padding: 16px 22px;
+	border-top: 1px solid #e9ecef;
+	box-shadow: 0 -6px 20px rgba(0,0,0,0.08);
+}
+
+	/* Botón confirmar mejorado SIN romper Bootstrap */
+	.bottom-bar .btn-primary {
+		border-radius: 40px;
+		padding: 10px 28px;
+		font-weight: 700;
+		transition: all 0.2s ease;
+	}
+
+		.bottom-bar .btn-primary:hover:not(:disabled) {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 18px rgba(13,110,253,0.4);
+		}
+
+/* ================================
+   CARRITO
+================================ */
+
+.cart-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0,0,0,0.6);
+	z-index: 2000;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.cart-panel {
+	background: white;
+	width: 92%;
+	max-width: 420px;
+	height: 100%;
+	animation: slideIn 0.25s ease-out;
+	display: flex;
+	flex-direction: column;
+	border-top-left-radius: 24px;
+	border-bottom-left-radius: 24px;
+}
+
+.cart-header {
+	background: #f8f9fa;
+}
+
+.cart-item {
+	background: #f8f9fa;
+	border-radius: 12px;
+	padding: 10px 14px;
+}
+
+.cart-body {
+	overflow-y: auto;
+	flex-grow: 1;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+	}
+
+	to {
+		transform: translateX(0);
+	}
+}
+
+/* ================================
+   COMENTARIO DEL CARRITO
+================================ */
+
+.comentario-carrito {
+	font-size: 0.75rem;
+	font-style: italic;
+	color: #6c757d;
+	line-height: 1.1;
+	margin-top: 4px;
+	display: flex;
+	align-items: flex-start;
+	gap: 4px;
+}
+
+	.comentario-carrito span {
+		display: -webkit-box;
+		-webkit-line-clamp: 2; /* 👈 máximo 2 líneas */
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		word-break: break-word;
+		max-height: 2.2em; /* 2 líneas exactas */
+	}
+
+		.comentario-carrito span:hover {
+			overflow: visible;
+			-webkit-line-clamp: unset;
+			max-height: none;
+			background: #f8f9fa;
+			padding: 4px;
+			border-radius: 6px;
+			position: relative;
+			z-index: 5;
+		}
+/* ===========================
+   MODAL LAYOUT FLEX
+=========================== */
+
+.pedido-modal {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	max-height: 90vh;
+}
+
+/* Body crece y puede hacer scroll */
+.modal-body-flex {
+	flex: 1;
+	overflow-y: auto;
+}
+
+/* Footer fijo abajo */
+.pedido-footer {
+	border-top: 1px solid #e0e0e0;
+	padding: 16px;
+	background: #fff;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+/* Total en una sola línea */
+.total-linea {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-weight: 600;
+	font-size: 1.1rem;
+}
+
+.total-precio {
+	color: #0d6efd;
+}
+
+/* Botón full width */
+.btn-agregar {
+	width: 100%;
+	padding: 14px;
+	font-size: 1rem;
+	border-radius: 12px;
+	border: none;
+	background: #198754;
+	color: white;
+	font-weight: 600;
+	transition: 0.2s ease;
+}
+
+	.btn-agregar:hover {
+		background: #157347;
+	}
+
+/* ===========================
+   HEADER DEL MODAL
+=========================== */
+
+.pedido-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 16px 20px;
+	background: #f8f9fa;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+	.pedido-header .modal-title {
+		font-weight: 600;
+		font-size: 1.2rem;
+	}
+
+/* Botón cerrar */
+.btn-cerrar {
+	border: none;
+	background: transparent;
+	font-size: 1.4rem;
+	color: #495057;
+	padding: 6px;
+	border-radius: 50%;
+	transition: 0.2s ease;
+}
+
+	.btn-cerrar:hover {
+		background: #e9ecef;
+		color: #000;
+	}
+
+/* ===========================
+   CAJA DE COMENTARIOS
+=========================== */
+
+.comentarios-container {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.comentarios-label {
+	font-weight: 600;
+	font-size: 0.9rem;
+	color: #495057;
+}
+
+	.comentarios-label span {
+		font-weight: 400;
+		color: #6c757d;
+	}
+
+.comentarios-input {
+	resize: none;
+	min-height: 90px;
+	padding: 12px 14px;
+	border-radius: 12px;
+	border: 1px solid #dee2e6;
+	background: #f8f9fa;
+	font-size: 0.9rem;
+	transition: 0.2s ease;
+}
+
+	/* Focus elegante */
+	.comentarios-input:focus {
+		outline: none;
+		border-color: #0d6efd;
+		background: #fff;
+		box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+	}
+
+	/* Placeholder más suave */
+	.comentarios-input::placeholder {
+		color: #adb5bd;
+	}
+/* ===============================
+   BACKDROP
+================================= */
+
+.modal-animado {
+	background-color: rgba(0, 0, 0, 0.45);
+	animation: backdropFadeIn 0.25s ease-out forwards;
+}
+
+	.modal-animado.closing {
+		animation: backdropFadeOut 0.25s ease-in forwards;
+	}
+
+	/* ===============================
+   MODAL ENTRADA
+================================= */
+
+	.modal-animado .modal-dialog {
+		animation: modalSlideIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+	}
+
+	/* ===============================
+   MODAL SALIDA
+================================= */
+
+	.modal-animado.closing .modal-dialog {
+		animation: modalSlideOut 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+	}
+
+/* ===============================
+   KEYFRAMES
+================================= */
+
+@keyframes backdropFadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes backdropFadeOut {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes modalSlideIn {
+	from {
+		opacity: 0;
+		transform: translateY(25px) scale(0.98);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@keyframes modalSlideOut {
+	from {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+
+	to {
+		opacity: 0;
+		transform: translateY(25px) scale(0.98);
+	}
+}

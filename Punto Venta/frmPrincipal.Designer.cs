@@ -40,11 +40,8 @@
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button13 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,11 +49,11 @@
             // 
             this.button1.BackColor = System.Drawing.Color.Black;
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(283, 484);
+            this.button1.Location = new System.Drawing.Point(298, 361);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(224, 115);
+            this.button1.Size = new System.Drawing.Size(208, 115);
             this.button1.TabIndex = 0;
             this.button1.Text = "Clientes";
             this.button1.UseVisualStyleBackColor = false;
@@ -76,9 +73,9 @@
             // 
             this.button2.BackColor = System.Drawing.Color.Black;
             this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(582, 219);
+            this.button2.Location = new System.Drawing.Point(586, 241);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(346, 87);
             this.button2.TabIndex = 2;
@@ -90,9 +87,9 @@
             // 
             this.button4.BackColor = System.Drawing.Color.Black;
             this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Location = new System.Drawing.Point(582, 312);
+            this.button4.Location = new System.Drawing.Point(586, 334);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(170, 102);
             this.button4.TabIndex = 4;
@@ -104,9 +101,9 @@
             // 
             this.button5.BackColor = System.Drawing.Color.Black;
             this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button5.ForeColor = System.Drawing.Color.White;
-            this.button5.Location = new System.Drawing.Point(758, 312);
+            this.button5.Location = new System.Drawing.Point(762, 334);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(170, 102);
             this.button5.TabIndex = 5;
@@ -118,9 +115,9 @@
             // 
             this.button6.BackColor = System.Drawing.Color.Black;
             this.button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button6.ForeColor = System.Drawing.Color.White;
-            this.button6.Location = new System.Drawing.Point(52, 234);
+            this.button6.Location = new System.Drawing.Point(51, 253);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(455, 102);
             this.button6.TabIndex = 6;
@@ -132,11 +129,11 @@
             // 
             this.button7.BackColor = System.Drawing.Color.Black;
             this.button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button7.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button7.ForeColor = System.Drawing.Color.White;
-            this.button7.Location = new System.Drawing.Point(582, 497);
+            this.button7.Location = new System.Drawing.Point(586, 519);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(346, 102);
+            this.button7.Size = new System.Drawing.Size(346, 87);
             this.button7.TabIndex = 8;
             this.button7.Text = "Corte";
             this.button7.UseVisualStyleBackColor = false;
@@ -145,11 +142,11 @@
             // button9
             // 
             this.button9.BackColor = System.Drawing.Color.Black;
-            this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button9.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button9.ForeColor = System.Drawing.Color.White;
-            this.button9.Location = new System.Drawing.Point(53, 484);
+            this.button9.Location = new System.Drawing.Point(53, 491);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(224, 115);
+            this.button9.Size = new System.Drawing.Size(210, 115);
             this.button9.TabIndex = 10;
             this.button9.Text = "Actualizar Inventario";
             this.button9.UseVisualStyleBackColor = false;
@@ -159,11 +156,11 @@
             // 
             this.button10.BackColor = System.Drawing.Color.Black;
             this.button10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button10.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button10.ForeColor = System.Drawing.Color.White;
-            this.button10.Location = new System.Drawing.Point(282, 351);
+            this.button10.Location = new System.Drawing.Point(298, 491);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(224, 115);
+            this.button10.Size = new System.Drawing.Size(208, 115);
             this.button10.TabIndex = 11;
             this.button10.Text = "Historial Cortes";
             this.button10.UseVisualStyleBackColor = false;
@@ -173,11 +170,11 @@
             // 
             this.button11.BackColor = System.Drawing.Color.Black;
             this.button11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button11.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button11.ForeColor = System.Drawing.Color.White;
-            this.button11.Location = new System.Drawing.Point(52, 351);
+            this.button11.Location = new System.Drawing.Point(53, 361);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(224, 115);
+            this.button11.Size = new System.Drawing.Size(210, 115);
             this.button11.TabIndex = 12;
             this.button11.Text = "Reporte Ventas";
             this.button11.UseVisualStyleBackColor = false;
@@ -188,36 +185,20 @@
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Location = new System.Drawing.Point(53, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(453, 212);
+            this.pictureBox1.Size = new System.Drawing.Size(453, 235);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 18;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_1);
-            // 
-            // button13
-            // 
-            this.button13.BackColor = System.Drawing.Color.Black;
-            this.button13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button13.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button13.ForeColor = System.Drawing.Color.White;
-            this.button13.Location = new System.Drawing.Point(582, 85);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(100, 87);
-            this.button13.TabIndex = 19;
-            this.button13.Text = "Comanda";
-            this.button13.UseVisualStyleBackColor = false;
-            this.button13.Visible = false;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // button12
             // 
             this.button12.BackColor = System.Drawing.Color.Black;
             this.button12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button12.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button12.ForeColor = System.Drawing.Color.White;
-            this.button12.Location = new System.Drawing.Point(582, 61);
+            this.button12.Location = new System.Drawing.Point(586, 148);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(346, 152);
+            this.button12.Size = new System.Drawing.Size(346, 87);
             this.button12.TabIndex = 0;
             this.button12.Text = "Toma de pedido";
             this.button12.UseVisualStyleBackColor = false;
@@ -227,9 +208,9 @@
             // 
             this.button14.BackColor = System.Drawing.Color.Black;
             this.button14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button14.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button14.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button14.ForeColor = System.Drawing.Color.White;
-            this.button14.Location = new System.Drawing.Point(582, 420);
+            this.button14.Location = new System.Drawing.Point(586, 442);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(346, 71);
             this.button14.TabIndex = 21;
@@ -237,40 +218,15 @@
             this.button14.UseVisualStyleBackColor = false;
             this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
-            // button15
-            // 
-            this.button15.Location = new System.Drawing.Point(0, 0);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(75, 23);
-            this.button15.TabIndex = 24;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.Black;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(554, 605);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(455, 102);
-            this.button3.TabIndex = 23;
-            this.button3.Text = "Compras";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Visible = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click_1);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkOrange;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1362, 741);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button15);
+            this.ClientSize = new System.Drawing.Size(977, 636);
             this.Controls.Add(this.button14);
             this.Controls.Add(this.button12);
-            this.Controls.Add(this.button13);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
@@ -284,11 +240,9 @@
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmPrincipal";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Menu Principal";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPrincipal_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPrincipal_FormClosed);
             this.Load += new System.EventHandler(this.frmPrincipal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -309,10 +263,7 @@
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button14;
-        private System.Windows.Forms.Button button15;
-        private System.Windows.Forms.Button button3;
     }
 }

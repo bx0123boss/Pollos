@@ -40,11 +40,10 @@
             this.dgvMesa.AllowUserToDeleteRows = false;
             this.dgvMesa.BackgroundColor = System.Drawing.Color.White;
             this.dgvMesa.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMesa.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dgvMesa.Location = new System.Drawing.Point(344, 0);
+            this.dgvMesa.Location = new System.Drawing.Point(199, 12);
             this.dgvMesa.Name = "dgvMesa";
             this.dgvMesa.ReadOnly = true;
-            this.dgvMesa.Size = new System.Drawing.Size(717, 646);
+            this.dgvMesa.Size = new System.Drawing.Size(413, 362);
             this.dgvMesa.TabIndex = 0;
             // 
             // button1
@@ -64,7 +63,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1061, 646);
+            this.ClientSize = new System.Drawing.Size(619, 383);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dgvMesa);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Punto_Venta
@@ -64,7 +57,7 @@ namespace Punto_Venta
                         MessageBox.Show($"Se ha editado la {tipo} con éxito", "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         frmCategorias apart = new frmCategorias();
                         apart.tipo = tipo;
-                        apart.Show();
+                        apart.ShowDialog();
                         this.Close();
                     }
                     else if (existe)
@@ -86,7 +79,7 @@ namespace Punto_Venta
                         MessageBox.Show($"Se ha creado la {tipo} con éxito", "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         frmCategorias apart = new frmCategorias();
                         apart.tipo = tipo;
-                        apart.Show();
+                        apart.ShowDialog();
                         this.Close();
                     }
                 }

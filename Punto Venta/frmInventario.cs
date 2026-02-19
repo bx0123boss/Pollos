@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
 using Microsoft.Office.Interop.Excel;
 using System.Data.SqlClient;
 
@@ -15,12 +9,11 @@ namespace Punto_Venta
 {
     public partial class frmInventario : Form
     {
-       
-        bool loaded = false;
         public string usuario;
         public frmInventario()
         {
             InitializeComponent();
+            this.MinimumSize = new Size(538, 709);
         }
 
         private void frmInventario_Load(object sender, EventArgs e)
@@ -52,24 +45,24 @@ namespace Punto_Venta
                 cmbOrigen.ValueMember = "IdOrigen";
                 cmbOrigen.DataSource = dt;
 
-                if (usuario == "Administrador")
-                {
-                    button10.Visible = true;
-                }
+               
 
             }
-            loaded = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             frmAgregarInventario add = new frmAgregarInventario();
-            add.Show();
+            add.ShowDialog();
             this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (dgvInventario.CurrentRow == null)
+            {
+                return;
+            }
             frmEditarInventario edita = new frmEditarInventario();
             edita.txtID.Text = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtProducto.Text = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
@@ -78,12 +71,16 @@ namespace Punto_Venta
             edita.origen = dgvInventario[4, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtPrecio.Text = dgvInventario[5, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtLimite.Text = dgvInventario[6, dgvInventario.CurrentRow.Index].Value.ToString();
-            edita.Show();
+            edita.ShowDialog();
             this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (dgvInventario.CurrentRow == null)
+            {
+                return;
+            }
             DialogResult dialogResult = MessageBox.Show("¿Estás seguro de eliminar el Producto?", "Alto!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dialogResult == DialogResult.Yes)
             {
@@ -131,8 +128,8 @@ namespace Punto_Venta
         private void button5_Click(object sender, EventArgs e)
         {
             frmPlatillos platillo = new frmPlatillos();
-            platillo.Show();
-            //this.Close();
+            platillo.ShowDialog();
+            this.Close();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -337,7 +334,7 @@ namespace Punto_Venta
         private void button12_Click(object sender, EventArgs e)
         {
             frmCombos com = new frmCombos();
-            com.Show();
+            com.ShowDialog();
             this.Close();
         }
 

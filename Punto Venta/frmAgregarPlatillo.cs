@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
-using System.IO;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Punto_Venta
 {
     public partial class frmAgregarPlatillo : Form
     {
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbCommand cmd2;
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
+        Double total=0;
         public string cat1, cat2;
         public string id = "0";
         public string idArticulo1 = "0", idArticulo2 = "0", idArticulo3 = "0", idArticulo4 = "0", idArticulo5 = "0", idArticulo6 = "0", idArticulo7 = "0", idArticulo8 = "0", idArticulo9 = "0", idArticulo10 = "0";
@@ -28,9 +18,152 @@ namespace Punto_Venta
         public frmAgregarPlatillo()
         {
             InitializeComponent();
-            conectar.Open();
         }
+        private void frmAgregarPlatillo_Load(object sender, EventArgs e)
+        {
+           
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
 
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM Categorias;", conectar))
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    comboBox1.DisplayMember = "Nombre";
+                    comboBox1.ValueMember = "IdCategoria";
+                    comboBox1.DataSource = dt;
+                }
+
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM SubCategorias;", conectar))
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    comboBox2.DisplayMember = "Nombre";
+                    comboBox2.ValueMember = "IdSubcategoria";
+                    comboBox2.DataSource = dt;
+                }
+                if (this.Text == "Editar Platillo")
+                {
+                    if (!(id is null))
+                    {
+                        comboBox1.SelectedValue = cat1;
+                        comboBox2.SelectedValue = cat2;
+                        string query = @"SELECT 
+                            ISNULL(i.IdProducto1, 0)AS IdProducto1,
+                            ISNULL(p1.Nombre, '0') AS Producto1, 
+                            ISNULL(p1.Medida, '0') AS Medida1, 
+                            ISNULL(p1.Precio, 0) AS Precio1, 
+                            ISNULL(i.CantidadProducto1, 0) AS CantidadProducto1,
+
+                            ISNULL(i.IdProducto2, 0)AS IdProducto2,
+                            ISNULL(p2.Nombre, '0') AS Producto2, 
+                            ISNULL(p2.Medida, '0') AS Medida2, 
+                            ISNULL(p2.Precio, 0) AS Precio2, 
+                            ISNULL(i.CantidadProducto2, 0) AS CantidadProducto2,
+
+                            ISNULL(i.IdProducto3, 0)AS IdProducto3,
+                            ISNULL(p3.Nombre, '0') AS Producto3, 
+                            ISNULL(p3.Medida, '0') AS Medida3, 
+                            ISNULL(p3.Precio, 0) AS Precio3, 
+                            ISNULL(i.CantidadProducto3, 0) AS CantidadProducto3,
+
+                            ISNULL(i.IdProducto4, 0)AS IdProducto4,
+                            ISNULL(p4.Nombre, '0') AS Producto4, 
+                            ISNULL(p4.Medida, '0') AS Medida4, 
+                            ISNULL(p4.Precio, 0) AS Precio4, 
+                            ISNULL(i.CantidadProducto4, 0) AS CantidadProducto4,
+
+                            ISNULL(i.IdProducto5, 0)AS IdProducto5,
+                            ISNULL(p5.Nombre, '0') AS Producto5, 
+                            ISNULL(p5.Medida, '0') AS Medida5, 
+                            ISNULL(p5.Precio, 0) AS Precio5, 
+                            ISNULL(i.CantidadProducto5, 0) AS CantidadProducto5,
+
+                            ISNULL(i.IdProducto6, 0)AS IdProducto6,
+                            ISNULL(p6.Nombre, '0') AS Producto6, 
+                            ISNULL(p6.Medida, '0') AS Medida6, 
+                            ISNULL(p6.Precio, 0) AS Precio6, 
+                            ISNULL(i.CantidadProducto6, 0) AS CantidadProducto6,
+
+                            ISNULL(i.IdProducto7, 0)AS IdProducto7,
+                            ISNULL(p7.Nombre, '0') AS Producto7, 
+                            ISNULL(p7.Medida, '0') AS Medida7, 
+                            ISNULL(p7.Precio, 0) AS Precio7, 
+                            ISNULL(i.CantidadProducto7, 0) AS CantidadProducto7,
+
+                            ISNULL(i.IdProducto8, 0)AS IdProducto8,
+                            ISNULL(p8.Nombre, '0') AS Producto8, 
+                            ISNULL(p8.Medida, '0') AS Medida8, 
+                            ISNULL(p8.Precio, 0) AS Precio8, 
+                            ISNULL(i.CantidadProducto8, 0) AS CantidadProducto8,
+
+                            ISNULL(i.IdProducto9, 0)AS IdProducto9,
+                            ISNULL(p9.Nombre, '0') AS Producto9, 
+                            ISNULL(p9.Medida, '0') AS Medida9, 
+                            ISNULL(p9.Precio, 0) AS Precio9, 
+                            ISNULL(i.CantidadProducto9, 0) AS CantidadProducto9,
+
+                            ISNULL(i.IdProducto10, 0)AS IdProducto10,
+                            ISNULL(p10.Nombre, '0') AS Producto10, 
+                            ISNULL(p10.Medida, '0') AS Medida10, 
+                            ISNULL(p10.Precio, 0) AS Precio10, 
+                            ISNULL(i.CantidadProducto10, 0) AS CantidadProducto10
+                        FROM INVENTARIO i
+                        LEFT JOIN PRODUCTOS p1 ON i.IdProducto1 = p1.IdProducto
+                        LEFT JOIN PRODUCTOS p2 ON i.IdProducto2 = p2.IdProducto
+                        LEFT JOIN PRODUCTOS p3 ON i.IdProducto3 = p3.IdProducto
+                        LEFT JOIN PRODUCTOS p4 ON i.IdProducto4 = p4.IdProducto
+                        LEFT JOIN PRODUCTOS p5 ON i.IdProducto5 = p5.IdProducto
+                        LEFT JOIN PRODUCTOS p6 ON i.IdProducto6 = p6.IdProducto
+                        LEFT JOIN PRODUCTOS p7 ON i.IdProducto7 = p7.IdProducto
+                        LEFT JOIN PRODUCTOS p8 ON i.IdProducto8 = p8.IdProducto
+                        LEFT JOIN PRODUCTOS p9 ON i.IdProducto9 = p9.IdProducto
+                        LEFT JOIN PRODUCTOS p10 ON i.IdProducto10 = p10.IdProducto
+                        WHERE i.IdInventario = @IdInventario;
+";
+                        using (SqlCommand cmd = new SqlCommand(query, conectar))
+                        {
+                            cmd.Parameters.AddWithValue("@IdInventario", id);
+
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    for (int i = 1; i <= 10; i++)
+                                    {
+                                        string idP = reader[$"IdProducto{i}"].ToString();
+                                        string producto = reader[$"Producto{i}"].ToString();
+                                        string medida = reader[$"Medida{i}"].ToString();
+                                        string precio = reader[$"Precio{i}"].ToString();
+                                        string cantidad = reader[$"CantidadProducto{i}"].ToString();
+
+                                        // Asignar los valores a las variables globales usando Reflection
+                                        GetType().GetField($"idArticulo{i}").SetValue(this, idP);
+                                        GetType().GetField($"Nombre{i}").SetValue(this, producto);
+                                        GetType().GetField($"Medida{i}").SetValue(this, medida);
+                                        GetType().GetField($"Precio{i}").SetValue(this, precio);
+
+                                        var lblNombre = this.Controls.Find($"lblNombre{i}", true).FirstOrDefault() as Label;
+                                        lblNombre.Text = producto == "0" ? "No definido": producto;
+                                        var lblMedida = this.Controls.Find($"lblMedida{i}", true).FirstOrDefault() as Label;
+                                        lblMedida.Text = medida;
+                                        var txtCantidad = this.Controls.Find($"txtCantidad{i}", true).FirstOrDefault() as TextBox;
+                                        txtCantidad.Text = cantidad;
+                                        var lblCosto = this.Controls.Find($"lblPrecio{i}", true).FirstOrDefault() as Label;
+                                        lblCosto.Text = (Convert.ToDouble(cantidad) * Convert.ToDouble(precio)) + "";
+                                       
+                                    }
+                                    lblTotal.Text = $"{GetTotal():C}";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         private void btnArticulo1_Click(object sender, EventArgs e)
         {
             using (frmBusquedaArticulo ori = new frmBusquedaArticulo())
@@ -41,9 +174,11 @@ namespace Punto_Venta
                     Nombre1 = ori.Nombre;
                     Medida1 = ori.Medida;
                     Precio1 = ori.Precio;
+                    lblNombre1.Text = Nombre1;
+                    lblMedida1.Text = Medida1;
+                    txtCantidad1.Focus();
                 }
-                lblNombre.Text = Nombre1;
-                lblMedida.Text = Medida1;
+                
             }
         }
 
@@ -57,9 +192,11 @@ namespace Punto_Venta
                     Nombre2 = ori.Nombre;
                     Medida2 = ori.Medida;
                     Precio2 = ori.Precio;
+                    lblNombre2.Text = Nombre2;
+                    lblMedida2.Text = Medida2;
+                    txtCantidad2.Focus();
                 }
-                lblNombre2.Text = Nombre2;
-                lblMedida2.Text = Medida2;
+                
             }
         }
 
@@ -73,9 +210,11 @@ namespace Punto_Venta
                     Nombre3 = ori.Nombre;
                     Medida3 = ori.Medida;
                     Precio3 = ori.Precio;
+                    lblNombre3.Text = Nombre3;
+                    lblMedida3.Text = Medida3;
+                    txtCantidad3.Focus();
                 }
-                lblNombre3.Text = Nombre3;
-                lblMedida3.Text = Medida3;
+               
             }
         }
 
@@ -89,9 +228,11 @@ namespace Punto_Venta
                     Nombre6 = ori.Nombre;
                     Medida6 = ori.Medida;
                     Precio6 = ori.Precio;
+                    lblNombre6.Text = Nombre6;
+                    lblMedida6.Text = Medida6;
+                    txtCantidad6.Focus();
                 }
-                lblNombre6.Text = Nombre6;
-                lblMedida6.Text = Medida6;
+                
             }
         }
 
@@ -105,9 +246,11 @@ namespace Punto_Venta
                     Nombre7 = ori.Nombre;
                     Medida7 = ori.Medida;
                     Precio7 = ori.Precio;
+                    lblNombre7.Text = Nombre7;
+                    lblMedida7.Text = Medida7;
+                    txtCantidad7.Focus();
                 }
-                lblNombre7.Text = Nombre7;
-                lblMedida7.Text = Medida7;
+               
             }
         }
 
@@ -121,9 +264,11 @@ namespace Punto_Venta
                     Nombre8 = ori.Nombre;
                     Medida8 = ori.Medida;
                     Precio8 = ori.Precio;
+                    lblNombre8.Text = Nombre8;
+                    lblMedida8.Text = Medida8;
+                    txtCantidad8.Focus();
                 }
-                lblNombre8.Text = Nombre8;
-                lblMedida8.Text = Medida8;
+                
             }
         }
 
@@ -137,9 +282,11 @@ namespace Punto_Venta
                     Nombre4 = ori.Nombre;
                     Medida4 = ori.Medida;
                     Precio4 = ori.Precio;
+                    lblNombre4.Text = Nombre4;
+                    lblMedida4.Text = Medida4;
+                    txtCantidad4.Focus();
                 }
-                lblNombre4.Text = Nombre4;
-                lblMedida4.Text = Medida4;
+                
             }
         }
 
@@ -153,9 +300,11 @@ namespace Punto_Venta
                     Nombre9 = ori.Nombre;
                     Medida9 = ori.Medida;
                     Precio9 = ori.Precio;
+                    lblNombre9.Text = Nombre9;
+                    lblMedida9.Text = Medida9;
+                    txtCantidad9.Focus();
                 }
-                lblNombre9.Text = Nombre9;
-                lblMedida9.Text = Medida9;
+               
             }
         }
 
@@ -169,9 +318,11 @@ namespace Punto_Venta
                     Nombre5 = ori.Nombre;
                     Medida5 = ori.Medida;
                     Precio5 = ori.Precio;
+                    lblNombre5.Text = Nombre5;
+                    lblMedida5.Text = Medida5;
+                    txtCantidad5.Focus();
                 }
-                lblNombre5.Text = Nombre5;
-                lblMedida5.Text = Medida5;
+               
             }
         }
 
@@ -185,14 +336,18 @@ namespace Punto_Venta
                     Nombre10 = ori.Nombre;
                     Medida10 = ori.Medida;
                     Precio10 = ori.Precio;
+                    lblNombre10.Text = Nombre10;
+                    lblMedida10.Text = Medida10;
+                    txtCantidad10.Focus();
                 }
-                lblNombre10.Text = Nombre10;
-                lblMedida10.Text = Medida10;
+               
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtPrecio.Text) || string.IsNullOrEmpty(txtNombre.Text))
+                return;
             string comanda = checkBox1.Checked ? "1" : "0";
 
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
@@ -207,45 +362,44 @@ namespace Punto_Venta
                 idProducto3, CantidadProducto3, idProducto4, CantidadProducto4, idProducto5, 
                 CantidadProducto5, idProducto6, CantidadProducto6, idProducto7, CantidadProducto7, 
                 idProducto8, CantidadProducto8, idProducto9, CantidadProducto9, idProducto10, 
-                CantidadProducto10, IdCategoria, CostoTotal, Comanda, IdSubCategoria
+                CantidadProducto10, IdCategoria, CostoTotal, Comanda, IdSubCategoria, Estatus
             ) VALUES (
                 @Nombre, @Precio, @idProducto1, @CantidadProducto1, @idProducto2, @CantidadProducto2, 
                 @idProducto3, @CantidadProducto3, @idProducto4, @CantidadProducto4, @idProducto5, 
                 @CantidadProducto5, @idProducto6, @CantidadProducto6, @idProducto7, @CantidadProducto7, 
                 @idProducto8, @CantidadProducto8, @idProducto9, @CantidadProducto9, @idProducto10, 
-                @CantidadProducto10, @Categoria, @CostoTotal, @Comanda, @SubCategoria
+                @CantidadProducto10, @Categoria, @CostoTotal, @Comanda, @SubCategoria, 1
             );";
-                    MessageBox.Show(query);
+                   
 
                     using (SqlCommand cmd2 = new SqlCommand(query, conectar))
                     {
                         cmd2.Parameters.AddWithValue("@Nombre", txtNombre.Text);
                         cmd2.Parameters.AddWithValue("@Precio", txtPrecio.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto1", idArticulo1);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto1", txtCantidad.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto2", idArticulo2);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto2", txtCantidad2.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto3", idArticulo3);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto3", txtCantidad3.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto4", idArticulo4);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto4", txtCantidad4.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto5", idArticulo5);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto5", txtCantidad5.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto6", idArticulo6);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto6", txtCantidad6.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto7", idArticulo7);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto7", txtCantidad7.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto8", idArticulo8);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto8", txtCantidad8.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto9", idArticulo9);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto9", txtCantidad9.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto10", idArticulo10);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto10", txtCantidad10.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto1", idArticulo1 == "0" ? (object)DBNull.Value : int.Parse(idArticulo1));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto1", idArticulo1 == "0" ? (object)DBNull.Value : txtCantidad1.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto2", idArticulo2 == "0" ? (object)DBNull.Value : int.Parse(idArticulo2));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto2", idArticulo2 == "0" ? (object)DBNull.Value : txtCantidad2.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto3", idArticulo3 == "0" ? (object)DBNull.Value : int.Parse(idArticulo3));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto3", idArticulo3 == "0" ? (object)DBNull.Value : txtCantidad3.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto4", idArticulo4 == "0" ? (object)DBNull.Value : int.Parse(idArticulo4));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto4", idArticulo4 == "0" ? (object)DBNull.Value : txtCantidad4.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto5", idArticulo5 == "0" ? (object)DBNull.Value : int.Parse(idArticulo5));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto5", idArticulo5 == "0" ? (object)DBNull.Value : txtCantidad5.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto6", idArticulo6 == "0" ? (object)DBNull.Value : int.Parse(idArticulo6));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto6", idArticulo6 == "0" ? (object)DBNull.Value : txtCantidad6.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto7", idArticulo7 == "0" ? (object)DBNull.Value : int.Parse(idArticulo7));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto7", idArticulo7 == "0" ? (object)DBNull.Value : txtCantidad7.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto8", idArticulo8 == "0" ? (object)DBNull.Value : int.Parse(idArticulo8));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto8", idArticulo8 == "0" ? (object)DBNull.Value : txtCantidad8.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto9", idArticulo9 == "0" ? (object)DBNull.Value : int.Parse(idArticulo9));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto9", idArticulo9 == "0" ? (object)DBNull.Value : txtCantidad9.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto10", idArticulo10 == "0" ? (object)DBNull.Value : int.Parse(idArticulo10));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto10", idArticulo10 == "0" ? (object)DBNull.Value : txtCantidad10.Text);
                         cmd2.Parameters.AddWithValue("@Categoria", comboBox1.SelectedValue);
-                        cmd2.Parameters.AddWithValue("@CostoTotal", lblTotal.Text);
+                        cmd2.Parameters.AddWithValue("@CostoTotal", GetTotal());
                         cmd2.Parameters.AddWithValue("@Comanda", comanda);
                         cmd2.Parameters.AddWithValue("@SubCategoria", comboBox2.SelectedValue);
-
                         cmd2.ExecuteNonQuery();
                     }
 
@@ -274,370 +428,108 @@ namespace Punto_Venta
                     {
                         cmd2.Parameters.AddWithValue("@Nombre", txtNombre.Text);
                         cmd2.Parameters.AddWithValue("@Precio", txtPrecio.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto1", idArticulo1);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto1", txtCantidad.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto2", idArticulo2);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto2", txtCantidad2.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto3", idArticulo3);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto3", txtCantidad3.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto4", idArticulo4);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto4", txtCantidad4.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto5", idArticulo5);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto5", txtCantidad5.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto6", idArticulo6);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto6", txtCantidad6.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto7", idArticulo7);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto7", txtCantidad7.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto8", idArticulo8);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto8", txtCantidad8.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto9", idArticulo9);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto9", txtCantidad9.Text);
-                        cmd2.Parameters.AddWithValue("@idProducto10", idArticulo10);
-                        cmd2.Parameters.AddWithValue("@CantidadProducto10", txtCantidad10.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto1", idArticulo1 == "0" ? (object)DBNull.Value : int.Parse(idArticulo1));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto1", idArticulo1 == "0" ? (object)DBNull.Value : txtCantidad1.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto2", idArticulo2 == "0" ? (object)DBNull.Value : int.Parse(idArticulo2));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto2", idArticulo2 == "0" ? (object)DBNull.Value : txtCantidad2.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto3", idArticulo3 == "0" ? (object)DBNull.Value : int.Parse(idArticulo3));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto3", idArticulo3 == "0" ? (object)DBNull.Value : txtCantidad3.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto4", idArticulo4 == "0" ? (object)DBNull.Value : int.Parse(idArticulo4));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto4", idArticulo4 == "0" ? (object)DBNull.Value : txtCantidad4.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto5", idArticulo5 == "0" ? (object)DBNull.Value : int.Parse(idArticulo5));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto5", idArticulo5 == "0" ? (object)DBNull.Value : txtCantidad5.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto6", idArticulo6 == "0" ? (object)DBNull.Value : int.Parse(idArticulo6));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto6", idArticulo6 == "0" ? (object)DBNull.Value : txtCantidad6.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto7", idArticulo7 == "0" ? (object)DBNull.Value : int.Parse(idArticulo7));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto7", idArticulo7 == "0" ? (object)DBNull.Value : txtCantidad7.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto8", idArticulo8 == "0" ? (object)DBNull.Value : int.Parse(idArticulo8));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto8", idArticulo8 == "0" ? (object)DBNull.Value : txtCantidad8.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto9", idArticulo9 == "0" ? (object)DBNull.Value : int.Parse(idArticulo9));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto9", idArticulo9 == "0" ? (object)DBNull.Value : txtCantidad9.Text);
+                        cmd2.Parameters.AddWithValue("@idProducto10", idArticulo10 == "0" ? (object)DBNull.Value : int.Parse(idArticulo10));
+                        cmd2.Parameters.AddWithValue("@CantidadProducto10", idArticulo10 == "0" ? (object)DBNull.Value : txtCantidad10.Text);
                         cmd2.Parameters.AddWithValue("@Categoria", comboBox1.SelectedValue);
-                        cmd2.Parameters.AddWithValue("@CostoTotal", lblTotal.Text);
+                        cmd2.Parameters.AddWithValue("@CostoTotal", GetTotal());
                         cmd2.Parameters.AddWithValue("@Comanda", comanda);
                         cmd2.Parameters.AddWithValue("@SubCategoria", comboBox2.SelectedValue);
-                        cmd2.Parameters.AddWithValue("@Id", id);
+                        cmd2.Parameters.AddWithValue("@Id", int.Parse(id));
 
                         cmd2.ExecuteNonQuery();
+                        MessageBox.Show("Se ha editado el platillo con éxito", "EDITADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
                     }
                 }
 
-                MessageBox.Show("Se ha editado el platillo con éxito", "EDITADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
+                
             }
         }
-        int suma;
-
-        public void obtenersumar()
-        {
-            using (StreamReader sr = new StreamReader("C:\\Jaeger Soft\\platillo.txt", false))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    suma = Convert.ToInt32(line) + 1;
-                }
-            }
-
-            FileStream stream = new FileStream("C:\\Jaeger Soft\\platillo.txt", FileMode.OpenOrCreate, FileAccess.Write);
-            StreamWriter writer = new StreamWriter(stream);
-            writer.WriteLine("" + suma);
-            writer.Close();
-        }
-        private void frmAgregarPlatillo_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            frmPlatillos platillo = new frmPlatillos();           
-            platillo.Show();
-        }
-
-        private void txtCantidad8_TextChanged(object sender, EventArgs e)
-        {
-            if (txtCantidad8.Text == "")
-            {
-                lblPrecio8.Text = "0";
-            }
-            else
-                lblPrecio8.Text = "" + Convert.ToDouble(Precio8) * Convert.ToDouble(txtCantidad8.Text);
-            lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-
-        }
-
-
-        private void frmAgregarPlatillo_Load(object sender, EventArgs e)
-        {
-            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
-            {
-                conectar.Open();
-
-                using (SqlCommand cmd = new SqlCommand("SELECT * FROM Categorias;", conectar))
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                {
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    comboBox1.DisplayMember = "Nombre";
-                    comboBox1.ValueMember = "IdCategoria";
-                    comboBox1.DataSource = dt;
-                }
-
-                // Llenar comboBox2 con SubCategoria
-                using (SqlCommand cmd = new SqlCommand("SELECT * FROM SubCategoria;", conectar))
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                {
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    comboBox2.DisplayMember = "Nombre";
-                    comboBox2.ValueMember = "IdSubcategoria";
-                    comboBox2.DataSource = dt;
-                }
-            }
-        }
-
+       
         private void txtCantidad_TextChanged(object sender, EventArgs e)
         {
             try
             {
-                if (txtCantidad.Text == "")
+                TextBox txtCantidad = sender as TextBox;
+                int index = int.Parse(txtCantidad.Name.Replace("txtCantidad", ""));
+                Label lblPrecio = this.Controls.Find($"lblPrecio{index}", true).FirstOrDefault() as Label;
+                // Obtener el precio directamente usando reflexión
+                var property = GetType().GetField($"Precio{index}");
+                double precioBase = property != null ? Convert.ToDouble(property.GetValue(this)) : 0;
+            
+                if (string.IsNullOrEmpty(txtCantidad.Text))
                 {
-                    lblPrecio1.Text = "0";
-                    lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
+                    lblPrecio.Text = "0"; // Si no hay cantidad, el precio es 0
                 }
                 else
                 {
-                    lblPrecio1.Text = "" + Convert.ToDouble(Precio1) * Convert.ToDouble(txtCantidad.Text);
-                    lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
+                    double cantidad = Convert.ToDouble(txtCantidad.Text);
+                    lblPrecio.Text = (precioBase * cantidad).ToString(); // Calcular precio
+                }
+
+                total = GetTotal() ;
+                
+
+                lblTotal.Text = $"{total:C}";
+            }
+            catch
+            {
+                // Manejar errores (por ejemplo, si el usuario ingresa un valor no numérico)
+            }
+        }
+        private double GetTotal()
+        {
+            double total = 0;
+            for (int i = 1; i <= 10; i++)
+            {
+                Label lblPrecioActual = this.Controls.Find($"lblPrecio{i}", true).FirstOrDefault() as Label;
+                if (lblPrecioActual != null && !string.IsNullOrEmpty(lblPrecioActual.Text))
+                {
+                    total += Convert.ToDouble(lblPrecioActual.Text);
                 }
             }
-            catch
-            { }
+            return total;
         }
 
-        private void txtCantidad2_TextChanged(object sender, EventArgs e)
-        {
-            try{
-            if (txtCantidad2.Text == "")
-            {
-                lblPrecio2.Text = "0";
-            }
-            else
-            {
-                lblPrecio2.Text = "" + Convert.ToDouble(Precio2) * Convert.ToDouble(txtCantidad2.Text);
-            }
-            lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-            catch 
-            { }
-        }
-
-        private void txtCantidad3_TextChanged(object sender, EventArgs e)
-        {
-            try{    
-            if (txtCantidad3.Text == "")
-            {
-                lblPrecio3.Text = "0";
-                lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-            else
-            {
-                lblPrecio3.Text = "" + Convert.ToDouble(Precio3) * Convert.ToDouble(txtCantidad3.Text);
-                lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-            }
-            catch 
-            { }
-        }
-
-        private void txtCantidad5_TextChanged(object sender, EventArgs e)
-        {
-            try{
-            if (txtCantidad5.Text == "")
-            {
-                lblPrecio5.Text = "0";
-                lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-            else
-            {
-                lblPrecio5.Text = "" + Convert.ToDouble(Precio5) * Convert.ToDouble(txtCantidad5.Text);
-                lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-            }
-            catch
-            { }
-        }
-
-        private void txtCantidad4_TextChanged(object sender, EventArgs e)
-        {
-            try{
-            if (txtCantidad4.Text == "")
-            {
-                lblPrecio4.Text = "0";
-                lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-            else
-            {
-                lblPrecio4.Text = "" + Convert.ToDouble(Precio4) * Convert.ToDouble(txtCantidad4.Text);
-                lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-
-            }
-            catch 
-            { }
-        }
-
-        private void txtCantidad6_TextChanged(object sender, EventArgs e)
-        {
-            try{
-            if (txtCantidad6.Text == "")
-            {
-                lblPrecio6.Text = "0";
-                lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-            else
-            {
-                lblPrecio6.Text = "" + Convert.ToDouble(Precio6) * Convert.ToDouble(txtCantidad6.Text);
-                lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-            }
-            catch 
-            { }
-        }
-
-        private void txtCantidad7_TextChanged(object sender, EventArgs e)
-        {
-            try{
-            if (txtCantidad7.Text == "")
-            {
-                lblPrecio7.Text = "0";
-            }
-            else
-                lblPrecio7.Text = "" + Convert.ToDouble(Precio7) * Convert.ToDouble(txtCantidad7.Text);
-            lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-            catch 
-            { }
-        }
-
-        private void txtCantidad9_TextChanged(object sender, EventArgs e)
-        {
-            try{
-            if (txtCantidad9.Text == "")
-            {
-                lblPrecio9.Text = "0";
-            }
-            else
-                lblPrecio9.Text = "" + Convert.ToDouble(Precio9) * Convert.ToDouble(txtCantidad9.Text);
-            lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-            catch 
-            { }
-        }
-
-        private void txtCantidad10_TextChanged(object sender, EventArgs e)
-        {
-            try{
-            if (txtCantidad10.Text == "")
-            {
-                lblPrecio10.Text = "0";
-            }
-            else
-                lblPrecio10.Text = "" + Convert.ToDouble(Precio10) * Convert.ToDouble(txtCantidad10.Text);
-            lblTotal.Text = "" + (Convert.ToDouble(lblPrecio1.Text) + Convert.ToDouble(lblPrecio2.Text) + Convert.ToDouble(lblPrecio3.Text) + Convert.ToDouble(lblPrecio4.Text) + Convert.ToDouble(lblPrecio5.Text) + Convert.ToDouble(lblPrecio6.Text) + Convert.ToDouble(lblPrecio7.Text) + Convert.ToDouble(lblPrecio8.Text) + Convert.ToDouble(lblPrecio9.Text) + Convert.ToDouble(lblPrecio10.Text));
-            }
-            catch
-            { }
-        }
-
-        private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        private void TxtCantidad_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
             {
                 e.Handled = true;
             }
 
-            // only allow one decimal point
+            // Solo permitir un punto decimal
             if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
             }
         }
-
-        private void txtCantidad_KeyPress(object sender, KeyPressEventArgs e)
+        private void TxtCantidad_Leave(object sender, EventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            TextBox txtCantidad = sender as TextBox;
+            if (string.IsNullOrEmpty(txtCantidad.Text))
             {
-                e.Handled = true;
-            }
-
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
+                txtCantidad.Text = "0";
             }
         }
 
-        private void txtCantidad2_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void txtCantidad3_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void txtCantidad4_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void txtCantidad5_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void txtCantidad6_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void txtCantidad7_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
-        }
     }
 }

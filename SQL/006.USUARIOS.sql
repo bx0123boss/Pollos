@@ -7,7 +7,7 @@ CREATE TABLE USUARIOS (
     Usuario VARCHAR(30) NOT NULL,
     Contraseña VARCHAR(30) NOT NULL,
     TipoUsuario VARCHAR(15),
-    Ventas NUMERIC(8,2),
+    Ventas NUMERIC(17,2),
     Mesas INT
 );
 COMMIT TRANSACTION;

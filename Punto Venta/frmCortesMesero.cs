@@ -1,22 +1,15 @@
 ﻿using LibPrintTicket;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Punto_Venta
 {
     public partial class frmCortesMesero : Form
     {
-        private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        OleDbDataAdapter da;
         public string idMesero = "";
         public string nombre = "";
         public frmCortesMesero()
@@ -26,35 +19,56 @@ namespace Punto_Venta
 
         private void frmCortesMesero_Load(object sender, EventArgs e)
         {
-            conectar.Open(); 
-            ds = new DataSet();
-            da = new OleDbDataAdapter("Select * from folios where Estatus='COBRADO' and Vehiculo='" + idMesero + "' and Fecha >=#" + dateTimePicker1.Value.Month.ToString() + "/" + dateTimePicker1.Value.Day.ToString() + "/" + dateTimePicker1.Value.Year.ToString() + " 00:00:00# and Fecha <=#" + dateTimePicker1.Value.Month.ToString() + "/" + dateTimePicker1.Value.Day.ToString() + "/" + dateTimePicker1.Value.Year.ToString() + " 23:59:59#;", conectar);
-            da.Fill(ds, "Id");
-            dataGridView1.DataSource = ds.Tables["Id"];
-            dataGridView1.Columns[3].Visible = false;
-            dataGridView1.Columns[4].Visible = false;
-            dataGridView1.Columns[5].Visible = false;
-            dataGridView1.Columns[6].Visible = false;
-            dataGridView1.Columns[7].Visible = false;
-            dataGridView1.Columns[9].Visible = false;
-            dataGridView1.Columns[10].Visible = false;
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
+                DataSet ds = new DataSet();
+                string query = @"SELECT a.IdFolio, A.ModalidadVenta, A.Estatus, ISNULL(A.IdCliente,0) AS IdCliente, A.FechaHora, A.Total, A.Descuento, A.Utilidad, B.Nombre AS Mesa, B.CantidadPersonas, C.Usuario AS Mesero, A.IdMesa, B.IdMesero
+                                   FROM Folios A
+                                   INNER JOIN MESAS B ON A.IdMesa = B.IdMesa
+                                   INNER JOIN USUARIOS C ON B.IdMesero = C.IdUsuario
+                                   WHERE FechaHora >= @StartDate AND FechaHora <= @EndDate
+                                    AND A.Estatus='COBRADO' AND B.IdMesero = @IdMesero ORDER BY FechaHora DESC;";
+
+                using (SqlDataAdapter da = new SqlDataAdapter(query, conectar))
+                {
+                    da.SelectCommand.Parameters.AddWithValue("@StartDate", dateTimePicker1.Value.Date);
+                    da.SelectCommand.Parameters.AddWithValue("@EndDate", dateTimePicker1.Value.Date.AddDays(1).AddSeconds(-1));
+                    da.SelectCommand.Parameters.AddWithValue("@IdMesero", idMesero);
+
+                    da.Fill(ds, "IdFolio");
+                    dataGridView1.DataSource = ds.Tables["IdFolio"];
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns["Total"].DefaultCellStyle.Format = "N2";
+                    dataGridView1.Columns["Descuento"].DefaultCellStyle.Format = "N2";
+                    dataGridView1.Columns["Utilidad"].DefaultCellStyle.Format = "N2";
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.CurrentRow == null)
+            {
+                return;
+            }
             try
             {
                 frmVentaDetallada detalles = new frmVentaDetallada();
-                detalles.idMesero = Convert.ToInt32(dataGridView1[4, dataGridView1.CurrentRow.Index].Value.ToString());
-                detalles.lblMesero.Text = dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString();
-                detalles.lblFolio.Text = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-                detalles.lblFecha.Text = dataGridView1[8, dataGridView1.CurrentRow.Index].Value.ToString();
-                detalles.lblModalidad.Text = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
-                if (dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString() == "CANCELADO")
+                detalles.lblFolio.Text = dataGridView1.CurrentRow.Cells["IdFolio"].Value.ToString();
+                detalles.lblFecha.Text = dataGridView1.CurrentRow.Cells["FechaHora"].Value.ToString();
+                detalles.lblModalidad.Text = dataGridView1.CurrentRow.Cells["ModalidadVenta"].Value.ToString();
+                detalles.lblMesero.Text = dataGridView1.CurrentRow.Cells["Mesero"].Value.ToString();
+                detalles.IdMesa = dataGridView1.CurrentRow.Cells["IdMesa"].Value.ToString();
+                detalles.idMesero = dataGridView1.CurrentRow.Cells["IdMesero"].Value.ToString();
+                detalles.lblMesa.Text = dataGridView1.CurrentRow.Cells["Mesa"].Value.ToString();
+                detalles.total = Convert.ToDouble(dataGridView1.CurrentRow.Cells["Total"].Value.ToString());
+                detalles.utilidad = Convert.ToDouble(dataGridView1.CurrentRow.Cells["Utilidad"].Value.ToString());
+                detalles.lblEstatus.Text = dataGridView1.CurrentRow.Cells["Estatus"].Value.ToString();
+                if (dataGridView1.CurrentRow.Cells["Estatus"].Value.ToString() == "CANCELADO")
                 {
                     detalles.button2.Hide();
                 }
-                //detalles.lblMonto.Text = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
                 detalles.Show();
                 this.Close();
             }

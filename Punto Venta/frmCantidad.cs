@@ -14,7 +14,7 @@ namespace Punto_Venta
     public partial class frmCantidad : Form
     {
         public string comentario { get; set; }
-        public string cantidad { get; set; }
+        public double cantidad { get; set; }
         public frmCantidad()
         {
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace Punto_Venta
             textBox1.Text = (Convert.ToDouble(textBox1.Text) + 1).ToString();
             txtComentario.Focus();
         }
-        public void Cantidad(string cant)
+        public void Cantidad(double cant)
         {
             comentario = txtComentario.Text;
             cantidad = cant;
@@ -102,7 +102,7 @@ namespace Punto_Venta
                 try
                 {
                     double price = Convert.ToDouble(textBox1.Text);
-                    Cantidad(textBox1.Text);
+                    Cantidad(price);
                 }
                 catch (FormatException)
                 {
@@ -154,74 +154,13 @@ namespace Punto_Venta
             }
         }
 
-        private void button17_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" Sin cebolla ");
-        }
-
-        private void button18_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" Sin jitomate ");
-        }
-
-        private void button19_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" Sin picante ");
-        }
-
-        private void button20_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" Sin aderezo ");
-        }
-
-        private void button21_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" Sin catsup ");
-        }
-
-        private void button22_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" FRESA ");
-        }
-
-        private void button23_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" PIÑA ");
-        }
-
-        private void button24_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" BBQ ");
-        }
-
-        private void button25_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" Bufalo ");
-        }
-
-        private void button26_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" Chiltepin ");
-        }
-
-        private void button27_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" Tamarindo ");
-        }
-
-        private void button28_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" Mango Habanero ");
-        }
-
-        private void button29_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" Piña Habanero ");
-        }
-
-        private void button30_Click(object sender, EventArgs e)
-        {
-            txtComentario.AppendText(" Para llevar ");
+        private void button_Click(object sender, EventArgs e)
+        {// Verifica si el sender es un botón
+            if (sender is Button button)
+            {
+                // Accede a la propiedad Text del botón que hizo clic
+                txtComentario.AppendText(" " + button.Text);
+            }
         }
 
         private void button31_Click(object sender, EventArgs e)

@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 using System.Data.OleDb;
 
 namespace Punto_Venta
@@ -45,7 +37,7 @@ namespace Punto_Venta
             if (lista == "FISICO")
             {
                 frmActInventario ACTU = new frmActInventario();
-                ACTU.Show();
+                ACTU.ShowDialog();
             }
             else if (lista != "")
             {
@@ -53,7 +45,7 @@ namespace Punto_Venta
                 invent.checkBox1.Checked = true;
                 invent.textBox1.Enabled = false;
                 invent.cmbOrigen.Text = lista;
-                invent.Show();
+                invent.ShowDialog();
             }
             this.Close();
 

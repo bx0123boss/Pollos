@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>220</ApplicationRevision>
+    <ApplicationRevision>238</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -69,17 +69,89 @@
     <Reference Include="LibPrintTicket">
       <HintPath>..\..\..\..\..\Desktop\LibPrintTicket\Release\LibPrintTicket.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=8.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.8.0.1\lib\net462\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.2\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=8.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.8.0.1\lib\net462\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=8.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.8.0.2\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=8.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.8.0.2\lib\net462\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.8.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\..\..\..\..\..\..\..\Windows\assembly\GAC\Microsoft.Office.Interop.Excel\12.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
+    <Reference Include="MigraDoc.DocumentObjectModel, Version=6.2.1.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.6.2.1\lib\net462\MigraDoc.DocumentObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.Rendering-gdi, Version=6.2.1.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.6.2.1\lib\net462\MigraDoc.Rendering-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.RtfRendering-gdi, Version=6.2.1.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.6.2.1\lib\net462\MigraDoc.RtfRendering-gdi.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Desktop\Dlls MySQL\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="PdfSharp-gdi, Version=6.2.1.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-GDI.6.2.1\lib\net462\PdfSharp-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.BarCodes-gdi, Version=6.2.1.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-GDI.6.2.1\lib\net462\PdfSharp.BarCodes-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting-gdi, Version=6.2.1.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-GDI.6.2.1\lib\net462\PdfSharp.Charting-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Quality-gdi, Version=6.2.1.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-GDI.6.2.1\lib\net462\PdfSharp.Quality-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Snippets-gdi, Version=6.2.1.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-GDI.6.2.1\lib\net462\PdfSharp.Snippets-gdi.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Pkcs, Version=8.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Pkcs.8.0.1\lib\net462\System.Security.Cryptography.Pkcs.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -88,9 +160,13 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TicketJaegersoft">
+      <HintPath>..\..\..\Leo\BRUNO-PERLA-RED\TicketJaegersoft\bin\Debug\net472\TicketJaegersoft.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conexion.cs" />
+    <Compile Include="FoliosReportPdf.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +245,12 @@
     <Compile Include="frmAgregarUsuario.Designer.cs">
       <DependentUpon>frmAgregarUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmAjustarFolios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAjustarFolios.Designer.cs">
+      <DependentUpon>frmAjustarFolios.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmArmaCombo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,18 +274,6 @@
     </Compile>
     <Compile Include="frmBusquedaArticulo.Designer.cs">
       <DependentUpon>frmBusquedaArticulo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmCambiarMesa.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmCambiarMesa.Designer.cs">
-      <DependentUpon>frmCambiarMesa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmCambio.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmCambio.Designer.cs">
-      <DependentUpon>frmCambio.cs</DependentUpon>
     </Compile>
     <Compile Include="frmCantidad.cs">
       <SubType>Form</SubType>
@@ -234,18 +304,6 @@
     </Compile>
     <Compile Include="frmCobros.Designer.cs">
       <DependentUpon>frmCobros.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmComanda.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmComanda.Designer.cs">
-      <DependentUpon>frmComanda.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmComandaGeneral.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmComandaGeneral.Designer.cs">
-      <DependentUpon>frmComandaGeneral.cs</DependentUpon>
     </Compile>
     <Compile Include="frmCombos.cs">
       <SubType>Form</SubType>
@@ -397,12 +455,6 @@
     <Compile Include="frmPedido.Designer.cs">
       <DependentUpon>frmPedido.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmPedidoRealizado.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmPedidoRealizado.Designer.cs">
-      <DependentUpon>frmPedidoRealizado.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmPizzas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -451,12 +503,6 @@
     <Compile Include="frmTipoDetallada.Designer.cs">
       <DependentUpon>frmTipoDetallada.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmTipoVenta.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmTipoVenta.Designer.cs">
-      <DependentUpon>frmTipoVenta.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -469,6 +515,12 @@
     <Compile Include="frmVentaDetallada.Designer.cs">
       <DependentUpon>frmVentaDetallada.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmVentaDetalladaPlaya.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVentaDetalladaPlaya.Designer.cs">
+      <DependentUpon>frmVentaDetalladaPlaya.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmVerCompra.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -477,12 +529,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
-    <Compile Include="TicketJaegersoftRestaurante.cs" />
+    <Compile Include="TicketPlaya.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -523,6 +580,9 @@
     <EmbeddedResource Include="frmAgregarUsuario.resx">
       <DependentUpon>frmAgregarUsuario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmAjustarFolios.resx">
+      <DependentUpon>frmAjustarFolios.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmArmaCombo.resx">
       <DependentUpon>frmArmaCombo.cs</DependentUpon>
     </EmbeddedResource>
@@ -534,12 +594,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBusquedaArticulo.resx">
       <DependentUpon>frmBusquedaArticulo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmCambiarMesa.resx">
-      <DependentUpon>frmCambiarMesa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmCambio.resx">
-      <DependentUpon>frmCambio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCantidad.resx">
       <DependentUpon>frmCantidad.cs</DependentUpon>
@@ -555,12 +609,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCobros.resx">
       <DependentUpon>frmCobros.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmComanda.resx">
-      <DependentUpon>frmComanda.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmComandaGeneral.resx">
-      <DependentUpon>frmComandaGeneral.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCombos.resx">
       <DependentUpon>frmCombos.cs</DependentUpon>
@@ -637,9 +685,6 @@
     <EmbeddedResource Include="frmPedido.resx">
       <DependentUpon>frmPedido.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPedidoRealizado.resx">
-      <DependentUpon>frmPedidoRealizado.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmPizzas.resx">
       <DependentUpon>frmPizzas.cs</DependentUpon>
     </EmbeddedResource>
@@ -664,14 +709,14 @@
     <EmbeddedResource Include="frmTipoDetallada.resx">
       <DependentUpon>frmTipoDetallada.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmTipoVenta.resx">
-      <DependentUpon>frmTipoVenta.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmUsuarios.resx">
       <DependentUpon>frmUsuarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVentaDetallada.resx">
       <DependentUpon>frmVentaDetallada.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVentaDetalladaPlaya.resx">
+      <DependentUpon>frmVentaDetalladaPlaya.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVerCompra.resx">
       <DependentUpon>frmVerCompra.cs</DependentUpon>
@@ -679,11 +724,13 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -725,6 +772,7 @@
     <None Include="Resources\Fast-Food-Fries-and-Burger-Wallpapers.jpg" />
     <None Include="Resources\LOGO.png" />
     <Content Include="Resources\COFEE.JPG" />
+    <None Include="Resources\X2.png" />
     <Content Include="RESTAURANTE2.ico" />
     <None Include="Resources\b02_01_carne2.jpg" />
     <None Include="Resources\3683914227_db400fe603_b1.jpg" />

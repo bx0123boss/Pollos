@@ -46,7 +46,10 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            if (dataGridView1.CurrentRow == null)
+            {
+                return;
+            }
             if (MessageBox.Show("¿Estás seguro de eliminar la Categoría?", "Alto!", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
@@ -79,10 +82,13 @@ namespace Punto_Venta
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.CurrentRow == null)
+            {
+                return;
+            }
             frmAgregarCategorias cat = new frmAgregarCategorias();
             cat.tipo = tipo;
             cat.id = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-            //cat.nombre = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
             cat.txtNombre.Text = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
             cat.button2.BackColor = System.Drawing.ColorTranslator.FromHtml("#" + dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString());
             cat.button2.ForeColor = Color.FromName(dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString());

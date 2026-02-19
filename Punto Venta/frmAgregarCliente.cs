@@ -8,58 +8,77 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
     public partial class frmAgregarCliente : Form
     {
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
-        OleDbCommand cmd;
         public int id;
         public string Nombre { get; set; }
 
         public frmAgregarCliente()
         {
             InitializeComponent();
-            conectar.Open();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (this.Text == "Editar")
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
-                cmd = new OleDbCommand("update Clientes set Nombre='"+txtNombre.Text+"',Telefono='"+txtTelefono.Text+"',Direccion='"+txtDireccion.Text+"',Referencia='"+txtReferencia.Text+"', Colonia='"+txtColonia.Text+"' where Id="+id+";", conectar);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Se ha editado el cliente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                frmClientes clientes = new frmClientes();
-                clientes.Show();
-                this.Close();
-            }
-            else
-            {
-                if (txtNombre.Text == "" || txtTelefono.Text == "" || txtDireccion.Text == "" || txtColonia.Text == "")
+                conectar.Open();
+
+                if (this.Text == "Editar")
                 {
-                    MessageBox.Show("Faltan campos por llenar", "Alto!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Usar parámetros para evitar la inyección SQL
+                    string query = "UPDATE Clientes SET Nombre=@Nombre, Telefono=@Telefono, Direccion=@Direccion, Referencia=@Referencia, Colonia=@Colonia WHERE IdCliente=@id;";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                        cmd.Parameters.AddWithValue("@Telefono", txtTelefono.Text);
+                        cmd.Parameters.AddWithValue("@Direccion", txtDireccion.Text);
+                        cmd.Parameters.AddWithValue("@Referencia", txtReferencia.Text);
+                        cmd.Parameters.AddWithValue("@Colonia", txtColonia.Text);
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Se ha editado el cliente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Nombre = txtTelefono.Text;
+                        this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                    }
+
                 }
                 else
                 {
-                    cmd = new OleDbCommand("INSERT INTO Clientes(Nombre, Telefono,Direccion,Referencia,Colonia) VALUES ('" + txtNombre.Text + "','" + txtTelefono.Text + "','" + txtDireccion.Text + "','" + txtReferencia.Text + "','" + txtColonia.Text + "');", conectar);
-                    cmd.ExecuteNonQuery();
-                    Nombre = txtTelefono.Text;
-                    MessageBox.Show("Se ha agregado el cliente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                    if (txtNombre.Text == "" || txtTelefono.Text == "" || txtDireccion.Text == "" || txtColonia.Text == "")
+                    {
+                        MessageBox.Show("Faltan campos por llenar", "Alto!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        using (SqlCommand cmdInsertar = new SqlCommand("INSERT INTO Clientes (Nombre, Telefono,Direccion,Referencia,Colonia) " +
+                                                                        "VALUES (@Nombre, @Telefono, @Direccion, @Referencia, @Colonia);", conectar))
+                        {
+                            cmdInsertar.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                            cmdInsertar.Parameters.AddWithValue("@Telefono", txtTelefono.Text);
+                            cmdInsertar.Parameters.AddWithValue("@Direccion", txtDireccion.Text);
+                            cmdInsertar.Parameters.AddWithValue("@Referencia", txtReferencia.Text);
+                            cmdInsertar.Parameters.AddWithValue("@Colonia", txtColonia.Text);
+
+                            cmdInsertar.ExecuteNonQuery();
+
+                            MessageBox.Show("Se ha agregado el cliente correctamente", "Correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Nombre = txtTelefono.Text;
+
+                            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                        }
+                       
+                    }
                 }
             }
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void frmAgregarCliente_Load(object sender, EventArgs e)
-        {
-
+        
         }
 
         private void txtTelefono_KeyPress(object sender, KeyPressEventArgs e)

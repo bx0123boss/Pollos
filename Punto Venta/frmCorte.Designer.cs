@@ -52,7 +52,6 @@
             this.lblCorte = new System.Windows.Forms.Label();
             this.lblSalida = new System.Windows.Forms.Label();
             this.lblEntrada = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.lblCredito = new System.Windows.Forms.Label();
@@ -77,6 +76,8 @@
             this.dgvCorte.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgvCorte.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvCorte.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCorte.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvCorte.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -98,15 +99,17 @@
             this.dgvCorte.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCorte.Location = new System.Drawing.Point(12, 57);
             this.dgvCorte.Name = "dgvCorte";
-            this.dgvCorte.Size = new System.Drawing.Size(668, 461);
+            this.dgvCorte.ReadOnly = true;
+            this.dgvCorte.Size = new System.Drawing.Size(629, 461);
             this.dgvCorte.TabIndex = 0;
             // 
             // button1
             // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.BackColor = System.Drawing.Color.Black;
-            this.button1.Font = new System.Drawing.Font("Stencil", 20.25F);
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(931, 479);
+            this.button1.Location = new System.Drawing.Point(654, 253);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(352, 85);
             this.button1.TabIndex = 1;
@@ -116,24 +119,27 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(940, 200);
+            this.label1.Location = new System.Drawing.Point(647, 100);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(175, 39);
             this.label1.TabIndex = 2;
             this.label1.Text = "Entradas:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(969, 259);
+            this.label2.Location = new System.Drawing.Point(676, 159);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(149, 39);
             this.label2.TabIndex = 3;
@@ -141,11 +147,13 @@
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(990, 311);
+            this.label3.Location = new System.Drawing.Point(697, 211);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(118, 39);
             this.label3.TabIndex = 4;
@@ -153,11 +161,13 @@
             // 
             // lblCorte
             // 
+            this.lblCorte.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCorte.AutoSize = true;
             this.lblCorte.BackColor = System.Drawing.Color.Transparent;
             this.lblCorte.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCorte.ForeColor = System.Drawing.Color.White;
-            this.lblCorte.Location = new System.Drawing.Point(1121, 311);
+            this.lblCorte.Location = new System.Drawing.Point(828, 211);
             this.lblCorte.Name = "lblCorte";
             this.lblCorte.Size = new System.Drawing.Size(118, 39);
             this.lblCorte.TabIndex = 7;
@@ -165,11 +175,13 @@
             // 
             // lblSalida
             // 
+            this.lblSalida.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSalida.AutoSize = true;
             this.lblSalida.BackColor = System.Drawing.Color.Transparent;
             this.lblSalida.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSalida.ForeColor = System.Drawing.Color.White;
-            this.lblSalida.Location = new System.Drawing.Point(1121, 259);
+            this.lblSalida.Location = new System.Drawing.Point(828, 159);
             this.lblSalida.Name = "lblSalida";
             this.lblSalida.Size = new System.Drawing.Size(149, 39);
             this.lblSalida.TabIndex = 6;
@@ -177,28 +189,17 @@
             // 
             // lblEntrada
             // 
+            this.lblEntrada.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblEntrada.AutoSize = true;
             this.lblEntrada.BackColor = System.Drawing.Color.Transparent;
             this.lblEntrada.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEntrada.ForeColor = System.Drawing.Color.White;
-            this.lblEntrada.Location = new System.Drawing.Point(1121, 200);
+            this.lblEntrada.Location = new System.Drawing.Point(828, 100);
             this.lblEntrada.Name = "lblEntrada";
             this.lblEntrada.Size = new System.Drawing.Size(175, 39);
             this.lblEntrada.TabIndex = 5;
             this.lblEntrada.Text = "Entradas:";
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.Black;
-            this.button2.Font = new System.Drawing.Font("Stencil", 20.25F);
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(931, 353);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(352, 120);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Reporte de entradas y salidas Inventario";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // dataGridView1
             // 
@@ -256,7 +257,7 @@
             dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridView2.Location = new System.Drawing.Point(459, 27);
+            this.dataGridView2.Location = new System.Drawing.Point(670, 677);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(430, 298);
             this.dataGridView2.TabIndex = 10;
@@ -264,24 +265,27 @@
             // 
             // lblCredito
             // 
+            this.lblCredito.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCredito.AutoSize = true;
             this.lblCredito.BackColor = System.Drawing.Color.Transparent;
             this.lblCredito.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCredito.ForeColor = System.Drawing.Color.White;
-            this.lblCredito.Location = new System.Drawing.Point(1121, 152);
+            this.lblCredito.Location = new System.Drawing.Point(828, 52);
             this.lblCredito.Name = "lblCredito";
             this.lblCredito.Size = new System.Drawing.Size(143, 39);
             this.lblCredito.TabIndex = 12;
             this.lblCredito.Text = "Tarjeta:";
-            this.lblCredito.Click += new System.EventHandler(this.lblCredito_Click);
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(969, 152);
+            this.label5.Location = new System.Drawing.Point(676, 52);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(143, 39);
             this.label5.TabIndex = 11;
@@ -330,7 +334,6 @@
             this.label6.TabIndex = 15;
             this.label6.Text = "Tarjeta:";
             this.label6.Visible = false;
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // label4
             // 
@@ -343,7 +346,6 @@
             this.label4.Size = new System.Drawing.Size(161, 39);
             this.label4.TabIndex = 14;
             this.label4.Text = "Efectivo:";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // dataGridView4
             // 
@@ -351,6 +353,8 @@
             this.dataGridView4.AllowUserToDeleteRows = false;
             dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGridView4.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            this.dataGridView4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView4.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -372,7 +376,8 @@
             this.dataGridView4.DefaultCellStyle = dataGridViewCellStyle15;
             this.dataGridView4.Location = new System.Drawing.Point(12, 567);
             this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.Size = new System.Drawing.Size(668, 121);
+            this.dataGridView4.ReadOnly = true;
+            this.dataGridView4.Size = new System.Drawing.Size(629, 162);
             this.dataGridView4.TabIndex = 16;
             // 
             // label7
@@ -389,14 +394,15 @@
             // 
             // button3
             // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.BackColor = System.Drawing.Color.Black;
-            this.button3.Font = new System.Drawing.Font("Stencil", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(411, 522);
+            this.button3.Location = new System.Drawing.Point(516, 525);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(269, 39);
+            this.button3.Size = new System.Drawing.Size(125, 39);
             this.button3.TabIndex = 18;
-            this.button3.Text = "Corte";
+            this.button3.Text = "Detalle";
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -406,7 +412,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkOrange;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1362, 741);
+            this.ClientSize = new System.Drawing.Size(1107, 738);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.dataGridView4);
@@ -416,7 +422,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.lblCorte);
             this.Controls.Add(this.lblSalida);
             this.Controls.Add(this.lblEntrada);
@@ -451,7 +456,6 @@
         private System.Windows.Forms.Label lblCorte;
         private System.Windows.Forms.Label lblSalida;
         private System.Windows.Forms.Label lblEntrada;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label lblCredito;

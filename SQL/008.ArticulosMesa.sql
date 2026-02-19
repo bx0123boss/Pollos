@@ -4,7 +4,7 @@ IF OBJECT_ID('ArticulosMesa', 'U') IS NOT NULL
 
 CREATE TABLE ArticulosMesa (
     IdArticulosMesa INT PRIMARY KEY IDENTITY(1,1),
-    IdProducto INT FOREIGN KEY REFERENCES PRODUCTOS(IdProducto),
+    IdInventario INT FOREIGN KEY REFERENCES Inventario(IdInventario),
     Cantidad NUMERIC(6,2),
     Total NUMERIC(8,2),
     Comentario VARCHAR(250),
@@ -12,6 +12,8 @@ CREATE TABLE ArticulosMesa (
     IdMesero INT FOREIGN KEY REFERENCES USUARIOS(IdUsuario),
     FechaHora DATETIME,
     Estatus VARCHAR(15),
-    IdUsuarioCancelo INT FOREIGN KEY REFERENCES USUARIOS(IdUsuario)
+    IdUsuarioCancelo INT FOREIGN KEY REFERENCES USUARIOS(IdUsuario),
+	Ids VARCHAR(50),
+	IdPromo INT
 );
 COMMIT TRANSACTION;
