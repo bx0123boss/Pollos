@@ -1,0 +1,117 @@
+﻿@using Microsoft.Data.SqlClient
+@using System.Data
+@using FastFoodWeb.Models
+@inject IConfiguration Configuration
+@inject IJSRuntime JS
+
+@if (Mostrar)
+{
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show d-block" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Agregar Nueva Mesa</h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre de la Mesa</label>
+                        <input type="text" class="form-control form-control-lg"
+                               placeholder="Ej: Mesa 10 o Barra 2"
+                               @bind="txtNombre" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Cantidad de Personas</label>
+                        <input type="number" class="form-control form-control-lg"
+                               min="1"
+                               @bind="txtCantidadPersonas" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CerrarModal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" @onclick="GuardarMesa">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool Mostrar { get; set; }
+    [Parameter] public EventCallback<Mesa> OnMesaAgregada { get; set; }
+    [Parameter] public EventCallback OnCerrar { get; set; }
+
+    private string txtNombre = "";
+    private int txtCantidadPersonas = 1;
+
+    private async Task CerrarModal()
+    {
+        LimpiarCampos();
+        await OnCerrar.InvokeAsync();
+    }
+
+    private void LimpiarCampos()
+    {
+        txtNombre = "";
+        txtCantidadPersonas = 1;
+    }
+
+    private async Task GuardarMesa()
+    {
+        if (string.IsNullOrWhiteSpace(txtNombre) || txtCantidadPersonas <= 0)
+        {
+            await JS.InvokeVoidAsync("alert", "Por favor ingresa un nombre y una cantidad de personas válida.");
+            return;
+        }
+
+        string connectionString = Configuration.GetConnectionString("CadenaSQL");
+        using (SqlConnection con = new SqlConnection(connectionString))
+        {
+            await con.OpenAsync();
+
+            // 1. Validar si ya existe
+            using (SqlCommand cmdCheck = new SqlCommand("SELECT Nombre FROM Mesas WHERE Nombre = @Nombre AND Estatus = 'COCINA';", con))
+            {
+                cmdCheck.Parameters.AddWithValue("@Nombre", txtNombre);
+                using (SqlDataReader reader = await cmdCheck.ExecuteReaderAsync())
+                {
+                    if (reader.HasRows)
+                    {
+                        await JS.InvokeVoidAsync("alert", "Existe una mesa similar activa (en COCINA), favor de verificar.");
+                        return;
+                    }
+                }
+            }
+
+            // 2. Insertar Nueva Mesa
+            string query = @"INSERT INTO Mesas (Nombre, IdMesero, CantidadPersonas, Impresion, Estatus)
+                             VALUES (@Nombre, @IdMesero, @CantidadPersonas, @Impresion, @Estatus);
+                             SELECT SCOPE_IDENTITY();";
+
+            int nuevaMesaId = 0;
+            using (SqlCommand cmdInsert = new SqlCommand(query, con))
+            {
+                cmdInsert.Parameters.AddWithValue("@Nombre", txtNombre);
+                cmdInsert.Parameters.AddWithValue("@IdMesero", 1); // TODO: Reemplazar por tu ID de sesión
+                cmdInsert.Parameters.AddWithValue("@CantidadPersonas", txtCantidadPersonas);
+                cmdInsert.Parameters.AddWithValue("@Impresion", 0);
+                cmdInsert.Parameters.AddWithValue("@Estatus", "NUEVA");
+
+                nuevaMesaId = Convert.ToInt32(await cmdInsert.ExecuteScalarAsync());
+            }
+
+            // 3. Crear el objeto para devolverlo al padre
+            var mesaNueva = new Mesa
+            {
+                Id = nuevaMesaId,
+                Nombre = txtNombre,
+                Estatus = "NUEVA",
+                CantidadPersonas = txtCantidadPersonas
+            };
+
+            LimpiarCampos();
+            await OnMesaAgregada.InvokeAsync(mesaNueva);
+        }
+    }
+}

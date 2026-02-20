@@ -1,17 +1,58 @@
 ﻿/* =====================================================
-   PEDIDO - UI POS LIMPIO Y PROFESIONAL
-   (Compatible con Bootstrap)
+   PEDIDO - UI POS · SISTEMA DE VARIABLES DE COLOR
+   Cambia tu paleta completa desde aquí ↓
+===================================================== */
+
+:root {
+	/* ─── PALETA PRIMARIA ─────────────────────────── */
+	--color-primario: #1a1a2e; /* Fondo header/bottom-bar        */
+	--color-primario-hover: #16213e; /* Hover sobre el primario         */
+	--color-acento: #e94560; /* Botones CTA, badges, precios    */
+	--color-acento-hover: #c73652; /* Hover del acento                */
+	--color-acento-soft: rgba(233, 69, 96, 0.12); /* Fondo suave acento */
+	/* ─── SUPERFICIES ─────────────────────────────── */
+	--color-fondo: #f0f2f5; /* Fondo general de la página      */
+	--color-superficie: #ffffff; /* Cards, paneles                  */
+	--color-superficie-alt: #f7f8fa; /* Fondos alternos (header cart)   */
+	/* ─── TEXTO ───────────────────────────────────── */
+	--color-texto: #1a1a2e; /* Texto principal                 */
+	--color-texto-suave: #6b7280; /* Texto secundario/muted          */
+	--color-texto-inv: #ffffff; /* Texto sobre fondos oscuros      */
+	/* ─── BORDES ──────────────────────────────────── */
+	--color-borde: #e5e7eb;
+	--color-borde-focus: var(--color-acento);
+	/* ─── ÉXITO / PRECIO ──────────────────────────── */
+	--color-precio: #059669; /* Precio en cards                 */
+	--color-precio-hover: #047857;
+	/* ─── SOMBRAS ─────────────────────────────────── */
+	--sombra-card: 0 2px 10px rgba(0,0,0,0.07);
+	--sombra-card-hover: 0 12px 28px rgba(0,0,0,0.14);
+	--sombra-sticky: 0 4px 20px rgba(0,0,0,0.10);
+	--sombra-bottom: 0 -8px 30px rgba(0,0,0,0.12);
+	--sombra-acento: 0 8px 20px rgba(233, 69, 96, 0.35);
+	/* ─── RADIOS ──────────────────────────────────── */
+	--radio-sm: 8px;
+	--radio-md: 14px;
+	--radio-lg: 20px;
+	--radio-pill: 50px;
+	/* ─── TIPOGRAFÍA ──────────────────────────────── */
+	--fuente: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* =====================================================
+   BASE
 ===================================================== */
 
 :host {
 	display: block;
-	background-color: #f4f6f9;
-	font-family: 'Segoe UI', sans-serif;
+	background-color: var(--color-fondo);
+	font-family: var(--fuente);
+	color: var(--color-texto);
 }
 
-/* ================================
+/* =====================================================
    LAYOUT GENERAL
-================================ */
+===================================================== */
 
 .main-container {
 	display: flex;
@@ -19,43 +60,43 @@
 	min-height: 100vh;
 }
 
-/* ================================
+/* =====================================================
    HEADER STICKY
-================================ */
+===================================================== */
 
 .sticky-header-group {
 	position: sticky;
 	top: 0;
 	z-index: 1000;
-	background: #ffffff;
-	box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+	background: var(--color-superficie);
+	box-shadow: var(--sombra-sticky);
 }
 
 .header-bar {
-	padding: 14px 18px 10px 18px;
+	padding: 12px 16px 10px 16px;
 }
 
-	/* Botón carrito (NO rompe Bootstrap) */
 	.header-bar .btn-light {
-		border-radius: 12px;
+		border-radius: var(--radio-md);
 		transition: all 0.2s ease;
 	}
 
 		.header-bar .btn-light:hover {
 			transform: translateY(-2px);
-			box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+			box-shadow: var(--sombra-card-hover);
 		}
 
-/* ================================
+/* =====================================================
    SELECTOR MODALIDAD
-================================ */
+===================================================== */
 
 .modalidad-selector {
 	margin-top: 8px;
-	background: #eef1f4;
-	border-radius: 14px;
+	background: var(--color-fondo);
+	border-radius: var(--radio-md);
 	padding: 4px;
 	display: flex;
+	border: 1px solid var(--color-borde);
 }
 
 	.modalidad-selector button {
@@ -63,43 +104,42 @@
 		border: none;
 		background: transparent;
 		padding: 8px 0;
-		border-radius: 10px;
+		border-radius: var(--radio-sm);
 		font-weight: 600;
-		font-size: 0.85rem;
-		color: #6c757d;
+		font-size: 0.82rem;
+		color: var(--color-texto-suave);
 		transition: all 0.2s ease;
+		letter-spacing: 0.02em;
 	}
 
 		.modalidad-selector button:hover {
-			background: rgba(0,0,0,0.05);
+			background: rgba(0,0,0,0.04);
+			color: var(--color-texto);
 		}
 
 		.modalidad-selector button.active {
-			background: white;
-			color: #0d6efd;
-			box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+			background: var(--color-primario);
+			color: var(--color-texto-inv);
+			box-shadow: 0 3px 12px rgba(0,0,0,0.18);
 		}
 
-/* ================================
+/* =====================================================
    CATEGORÍAS
-================================ */
+===================================================== */
 
 .categories-wrapper {
-	background: white;
+	background: var(--color-superficie);
 	padding: 12px 0 14px 0;
-	border-top: 1px solid #f1f3f5;
-	border-bottom: 1px solid #e9ecef;
+	border-top: 1px solid var(--color-borde);
+	border-bottom: 1px solid var(--color-borde);
 }
-/* ================================
-   CATEGORÍAS - SCROLL POS ESTABLE
-================================ */
 
 .categories-scroll {
 	display: grid;
-	grid-auto-flow: column; /* Flujo por columnas */
-	grid-template-rows: repeat(2, 1fr); /* 2 filas en móvil */
-	gap: 10px;
-	padding: 0 15px;
+	grid-auto-flow: column;
+	grid-template-rows: repeat(2, 1fr);
+	gap: 8px;
+	padding: 0 14px;
 	overflow-x: auto;
 	overflow-y: hidden;
 	scrollbar-width: none;
@@ -109,56 +149,60 @@
 		display: none;
 	}
 
-/* PC → 4 filas fijas */
 @media (min-width: 1000px) {
 	.categories-scroll {
 		grid-template-rows: repeat(4, 1fr);
 	}
 }
 
-
 .btn-category {
 	border: none;
-	padding: 8px 18px;
-	border-radius: 30px;
+	padding: 7px 16px;
+	border-radius: var(--radio-pill);
 	font-weight: 600;
-	font-size: 0.75rem;
+	font-size: 0.73rem;
 	white-space: nowrap;
 	transition: all 0.15s ease;
-	opacity: 0.9;
+	opacity: 0.88;
+	letter-spacing: 0.025em;
 }
 
 	.btn-category:hover {
 		transform: translateY(-2px);
 		opacity: 1;
+		box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 	}
 
 	.btn-category.cat-selected {
-		transform: scale(1.05);
-		box-shadow: 0 6px 16px rgba(0,0,0,0.18);
-		border: 2px solid #212529;
+		transform: scale(1.06);
+		box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+		outline: 2.5px solid var(--color-texto);
+		outline-offset: 1px;
+		opacity: 1;
 	}
 
-/* ================================
+/* =====================================================
    PRODUCTOS
-================================ */
+===================================================== */
 
 .products-container {
-	padding: 18px;
+	padding: 16px;
 	flex-grow: 1;
 }
 
 .product-card {
 	cursor: pointer;
-	border-radius: 18px;
+	border-radius: var(--radio-lg);
 	transition: all 0.18s ease;
-	background: white;
-	border: 1px solid rgba(0,0,0,0.05);
+	background: var(--color-superficie);
+	border: 1px solid var(--color-borde) !important;
+	box-shadow: var(--sombra-card);
 }
 
 	.product-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+		transform: translateY(-5px);
+		box-shadow: var(--sombra-card-hover);
+		border-color: rgba(0,0,0,0.1) !important;
 	}
 
 	.product-card:active {
@@ -166,9 +210,9 @@
 	}
 
 .img-placeholder {
-	background: linear-gradient(135deg, #f1f3f5, #e9ecef);
-	height: 85px;
-	border-radius: 14px;
+	background: linear-gradient(135deg, var(--color-fondo), var(--color-borde));
+	height: 82px;
+	border-radius: var(--radio-md);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -184,78 +228,163 @@
 }
 
 .price-tag {
-	margin-top: 10px;
+	margin-top: 8px;
 	font-weight: 800;
-	font-size: 0.9rem;
-	color: #198754;
+	font-size: 0.88rem;
+	color: var(--color-precio); /* Verde — precio de venta en card */
 }
 
-/* ================================
-   BOTTOM BAR
-================================ */
+/* Nombre del producto en la card */
+.product-card .card-title {
+	color: var(--color-secundario);
+}
+
+/* =====================================================
+   BOTTOM BAR — REDISEÑADA
+===================================================== */
 
 .bottom-bar {
 	position: sticky;
 	bottom: 0;
 	z-index: 1000;
-	background: white;
-	padding: 16px 22px;
-	border-top: 1px solid #e9ecef;
-	box-shadow: 0 -6px 20px rgba(0,0,0,0.08);
+	background: var(--color-primario);
+	padding: 0; /* el padding lo maneja el inner */
+	box-shadow: var(--sombra-bottom);
+	/* Línea luminosa superior */
+	border-top: 1px solid rgba(255,255,255,0.08);
 }
 
-	/* Botón confirmar mejorado SIN romper Bootstrap */
-	.bottom-bar .btn-primary {
-		border-radius: 40px;
-		padding: 10px 28px;
-		font-weight: 700;
-		transition: all 0.2s ease;
+	/* Contenedor interno */
+	.bottom-bar > .d-flex {
+		padding: 14px 18px;
+		align-items: center;
+		gap: 16px;
 	}
 
-		.bottom-bar .btn-primary:hover:not(:disabled) {
+	/* Bloque de total */
+	.bottom-bar .total-block {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.1;
+	}
+
+	.bottom-bar .total-label {
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: rgba(255,255,255,0.5);
+	}
+
+	.bottom-bar .total-amount {
+		font-size: 1.55rem;
+		font-weight: 800;
+		color: var(--color-texto-inv);
+		line-height: 1.15;
+	}
+
+	/* Botón confirmar */
+	.bottom-bar .btn-confirmar {
+		flex: 1;
+		border: none;
+		border-radius: var(--radio-pill);
+		background: var(--color-secundario);
+		color: var(--color-texto-inv);
+		padding: 12px 24px;
+		font-weight: 700;
+		font-size: 0.9rem;
+		letter-spacing: 0.04em;
+		transition: all 0.22s ease;
+		box-shadow: var(--sombra-acento);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+	}
+
+		.bottom-bar .btn-confirmar:hover:not(:disabled) {
+			background: var(--color-acento-hover);
 			transform: translateY(-2px);
-			box-shadow: 0 8px 18px rgba(13,110,253,0.4);
+			box-shadow: 0 12px 24px rgba(233, 69, 96, 0.45);
 		}
 
-/* ================================
-   CARRITO
-================================ */
+		.bottom-bar .btn-confirmar:active:not(:disabled) {
+			transform: scale(0.97);
+		}
+
+		.bottom-bar .btn-confirmar:disabled {
+			opacity: 0.38;
+			box-shadow: none;
+			cursor: not-allowed;
+		}
+
+/* =====================================================
+   CARRITO (PANEL LATERAL)
+===================================================== */
 
 .cart-overlay {
 	position: fixed;
 	inset: 0;
-	background: rgba(0,0,0,0.6);
+	background: rgba(0,0,0,0.55);
 	z-index: 2000;
 	display: flex;
 	justify-content: flex-end;
+	backdrop-filter: blur(3px);
 }
 
 .cart-panel {
-	background: white;
+	background: var(--color-superficie);
 	width: 92%;
 	max-width: 420px;
 	height: 100%;
-	animation: slideIn 0.25s ease-out;
+	animation: slideIn 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 	display: flex;
 	flex-direction: column;
 	border-top-left-radius: 24px;
 	border-bottom-left-radius: 24px;
+	overflow: hidden;
 }
 
 .cart-header {
-	background: #f8f9fa;
+	background: var(--color-primario);
+	color: var(--color-texto-inv);
+	padding: 16px 18px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
-.cart-item {
-	background: #f8f9fa;
-	border-radius: 12px;
-	padding: 10px 14px;
-}
+	.cart-header h5 {
+		color: var(--color-texto-inv);
+	}
+
+	.cart-header .btn-close {
+		filter: invert(1);
+	}
 
 .cart-body {
 	overflow-y: auto;
 	flex-grow: 1;
+	padding: 14px;
 }
+
+.cart-item {
+	background: var(--color-superficie-alt);
+	border-radius: var(--radio-md);
+	padding: 10px 14px;
+	margin-bottom: 10px;
+	border: 1px solid var(--color-borde);
+	transition: box-shadow 0.15s ease;
+}
+
+	.cart-item:hover {
+		box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+	}
+
+	/* Nombre del producto en el carrito */
+	.cart-item .fw-bold {
+		color: var(--color-secundario);
+	}
 
 @keyframes slideIn {
 	from {
@@ -267,14 +396,20 @@
 	}
 }
 
-/* ================================
+/* Precio de línea en el carrito */
+.precio-item {
+	color: var(--color-secundario);
+	font-weight: 700;
+}
+
+/* =====================================================
    COMENTARIO DEL CARRITO
-================================ */
+===================================================== */
 
 .comentario-carrito {
-	font-size: 0.75rem;
+	font-size: 0.74rem;
 	font-style: italic;
-	color: #6c757d;
+	color: var(--color-texto-suave);
 	line-height: 1.1;
 	margin-top: 4px;
 	display: flex;
@@ -284,27 +419,28 @@
 
 	.comentario-carrito span {
 		display: -webkit-box;
-		-webkit-line-clamp: 2; /* 👈 máximo 2 líneas */
+		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		word-break: break-word;
-		max-height: 2.2em; /* 2 líneas exactas */
+		max-height: 2.2em;
 	}
 
 		.comentario-carrito span:hover {
 			overflow: visible;
 			-webkit-line-clamp: unset;
 			max-height: none;
-			background: #f8f9fa;
+			background: var(--color-fondo);
 			padding: 4px;
 			border-radius: 6px;
 			position: relative;
 			z-index: 5;
 		}
-/* ===========================
-   MODAL LAYOUT FLEX
-=========================== */
+
+/* =====================================================
+   MODAL DE PRODUCTO — PEDIDO MODAL
+===================================================== */
 
 .pedido-modal {
 	display: flex;
@@ -313,23 +449,117 @@
 	max-height: 90vh;
 }
 
-/* Body crece y puede hacer scroll */
 .modal-body-flex {
 	flex: 1;
 	overflow-y: auto;
 }
 
-/* Footer fijo abajo */
-.pedido-footer {
-	border-top: 1px solid #e0e0e0;
-	padding: 16px;
-	background: #fff;
+/* ─── Header del Modal ─────────────────────────── */
+
+.pedido-header {
 	display: flex;
-	flex-direction: column;
-	gap: 12px;
+	justify-content: space-between;
+	align-items: center;
+	padding: 16px 20px;
+	background: var(--color-primario);
+	border-bottom: none;
 }
 
-/* Total en una sola línea */
+	.pedido-header .modal-title {
+		font-weight: 700;
+		font-size: 1.1rem;
+		color: var(--color-texto-inv);
+	}
+
+.btn-cerrar {
+	border: none;
+	background: rgba(255,255,255,0.1);
+	color: var(--color-texto-inv);
+	font-size: 1rem;
+	width: 32px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	transition: 0.2s ease;
+}
+
+	.btn-cerrar:hover {
+		background: rgba(255,255,255,0.22);
+		color: #fff;
+	}
+
+/* ─── Footer del Modal — REDISEÑADO ───────────── */
+
+.pedido-footer {
+	/* Separación sutil, no el borde genérico */
+	border-top: none;
+	padding: 0;
+	background: transparent;
+	gap: 0;
+}
+
+.pedido-footer-inner {
+	margin: 12px 16px 16px 16px;
+	background: var(--color-superficie-alt);
+	border: 1.5px solid var(--color-borde);
+	border-radius: var(--radio-lg);
+	overflow: hidden;
+	/* Sombra suave en el recuadro */
+	box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.pedido-footer-total {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px 18px;
+	background: var(--color-fondo);
+	border-bottom: 1.5px solid var(--color-borde);
+}
+
+.pedido-footer-total-label {
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--color-texto-suave);
+}
+
+.pedido-footer-total-amount {
+	font-size: 1.4rem;
+	font-weight: 800;
+	color: var(--color-secundario);
+	letter-spacing: -0.01em;
+}
+
+.btn-agregar {
+	width: 100%;
+	padding: 14px;
+	font-size: 0.95rem;
+	border-radius: 0;
+	border: none;
+	background: var(--color-acento);
+	color: var(--color-texto-inv);
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	transition: 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+	.btn-agregar:hover {
+		background: var(--color-acento-hover);
+	}
+
+	.btn-agregar:active {
+		filter: brightness(0.92);
+	}
+
+/* ─── Total en una sola línea (helper) ─────────── */
 .total-linea {
 	display: flex;
 	justify-content: space-between;
@@ -339,63 +569,10 @@
 }
 
 .total-precio {
-	color: #0d6efd;
+	color: var(--color-acento);
 }
 
-/* Botón full width */
-.btn-agregar {
-	width: 100%;
-	padding: 14px;
-	font-size: 1rem;
-	border-radius: 12px;
-	border: none;
-	background: #198754;
-	color: white;
-	font-weight: 600;
-	transition: 0.2s ease;
-}
-
-	.btn-agregar:hover {
-		background: #157347;
-	}
-
-/* ===========================
-   HEADER DEL MODAL
-=========================== */
-
-.pedido-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 16px 20px;
-	background: #f8f9fa;
-	border-bottom: 1px solid #e5e5e5;
-}
-
-	.pedido-header .modal-title {
-		font-weight: 600;
-		font-size: 1.2rem;
-	}
-
-/* Botón cerrar */
-.btn-cerrar {
-	border: none;
-	background: transparent;
-	font-size: 1.4rem;
-	color: #495057;
-	padding: 6px;
-	border-radius: 50%;
-	transition: 0.2s ease;
-}
-
-	.btn-cerrar:hover {
-		background: #e9ecef;
-		color: #000;
-	}
-
-/* ===========================
-   CAJA DE COMENTARIOS
-=========================== */
+/* ─── Comentarios ─────────────────────────────── */
 
 .comentarios-container {
 	margin-top: 20px;
@@ -406,41 +583,41 @@
 
 .comentarios-label {
 	font-weight: 600;
-	font-size: 0.9rem;
-	color: #495057;
+	font-size: 0.88rem;
+	color: var(--color-secundario);
 }
 
 	.comentarios-label span {
 		font-weight: 400;
-		color: #6c757d;
+		color: var(--color-texto-suave);
 	}
 
 .comentarios-input {
 	resize: none;
-	min-height: 90px;
+	min-height: 88px;
 	padding: 12px 14px;
-	border-radius: 12px;
-	border: 1px solid #dee2e6;
-	background: #f8f9fa;
-	font-size: 0.9rem;
+	border-radius: var(--radio-md);
+	border: 1.5px solid var(--color-borde);
+	background: var(--color-superficie-alt);
+	font-size: 0.88rem;
 	transition: 0.2s ease;
+	font-family: var(--fuente);
 }
 
-	/* Focus elegante */
 	.comentarios-input:focus {
 		outline: none;
-		border-color: #0d6efd;
-		background: #fff;
-		box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+		border-color: var(--color-acento);
+		background: var(--color-superficie);
+		box-shadow: 0 0 0 3px var(--color-acento-soft);
 	}
 
-	/* Placeholder más suave */
 	.comentarios-input::placeholder {
 		color: #adb5bd;
 	}
-/* ===============================
-   BACKDROP
-================================= */
+
+/* =====================================================
+   ANIMACIONES DE MODAL
+===================================================== */
 
 .modal-animado {
 	background-color: rgba(0, 0, 0, 0.45);
@@ -451,25 +628,13 @@
 		animation: backdropFadeOut 0.25s ease-in forwards;
 	}
 
-	/* ===============================
-   MODAL ENTRADA
-================================= */
-
 	.modal-animado .modal-dialog {
 		animation: modalSlideIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 	}
 
-	/* ===============================
-   MODAL SALIDA
-================================= */
-
 	.modal-animado.closing .modal-dialog {
 		animation: modalSlideOut 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 	}
-
-/* ===============================
-   KEYFRAMES
-================================= */
 
 @keyframes backdropFadeIn {
 	from {
@@ -494,7 +659,7 @@
 @keyframes modalSlideIn {
 	from {
 		opacity: 0;
-		transform: translateY(25px) scale(0.98);
+		transform: translateY(28px) scale(0.97);
 	}
 
 	to {
@@ -511,6 +676,154 @@
 
 	to {
 		opacity: 0;
-		transform: translateY(25px) scale(0.98);
+		transform: translateY(28px) scale(0.97);
 	}
 }
+
+/* =====================================================
+   MESAS (MODAL)
+===================================================== */
+
+.mesa-card {
+	position: relative;
+	height: 138px;
+	border-radius: var(--radio-lg);
+	background: var(--color-superficie);
+	cursor: pointer;
+	transition: all 0.22s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: var(--sombra-card);
+	border: 2.5px solid transparent;
+}
+
+	.mesa-card:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--sombra-card-hover);
+	}
+
+.mesa-content {
+	text-align: center;
+}
+
+.mesa-icon {
+	font-size: 1.8rem;
+	opacity: 0.8;
+	margin-bottom: 5px;
+	display: block;
+}
+
+.mesa-title {
+	font-weight: 700;
+	margin-bottom: 4px;
+	font-size: 1.05rem;
+	color: var(--color-secundario);
+}
+
+.mesa-badge {
+	font-size: 0.68rem;
+	padding: 3px 10px;
+	border-radius: var(--radio-pill);
+	font-weight: 600;
+}
+
+.mesa-status-dot {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 11px;
+	height: 11px;
+	border-radius: 50%;
+	box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+/* Estados */
+.mesa-card.cocina {
+	background: linear-gradient(135deg, #fff4e5, #ffe5cc);
+	border-color: #ff9800;
+}
+
+	.mesa-card.cocina .mesa-badge {
+		background: #ff5722;
+		color: white;
+	}
+
+	.mesa-card.cocina .mesa-status-dot {
+		background: #ff5722;
+		box-shadow: 0 0 12px #ff5722;
+	}
+
+.mesa-card.nueva {
+	background: linear-gradient(135deg, #e3f2fd, #d0e8ff);
+	border-color: #2196f3;
+}
+
+	.mesa-card.nueva .mesa-badge {
+		background: #2196f3;
+		color: white;
+	}
+
+	.mesa-card.nueva .mesa-status-dot {
+		background: #2196f3;
+		box-shadow: 0 0 12px #2196f3;
+	}
+
+.mesa-card.libre {
+	background: linear-gradient(135deg, #e8f5e9, #d2f4d3);
+	border-color: #4caf50;
+}
+
+	.mesa-card.libre .mesa-badge {
+		background: #4caf50;
+		color: white;
+	}
+
+	.mesa-card.libre .mesa-status-dot {
+		background: #4caf50;
+		box-shadow: 0 0 12px #4caf50;
+	}
+
+.mesa-card.seleccionada {
+	border-color: var(--color-acento) !important;
+	transform: scale(1.05);
+	box-shadow: 0 0 0 3px var(--color-acento-soft), 0 8px 22px rgba(0,0,0,0.15);
+}
+
+	.mesa-card.seleccionada .mesa-icon {
+		opacity: 1;
+		color: var(--color-acento);
+	}
+
+/* =====================================================
+   FAB DENTRO DEL MODAL
+===================================================== */
+
+.fab-btn-modal {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	width: 58px;
+	height: 58px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, var(--color-precio), #047857);
+	color: white;
+	border: none;
+	font-size: 1.7rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	z-index: 10;
+	transition: all 0.25s ease;
+	box-shadow: 0 6px 18px rgba(5, 150, 105, 0.4);
+}
+
+	.fab-btn-modal:hover {
+		transform: scale(1.1);
+		box-shadow: 0 10px 26px rgba(5,150,105,0.55);
+	}
+
+	.fab-btn-modal:active {
+		transform: scale(0.95);
+	}

@@ -1,0 +1,74 @@
+﻿@page "/configuracion"
+@using FastFoodWeb.Models
+@using FastFoodWeb.Services
+@inject ConfiguracionService ConfigService
+@inject IJSRuntime JS
+
+<h3>Configuración del Sistema</h3>
+
+<div class="card mt-3">
+
+    <div class="card-body">
+
+       
+            <h5>Paleta de Colores</h5>
+            <p class="text-muted">Selecciona los colores que se usarán en los encabezados y botones.</p>
+
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <label class="form-label fw-bold">Color Principal</label>
+                    <div class="input-group mb-3">
+                        <input type="color" class="form-control form-control-color"
+                               @bind="coloresConfig.ColorPrimario"
+                               title="Elige tu color principal">
+                        <input type="text" class="form-control" @bind="coloresConfig.ColorPrimario" readonly>
+                    </div>
+                </div>
+
+                <div class="col-md-4 text-center">
+                    <label class="form-label fw-bold">Color Secundario</label>
+                    <div class="input-group mb-3">
+                        <input type="color" class="form-control form-control-color"
+                               @bind="coloresConfig.ColorSecundario"
+                               title="Elige tu color secundario">
+                        <input type="text" class="form-control" @bind="coloresConfig.ColorSecundario" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <button class="btn btn-primary" @onclick="GuardarColores">
+                    <span class="oi oi-check"></span> Guardar Configuración
+                </button>
+            </div>
+
+            <div class="mt-5 p-3 text-white rounded" style="background-color: @coloresConfig.ColorPrimario;">
+                Esta es una muestra del color PRINCIPAL con texto blanco.
+                <button class="btn btn-sm mt-2" style="background-color: @coloresConfig.ColorSecundario; color: white;">Botón Secundario</button>
+            </div>
+        
+
+    </div>
+</div>
+
+@code {
+    private int tabActiva = 1;
+    private ConfiguracionApariencia coloresConfig = new ConfiguracionApariencia();
+    private bool modoEdicion = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarDatos();
+    }
+
+    private async Task CargarDatos()
+    {
+        coloresConfig = await ConfigService.ObtenerColores();
+    }
+    // --- Lógica Colores ---
+    private async Task GuardarColores()
+    {
+        await ConfigService.GuardarColores(coloresConfig);
+        // Aquí podrías inyectar un servicio para refrescar el layout si fuera necesario
+        await JS.InvokeVoidAsync("alert", "Colores actualizados correctamente.");
+    }
+}

@@ -1,30 +1,45 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using FastFoodWeb.Services
+@using FastFoodWeb.Models
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">FastFoodWeb</a>
+        <a class="navbar-brand" href="">Jaegersoft</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     </div>
 </div>
-
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column d-flex" style="height: 100%;">
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="pedido">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Pedidos
+                <span class="bi bi-receipt"></span> Pedidos
             </NavLink>
         </div>
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="mesas">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Mesas
+                <span class="bi bi-diagram-3"></span> Mesas
             </NavLink>
         </div>
+
+
+        <div class="nav-item px-3 ">
+            <NavLink class="nav-link" href="configuracion">
+                <span class="bi bi-gear"></span> Configuración
+            </NavLink>
+        </div>
+
     </nav>
 </div>
 
+@code {
+    private bool collapseNavMenu = true;
+    private string nombreNegocio = "Cargando...";
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

@@ -9,7 +9,6 @@
 <div class="main-container">
 
     @* --- GRUPO SUPERIOR PEGAGOSO (HEADER + CATEGORÍAS) --- *@
-    @* Al agruparlos, ambos se quedan pegados arriba sin taparse entre sí *@
     <div class="sticky-header-group">
 
         @* --- BARRA DE ESTADO Y MODALIDAD --- *@
@@ -17,8 +16,63 @@
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div>
                     <span class="badge rounded-pill bg-dark">@modalidad</span>
+
+                    @* --- ESTE ES EL BOTÓN QUE ABRE EL MODAL --- *@
+                    @if (modalidad == "MESA")
+                    {
+                        <button class="btn btn-sm btn-outline-primary ms-2 fw-bold bg-white" @onclick="AbrirSeleccionMesa">
+                            <i class="bi bi-geo-alt-fill text-danger"></i>
+                            @(mesaSeleccionada?.Nombre ?? "Seleccionar Mesa")
+                        </button>
+                    }
+
                     <span class="ms-2 fw-bold text-dark small">Folio: @folioActual</span>
                 </div>
+                @* --- MODAL DE SELECCIÓN DE MESA --- *@
+                @if (mostrarModalMesas)
+                {
+                    <div class="modal-backdrop fade show"></div>
+                    <div class="modal fade show d-block" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+
+                            @* Bootstrap ya le da position:relative a modal-content por defecto *@
+                            <div class="modal-content border-0 shadow-lg">
+
+                                @* --- ENCABEZADO LIMPIO --- *@
+                                <div class="modal-header bg-dark text-white">
+                                    <h5 class="modal-title"><i class="bi bi-ui-radios-grid me-2"></i>Seleccionar Mesa</h5>
+                                    <button type="button" class="btn-close btn-close-white" @onclick="() => mostrarModalMesas = false"></button>
+                                </div>
+
+                                @* --- CUERPO DEL MODAL (LISTA DE MESAS) --- *@
+                                @* Agregamos padding-bottom: 80px para que el último renglón de mesas no se esconda detrás del botón *@
+                                <div class="modal-body bg-light" style="max-height: 60vh; overflow-y: auto; padding-bottom: 80px;">
+                                    <div class="row g-3">
+                                        @foreach (var m in listaMesasDisponibles)
+                                        {
+                                            <div class="col-6 col-md-4 col-lg-3">
+                                                <div class="mesa-card @(m.Estatus.ToLower()) @(mesaSeleccionada?.Id == m.Id ? "seleccionada" : "")"
+                                                     @onclick="() => SeleccionarMesa(m)">
+                                                    <div class="mesa-status-dot"></div>
+                                                    <div class="mesa-content">
+                                                        <i class="bi bi-grid-3x3-gap-fill mesa-icon"></i>
+                                                        <h4 class="mesa-title">@m.Nombre</h4>
+                                                        <span class="mesa-badge">@m.Estatus</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <button class="fab-btn-modal shadow" @onclick="() => mostrarModalCrearMesa = true" title="Agregar Nueva Mesa">
+                                    <i class="bi bi-plus-lg"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                }
                 <button class="btn btn-light position-relative border shadow-sm" @onclick="ToggleCarrito">
                     <i class="bi bi-cart3 fs-5"></i>
                     @if (carrito.Count > 0)
@@ -37,7 +91,7 @@
             </div>
         </div>
 
-        @* --- CATEGORÍAS (2 RENGLONES) --- *@
+        @* --- CATEGORÍAS --- *@
         <div class="categories-wrapper">
             <div class="categories-scroll">
                 @foreach (var cat in categorias)
@@ -89,14 +143,14 @@
     </div>
 
     @* --- BARRA INFERIOR (TOTAL) --- *@
-    <div class="bottom-bar shadow-lg">
-        <div class="d-flex justify-content-between align-items-center w-100">
-            <div class="d-flex flex-column">
-                <span class="small text-muted">Total Orden</span>
-                <span class="fs-4 fw-bolder text-dark">$@total.ToString("N2")</span>
+    <div class="bottom-bar">
+        <div class="d-flex w-100">
+            <div class="total-block me-3">
+                <span class="total-label">Total Orden</span>
+                <span class="total-amount">$@total.ToString("N2")</span>
             </div>
-            <button class="btn btn-primary rounded-pill px-4 fw-bold" disabled="@(carrito.Count == 0)" @onclick="FinalizarOrden">
-                Confirmar <i class="bi bi-check2"></i>
+            <button class="btn-confirmar" disabled="@(carrito.Count == 0)" @onclick="FinalizarOrden">
+                <i class="bi bi-check2-circle"></i> Confirmar Pedido
             </button>
         </div>
     </div>
@@ -187,30 +241,34 @@
                             <textarea class="comentarios-input"
                                       placeholder="Ej. Sin cebolla, extra aderezo..."
                                       @bind="comentarioTemporal">
-                            </textarea>
+                                </textarea>
                         </div>
 
                     </div>
-                    <div class="modal-footer pedido-footer">
-                        <div class="fw-bold fs-5">
-                            Total: <span class="text-primary">$@((productoSeleccionado.Precio * cantidadTemporal).ToString("N2"))</span>
+                    <div class="modal-footer pedido-footer p-0">
+                        <div class="pedido-footer-inner w-100">
+                            <div class="pedido-footer-total">
+                                <span class="pedido-footer-total-label">Total</span>
+                                <span class="pedido-footer-total-amount">$@((productoSeleccionado.Precio * cantidadTemporal).ToString("N2"))</span>
+                            </div>
+                            <button type="button" class="btn-agregar" @onclick="ConfirmarAgregarAlCarrito">
+                                <i class="bi bi-cart-plus"></i> Agregar al pedido
+                            </button>
                         </div>
-                        <button type="button" class="btn-agregar" @onclick="ConfirmarAgregarAlCarrito">
-                            <i class="bi bi-cart-plus me-1"></i> Agregar
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
     }
 </div>
-
+<ModalAgregarMesa Mostrar="mostrarModalCrearMesa"
+                  OnCerrar="() => mostrarModalCrearMesa = false"
+                  OnMesaAgregada="MesaRecienCreadaHandler" />
 @code {
     // --- LÓGICA C# ---
     // (Exactamente la misma lógica corregida de la respuesta anterior,
     // asegúrate de mantener los métodos CargarCategorias con int, etc.)
 
-    private string modalidad = "MESA";
     private string folioActual = "NUEVO";
     private int categoriaSeleccionadaId = 0;
     private double total = 0;
@@ -220,10 +278,21 @@
     private string comentarioTemporal = "";
     private bool mostrarModal = false;
     private bool cerrandoModal = false;
+    private bool mostrarModalMesas = false;
+    private List<Mesa> listaMesasDisponibles = new();
+    private Mesa? mesaSeleccionada;
 
     private List<Categoria> categorias = new();
     private List<Producto> productosMostrados = new();
     private List<ItemCarrito> carrito = new();
+    private bool mostrarModalCrearMesa = false;
+
+    private async Task MesaRecienCreadaHandler(Mesa nuevaMesa)
+    {
+        mostrarModalCrearMesa = false;
+        await CargarMesas();
+        SeleccionarMesa(listaMesasDisponibles.First(m => m.Id == nuevaMesa.Id));
+    }
 
     protected override void OnInitialized()
     {
@@ -268,7 +337,171 @@
         productoSeleccionado = prod;
         cantidadTemporal = 1;
         comentarioTemporal = "";
-        mostrarModal = true;   
+        mostrarModal = true;
+    }
+    private string _modalidad = "MESA";
+    private string modalidad
+    {
+        get => _modalidad;
+        set
+        {
+            _modalidad = value;
+            if (value == "MESA") AbrirSeleccionMesa();
+            else mesaSeleccionada = null; // Limpiar si cambia a Domicilio/Llevar
+        }
+    }
+    private async Task AbrirSeleccionMesa()
+    {
+        await CargarMesas();
+        mostrarModalMesas = true;
+    }
+
+    private async Task CargarMesas()
+    {
+        listaMesasDisponibles.Clear();
+        using var con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL"));
+        // Traemos LIBRE, NUEVA y COCINA (por si quieren agregar a una cuenta abierta)
+        string sql = "SELECT IdMesa, Nombre, Estatus FROM MESAS WHERE Estatus IN ('NUEVA', 'COCINA') ORDER BY Nombre";
+        await con.OpenAsync();
+        using var cmd = new SqlCommand(sql, con);
+        using var reader = await cmd.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            listaMesasDisponibles.Add(new Mesa
+            {
+                Id = Convert.ToInt32(reader["IdMesa"]),
+                Nombre = reader["Nombre"].ToString()!,
+                Estatus = reader["Estatus"].ToString()!
+            });
+        }
+    }
+
+    private void SeleccionarMesa(Mesa m)
+    {
+        mesaSeleccionada = m;
+        mostrarModalMesas = false;
+    }
+    private async Task FinalizarOrden() // Cambiado a 'async Task'
+    {
+        // 1. Validaciones iniciales
+        if (modalidad == "MESA" && mesaSeleccionada == null)
+        {
+            await JS.InvokeVoidAsync("alert", "Por favor selecciona una mesa antes de confirmar.");
+            return;
+        }
+
+        if (carrito.Count == 0)
+        {
+            await JS.InvokeVoidAsync("alert", "El carrito está vacío.");
+            return;
+        }
+
+        try
+        {
+            string connectionString = Configuration.GetConnectionString("CadenaSQL");
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                await con.OpenAsync();
+
+                // Iniciamos transacción: Si algo falla, deshacemos todo para no tener pedidos a medias
+                using (SqlTransaction transaction = con.BeginTransaction())
+                {
+                    try
+                    {
+                        int idMesaFinal = 0;
+
+                        // --- LÓGICA SEGÚN MODALIDAD ---
+                        if (modalidad == "MESA")
+                        {
+                            idMesaFinal = mesaSeleccionada.Id;
+
+                            // Actualizar el estatus de la mesa a COCINA
+                            if (mesaSeleccionada.Estatus != "COCINA")
+                            {
+                                string updateMesaQuery = "UPDATE MESAS SET Estatus = 'COCINA' WHERE IdMesa = @IdMesa;";
+                                using (SqlCommand cmdMesa = new SqlCommand(updateMesaQuery, con, transaction))
+                                {
+                                    cmdMesa.Parameters.AddWithValue("@IdMesa", idMesaFinal);
+                                    await cmdMesa.ExecuteNonQueryAsync();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // TODO: Refinar después para DOMICILIO / LLEVAR (Insert en Mesas + SCOPE_IDENTITY)
+                            await JS.InvokeVoidAsync("alert", "La modalidad Domicilio/Llevar está en construcción.");
+                            return;
+                        }
+
+                        // --- INSERTAR ARTÍCULOS ---
+                        string insertArticuloQuery = @"
+                        INSERT INTO ArticulosMesa
+                        (IdInventario, Cantidad, Total, Comentario, IdMesa, IdMesero, FechaHora, Estatus, Ids, IdPromo)
+                        VALUES
+                        (@IdInventario, @Cantidad, @Total, @Comentario, @IdMesa, @IdMesero, GETDATE(), @Estatus, @Ids, @IdPromo);";
+
+                        foreach (var item in carrito)
+                        {
+                            using (SqlCommand cmdArticulo = new SqlCommand(insertArticuloQuery, con, transaction))
+                            {
+                                // Lógica copiada de WinForms para detectar Combos/Promos
+                                if (item.ProductoId.StartsWith("C"))
+                                {
+                                    cmdArticulo.Parameters.AddWithValue("@IdInventario", 0);
+                                    cmdArticulo.Parameters.AddWithValue("@IdPromo", item.ProductoId.Substring(1));
+                                }
+                                else
+                                {
+                                    cmdArticulo.Parameters.AddWithValue("@IdInventario", item.ProductoId);
+                                    cmdArticulo.Parameters.AddWithValue("@IdPromo", DBNull.Value);
+                                }
+
+                                cmdArticulo.Parameters.AddWithValue("@Cantidad", item.Cantidad);
+                                // Calculamos el total de esa línea (Precio unitario * Cantidad)
+                                cmdArticulo.Parameters.AddWithValue("@Total", item.Precio * item.Cantidad);
+                                cmdArticulo.Parameters.AddWithValue("@Comentario", string.IsNullOrWhiteSpace(item.Comentario) ? "" : item.Comentario);
+                                cmdArticulo.Parameters.AddWithValue("@IdMesa", idMesaFinal);
+
+                                // Asignar el IdMesero (TODO: Cambiar por el ID del usuario logueado en la sesión)
+                                cmdArticulo.Parameters.AddWithValue("@IdMesero", 1);
+
+                                cmdArticulo.Parameters.AddWithValue("@Estatus", "COCINA");
+
+                                // Si luego agregas extras/modificadores, van aquí. Por ahora Nulo.
+                                cmdArticulo.Parameters.AddWithValue("@Ids", DBNull.Value);
+
+                                await cmdArticulo.ExecuteNonQueryAsync();
+                            }
+                        }
+
+                        // Confirmar que todos los Inserts y Updates fueron exitosos
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        // Si ocurre un error, deshacemos todos los cambios en la DB
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+
+            // --- ACCIONES POST-GUARDADO ---
+            await JS.InvokeVoidAsync("alert", "¡SE HA REALIZADO LA ORDEN CON ÉXITO!");
+
+            // TODO: Llamar lógica de impresión de ticket a cocina aquí si se requiere
+
+            // Limpiar la pantalla para el siguiente pedido
+            mostrarCarrito = false;
+            carrito.Clear();
+            total = 0;
+            mesaSeleccionada = null;
+            folioActual = "NUEVO"; // Reiniciamos folio simulado
+        }
+        catch (Exception ex)
+        {
+            await JS.InvokeVoidAsync("alert", $"Ocurrió un error al guardar la orden: {ex.Message}");
+        }
     }
     private async Task CerrarModalCantidad()
     {
@@ -280,6 +513,7 @@
         mostrarModal = false;
         cerrandoModal = false;
         productoSeleccionado = null;
+        StateHasChanged();
     }
 
 
@@ -288,11 +522,11 @@
     private void RestarCantidad()
     {
         if (cantidadTemporal > 1)
-            cantidadTemporal--; 
+            cantidadTemporal--;
         else if (cantidadTemporal > 0.1)
             cantidadTemporal = 0;
     }
-    private void ConfirmarAgregarAlCarrito()
+    private async Task ConfirmarAgregarAlCarrito() // <-- 1. Agregar 'async Task'
     {
         if (productoSeleccionado == null || cantidadTemporal <= 0) return;
 
@@ -319,7 +553,9 @@
         }
 
         CalcularTotal();
-        CerrarModalCantidad();
+
+        // <-- 2. Agregar 'await' para que Blazor espere la animación y refresque la UI al terminar
+        await CerrarModalCantidad();
     }
     private void CargarProductos(int idCategoria)
     {
@@ -359,7 +595,6 @@
 
     private void CalcularTotal() => total = carrito.Sum(x => x.Precio * x.Cantidad);
     private void ToggleCarrito() => mostrarCarrito = !mostrarCarrito;
-    private void FinalizarOrden() { mostrarCarrito = false; carrito.Clear(); total = 0; }
 
     public class ItemCarrito { public string ProductoId { get; set; } = ""; public string Nombre { get; set; } = ""; public double Precio { get; set; } public double Cantidad { get; set; } public double Costo { get; set; } public string Comentario { get; set; } = ""; }
 }

@@ -47,36 +47,11 @@
 
 @* --- BOTÓN FLOTANTE (FAB) --- *@
 <button class="fab-btn shadow" @onclick="AbrirModal">
-    <i class="bi bi-plus-lg">+</i>
+    <i class="bi bi-plus-lg"></i>
 </button>
-
-@* --- MODAL PARA NUEVA MESA --- *@
-@if (mostrarModal)
-{
-    <div class="modal-backdrop fade show"></div>
-    <div class="modal fade show d-block" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Agregar Nueva Mesa</h5>
-                    <button type="button" class="btn-close btn-close-white" @onclick="CerrarModal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Nombre de la Mesa</label>
-                        <input type="text" class="form-control form-control-lg"
-                               placeholder="Ej: Mesa 10 o Barra 2"
-                               @bind="nuevaMesaNombre" />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @onclick="CerrarModal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" @onclick="GuardarMesa">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-}
+<ModalAgregarMesa Mostrar="mostrarModal"
+                  OnCerrar="CerrarModal"
+                  OnMesaAgregada="MesaCreadaDesdePantallaMesas" />
 @* --- MODAL DETALLE DE MESA --- *@
 @if (mostrarModalDetalle)
 {
@@ -348,9 +323,6 @@
 
         using (SqlConnection con = new SqlConnection(connectionString))
         {
-            // NOTA: He incluido 'LIBRE' en la consulta también para que
-            // cuando crees una mesa nueva (que nace LIBRE), puedas verla en la lista.
-            // Si quieres estrictamente solo COCINA, quita "OR Estatus = 'LIBRE'".
             string query = "SELECT IdMesa, Nombre, Estatus FROM MESAS WHERE Estatus = 'COCINA' OR Estatus = 'NUEVA' ORDER BY Nombre";
 
             SqlCommand cmd = new SqlCommand(query, con);
@@ -370,7 +342,11 @@
             }
         }
     }
-
+    private async Task MesaCreadaDesdePantallaMesas(Mesa nuevaMesa)
+    {
+        mostrarModal = false;
+        await CargarMesas(); // Recarga el panel para ver la nueva tarjeta azul "NUEVA"
+    }
     private void AbrirModal()
     {
         nuevaMesaNombre = "";

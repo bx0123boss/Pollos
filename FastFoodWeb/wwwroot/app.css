@@ -1,3 +1,14 @@
+:root {
+    --color-dorado-oscuro: #A07830; /* hover del dorado */
+    --color-fondo-menu: #111111; /* negro del sidebar */
+    --color-fondo-menu-hover: #1e1e1e; /* hover de items del menú */
+    --color-fondo-body: #f7f7f7; /* fondo del contenido */
+    --color-texto-gris: #b0b0b0; /* texto normal de links */
+    --color-texto-blanco: #ffffff;
+    --color-primario: #1a1a2e; /* Header y bottom-bar */
+    --color-acento: #e94560; /* Botones CTA y badges */
+    --color-precio: #059669; /* Precios en cards */
+}
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -13,7 +24,7 @@ a, .btn-link {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .content {

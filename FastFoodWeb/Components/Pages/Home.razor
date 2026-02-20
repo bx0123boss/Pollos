@@ -1,5 +1,65 @@
 ﻿@page "/"
+@using System.IO
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Inicio | Punto de Venta</PageTitle>
 
-<h1>Jaegersoft FastFood</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow-lg border-0 rounded-3 text-center">
+                <div class="card-body p-5">
+
+                    <div class="mb-4">
+                        @if (!string.IsNullOrEmpty(ImagenBase64))
+                        {
+                            <img src="@ImagenBase64" alt="Logo" style="max-height: 150px; width: auto;" />
+                        }
+                        else
+                        {
+                            <div class="text-primary">
+                                <span class="oi oi-graph" style="font-size: 5rem;"></span>
+                            </div>
+                        }
+                    </div>
+
+                    <h1 class="display-6 fw-bold mb-3">
+                        Bienvenido a tu punto de venta web
+                    </h1>
+
+                    <p class="lead text-muted mb-4">
+                        Sistema de gestión web sincronizado.
+                    </p>
+
+                    <div class="text-secondary small">
+                        <span class="oi oi-check me-1"></span> Jaegersoft
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    private string ImagenBase64 = "";
+
+    protected override void OnInitialized()
+    {
+        string rutaImagen = @"C:\Jaeger Soft\LogoJ.jpg";
+
+        try
+        {
+            if (File.Exists(rutaImagen))
+            {
+                byte[] bytes = File.ReadAllBytes(rutaImagen);
+                string base64 = Convert.ToBase64String(bytes);
+                ImagenBase64 = $"data:image/jpeg;base64,{base64}";
+            }
+        }
+        catch
+        {
+        }
+    }
+}
