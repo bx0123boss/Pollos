@@ -6,6 +6,7 @@
     --color-texto-gris: #b0b0b0; /* texto normal de links */
     --color-texto-blanco: #ffffff;
     --color-primario: #1a1a2e; /* Header y bottom-bar */
+    --color-secundario: #A07830;
     --color-acento: #e94560; /* Botones CTA y badges */
     --color-precio: #059669; /* Precios en cards */
 }

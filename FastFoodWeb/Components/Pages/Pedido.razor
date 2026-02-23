@@ -1,4 +1,5 @@
 ﻿@page "/pedido"
+@page "/pedido/{MesaId:int}"
 @using FastFoodWeb.Models
 @using Microsoft.Data.SqlClient
 @using System.Data
@@ -39,14 +40,14 @@
                             <div class="modal-content border-0 shadow-lg">
 
                                 @* --- ENCABEZADO LIMPIO --- *@
-                                <div class="modal-header bg-dark text-white">
+                                <div class="modal-header mesas-modal-header">
                                     <h5 class="modal-title"><i class="bi bi-ui-radios-grid me-2"></i>Seleccionar Mesa</h5>
                                     <button type="button" class="btn-close btn-close-white" @onclick="() => mostrarModalMesas = false"></button>
                                 </div>
 
                                 @* --- CUERPO DEL MODAL (LISTA DE MESAS) --- *@
                                 @* Agregamos padding-bottom: 80px para que el último renglón de mesas no se esconda detrás del botón *@
-                                <div class="modal-body bg-light" style="max-height: 60vh; overflow-y: auto; padding-bottom: 80px;">
+                                <div class="modal-body mesas-modal-body" style="max-height: 60vh; overflow-y: auto; padding-bottom: 80px;">
                                     <div class="row g-3">
                                         @foreach (var m in listaMesasDisponibles)
                                         {
@@ -65,7 +66,7 @@
                                     </div>
                                 </div>
 
-                                <button class="fab-btn-modal shadow" @onclick="() => mostrarModalCrearMesa = true" title="Agregar Nueva Mesa">
+                                <button class="fab-btn-modal" @onclick="() => mostrarModalCrearMesa = true" title="Agregar Nueva Mesa">
                                     <i class="bi bi-plus-lg"></i>
                                 </button>
 
@@ -85,9 +86,9 @@
             </div>
 
             <div class="modalidad-selector">
-                <button class="@(modalidad == "MESA" ? "active" : "")" @onclick='() => modalidad = "MESA"'>Mesa</button>
-                <button class="@(modalidad == "RAPIDO" ? "active" : "")" @onclick='() => modalidad = "RAPIDO"'>Llevar</button>
-                <button class="@(modalidad == "DOMICILIO" ? "active" : "")" @onclick='() => modalidad = "DOMICILIO"'>Domicilio</button>
+                <button class="@(modalidad == "MESA" ? "active" : "")" @onclick='() => CambiarModalidad("MESA")'>Mesa</button>
+                <button class="@(modalidad == "RAPIDO" ? "active" : "")" @onclick='() => CambiarModalidad("RAPIDO")'>Llevar</button>
+                <button class="@(modalidad == "DOMICILIO" ? "active" : "")" @onclick='() => CambiarModalidad("DOMICILIO")'>Domicilio</button>
             </div>
         </div>
 
@@ -170,7 +171,11 @@
                     }
                     @foreach (var item in carrito)
                     {
-                        <div class="cart-item d-flex justify-content-between align-items-start mb-3 border-bottom pb-2">
+                        @* Agregamos el onclick al contenedor principal para abrir el modal *@
+                        <div class="cart-item d-flex justify-content-between align-items-start mb-3 border-bottom pb-2"
+                             style="cursor: pointer; transition: background 0.2s;"
+                             @onclick="() => AbrirModalEdicion(item)">
+
                             <div class="pe-2">
                                 <div class="fw-bold text-dark">@item.Nombre</div>
                                 <div class="text-muted small mb-1">$@item.Precio.ToString("0.##") x @item.Cantidad.ToString("0.##")</div>
@@ -185,7 +190,11 @@
                             </div>
                             <div class="d-flex align-items-center mt-1">
                                 <span class="fw-bold me-3 text-primary">$@((item.Precio * item.Cantidad).ToString("0.##"))</span>
-                                <button class="btn btn-outline-danger btn-sm rounded-circle flex-shrink-0" @onclick="() => EliminarDelCarrito(item)">
+
+                                @* Usamos stopPropagation para que al dar clic al basurero NO se abra el modal, sino que se borre directo *@
+                                <button class="btn btn-outline-danger btn-sm rounded-circle flex-shrink-0"
+                                        @onclick:stopPropagation="true"
+                                        @onclick="() => EliminarDelCarrito(item)">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
@@ -246,14 +255,29 @@
 
                     </div>
                     <div class="modal-footer pedido-footer p-0">
-                        <div class="pedido-footer-inner w-100">
-                            <div class="pedido-footer-total">
+                        <div class="pedido-footer-inner w-100 d-flex align-items-center">
+
+                            <div class="pedido-footer-total me-auto">
                                 <span class="pedido-footer-total-label">Total</span>
                                 <span class="pedido-footer-total-amount">$@((productoSeleccionado.Precio * cantidadTemporal).ToString("N2"))</span>
                             </div>
-                            <button type="button" class="btn-agregar" @onclick="ConfirmarAgregarAlCarrito">
-                                <i class="bi bi-cart-plus"></i> Agregar al pedido
-                            </button>
+
+                            @if (itemEnEdicion == null)
+                            {
+                                <button type="button" class="btn-agregar" @onclick="ConfirmarAgregarAlCarrito">
+                                    <i class="bi bi-cart-plus"></i> Agregar
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-outline-danger bg-white me-2" @onclick="EliminarDelCarritoDesdeModal" style="border-radius: 12px; padding: 10px 15px; border-width: 2px;">
+                                    <i class="bi bi-trash fw-bold"></i>
+                                </button>
+                                <button type="button" class="btn-agregar px-4" @onclick="ConfirmarActualizarCarrito">
+                                    <i class="bi bi-check-lg me-1"></i> Guardar
+                                </button>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -265,10 +289,8 @@
                   OnCerrar="() => mostrarModalCrearMesa = false"
                   OnMesaAgregada="MesaRecienCreadaHandler" />
 @code {
-    // --- LÓGICA C# ---
-    // (Exactamente la misma lógica corregida de la respuesta anterior,
-    // asegúrate de mantener los métodos CargarCategorias con int, etc.)
-
+    [Parameter]
+    public int MesaId { get; set; }
     private string folioActual = "NUEVO";
     private int categoriaSeleccionadaId = 0;
     private double total = 0;
@@ -281,6 +303,7 @@
     private bool mostrarModalMesas = false;
     private List<Mesa> listaMesasDisponibles = new();
     private Mesa? mesaSeleccionada;
+    private ItemCarrito? itemEnEdicion = null;
 
     private List<Categoria> categorias = new();
     private List<Producto> productosMostrados = new();
@@ -296,7 +319,92 @@
 
     protected override void OnInitialized()
     {
+        if (MesaId > 0)
+        {
+            modalidad = "MESA";
+            CargarDatosMesaSeleccionada();
+        }
         CargarCategorias();
+    }
+    private void AbrirModalCantidad(Producto prod)
+    {
+        itemEnEdicion = null;
+        productoSeleccionado = prod;
+        cantidadTemporal = 1;
+        comentarioTemporal = "";
+        mostrarModal = true;
+    }
+    // Abre el modal simulando el producto con los datos que ya están en el carrito
+    private void AbrirModalEdicion(ItemCarrito item)
+    {
+        itemEnEdicion = item;
+
+        // Creamos un producto "ficticio" para que el modal use su diseño sin cambiar nada
+        productoSeleccionado = new Producto
+        {
+            Id = item.ProductoId,
+            Nombre = item.Nombre,
+            Precio = item.Precio,
+            CostoTotal = item.Costo
+        };
+
+        cantidadTemporal = item.Cantidad;
+        comentarioTemporal = item.Comentario;
+        mostrarCarrito = false;
+        mostrarModal = true;
+    }
+
+    // Guarda los cambios hechos en el modal
+    private async Task ConfirmarActualizarCarrito()
+    {
+        if (itemEnEdicion != null && cantidadTemporal > 0)
+        {
+            // Actualizamos la misma referencia que ya existe en la lista
+            itemEnEdicion.Cantidad = cantidadTemporal;
+            itemEnEdicion.Comentario = comentarioTemporal;
+
+            CalcularTotal();
+            await CerrarModalCantidad();
+        }
+    }
+
+    // Elimina el producto directamente desde dentro del modal
+    private async Task EliminarDelCarritoDesdeModal()
+    {
+        if (itemEnEdicion != null)
+        {
+            carrito.Remove(itemEnEdicion);
+            CalcularTotal();
+            await CerrarModalCantidad();
+        }
+    }
+    private void CargarDatosMesaSeleccionada()
+    {
+        try
+        {
+            using var con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL"));
+            string sql = "SELECT IdMesa, Nombre, Estatus FROM MESAS WHERE IdMesa = @Id";
+            con.Open();
+
+            using var cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@Id", MesaId);
+
+            using var reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                // Seteamos tu variable con el objeto completo
+                mesaSeleccionada = new Mesa
+                {
+                    Id = Convert.ToInt32(reader["IdMesa"]),
+                    Nombre = reader["Nombre"].ToString(),
+                    Estatus = reader["Estatus"].ToString()
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
     private async Task CerrarModal()
     {
@@ -332,24 +440,21 @@
         }
         catch (Exception ex) { Console.WriteLine(ex.Message); }
     }
-    private void AbrirModalCantidad(Producto prod)
+    private string modalidad = "MESA"; 
+
+    private async Task CambiarModalidad(string nuevaModalidad)
     {
-        productoSeleccionado = prod;
-        cantidadTemporal = 1;
-        comentarioTemporal = "";
-        mostrarModal = true;
-    }
-    private string _modalidad = "MESA";
-    private string modalidad
-    {
-        get => _modalidad;
-        set
+        modalidad = nuevaModalidad;
+        if (modalidad == "MESA")
         {
-            _modalidad = value;
-            if (value == "MESA") AbrirSeleccionMesa();
-            else mesaSeleccionada = null; // Limpiar si cambia a Domicilio/Llevar
+            await AbrirSeleccionMesa();
+        }
+        else
+        {
+            mesaSeleccionada = null;
         }
     }
+   
     private async Task AbrirSeleccionMesa()
     {
         await CargarMesas();
@@ -513,6 +618,7 @@
         mostrarModal = false;
         cerrandoModal = false;
         productoSeleccionado = null;
+        itemEnEdicion = null;
         StateHasChanged();
     }
 

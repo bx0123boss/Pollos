@@ -5,7 +5,6 @@
 
 :root {
 	/* ─── PALETA PRIMARIA ─────────────────────────── */
-	--color-primario: #1a1a2e; /* Fondo header/bottom-bar        */
 	--color-primario-hover: #16213e; /* Hover sobre el primario         */
 	--color-acento: #e94560; /* Botones CTA, badges, precios    */
 	--color-acento-hover: #c73652; /* Hover del acento                */
@@ -231,7 +230,7 @@
 	margin-top: 8px;
 	font-weight: 800;
 	font-size: 0.88rem;
-	color: var(--color-precio); /* Verde — precio de venta en card */
+	color: var(--color-secundario); /* Verde — precio de venta en card */
 }
 
 /* Nombre del producto en la card */
@@ -325,15 +324,16 @@
 .cart-overlay {
 	position: fixed;
 	inset: 0;
-	background: rgba(0,0,0,0.55);
-	z-index: 2000;
+	background: rgba(0,0,0,0.45); /* mucho más natural */
+	backdrop-filter: none; /* quitar blur completamente */
 	display: flex;
 	justify-content: flex-end;
-	backdrop-filter: blur(3px);
+	z-index: 2000;
 }
 
 .cart-panel {
-	background: var(--color-superficie);
+	background: #ffffff !important;
+	opacity: 1 !important;
 	width: 92%;
 	max-width: 420px;
 	height: 100%;
@@ -359,8 +359,27 @@
 	}
 
 	.cart-header .btn-close {
-		filter: invert(1);
+		background: none;
+		filter: none;
+		opacity: 1;
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		position: relative;
 	}
+
+		/* Forzar color rojo en SVG interno (Bootstrap 5 usa mask) */
+		.cart-header .btn-close::before {
+			content: "✕";
+			color: #e53935; /* rojo elegante */
+			font-size: 18px;
+			font-weight: 700;
+			position: absolute;
+			inset: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
 .cart-body {
 	overflow-y: auto;
@@ -540,7 +559,7 @@
 	font-size: 0.95rem;
 	border-radius: 0;
 	border: none;
-	background: var(--color-acento);
+	background: var(--color-secundario);
 	color: var(--color-texto-inv);
 	font-weight: 700;
 	letter-spacing: 0.04em;
@@ -806,7 +825,7 @@
 	width: 58px;
 	height: 58px;
 	border-radius: 50%;
-	background: linear-gradient(135deg, var(--color-precio), #047857);
+	background:  var(--color-secundario);
 	color: white;
 	border: none;
 	font-size: 1.7rem;
@@ -822,6 +841,64 @@
 	.fab-btn-modal:hover {
 		transform: scale(1.1);
 		box-shadow: 0 10px 26px rgba(5,150,105,0.55);
+	}
+
+	.fab-btn-modal:active {
+		transform: scale(0.95);
+	}
+/* ==========================================
+   MODAL SELECCIONAR MESAS — THEMEABLE
+========================================== */
+
+.mesas-modal-header {
+	background: var(--color-primario);
+	color: var(--color-texto-inv);
+	border-bottom: none;
+}
+
+	.mesas-modal-header .modal-title {
+		font-weight: 700;
+		letter-spacing: 0.03em;
+	}
+
+	.mesas-modal-header .btn-close {
+		filter: invert(1);
+	}
+
+/* Fondo del cuerpo */
+.mesas-modal-body {
+	background: var(--color-fondo);
+}
+
+/* Modal content */
+.modal-content {
+	border-radius: var(--radio-lg);
+	overflow: hidden;
+}
+
+/* FAB botón agregar mesa */
+.fab-btn-modal {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	border: none;
+	background: var(--color-secundario);
+	color: var(--color-texto-inv);
+	font-size: 1.6rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: 0.25s ease;
+	box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+}
+
+	.fab-btn-modal:hover {
+		background: var(--color-acento);
+		transform: scale(1.1);
 	}
 
 	.fab-btn-modal:active {

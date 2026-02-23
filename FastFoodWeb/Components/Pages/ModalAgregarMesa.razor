@@ -10,7 +10,7 @@
     <div class="modal fade show d-block" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
+                <div class="modal-header mesa-modal-header">
                     <h5 class="modal-title">Agregar Nueva Mesa</h5>
                     <button type="button" class="btn-close btn-close-white" @onclick="CerrarModal"></button>
                 </div>
@@ -29,13 +29,60 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @onclick="CerrarModal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" @onclick="GuardarMesa">Guardar</button>
+                    <button type="button" class="btn btn-cancelar" @onclick="CerrarModal">Cancelar</button>
+                    <button type="button" class="btn btn-guardar" @onclick="GuardarMesa">Guardar</button>
                 </div>
             </div>
         </div>
     </div>
 }
+<style>
+    /* ===============================
+       MODAL NUEVA MESA — THEMEABLE
+    ================================ */
+
+    .mesa-modal-header {
+        background: var(--color-primario);
+        color: var(--color-texto-inv);
+        border-bottom: none;
+    }
+
+        .mesa-modal-header .btn-close {
+            filter: invert(1);
+        }
+
+    /* Botón cancelar */
+    .btn-cancelar {
+        background: transparent;
+        border: 2px solid var(--color-secundario);
+        color: var(--color-secundario);
+        font-weight: 600;
+        border-radius: var(--radio-md);
+        padding: 8px 18px;
+        transition: 0.2s ease;
+    }
+
+        .btn-cancelar:hover {
+            background: var(--color-secundario);
+            color: var(--color-texto-inv);
+        }
+
+    /* Botón guardar (CTA real) */
+    .btn-guardar {
+        background: var(--color-secundario);
+        border: none;
+        color: var(--color-texto-inv);
+        font-weight: 700;
+        border-radius: var(--radio-md);
+        padding: 8px 22px;
+        transition: 0.2s ease;
+    }
+
+        .btn-guardar:hover {
+            background: var(--color-acento-hover);
+            transform: translateY(-2px);
+        }
+</style>
 
 @code {
     [Parameter] public bool Mostrar { get; set; }

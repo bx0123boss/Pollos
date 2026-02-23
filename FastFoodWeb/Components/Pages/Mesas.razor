@@ -4,6 +4,7 @@
 @using FastFoodWeb.Models
 @inject IConfiguration Configuration
 @inject IJSRuntime JS
+@inject NavigationManager Nav
 <PageTitle>Gestión de Mesas</PageTitle>
 
 <div class="container pb-5">
@@ -135,7 +136,12 @@
 
                 @* Pie: Botones de acción *@
                 <div class="modal-footer bg-light">
-                    <button type="button" class="btn btn-secondary" @onclick="CerrarModalDetalle">Cerrar</button>
+                    @* NUEVO BOTÓN PARA AGREGAR PRODUCTOS *@
+                    <button type="button" class="btn btn-primary" @onclick="IrAAgregarProductos">
+                        <i class="bi bi-cart-plus me-1"></i> Agregar productos
+                    </button>
+
+
                     @if (detallesMesa != null && detallesMesa.Count > 0)
                     {
                         <button type="button" class="btn btn-success" @onclick="CerrarModalDetalle">
@@ -342,6 +348,11 @@
             }
         }
     }
+    private void IrAAgregarProductos()
+    {
+        CerrarModalDetalle();
+        Nav.NavigateTo($"/pedido/{mesaSeleccionadaId}");
+    }
     private async Task MesaCreadaDesdePantallaMesas(Mesa nuevaMesa)
     {
         mostrarModal = false;
@@ -354,12 +365,19 @@
     }
     private async Task SeleccionarMesa(Mesa mesa) // Cambié int id por el objeto completo
     {
-        mesaSeleccionadaId = mesa.Id; // Asegúrate de tener Id en tu MesaDTO
-        mesaSeleccionadaNombre = mesa.Nombre;
-        mostrarModalDetalle = true;
-        detallesMesa = null; // Reiniciar lista para mostrar spinner
-
-        await CargarDetalleMesa();
+        if (mesa.Estatus.Equals("NUEVA", StringComparison.OrdinalIgnoreCase) ||
+            mesa.Estatus.Equals("LIBRE", StringComparison.OrdinalIgnoreCase))
+        {
+            Nav.NavigateTo($"/pedido/{mesa.Id}");
+        }
+        else
+        {
+            mesaSeleccionadaId = mesa.Id; 
+            mesaSeleccionadaNombre = mesa.Nombre;
+            mostrarModalDetalle = true;
+            detallesMesa = null; 
+            await CargarDetalleMesa();
+        }
     }
 
     private async Task CargarDetalleMesa()
@@ -380,7 +398,8 @@
                     am.Comentario
                 FROM ArticulosMesa am
                 INNER JOIN INVENTARIO i ON am.IdInventario = i.IdInventario
-                WHERE am.IdMesa = @IdMesa";
+                WHERE am.IdMesa = @IdMesa
+                  AND am.Estatus != 'CANCELADO'";
 
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@IdMesa", mesaSeleccionadaId);
@@ -403,39 +422,57 @@
         }
     }
 
-    // 2. ELIMINAR ARTÍCULO (Lógica de borrado directo)
+    // 2. ELIMINAR ARTÍCULO 
     private async Task EliminarArticulo(int idArticulo)
     {
-        bool confirmado = await JS.InvokeAsync<bool>("confirm", "¿Seguro que deseas cancelar este artículo?");
-        if (!confirmado) return;
+        string motivo = await JS.InvokeAsync<string>("prompt", "¿Seguro que deseas cancelar este artículo?\nIngresa el motivo de cancelación:");
+        if (motivo == null || String.IsNullOrWhiteSpace(motivo)) return;
 
         string connectionString = Configuration.GetConnectionString("CadenaSQL");
         using (SqlConnection con = new SqlConnection(connectionString))
         {
-            // Borrado físico como solicitaste
-            string query = "DELETE FROM ArticulosMesa WHERE IdArticulosMesa = @Id";
+            string query = "UPDATE ArticulosMesa SET Comentario= @Comentario, Estatus = 'CANCELADO' WHERE IdArticulosMesa = @Id";
+            //string query = "DELETE FROM ArticulosMesa WHERE IdArticulosMesa = @Id";
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@Id", idArticulo);
+            cmd.Parameters.AddWithValue("@Comentario", motivo);
 
             await con.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
+            // Revisamos cuántos artículos quedan para esta mesa
+            string sqlCount = "SELECT count(*) FROM ArticulosMesa WHERE IdMesa = @IdMesa AND Estatus != 'CANCELADO'";
+            SqlCommand cmdCount = new SqlCommand(sqlCount, con);
+            cmdCount.Parameters.AddWithValue("@IdMesa", mesaSeleccionadaId);
+
+            int restantes = Convert.ToInt32(await cmdCount.ExecuteScalarAsync());
+
+            // Si la mesa se quedó en 0 artículos, la regresamos a estado 'NUEVA'
+            if (restantes == 0)
+            {
+                string sqlUpdate = "UPDATE MESAS SET Estatus = 'NUEVA' WHERE IdMesa = @IdMesa";
+                SqlCommand cmdUpdate = new SqlCommand(sqlUpdate, con);
+                cmdUpdate.Parameters.AddWithValue("@IdMesa", mesaSeleccionadaId);
+                await cmdUpdate.ExecuteNonQueryAsync();
+
+                CerrarModalDetalle();
+                await CargarMesas();
+            }
+            else
+            {
+                await CargarDetalleMesa();
+                await CargarMesas(); 
+            }
+
+
         }
-
-        // Recargamos la lista para ver que desapareció
         await CargarDetalleMesa();
-
-        // Opcional: Si la mesa queda vacía, podrías querer actualizar el estado de la mesa principal
-        // await CargarMesas();
     }
 
     private void CerrarModalDetalle()
     {
         mostrarModalDetalle = false;
-        // Opcional: Recargar las mesas al cerrar por si cambió el estatus
-        // CargarMesas();
     }
 
-    // DTO para el detalle
     public class DetallePedido
     {
         public int IdArticulosMesa { get; set; }
@@ -453,8 +490,7 @@
         string connectionString = Configuration.GetConnectionString("CadenaSQL");
         using (SqlConnection con = new SqlConnection(connectionString))
         {
-            // Insertamos la mesa con estatus 'LIBRE' por defecto
-            string query = "INSERT INTO MESAS (Nombre, Estatus, Mesero) VALUES (@nombre, 'LIBRE', '')";
+            string query = "INSERT INTO MESAS (Nombre, Estatus, Mesero) VALUES (@nombre, 'NUEVA', '')";
 
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@nombre", nuevaMesaNombre);
@@ -464,6 +500,6 @@
         }
 
         mostrarModal = false;
-        await CargarMesas(); // Recargar la lista para ver la nueva mesa
+        await CargarMesas();
     }
 }
