@@ -2,7 +2,7 @@
 
 namespace Punto_Venta
 {
-    class Conexion
+    public class Conexion
     {
         static string nombrePC = Environment.MachineName;
 

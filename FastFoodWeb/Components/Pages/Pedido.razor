@@ -3,6 +3,8 @@
 @using FastFoodWeb.Models
 @using Microsoft.Data.SqlClient
 @using System.Data
+@using FastFoodWeb.Services
+@inject ServicioImpresion PrintService
 @inject IConfiguration Configuration
 @inject NavigationManager Nav
 @inject IJSRuntime JS
@@ -486,7 +488,8 @@
         mesaSeleccionada = m;
         mostrarModalMesas = false;
     }
-    private async Task FinalizarOrden() // Cambiado a 'async Task'
+    
+    private async Task FinalizarOrden()
     {
         // 1. Validaciones iniciales
         if (modalidad == "MESA" && mesaSeleccionada == null)
@@ -594,7 +597,40 @@
             // --- ACCIONES POST-GUARDADO ---
             await JS.InvokeVoidAsync("alert", "¡SE HA REALIZADO LA ORDEN CON ÉXITO!");
 
-            // TODO: Llamar lógica de impresión de ticket a cocina aquí si se requiere
+            // ==========================================
+            // LÓGICA DE IMPRESIÓN DE COMANDA (COCINA)
+            // ==========================================
+            try
+             
+            {
+                var listaComanda = new List<(string id, string Cantidad, string Descripcion, string Comentario, string ides)>();
+
+                // Llenamos la lista con el formato que requiere tu DLL
+                foreach (var item in carrito)
+                {
+                    // NOTA: Asegúrate de que tu objeto "item" tenga la propiedad "Nombre"
+                    // Si en tu carrito manejas IdsExtras (para combos/mitades), colócalo en vez del string vacío ""
+                    listaComanda.Add((
+                        item.ProductoId,
+                        item.Cantidad.ToString(),
+                        item.Nombre,
+                        item.Comentario ?? "",
+                        "" // <-- Aquí irían los modificadores "ides" si el carrito web ya los soporta
+                    ));
+                }
+
+                string nombreMesa = modalidad == "MESA" ? mesaSeleccionada.Nombre : "Mostrador / Domicilio";
+                string nombreMesero = "Mesero 1"; // TODO: Sustituir por el nombre real del usuario logueado
+
+                // Enviamos a imprimir al Servidor
+                PrintService.ImprimirComandaCocina(listaComanda, nombreMesa, nombreMesero);
+            }
+            catch (Exception exPrint)
+            {
+                // Si falla la impresión, avisamos pero no detenemos el flujo porque ya se guardó en BD
+                await JS.InvokeVoidAsync("alert", $"La orden se guardó, pero hubo un error al imprimir en cocina: {exPrint.Message}");
+            }
+            // ==========================================
 
             // Limpiar la pantalla para el siguiente pedido
             mostrarCarrito = false;

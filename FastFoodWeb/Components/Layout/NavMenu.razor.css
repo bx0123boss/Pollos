@@ -86,7 +86,7 @@
     padding: 0.5rem 0;
 }
 
-@media (min-width: 641px) {
+@media (min-width: 1024px) {
     .navbar-toggler {
         display: none;
     }

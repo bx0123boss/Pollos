@@ -904,3 +904,46 @@
 	.fab-btn-modal:active {
 		transform: scale(0.95);
 	}
+
+/* Aplica esto en Pedido.razor.css */
+@media (min-width: 768px) and (max-width: 1024px) {
+	/* 1. Reducir márgenes y paddings del contenedor principal */
+	.contenedor-pedido {
+		padding: 0.5rem;
+	}
+
+	/* 2. Hacer los botones de categorías más compactos */
+	.btn-categoria {
+		font-size: 0.85rem;
+		padding: 0.4rem 0.5rem;
+		margin: 0.2rem;
+		height: auto;
+	}
+
+	/* 3. Ajustar la cuadrícula de productos para que quepan más por fila */
+	.grid-productos {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* Tarjetas más delgadas */
+		gap: 0.5rem; /* Menos espacio entre productos */
+	}
+
+	/* 4. Reducir el contenido de la tarjeta de producto */
+	.card-producto {
+		padding: 0.5rem;
+	}
+
+		.card-producto img {
+			max-height: 70px; /* Limitar altura de la imagen si tienen */
+			object-fit: contain;
+		}
+
+		.card-producto h5 {
+			font-size: 0.9rem;
+			margin-bottom: 0.2rem;
+		}
+
+		.card-producto .precio {
+			font-size: 0.85rem;
+			font-weight: bold;
+		}
+}
