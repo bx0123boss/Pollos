@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Data;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Punto_Venta
 {
@@ -13,6 +15,52 @@ namespace Punto_Venta
         public string id = "0";
         public string idArticulo1 = "0", idArticulo2 = "0", idArticulo3 = "0", idArticulo4 = "0", idArticulo5 = "0", idArticulo6 = "0", idArticulo7 = "0", idArticulo8 = "0", idArticulo9 = "0", idArticulo10 = "0";
         public string Nombre1 = "0", Nombre2 = "0", Nombre3 = "0", Nombre4 = "0", Nombre5 = "0", Nombre6 = "0", Nombre7 = "0", Nombre8 = "0", Nombre9 = "0", Nombre10 = "0";
+        private string rutaImagenSeleccionada = "";
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Title = "Seleccionar imágen";
+                ofd.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png;*.bmp";
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    rutaImagenSeleccionada= ofd.FileName;
+                    try
+                    {
+                        picLogo.Image = Image.FromFile(rutaImagenSeleccionada);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                    
+                }
+            }
+        }
+        private string GuardarImagenProducto(int idInventario)
+        {
+            if (string.IsNullOrWhiteSpace(rutaImagenSeleccionada))
+                return null;
+
+            string carpetaDestino = @"C:\Jaeger Soft\ModuloWebFastFood\wwwroot\images\productos";
+
+            if (!Directory.Exists(carpetaDestino))
+                Directory.CreateDirectory(carpetaDestino);
+
+            string extension = Path.GetExtension(rutaImagenSeleccionada);
+
+            string nombreArchivo = idInventario + extension;
+
+            string destino = Path.Combine(carpetaDestino, nombreArchivo);
+
+            File.Copy(rutaImagenSeleccionada, destino, true);
+
+            return $"images/productos/{nombreArchivo}";
+        }
+
         public string Medida1 = "0", Medida2 = "0", Medida3 = "0", Medida4 = "0", Medida5 = "0", Medida6 = "0", Medida7 = "0", Medida8 = "0", Medida9 = "0", Medida10 = "0";
         public string Precio1 = "0", Precio2 = "0", Precio3 = "0", Precio4 = "0", Precio5 = "0", Precio6 = "0", Precio7 = "0", Precio8 = "0", Precio9 = "0", Precio10 = "0";
         public frmAgregarPlatillo()
@@ -346,6 +394,7 @@ namespace Punto_Venta
 
         private void button2_Click(object sender, EventArgs e)
         {
+            int idInventario = 0;
             if (string.IsNullOrEmpty(txtPrecio.Text) || string.IsNullOrEmpty(txtNombre.Text))
                 return;
             string comanda = checkBox1.Checked ? "1" : "0";
@@ -363,15 +412,17 @@ namespace Punto_Venta
                 CantidadProducto5, idProducto6, CantidadProducto6, idProducto7, CantidadProducto7, 
                 idProducto8, CantidadProducto8, idProducto9, CantidadProducto9, idProducto10, 
                 CantidadProducto10, IdCategoria, CostoTotal, Comanda, IdSubCategoria, Estatus
-            ) VALUES (
+            ) 
+            OUTPUT INSERTED.IdInventario
+            VALUES (
                 @Nombre, @Precio, @idProducto1, @CantidadProducto1, @idProducto2, @CantidadProducto2, 
                 @idProducto3, @CantidadProducto3, @idProducto4, @CantidadProducto4, @idProducto5, 
                 @CantidadProducto5, @idProducto6, @CantidadProducto6, @idProducto7, @CantidadProducto7, 
                 @idProducto8, @CantidadProducto8, @idProducto9, @CantidadProducto9, @idProducto10, 
                 @CantidadProducto10, @Categoria, @CostoTotal, @Comanda, @SubCategoria, 1
             );";
-                   
 
+                    
                     using (SqlCommand cmd2 = new SqlCommand(query, conectar))
                     {
                         cmd2.Parameters.AddWithValue("@Nombre", txtNombre.Text);
@@ -401,6 +452,22 @@ namespace Punto_Venta
                         cmd2.Parameters.AddWithValue("@Comanda", comanda);
                         cmd2.Parameters.AddWithValue("@SubCategoria", comboBox2.SelectedValue);
                         cmd2.ExecuteNonQuery();
+                        idInventario = Convert.ToInt32(cmd2.ExecuteScalar());
+
+                        string imagenUrl = GuardarImagenProducto(idInventario);
+
+                        using (SqlCommand cmd = new SqlCommand(
+                            @"UPDATE Inventario
+                              SET ImagenUrl=@Imagen
+                              WHERE IdInventario=@Id", conectar))
+                        {
+                            cmd.Parameters.AddWithValue("@Imagen",
+                                (object)imagenUrl ?? DBNull.Value);
+
+                            cmd.Parameters.AddWithValue("@Id", idInventario);
+
+                            cmd.ExecuteNonQuery();
+                        }
                     }
 
                     MessageBox.Show("Se ha agregado el platillo con éxito", "AGREGADO", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -1,4 +1,4 @@
-﻿@page "/pedido"
+@page "/pedido"
 @page "/pedido/{MesaId:int}"
 @using FastFoodWeb.Models
 @using Microsoft.Data.SqlClient
@@ -26,6 +26,13 @@
                         <button class="btn btn-sm btn-outline-primary ms-2 fw-bold bg-white" @onclick="AbrirSeleccionMesa">
                             <i class="bi bi-geo-alt-fill text-danger"></i>
                             @(mesaSeleccionada?.Nombre ?? "Seleccionar Mesa")
+                        </button>
+                    }
+                    else if (modalidad == "DOMICILIO")
+                    {
+                        <button class="btn btn-sm btn-outline-primary ms-2 fw-bold bg-white" @onclick="() => mostrarModalClientes = true">
+                            <i class="bi bi-person-fill text-danger"></i>
+                            @(clienteSeleccionado?.Nombre ?? "Seleccionar Cliente")
                         </button>
                     }
 
@@ -129,9 +136,15 @@
                     <div class="col-6 col-md-4 col-lg-3">
                         <div class="card product-card h-100 border-0 shadow-sm" @onclick="() => AbrirModalCantidad(prod)">
                             <div class="card-body p-2 d-flex flex-column text-center">
-                                @* Espacio para imagen *@
                                 <div class="img-placeholder rounded-3 mb-2">
-                                    <span class="fs-2">🍔</span>
+                                    @if (!string.IsNullOrEmpty(prod.ImagenUrl))
+                                    {
+                                        <img src="@prod.ImagenUrl" alt="@prod.Nombre" class="img-fluid rounded-3" style="max-height: 80px; object-fit: cover;" />
+                                    }
+                                    else
+                                    {
+                                        <span class="fs-2">🍔</span>
+                                    }
                                 </div>
                                 <h6 class="card-title text-dark fw-bold mb-1 text-truncate-2 small">@prod.Nombre</h6>
                                 <div class="mt-auto price-tag">
@@ -290,6 +303,17 @@
 <ModalAgregarMesa Mostrar="mostrarModalCrearMesa"
                   OnCerrar="() => mostrarModalCrearMesa = false"
                   OnMesaAgregada="MesaRecienCreadaHandler" />
+
+<ModalBuscarCliente Mostrar="mostrarModalClientes"
+                    OnCerrar="() => mostrarModalClientes = false"
+                    OnClienteSeleccionado="ClienteSeleccionadoHandler" />
+
+@if (mostrarModalCobro)
+{
+    <ModalCobro MesaId="idMesaCobro" Total="totalCobro" 
+                OnCerrar="CerrarModalCobro" 
+                OnCobroExitoso="CobroExitosoHandler" />
+}
 @code {
     [Parameter]
     public int MesaId { get; set; }
@@ -301,6 +325,9 @@
     private double cantidadTemporal = 1;
     private string comentarioTemporal = "";
     private bool mostrarModal = false;
+    private bool mostrarModalCobro = false;
+    private int idMesaCobro = 0;
+    private double totalCobro = 0;
     private bool cerrandoModal = false;
     private bool mostrarModalMesas = false;
     private List<Mesa> listaMesasDisponibles = new();
@@ -311,6 +338,14 @@
     private List<Producto> productosMostrados = new();
     private List<ItemCarrito> carrito = new();
     private bool mostrarModalCrearMesa = false;
+    private bool mostrarModalClientes = false;
+    private Cliente? clienteSeleccionado;
+
+    private void ClienteSeleccionadoHandler(Cliente cliente)
+    {
+        clienteSeleccionado = cliente;
+        mostrarModalClientes = false;
+    }
 
     private async Task MesaRecienCreadaHandler(Mesa nuevaMesa)
     {
@@ -451,9 +486,18 @@
         {
             await AbrirSeleccionMesa();
         }
+        else if (modalidad == "DOMICILIO")
+        {
+            mesaSeleccionada = null;
+            if (clienteSeleccionado == null)
+            {
+                mostrarModalClientes = true;
+            }
+        }
         else
         {
             mesaSeleccionada = null;
+            clienteSeleccionado = null;
         }
     }
    
@@ -497,6 +541,12 @@
             await JS.InvokeVoidAsync("alert", "Por favor selecciona una mesa antes de confirmar.");
             return;
         }
+        
+        if (modalidad == "DOMICILIO" && clienteSeleccionado == null)
+        {
+            await JS.InvokeVoidAsync("alert", "Por favor selecciona un cliente para el pedido a domicilio.");
+            return;
+        }
 
         if (carrito.Count == 0)
         {
@@ -507,6 +557,7 @@
         try
         {
             string connectionString = Configuration.GetConnectionString("CadenaSQL");
+            int idMesaFinal = 0;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
@@ -516,8 +567,6 @@
                 {
                     try
                     {
-                        int idMesaFinal = 0;
-
                         // --- LÓGICA SEGÚN MODALIDAD ---
                         if (modalidad == "MESA")
                         {
@@ -534,11 +583,26 @@
                                 }
                             }
                         }
-                        else
+                        else if (modalidad == "RAPIDO")
                         {
-                            // TODO: Refinar después para DOMICILIO / LLEVAR (Insert en Mesas + SCOPE_IDENTITY)
-                            await JS.InvokeVoidAsync("alert", "La modalidad Domicilio/Llevar está en construcción.");
-                            return;
+                            string insertMesaQuery = "INSERT INTO MESAS (Nombre, IdMesero, Impresion, Estatus) VALUES ('Para llevar', @IdMesero, 0, 'COCINA'); SELECT SCOPE_IDENTITY();";
+                            using (SqlCommand cmdMesa = new SqlCommand(insertMesaQuery, con, transaction))
+                            {
+                                cmdMesa.Parameters.AddWithValue("@IdMesero", 1); // TODO: Usuario logueado
+                                idMesaFinal = Convert.ToInt32(await cmdMesa.ExecuteScalarAsync());
+                            }
+                        }
+                        else if (modalidad == "DOMICILIO")
+                        {
+                            string nombreMesa = "Domicilio " + (clienteSeleccionado.Nombre.Length > 20 ? clienteSeleccionado.Nombre.Substring(0, 20) : clienteSeleccionado.Nombre);
+                            string insertMesaQuery = "INSERT INTO MESAS (Nombre, IdMesero, Impresion, Estatus, IdCliente) VALUES (@Nombre, @IdMesero, 0, 'COCINA', @IdCliente); SELECT SCOPE_IDENTITY();";
+                            using (SqlCommand cmdMesa = new SqlCommand(insertMesaQuery, con, transaction))
+                            {
+                                cmdMesa.Parameters.AddWithValue("@Nombre", nombreMesa);
+                                cmdMesa.Parameters.AddWithValue("@IdMesero", 1); // TODO: Usuario logueado
+                                cmdMesa.Parameters.AddWithValue("@IdCliente", clienteSeleccionado.Id);
+                                idMesaFinal = Convert.ToInt32(await cmdMesa.ExecuteScalarAsync());
+                            }
                         }
 
                         // --- INSERTAR ARTÍCULOS ---
@@ -619,7 +683,7 @@
                     ));
                 }
 
-                string nombreMesa = modalidad == "MESA" ? mesaSeleccionada.Nombre : "Mostrador / Domicilio";
+                string nombreMesa = modalidad == "MESA" ? mesaSeleccionada.Nombre : (modalidad == "DOMICILIO" ? "****ENTREGA A DOMICILIO****" : "Mostrador / Domicilio");
                 string nombreMesero = "Mesero 1"; // TODO: Sustituir por el nombre real del usuario logueado
 
                 // Enviamos a imprimir al Servidor
@@ -632,17 +696,45 @@
             }
             // ==========================================
 
-            // Limpiar la pantalla para el siguiente pedido
-            mostrarCarrito = false;
-            carrito.Clear();
-            total = 0;
-            mesaSeleccionada = null;
-            folioActual = "NUEVO"; // Reiniciamos folio simulado
+            if (modalidad == "RAPIDO")
+            {
+                // Configurar modal de cobro y no limpiar hasta que termine el cobro
+                idMesaCobro = idMesaFinal;
+                totalCobro = total;
+                mostrarModalCobro = true;
+            }
+            else
+            {
+                // Limpiar la pantalla para el siguiente pedido (MESA y DOMICILIO)
+                mostrarCarrito = false;
+                carrito.Clear();
+                total = 0;
+                mesaSeleccionada = null;
+                clienteSeleccionado = null;
+                folioActual = "NUEVO"; // Reiniciamos folio simulado
+            }
         }
         catch (Exception ex)
         {
             await JS.InvokeVoidAsync("alert", $"Ocurrió un error al guardar la orden: {ex.Message}");
         }
+    }
+
+    private void CerrarModalCobro()
+    {
+        mostrarModalCobro = false;
+    }
+
+    private void CobroExitosoHandler()
+    {
+        mostrarModalCobro = false;
+        // Limpiar la pantalla para el siguiente pedido
+        mostrarCarrito = false;
+        carrito.Clear();
+        total = 0;
+        mesaSeleccionada = null;
+        folioActual = "NUEVO"; // Reiniciamos folio simulado
+        StateHasChanged();
     }
     private async Task CerrarModalCantidad()
     {
@@ -704,7 +796,7 @@
         categoriaSeleccionadaId = idCategoria;
         productosMostrados.Clear();
         using var con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL"));
-        string sql = "SELECT IdInventario, Nombre, Precio, CostoTotal FROM Inventario WHERE IdCategoria = @cat ORDER BY Nombre";
+        string sql = "SELECT IdInventario, Nombre, Precio, CostoTotal, ImagenUrl FROM Inventario WHERE IdCategoria = @cat ORDER BY Nombre";
         con.Open();
         using var cmd = new SqlCommand(sql, con);
         cmd.Parameters.AddWithValue("@cat", idCategoria);
@@ -716,7 +808,8 @@
                 Id = reader["IdInventario"].ToString(),
                 Nombre = reader["Nombre"].ToString(),
                 Precio = Convert.ToDouble(reader["Precio"]),
-                CostoTotal = reader["CostoTotal"] != DBNull.Value ? Convert.ToDouble(reader["CostoTotal"]) : 0
+                CostoTotal = reader["CostoTotal"] != DBNull.Value ? Convert.ToDouble(reader["CostoTotal"]) : 0,
+                ImagenUrl = reader["ImagenUrl"].ToString()
             });
         }
     }

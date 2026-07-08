@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using LibPrintTicket;
 using System.Data.SqlClient;
 
 namespace Punto_Venta
@@ -30,15 +29,6 @@ namespace Punto_Venta
                         cmd2.ExecuteNonQuery();
                     }
                 }
-                Ticket ticket2 = new Ticket();
-                ticket2.MaxChar = 35;
-                ticket2.MaxCharDescription = 22;
-                ticket2.FontSize = 8;
-                ticket2.AddHeaderLine("****** SALIDA DE EFECTIVO  *****");
-                ticket2.AddSubHeaderLine("FECHA Y HORA:" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-                ticket2.AddSubHeaderLine("Usuario:" + usuario);
-                ticket2.AddItem("1", txtConcepto.Text, "$" + txtIngreso.Text);
-                ticket2.PrintTicket(Conexion.impresora);
                 MessageBox.Show("Se ha retirado de caja correctamente", "Listo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch 

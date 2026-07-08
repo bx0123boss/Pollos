@@ -1,8 +1,9 @@
-﻿using LibPrintTicket;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Punto_Venta
@@ -78,23 +79,30 @@ namespace Punto_Venta
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Ticket ticket = new Ticket();
-            ticket.MaxChar = 35;
-            ticket.MaxCharDescription = 22;
-            ticket.FontSize = 8;
-            ticket.AddHeaderLine("********  CORTE DE CAJA  *******");
-            ticket.AddHeaderLine("MESERO: " + nombre);
-            ticket.AddSubHeaderLine("FECHA Y HORA:");
-            ticket.AddSubHeaderLine(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
+            string[] encabezados = new string[] { "********** CORTE DE CAJA  ********", "MESERO: " + "FECHA Y HORA:", DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() };
+            List<Producto> productos = new List<Producto>();
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
-                ticket.AddItem("1", "Folio: " +dataGridView1[0, i].Value.ToString(), "   $" + dataGridView1[11, i].Value.ToString());
+                productos.Add(new Producto
+                {
+                    Cantidad = 0,
+                    Nombre = dataGridView1[0, i].Value.ToString(),
+                    PrecioUnitario = Convert.ToDouble(dataGridView1[11, i].Value.ToString()),
+                    Total = Convert.ToDouble(dataGridView1[11, i].Value.ToString()),
+                });
             }
-            ticket.AddTotal("Total: ", lblMonto.Text);
-            ticket.AddTotal("Mesas Atendidas:", lblMesas.Text);
-            ticket.PrintTicket(Conexion.impresora);
-        }
+            Dictionary<string, double> totales = new Dictionary<string, double>();
+            totales.Add("Total", Convert.ToDouble(GetNumericValue(lblMonto.Text)));
+            totales.Add("Mesas Atendidas", Convert.ToDouble(GetNumericValue(lblMesas.Text)));
 
+            TicketPrinter ticketPrinter = new TicketPrinter(encabezados, Conexion.pieDeTicket, Conexion.logoPath, productos, "", "", "", Convert.ToDouble(lblMonto.Text), true, totales);
+            ticketPrinter.ImprimirTicket();
+
+        }
+        string GetNumericValue(string input)
+        {
+            return Regex.Replace(input, @"[^\d.-]", "");
+        }
         private void button3_Click(object sender, EventArgs e)
         {
             frmCorte corte = new frmCorte();

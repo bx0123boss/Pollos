@@ -27,7 +27,7 @@ public class ClienteService
 
                 // 1. INSERTAR DATOS
                 string query = @"INSERT INTO Clientes 
-                            (Nombre, Telefono, Direccion, Referencia, RFC, Correo, Adeudo, Limite, UltimoPago, Estatus) 
+                            (Nombre, Telefono, Direccion, Referencia, , Colonia) 
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                 using (var cmd = new OdbcCommand(query, con))
@@ -36,12 +36,7 @@ public class ClienteService
                     cmd.Parameters.AddWithValue("?", cliente.Telefono ?? "");
                     cmd.Parameters.AddWithValue("?", cliente.Direccion ?? "");
                     cmd.Parameters.AddWithValue("?", cliente.Referencia ?? "");
-                    cmd.Parameters.AddWithValue("?", string.IsNullOrEmpty(cliente.RFC) ? "XAXX010101000" : cliente.RFC);
-                    cmd.Parameters.AddWithValue("?", cliente.Correo ?? "");
-                    cmd.Parameters.AddWithValue("?", 0);
-                    cmd.Parameters.AddWithValue("?", cliente.Limite);
-                    cmd.Parameters.AddWithValue("?", DateTime.Now);
-                    cmd.Parameters.AddWithValue("?", "Activo");
+                    cmd.Parameters.AddWithValue("?", cliente.Colonia ?? "");
 
                     await cmd.ExecuteNonQueryAsync();
 
@@ -183,13 +178,12 @@ public class ClienteService
         {
             Id = Convert.ToInt32(reader["Id"]),
             Nombre = reader["Nombre"] != DBNull.Value ? reader["Nombre"].ToString() : "",
-            RFC = reader["RFC"] != DBNull.Value ? reader["RFC"].ToString() : "",
+            
             Direccion = reader["Direccion"] != DBNull.Value ? reader["Direccion"].ToString() : "",
             Telefono = reader["Telefono"] != DBNull.Value ? reader["Telefono"].ToString() : "",
-            Correo = HasColumn(reader, "Correo") && reader["Correo"] != DBNull.Value ? reader["Correo"].ToString() : "",
             Referencia = HasColumn(reader, "Referencia") && reader["Referencia"] != DBNull.Value ? reader["Referencia"].ToString() : "",
-            Limite = HasColumn(reader, "Limite") && reader["Limite"] != DBNull.Value ? Convert.ToDecimal(reader["Limite"]) : 0,
-            Estatus = HasColumn(reader, "Estatus") && reader["Estatus"] != DBNull.Value ? reader["Estatus"].ToString() : "Activo"
+            
+            Colonia = HasColumn(reader, "Colonia") && reader["Colonia"] != DBNull.Value  ? reader["Colonia"].ToString() : "Activo"
         };
     }
 

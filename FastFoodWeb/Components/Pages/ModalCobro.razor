@@ -1,0 +1,275 @@
+@using Microsoft.Data.SqlClient
+@using System.Data
+@using FastFoodWeb.Models
+@using FastFoodWeb.Services
+@inject IConfiguration Configuration
+@inject IJSRuntime JS
+@inject ServicioImpresion PrintService
+
+<div class="modal-backdrop fade show"></div>
+<div class="modal fade show d-block" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Cobrar Pedido</h5>
+                <button type="button" class="btn-close btn-close-white" @onclick="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 text-center">
+                    <h2 class="text-success fw-bold">Total: @Total.ToString("C2")</h2>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Pago (Efectivo):</label>
+                    <input type="number" class="form-control form-control-lg text-center fw-bold fs-3" 
+                           @bind="pagoEfectivo" @bind:event="oninput" 
+                           min="0" step="1" />
+                </div>
+                <div class="mb-3 text-center">
+                    <h4 class="text-danger fw-bold">Cambio: @(Cambio >= 0 ? Cambio.ToString("C2") : "$0.00")</h4>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @onclick="Cerrar">Cancelar</button>
+                <button type="button" class="btn btn-success fw-bold" disabled="@(pagoEfectivo < Total)" @onclick="ProcesarCobro">
+                    Confirmar Cobro
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int MesaId { get; set; }
+
+    [Parameter]
+    public double Total { get; set; }
+
+    [Parameter]
+    public EventCallback OnCerrar { get; set; }
+
+    [Parameter]
+    public EventCallback OnCobroExitoso { get; set; }
+
+    private double pagoEfectivo = 0;
+    
+    private double Cambio => pagoEfectivo - Total;
+
+    private async Task Cerrar()
+    {
+        await OnCerrar.InvokeAsync();
+    }
+
+    private async Task ProcesarCobro()
+    {
+        if (pagoEfectivo < Total)
+        {
+            await JS.InvokeVoidAsync("alert", "El pago no puede ser menor al total.");
+            return;
+        }
+
+        try
+        {
+            using (SqlConnection con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL")))
+            {
+                await con.OpenAsync();
+
+                using (SqlTransaction transaction = con.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Insertar en Folios
+                        string insertFolioQuery = @"INSERT INTO Folios (ModalidadVenta, Estatus, FechaHora, Total, Descuento, Utilidad, IdMesa) 
+                                                    VALUES (@ModalidadVenta, 'COBRADO', GETDATE(), @Total, 0, 0, @IdMesa); 
+                                                    SELECT SCOPE_IDENTITY();";
+                        
+                        int lastIdFolio = 0;
+                        using (SqlCommand cmdFolio = new SqlCommand(insertFolioQuery, con, transaction))
+                        {
+                            cmdFolio.Parameters.AddWithValue("@ModalidadVenta", "PARA LLEVAR");
+                            cmdFolio.Parameters.AddWithValue("@Total", Total);
+                            cmdFolio.Parameters.AddWithValue("@IdMesa", MesaId.ToString());
+                            lastIdFolio = Convert.ToInt32(await cmdFolio.ExecuteScalarAsync());
+                        }
+
+                        // 2. Traer artículos de la mesa para pasarlos a Folio
+                        List<global::Producto> productosParaImprimir = new List<global::Producto>();
+                        Dictionary<string, double> totales = new Dictionary<string, double>
+                        {
+                            { "total", Total },
+                            { "pago", pagoEfectivo },
+                            { "cambio", Cambio }
+                        };
+
+                        string selectArticulosQuery = "SELECT IdInventario, Cantidad, Comentario, Total, Ids, IdPromo FROM ArticulosMesa WHERE IdMesa = @IdMesa";
+                        using (SqlCommand cmdSelect = new SqlCommand(selectArticulosQuery, con, transaction))
+                        {
+                            cmdSelect.Parameters.AddWithValue("@IdMesa", MesaId);
+                            using (SqlDataReader reader = await cmdSelect.ExecuteReaderAsync())
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    string idInventario = reader["IdInventario"].ToString()!;
+                                    string idPromo = reader["IdPromo"] != DBNull.Value ? reader["IdPromo"].ToString()! : "";
+                                    decimal cantidad = Convert.ToDecimal(reader["Cantidad"]);
+                                    decimal totalArticulo = Convert.ToDecimal(reader["Total"]);
+                                    string comentario = reader["Comentario"]?.ToString() ?? "";
+                                    string ids = reader["Ids"]?.ToString() ?? "";
+
+                                    // Para imprimir necesitamos Nombre y Precio Unitario, lo buscamos en una query rápida
+                                    productosParaImprimir.Add(new global::Producto
+                                    {
+                                        Nombre = idInventario == "0" ? $"Promo/Combo {idPromo}" : ObtenerNombreProducto(idInventario, con, transaction),
+                                        Cantidad = Convert.ToDouble(cantidad),
+                                        Total = Convert.ToDouble(totalArticulo),
+                                        PrecioUnitario = Convert.ToDouble(totalArticulo) / (Convert.ToDouble(cantidad) == 0 ? 1 : Convert.ToDouble(cantidad))
+                                    });
+                                }
+                            }
+                        }
+
+                        // Reabrimos el select para procesar inserts porque el reader anterior lo usamos para leer
+                        using (SqlCommand cmdSelect2 = new SqlCommand(selectArticulosQuery, con, transaction))
+                        {
+                            cmdSelect2.Parameters.AddWithValue("@IdMesa", MesaId);
+                            List<(string idInv, decimal cant, string com, decimal tot, string idExtra, string idP)> lineas = new();
+                            using (SqlDataReader reader = await cmdSelect2.ExecuteReaderAsync())
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    lineas.Add((
+                                        reader["IdInventario"].ToString()!,
+                                        Convert.ToDecimal(reader["Cantidad"]),
+                                        reader["Comentario"]?.ToString() ?? "",
+                                        Convert.ToDecimal(reader["Total"]),
+                                        reader["Ids"]?.ToString() ?? "",
+                                        reader["IdPromo"] != DBNull.Value ? reader["IdPromo"].ToString()! : ""
+                                    ));
+                                }
+                            }
+
+                            foreach (var ln in lineas)
+                            {
+                                // ArticulosFolio
+                                string insertArticuloQuery = @"INSERT INTO ArticulosFolio (IdInventario, IdFolio, Cantidad, Comentario, Total, IdExtra, IdPromo) 
+                                                               VALUES (@IdProducto, @IdFolio, @Cantidad, @Comentario, @Total, @IdExtra, @IdPromo);";
+                                using (SqlCommand cmdArt = new SqlCommand(insertArticuloQuery, con, transaction))
+                                {
+                                    cmdArt.Parameters.AddWithValue("@IdProducto", ln.idInv);
+                                    cmdArt.Parameters.AddWithValue("@IdFolio", lastIdFolio);
+                                    cmdArt.Parameters.AddWithValue("@Cantidad", ln.cant);
+                                    cmdArt.Parameters.AddWithValue("@Comentario", string.IsNullOrEmpty(ln.com) ? DBNull.Value : ln.com);
+                                    cmdArt.Parameters.AddWithValue("@Total", ln.tot);
+                                    cmdArt.Parameters.AddWithValue("@IdExtra", string.IsNullOrEmpty(ln.idExtra) ? DBNull.Value : ln.idExtra);
+                                    cmdArt.Parameters.AddWithValue("@IdPromo", string.IsNullOrEmpty(ln.idP) ? DBNull.Value : ln.idP);
+                                    await cmdArt.ExecuteNonQueryAsync();
+                                }
+
+                                // tempInventario
+                                string insertTemp = @"INSERT INTO tempInventario(id, cantidad, ide) VALUES (@id, @cantidad, @ide);";
+                                using (SqlCommand cmdTemp = new SqlCommand(insertTemp, con, transaction))
+                                {
+                                    cmdTemp.Parameters.AddWithValue("@id", ln.idInv == "0" ? ln.idP : ln.idInv);
+                                    cmdTemp.Parameters.AddWithValue("@cantidad", ln.cant);
+                                    cmdTemp.Parameters.AddWithValue("@ide", string.IsNullOrEmpty(ln.idExtra) ? DBNull.Value : ln.idExtra);
+                                    await cmdTemp.ExecuteNonQueryAsync();
+                                }
+                            }
+                        }
+
+                        // 3. Corte
+                        string queryCorte = @"INSERT INTO CORTE (Concepto, Total, FechaHora, FormaPago) VALUES (@Concepto, @Total, GETDATE(), 'EFECTIVO')";
+                        using (SqlCommand cmdCorte = new SqlCommand(queryCorte, con, transaction))
+                        {
+                            cmdCorte.Parameters.AddWithValue("@Concepto", $"VENTA DE FOLIO: {lastIdFolio}");
+                            cmdCorte.Parameters.AddWithValue("@Total", Total);
+                            await cmdCorte.ExecuteNonQueryAsync();
+                        }
+
+                        // 4. Actualizar usuario (TODO: ID Mesero dinámico, usando 1 por defecto)
+                        int idMesero = 1;
+                        double ventas = 0;
+                        int mesas = 0;
+                        using (SqlCommand cmdUsu = new SqlCommand("SELECT Ventas, Mesas FROM Usuarios WHERE IdUsuario = @IdMesero;", con, transaction))
+                        {
+                            cmdUsu.Parameters.AddWithValue("@IdMesero", idMesero);
+                            using (SqlDataReader rUsu = await cmdUsu.ExecuteReaderAsync())
+                            {
+                                if (await rUsu.ReadAsync())
+                                {
+                                    ventas = Convert.ToDouble(rUsu["Ventas"]);
+                                    mesas = Convert.ToInt32(rUsu["Mesas"]);
+                                }
+                            }
+                        }
+                        using (SqlCommand cmdUsuUpd = new SqlCommand("UPDATE Usuarios SET Ventas = @Ventas, Mesas = @Mesas WHERE IdUsuario = @IdMesero;", con, transaction))
+                        {
+                            cmdUsuUpd.Parameters.AddWithValue("@Ventas", ventas + Total);
+                            cmdUsuUpd.Parameters.AddWithValue("@Mesas", mesas + 1);
+                            cmdUsuUpd.Parameters.AddWithValue("@IdMesero", idMesero);
+                            await cmdUsuUpd.ExecuteNonQueryAsync();
+                        }
+
+                        // 5. Actualizar Estatus MESAS y ArticulosMesa a COBRADO
+                        using (SqlCommand cmdMesasUpd = new SqlCommand("UPDATE MESAS SET Estatus = 'COBRADO' WHERE IdMesa = @IdMesa;", con, transaction))
+                        {
+                            cmdMesasUpd.Parameters.AddWithValue("@IdMesa", MesaId);
+                            await cmdMesasUpd.ExecuteNonQueryAsync();
+                        }
+                        using (SqlCommand cmdArtMesasUpd = new SqlCommand("UPDATE ArticulosMesa SET Estatus = 'COBRADO' WHERE IdMesa = @IdMesa;", con, transaction))
+                        {
+                            cmdArtMesasUpd.Parameters.AddWithValue("@IdMesa", MesaId);
+                            await cmdArtMesasUpd.ExecuteNonQueryAsync();
+                        }
+
+                        transaction.Commit();
+
+                        // 6. IMPRIMIR TICKET CLIENTE
+                        try
+                        {
+                            PrintService.ImprimirTicketVenta(
+                                folio: lastIdFolio.ToString(), 
+                                mesa: "Para llevar", 
+                                mesero: "Mesero 1", 
+                                total: Total, 
+                                totales: totales, 
+                                formaPago: "EFECTIVO", 
+                                productosParaImprimir: productosParaImprimir
+                            );
+                        }
+                        catch (Exception printEx)
+                        {
+                            await JS.InvokeVoidAsync("alert", "Error al imprimir ticket: " + printEx.Message);
+                        }
+                        
+                        await JS.InvokeVoidAsync("alert", "COBRO REALIZADO CON ÉXITO");
+                        await OnCobroExitoso.InvokeAsync();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await JS.InvokeVoidAsync("alert", $"Ocurrió un error al cobrar: {ex.Message}");
+        }
+    }
+
+    private string ObtenerNombreProducto(string idInventario, SqlConnection con, SqlTransaction tr)
+    {
+        try
+        {
+            using (SqlCommand cmd = new SqlCommand("SELECT Nombre FROM Inventario WHERE IdInventario = @Id", con, tr))
+            {
+                cmd.Parameters.AddWithValue("@Id", idInventario);
+                var result = cmd.ExecuteScalar();
+                return result?.ToString() ?? "Producto Desconocido";
+            }
+        }
+        catch { return "Producto Desconocido"; }
+    }
+}

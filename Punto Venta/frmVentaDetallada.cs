@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
-using System.Windows.Forms;
-using LibPrintTicket;
-using System.Globalization;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 
 namespace Punto_Venta
@@ -88,33 +88,44 @@ namespace Punto_Venta
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Ticket ticket = new Ticket();
-            ticket.MaxChar = 34;
-            ticket.FontSize = 9;
-            ticket.HeaderImage = Image.FromFile("C:\\Jaeger Soft\\logo.jpg");
-            ticket.AddHeaderLine("*******  NOTA DE CONSUMO  *******");
-            ticket.AddHeaderLine("FOLIO DE VENTA: " + lblFolio.Text);
-            ticket.AddSubHeaderLine("FECHA: " + lblFecha.Text);
-            ticket.AddSubHeaderLine("FECHA REIMPRESION: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
+            List<Producto> productos = new List<Producto>();
+
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
-
-                double lol = Convert.ToDouble(dataGridView1[5, i].Value.ToString());
-                string producto;
-
-                producto = dataGridView1[3, i].Value.ToString();
-
-
-                string item = dataGridView1[2, i].Value.ToString();
-
-                ticket.AddItem(String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", item), producto, "$" + String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", lol));
-
-
+                productos.Add(new Producto
+                {
+                    Nombre = dataGridView1[3, i].Value.ToString(),
+                    Cantidad = Convert.ToDouble(dataGridView1[2, i].Value.ToString()),
+                    PrecioUnitario = Convert.ToDouble(dataGridView1[5, i].Value.ToString()) / Convert.ToDouble(dataGridView1[2, i].Value.ToString()),
+                    Total = Convert.ToDouble(dataGridView1[5, i].Value.ToString()),
+                });
             }
 
-            ticket.AddTotal("TOTAL", String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", lblMonto.Text));
-            ticket.AddFooterLine("  ¡GRACIAS POR SU PREFERENCIA!");
-            ticket.PrintTicket("print");
+            string GetNumericValue(string input)
+            {
+                return Regex.Replace(input, @"[^\d.-]", "");
+            }
+
+            double total = Convert.ToDouble(GetNumericValue(lblMonto.Text));
+            Dictionary<string, double> totales = new Dictionary<string, double>();
+            totales.Add("Subtotal", total / 1.16);
+            totales.Add("IVA", (total / 1.16) * 0.16);
+            totales.Add("Total", total);
+
+            TicketPrinter ticketPrinter = new TicketPrinter(
+                   Conexion.datosTicket,
+                   Conexion.pieDeTicket,
+                   Conexion.logoPath,
+                   productos,
+                   lblFolio.Text,
+                   "",       // Datos Extra
+                   "",
+                   Convert.ToDouble(lblMonto.Text),
+                   false,
+                   totales,
+                   "");
+
+            ticketPrinter.ImprimirTicket();
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -61,7 +61,6 @@ namespace FastFoodWeb.Services
 
             TicketPrinter ticket = new TicketPrinter(productosParaImprimir, mesa, mesero);
 
-            // Usamos impresora2 de tu archivo Conexion.cs (la de cocina)
             ticket.ImprimirComanda(Conexion.impresora2);
         }
 

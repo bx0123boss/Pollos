@@ -15,14 +15,5 @@ public class Cliente
     public string Direccion { get; set; }
 
     public string Referencia { get; set; }
-
-    [Required(ErrorMessage = "El RFC es obligatorio")]
-    public string RFC { get; set; }
-
-    [EmailAddress(ErrorMessage = "Formato de correo inválido")]
-    public string Correo { get; set; }
-    public decimal Adeudo { get; set; }
-    public decimal Limite { get; set; }
-    public DateTime UltimoPago { get; set; }
-    public string Estatus { get; set; }
+    public string Colonia { get; set; }
 }

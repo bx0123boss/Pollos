@@ -142,6 +142,8 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label38 = new System.Windows.Forms.Label();
+            this.button11 = new System.Windows.Forms.Button();
+            this.picLogo = new System.Windows.Forms.PictureBox();
             this.groupBox11.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -153,6 +155,7 @@
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // lblMedida9
@@ -1466,12 +1469,36 @@
             this.label38.TabIndex = 32;
             this.label38.Text = "Sub:";
             // 
+            // button11
+            // 
+            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button11.Location = new System.Drawing.Point(903, 41);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(106, 49);
+            this.button11.TabIndex = 33;
+            this.button11.Text = "Seleccionar Imágen";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // picLogo
+            // 
+            this.picLogo.BackColor = System.Drawing.Color.White;
+            this.picLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picLogo.Location = new System.Drawing.Point(1015, 6);
+            this.picLogo.Name = "picLogo";
+            this.picLogo.Size = new System.Drawing.Size(177, 106);
+            this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picLogo.TabIndex = 34;
+            this.picLogo.TabStop = false;
+            // 
             // frmAgregarPlatillo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1252, 662);
+            this.Controls.Add(this.picLogo);
+            this.Controls.Add(this.button11);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label38);
             this.Controls.Add(this.checkBox1);
@@ -1511,6 +1538,7 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1631,6 +1659,7 @@
         public System.Windows.Forms.CheckBox checkBox1;
         public System.Windows.Forms.ComboBox comboBox2;
         public System.Windows.Forms.Label label38;
-
+        public System.Windows.Forms.Button button11;
+        private System.Windows.Forms.PictureBox picLogo;
     }
 }

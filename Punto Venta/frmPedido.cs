@@ -1,11 +1,12 @@
-﻿using System;
+﻿using MigraDoc.DocumentObjectModel.Internals;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using LibPrintTicket;
 
 namespace Punto_Venta
 {
@@ -347,72 +348,94 @@ namespace Punto_Venta
                 return false;
         }
         public void TicketComanda(List<(string id,string Cantidad, string Descripcion, string Comentario, string ides)> itemsComanda)
-        {
+        {          
+            string modalidad = "";
             string RESULT = "";
-            Ticket ticket = new Ticket();
-            ticket.FontSize = 10;
-            ticket.MaxCharDescription = 26;
             //Llevar
             if (tabControl1.SelectedIndex == 2)
             {
-                ticket.AddHeaderLine("****PARA LLEVAR****");
-                ticket.AddHeaderLine(" ");
-                ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-                //llevar();
+                modalidad= "****PARA LLEVAR****";
             }
             //mesa
             else if (tabControl1.SelectedIndex == 0)
             {
-                ticket.AddHeaderLine("****MESA " + CmbMesa.Text + "****");
-                ticket.AddHeaderLine(" ");
-                //enMesa();
+                modalidad = "****MESA " + CmbMesa.Text + "****";
             }
             //domicilio
             else if (tabControl1.SelectedIndex == 1)
             {
-                ticket.AddHeaderLine("****ENTREGA A DOMICILIO****");
-                ticket.AddHeaderLine("Cliente: " + LblNombre.Text);
+                modalidad ="****ENTREGA A DOMICILIO****";
+                modalidad += "\nCliente: " + LblNombre.Text;
                 //domicilio();
             }
-            ticket.AddHeaderLine("MESERO:" + lblMesero.Text);
-            ticket.AddHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString());
-            foreach (var (id,cantidad, descripcion, comentario, ide) in itemsComanda)
+            List<Producto> productosParaImprimir = new List<Producto>();
+
+            foreach (var (id, cantidad, descripcion, comentario, ide) in itemsComanda)
             {
-                ticket.AddItem(cantidad, descripcion +": "+ comentario, "");
-                if (id.Substring(0, 1) == "C")
+                productosParaImprimir.Add(new Producto
                 {
-                    string[] ids = ide.Split(';');
-                    
-                    foreach (var word in ids)
+                    Nombre = descripcion,
+                    Cantidad = Convert.ToDouble(cantidad),
+                    Comentario = comentario,
+                    PrecioUnitario = 0,
+                    Total = 0
+                });
+
+                // 1.2 Desglosar los extras/mitades si los hay
+                if ((id.StartsWith("C") || id.StartsWith("P") || !string.IsNullOrEmpty(ide)) && !string.IsNullOrWhiteSpace(ide))
+                {
+                    string[] idsExtras = ide.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var extra in idsExtras)
                     {
-                        string[] ids2 = word.Split(',');
-                        for (int i2 = 0; i2 < ids2.Length - 1; i2 = i2 + 2)
+                        string[] detallesId = extra.Split(',');
+                        if (detallesId.Length >= 2)
                         {
-                            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                            double subCantidad = Convert.ToDouble(detallesId[0]);
+                            string idInventario = detallesId[1];
+                            string nombreExtra = ObtenerNombreProducto(idInventario);
+
+                            if (!string.IsNullOrEmpty(nombreExtra))
                             {
-                                conectar.Open();
-
-                                string query = @"SELECT Nombre FROM Inventario WHERE IdInventario = @IdInventario";
-
-                                using (SqlCommand cmd = new SqlCommand(query, conectar))
+                                productosParaImprimir.Add(new Producto
                                 {
-                                    cmd.Parameters.AddWithValue("@IdInventario", ids2[1]);
-                                    using (SqlDataReader reader = cmd.ExecuteReader())
-                                    {
-                                        while (reader.Read())
-                                        {
-                                            ticket.AddItem(ids2[0], reader[0].ToString() + "", "");
-                                            RESULT += ids2[0] + " : " + reader[0].ToString() + "\n";
-                                        }
-                                    }
-                                }
+                                    Nombre = "  -> " + nombreExtra,
+                                    Cantidad = subCantidad,
+                                    Comentario = "",
+                                    PrecioUnitario = 0,
+                                    Total = 0
+                                });
                             }
                         }
                     }
                 }
             }
-            //MessageBox.Show(RESULT);
-            ticket.PrintTicket(Conexion.impresora2);
+            TicketPrinter ticket = new TicketPrinter(productosParaImprimir, lblMesa.Text, lblMesero.Text);
+            ticket.ImprimirComanda(Conexion.impresora2);
+        }
+        private string ObtenerNombreProducto(string idInventario)
+        {
+            string nombre = "";
+            try
+            {
+                // Usamos la cadena de conexión de SQL de tu clase compartida
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    conectar.Open();
+                    string query = "SELECT Nombre FROM Inventario WHERE IdInventario = @Id";
+                    using (SqlCommand cmd = new SqlCommand(query, conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", idInventario);
+                        var result = cmd.ExecuteScalar();
+                        if (result != null) nombre = result.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al consultar BD para impresión: " + ex.Message);
+            }
+            return nombre;
         }
         private void BtnEntregar_Click(object sender, EventArgs e)
         {
