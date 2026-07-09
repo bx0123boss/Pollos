@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmEntregarRuta : Form
+    public partial class frmEntregarRuta : frmBase
     {
         private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
@@ -112,3 +112,4 @@ namespace Punto_Venta
         }
     }
 }
+

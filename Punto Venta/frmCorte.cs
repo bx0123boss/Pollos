@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmCorte : Form
+    public partial class frmCorte : frmBase
     {
         double mas = 0;
         double menos = 0;
@@ -215,3 +215,4 @@ namespace Punto_Venta
         }
     }
 }
+

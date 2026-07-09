@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmClaveVendendor : Form
+    public partial class frmClaveVendendor : frmBase
     {
         public int Id { get; set; }
         public string Mesero { get; set; }
@@ -92,3 +92,4 @@ namespace Punto_Venta
         }
     }
 }
+

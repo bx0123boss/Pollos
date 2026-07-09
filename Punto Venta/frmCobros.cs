@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmCobros : Form
+    public partial class frmCobros : frmBase
     {
         double iva;
         double descuento;
@@ -653,3 +653,4 @@ namespace Punto_Venta
         }
     }
 }
+

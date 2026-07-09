@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmBusquedaArticulo : Form
+    public partial class frmBusquedaArticulo : frmBase
     {      
 
         public string Id { get; set; }
@@ -83,3 +83,4 @@ namespace Punto_Venta
         }
     }
 }
+

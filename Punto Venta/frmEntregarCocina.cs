@@ -8,7 +8,7 @@ using System.Drawing.Printing;
 
 namespace Punto_Venta
 {
-    public partial class frmEntregarCocina : Form
+    public partial class frmEntregarCocina : frmBase
     {
         private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
@@ -477,3 +477,4 @@ namespace Punto_Venta
         }
     }
 }
+

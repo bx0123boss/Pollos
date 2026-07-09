@@ -1,0 +1,17 @@
+BEGIN TRANSACTION;
+IF OBJECT_ID('Proveedores', 'U') IS NOT NULL
+    DROP TABLE Proveedores; 
+
+CREATE TABLE Proveedores (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre NVARCHAR(50) NULL,
+    RFC NVARCHAR(20) NULL,
+    Direccion NVARCHAR(100) NULL,
+    Telefono NVARCHAR(20) NULL,
+    Correo NVARCHAR(50) NULL,
+    Referencia NVARCHAR(100) NULL,
+    Clave NVARCHAR(20) NULL,
+    Adeudo NVARCHAR(20) NULL
+);
+
+COMMIT TRANSACTION;

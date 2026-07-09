@@ -11,7 +11,7 @@ using System.Data.OleDb;
 
 namespace Punto_Venta
 {
-    public partial class frmEditarGasto : Form
+    public partial class frmEditarGasto : frmBase
     {
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
         OleDbCommand cmd;
@@ -45,3 +45,4 @@ namespace Punto_Venta
         }
     }
 }
+

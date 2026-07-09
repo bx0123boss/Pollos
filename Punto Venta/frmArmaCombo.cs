@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmArmaCombo : Form
+    public partial class frmArmaCombo : frmBase
     {
         private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
@@ -32,3 +32,4 @@ namespace Punto_Venta
         }
     }
 }
+

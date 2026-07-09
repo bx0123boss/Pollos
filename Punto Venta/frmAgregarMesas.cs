@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmAgregarMesas : Form
+    public partial class frmAgregarMesas : frmBase
     {
         public int IdMesa { get; set; }
         public int IdMesero { get; set; }
@@ -76,3 +76,4 @@ namespace Punto_Venta
         }
     }
 }
+

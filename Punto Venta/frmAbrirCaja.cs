@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmAbrirCaja : Form
+    public partial class frmAbrirCaja : frmBase
     {
         public string usuario, nombre;
         public int id = 0;
@@ -33,6 +33,13 @@ namespace Punto_Venta
                 return;
             }
         }
+
+        private void frmAbrirCaja_Load(object sender, EventArgs e)
+        {
+            EstilizarTextBox(txtIngreso);
+            EstilizarBotonPrimario(button1);
+        }
+
         public void aceptar()
         {
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
@@ -68,3 +75,4 @@ namespace Punto_Venta
         }
     }
 }
+

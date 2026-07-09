@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmAgregarUsuario : Form
+    public partial class frmAgregarUsuario : frmBase
     {
 
         public frmAgregarUsuario()
@@ -79,3 +79,4 @@ namespace Punto_Venta
         }
     }
 }
+

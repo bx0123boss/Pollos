@@ -11,7 +11,7 @@ using System.Data.OleDb;
 
 namespace Punto_Venta
 {
-    public partial class frmDescontarExistencias : Form
+    public partial class frmDescontarExistencias : frmBase
     {
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
         OleDbCommand cmd;
@@ -77,3 +77,4 @@ namespace Punto_Venta
         }
     }
 }
+

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmPizzas : Form
+    public partial class frmPizzas : frmBase
     {
 
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
@@ -288,4 +288,5 @@ namespace Punto_Venta
         
         }
     }
+
 

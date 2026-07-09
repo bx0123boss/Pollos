@@ -4,7 +4,7 @@ using System.Data.OleDb;
 
 namespace Punto_Venta
 {
-    public partial class frmAgregarExistencias : Form
+    public partial class frmAgregarExistencias : frmBase
     {
 
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
@@ -76,3 +76,4 @@ namespace Punto_Venta
         }
     }
 }
+

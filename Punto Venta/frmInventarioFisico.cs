@@ -6,7 +6,7 @@ using System.Data.OleDb;
 
 namespace Punto_Venta
 {
-    public partial class frmInventarioFisico : Form
+    public partial class frmInventarioFisico : frmBase
     {
         public bool invitado;
         private DataSet ds;
@@ -99,3 +99,4 @@ namespace Punto_Venta
         }
     }
 }
+

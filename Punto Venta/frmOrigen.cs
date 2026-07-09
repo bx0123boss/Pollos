@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmOrigen : Form
+    public partial class frmOrigen : frmBase
     {
         public frmOrigen()
         {
@@ -79,3 +79,4 @@ namespace Punto_Venta
         }
     }
 }
+

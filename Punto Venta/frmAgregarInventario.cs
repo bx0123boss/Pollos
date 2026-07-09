@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmAgregarInventario : Form
+    public partial class frmAgregarInventario : frmBase
     {
         public string lista = "";
         public frmAgregarInventario()
@@ -136,3 +136,4 @@ namespace Punto_Venta
         }
     }
 }
+

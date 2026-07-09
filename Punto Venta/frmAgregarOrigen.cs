@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmAgregarOrigen : Form
+    public partial class frmAgregarOrigen : frmBase
     {
         public frmAgregarOrigen()
         {
@@ -45,3 +45,4 @@ namespace Punto_Venta
         }
     }
 }
+

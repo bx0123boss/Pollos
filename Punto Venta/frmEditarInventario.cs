@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmEditarInventario : Form
+    public partial class frmEditarInventario : frmBase
     {
         public string origen;
         public frmEditarInventario()
@@ -106,3 +106,4 @@ namespace Punto_Venta
         }
     }
 }
+

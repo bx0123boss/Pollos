@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmDetalleCorte : Form
+    public partial class frmDetalleCorte : frmBase
     {
         public int ID;
         
@@ -58,3 +58,4 @@ namespace Punto_Venta
         }
     }
 }
+

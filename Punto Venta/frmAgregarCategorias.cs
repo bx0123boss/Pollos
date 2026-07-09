@@ -2,10 +2,11 @@
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Punto_Venta
 {
-    public partial class frmAgregarCategorias : Form
+    public partial class frmAgregarCategorias : frmBase
     {
         public string id="";
         string color="bab8b8";
@@ -120,6 +121,15 @@ namespace Punto_Venta
         private void frmAgregarCategorias_Load(object sender, EventArgs e)
         {
             this.Text = tipo;
+            AplicarEstilos();
+        }
+        private void AplicarEstilos()
+        {
+            EstilizarBotonAdvertencia(button2);
+            EstilizarTextBox(txtNombre);
+            EstilizarBotonPrimario(button1);
+            button2.ForeColor = Color.FromName("Black");
         }
     }
 }
+

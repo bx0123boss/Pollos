@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmCortesMesero : Form
+    public partial class frmCortesMesero : frmBase
     {
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
         public string idMesero = "";
@@ -112,3 +112,4 @@ namespace Punto_Venta
         }
     }
 }
+

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmAgregarPlatillo : Form
+    public partial class frmAgregarPlatillo : frmBase
     {
         Double total=0;
         public string cat1, cat2;
@@ -600,3 +600,4 @@ namespace Punto_Venta
 
     }
 }
+

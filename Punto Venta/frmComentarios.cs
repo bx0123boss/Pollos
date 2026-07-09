@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmComentarios : Form
+    public partial class frmComentarios : frmBase
     {
         public string Comentario { get; set; }
         public frmComentarios()
@@ -44,3 +44,4 @@ namespace Punto_Venta
         }
     }
 }
+

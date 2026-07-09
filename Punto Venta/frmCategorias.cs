@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmCategorias : Form
+    public partial class frmCategorias : frmBase
     {
         private DataSet ds;
         public string tipo;
@@ -102,3 +102,4 @@ namespace Punto_Venta
         }
     }
 }
+

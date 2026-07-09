@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmArticulosCancelados : Form
+    public partial class frmArticulosCancelados : frmBase
     {
         public frmArticulosCancelados()
         {
@@ -99,3 +99,4 @@ namespace Punto_Venta
         }
     }
 }
+

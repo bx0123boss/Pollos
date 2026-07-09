@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmCombos : Form
+    public partial class frmCombos : frmBase
     {
         public frmCombos()
         {
@@ -140,3 +140,4 @@ namespace Punto_Venta
         }
     }
 }
+

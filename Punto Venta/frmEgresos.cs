@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmEgresos : Form
+    public partial class frmEgresos : frmBase
     {
        
         public string usuario;
@@ -55,3 +55,4 @@ namespace Punto_Venta
         }
     }
 }
+

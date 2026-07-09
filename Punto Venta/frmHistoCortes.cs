@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmHistoCortes : Form
+    public partial class frmHistoCortes : frmBase
     {
        
         public frmHistoCortes()
@@ -82,3 +82,4 @@ namespace Punto_Venta
         }
     }
 }
+

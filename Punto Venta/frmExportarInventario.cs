@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmExportarInventario : Form
+    public partial class frmExportarInventario : frmBase
     {
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
         OleDbConnection conn;
@@ -69,3 +69,4 @@ namespace Punto_Venta
         }
     }
 }
+

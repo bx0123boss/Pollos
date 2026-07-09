@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmInventario : Form
+    public partial class frmInventario : frmBase
     {
         public string usuario;
         public frmInventario()
@@ -44,10 +44,30 @@ namespace Punto_Venta
                 cmbOrigen.DisplayMember = "Nombre";
                 cmbOrigen.ValueMember = "IdOrigen";
                 cmbOrigen.DataSource = dt;
-
-               
-
             }
+            AplicarEstilos();
+        }
+
+        private void AplicarEstilos()
+        {
+            EstilizarBotonAdvertencia(button2);
+            EstilizarBotonAdvertencia(button9);
+            EstilizarBotonAdvertencia(button13);
+            EstilizarBotonAdvertencia(button5);
+            EstilizarBotonPeligro(button3);
+            EstilizarBotonPeligro(button8);
+            EstilizarBotonPeligro(button11);
+            EstilizarBotonPeligro(button12);
+            EstilizarTextBox(textBox1);
+            EstilizarComboBox(cmbOrigen);
+            EstilizarBotonPrimario(button1);
+            EstilizarBotonPrimario(button7);
+            EstilizarBotonPrimario(button10);
+            EstilizarBotonPrimario(button6);
+            EstilizarDataGridView(dgvInventario);
+            this.dgvInventario.ReadOnly = true;
+            this.dgvInventario.AllowUserToAddRows = false;
+            this.dgvInventario.AllowUserToDeleteRows = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -325,10 +345,9 @@ namespace Punto_Venta
 
         private void button11_Click(object sender, EventArgs e)
         {
-            frmCompras com = new frmCompras();
+            frmPolizas com = new frmPolizas();
             com.usuario = usuario;
-            com.Show();
-            this.Close();
+            com.ShowDialog();
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -343,6 +362,12 @@ namespace Punto_Venta
             frmCategorias cat = new frmCategorias();
             cat.tipo = "Subcategorias";
             cat.Show();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            frmProveedores pro = new frmProveedores();
+            pro.ShowDialog();
         }
     }
 }

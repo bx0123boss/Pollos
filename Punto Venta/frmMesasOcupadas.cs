@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmMesasOcupadas : Form
+    public partial class frmMesasOcupadas : frmBase
     {
         public frmMesasOcupadas()
         {
@@ -141,3 +141,4 @@ namespace Punto_Venta
 
     }
 }
+

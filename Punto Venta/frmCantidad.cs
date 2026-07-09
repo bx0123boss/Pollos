@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmCantidad : Form
+    public partial class frmCantidad : frmBase
     {
         public string comentario { get; set; }
         public double cantidad { get; set; }
@@ -188,3 +188,4 @@ namespace Punto_Venta
         }
     }
 }
+
