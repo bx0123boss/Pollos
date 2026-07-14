@@ -43,6 +43,11 @@ namespace Punto_Venta
                 }
             } // La conexión se cierra automáticamente aquí
         }
+
+        private void frmAgregarOrigen_Load(object sender, EventArgs e)
+        {
+            EstilizarBotonPrimario(button1);
+        }
     }
 }
 

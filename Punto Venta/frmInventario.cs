@@ -74,7 +74,6 @@ namespace Punto_Venta
         {
             frmAgregarInventario add = new frmAgregarInventario();
             add.ShowDialog();
-            this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -92,7 +91,6 @@ namespace Punto_Venta
             edita.txtPrecio.Text = dgvInventario[5, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtLimite.Text = dgvInventario[6, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.ShowDialog();
-            this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -141,15 +139,13 @@ namespace Punto_Venta
             agregar.lista = cmbOrigen.SelectedValue.ToString();
             agregar.txtActuales.Text = dgvInventario[2, dgvInventario.CurrentRow.Index].Value.ToString();
             agregar.lblID.Text = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
-            agregar.Show();
-            this.Close();
+            agregar.ShowDialog();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             frmPlatillos platillo = new frmPlatillos();
             platillo.ShowDialog();
-            this.Close();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -159,8 +155,7 @@ namespace Punto_Venta
             agregar.lblProducto.Text = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
             agregar.txtActuales.Text = dgvInventario[2, dgvInventario.CurrentRow.Index].Value.ToString();
             agregar.lblID.Text = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
-            agregar.Show();
-            this.Close();
+            agregar.ShowDialog();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -297,15 +292,14 @@ namespace Punto_Venta
         private void button8_Click(object sender, EventArgs e)
         {
             frmOrigen or = new frmOrigen();
-            or.Show();
-            this.Close();
+            or.ShowDialog();
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
             frmCategorias cat = new frmCategorias();
             cat.tipo = "Categorias";
-            cat.Show();
+            cat.ShowDialog();
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -331,15 +325,12 @@ namespace Punto_Venta
                     ws.Cells[cont, 3] = dgvInventario[2, i].Value.ToString();
                 }
                 frmExportarInventario fis = new frmExportarInventario();
-                fis.Show();
-                this.Close();
+                fis.ShowDialog();
             }
             else
             {
                 frmExportarInventario fis = new frmExportarInventario();
-                fis.Show();
-                this.Close();
-
+                fis.ShowDialog();
             }
         }
 
@@ -354,14 +345,13 @@ namespace Punto_Venta
         {
             frmCombos com = new frmCombos();
             com.ShowDialog();
-            this.Close();
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
             frmCategorias cat = new frmCategorias();
             cat.tipo = "Subcategorias";
-            cat.Show();
+            cat.ShowDialog();
         }
 
         private void button7_Click(object sender, EventArgs e)

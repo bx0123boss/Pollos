@@ -3,7 +3,7 @@ BEGIN TRANSACTION;
 IF OBJECT_ID('dbo.Poliza', 'U') IS NOT NULL
     DROP TABLE dbo.Poliza;
 
-CREATE TABLE dbo.NombreTabla (
+CREATE TABLE dbo.Poliza (
     Id INT IDENTITY(1,1) PRIMARY KEY,       -- Autonumeración (llave primaria)
     Folio VARCHAR(MAX) NULL,                -- Texto largo
     Fecha DATETIME NULL,                    -- Fecha/Hora

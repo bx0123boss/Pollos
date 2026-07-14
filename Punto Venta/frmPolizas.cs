@@ -90,8 +90,8 @@ namespace Punto_Venta
         private void button1_Click(object sender, EventArgs e)
         {
             frmAgregarCompras add = new frmAgregarCompras();
-            add.Show();
-            this.Close();
+            add.ShowDialog();
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

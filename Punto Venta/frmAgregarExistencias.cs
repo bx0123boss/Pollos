@@ -18,6 +18,7 @@ namespace Punto_Venta
         private void textBox1_Leave(object sender, EventArgs e)
         {
             txtTotales.Text = "" + (Convert.ToDouble(txtActuales.Text) + Convert.ToDouble(textBox1.Text));
+            EstilizarBotonPrimario(button1);
         }
 
         private void button1_Click(object sender, EventArgs e)

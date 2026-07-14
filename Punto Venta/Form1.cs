@@ -1,6 +1,8 @@
-﻿using System;
+﻿using JaegerSoft;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
@@ -24,25 +26,6 @@ namespace Punto_Venta
         private void button1_Click_2(object sender, EventArgs e)
         {
             entrar();
-        }
-        public String Autentica()
-        {
-            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
-            {
-                conectar.Open();
-                using (SqlCommand cmd = new SqlCommand("select IdUsuario,Usuario,TipoUsuario from Usuarios where Usuario='" + txtUser.Text + "' AND Contraseña='" + txtContraseña.Text + "';", conectar))
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        idMesero = Convert.ToInt32(reader["IdUsuario"].ToString());
-                        usuario = reader["Usuario"].ToString();
-                        return Convert.ToString(reader["TipoUsuario"].ToString());
-
-                    }
-                    return "ERROR";
-                }
-            }
         }
         private void pictureBox2_Click(object sender, EventArgs e)
         {
@@ -93,59 +76,170 @@ namespace Punto_Venta
             }
         }
         public void entrar()
+        
         {
-            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            try
             {
-                conectar.Open();
-                using (SqlCommand cmd = new SqlCommand("select * from inicio where id=1;", conectar))
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    while (reader.Read())
+                    conectar.Open();
+
+                    // Obtener datos del usuario autenticado
+                    string aut = Autentica();
+                    if (aut == "ERROR")
                     {
-                        if (Convert.ToString(reader["inicio"].ToString()) == "0")
+                        MessageBox.Show("El usuario y/o contraseña no son válidos,\nFavor de introducirlas nuevamente",
+                                      "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        txtUser.Text = "";
+                        txtContraseña.Clear();
+                        txtContraseña.Focus();
+                        return;
+                    }
+
+                    // Consultar el estado de inicio del usuario (si necesita abrir caja o no)
+                    using (SqlCommand cmd = new SqlCommand("SELECT inicio FROM inicio WHERE id = 1", conectar))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            string aut = Autentica();
-                            if (aut != "ERROR")
+                            if (reader.Read())
                             {
-                                frmAbrirCaja caja = new frmAbrirCaja();
-                                caja.usuario = aut;
-                                caja.id = idMesero;
-                                caja.nombre = usuario;
-                                caja.ShowDialog();
-                                this.Hide();
+                                CargarPermisosUsuario(Sesion.IdUsuario);
+
+                                string estadoInicio = reader["inicio"].ToString();
+
+                                if (estadoInicio == "0")
+                                {
+                                    // Usuario necesita abrir caja
+                                    frmAbrirCaja caja = new frmAbrirCaja();
+                                    caja.usuario = aut;
+                                    caja.id = idMesero;
+                                    caja.nombre = usuario;
+                                    caja.ShowDialog();
+                                    this.Hide();
+                                }
+                                else
+                                {
+                                    // Usuario va directamente al principal
+                                    frmPrincipal principal = new frmPrincipal();
+                                    principal.id = idMesero;
+                                    principal.lblUser.Text = aut;
+                                    principal.usuario = usuario;
+                                    principal.Show();
+                                    this.Hide();
+                                }
                             }
                             else
                             {
-                                MessageBox.Show("El usuario y/o contraseña no son valids,\nFavor de introducirlas nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                txtUser.Text = "";
-                                txtContraseña.Clear();
-                                txtContraseña.Focus();
-                            }
-                        }
-                        else
-                        {
-                            string aut = Autentica();
-                            if (aut != "ERROR")
-                            {
-                                frmPrincipal principal = new frmPrincipal();
-                                principal.id = idMesero;
-                                principal.lblUser.Text = aut;
-                                principal.usuario = usuario;
-                                principal.Show();
-                                this.Hide();
-                            }
-                            else
-                            {
-                                MessageBox.Show("El usuario y/o contraseña no son valids,\nFavor de introducirlas nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                txtUser.Text = "";
-                                txtContraseña.Clear();
-                                txtContraseña.Focus();
+                                MessageBox.Show("No se encontró información del usuario en el sistema",
+                                              "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                     }
                 }
             }
+            catch (SqlException exSql)
+            {
+                MessageBox.Show("Error de base de datos: " + exSql.Message,
+                               "Error SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error inesperado: " + ex.Message,
+                               "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
+        private void CargarPermisosUsuario(string idUsuario)
+        {
+            try
+            {
+                // Limpiar permisos anteriores
+                Sesion.PermisosActuales.Clear();
+
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    conectar.Open();
+
+                    // Consulta para obtener permisos del usuario
+                    string queryPermisos = @"SELECT * FROM PermisosUsuario
+                                    WHERE IdUsuario = @IdUsuario";
+
+                    using (SqlCommand cmdPermisos = new SqlCommand(queryPermisos, conectar))
+                    {
+                        cmdPermisos.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                        using (SqlDataReader rdrPermisos = cmdPermisos.ExecuteReader())
+                        {
+                            while (rdrPermisos.Read())
+                            {
+                                // Agregar cada permiso a la sesión
+                                string permiso = rdrPermisos["Permiso"].ToString().ToUpper();
+                                Sesion.PermisosActuales.Add(permiso);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar permisos: " + ex.Message,
+                               "Error de Permisos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // Continuar con la sesión aunque fallen los permisos
+            }
+        }
+
+        // Método de autenticación mejorado
+        private string Autentica()
+        {
+            try
+            {
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    conectar.Open();
+
+                    string query = @"SELECT IdUsuario, usuario, contrasena 
+                            FROM Usuarios 
+                    WHERE usuario = @Usuario AND contrasena = @Contrasena";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Usuario", txtUser.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Contrasena", txtContraseña.Text);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                idMesero = Convert.ToInt32(reader["IdUsuario"]);
+                                usuario = reader["usuario"].ToString();
+                                Sesion.IdUsuario = reader["IdUsuario"].ToString();
+                                Sesion.NombreUsuario = reader["usuario"].ToString();
+                                return reader["usuario"].ToString();
+                            }
+                            else
+                            {
+                                return "ERROR";
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return "ERROR";
+            }
+        }
+
+        private string EncriptarContrasena(string contrasena)
+        {
+            // Aquí puedes implementar tu método de encriptación
+            // Ejemplo simple con SHA256
+            using (System.Security.Cryptography.SHA256 sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(contrasena);
+                byte[] hash = sha256.ComputeHash(bytes);
+                return Convert.ToBase64String(hash);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

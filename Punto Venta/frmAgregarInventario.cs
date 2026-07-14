@@ -82,7 +82,7 @@ namespace Punto_Venta
                 comboBox2.ValueMember = "IdOrigen";
                 comboBox2.DataSource = dt;
             }
-
+            EstilizarBotonPrimario(button1);
         }
 
         private void txtCantidad_KeyPress(object sender, KeyPressEventArgs e)

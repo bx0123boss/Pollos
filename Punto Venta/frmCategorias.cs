@@ -34,14 +34,20 @@ namespace Punto_Venta
                 dataGridView1.DataSource = ds.Tables["Id"];
                 dataGridView1.Columns[0].Visible = false;
             }
+            EstilizarBotonPrimario(button3);
+            EstilizarBotonAdvertencia(button2);
+            EstilizarBotonPeligro(button1); 
+            EstilizarDataGridView(dataGridView1);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             frmAgregarCategorias CAT = new frmAgregarCategorias();
             CAT.tipo = tipo;
-            CAT.Show();
-            this.Close();
+            CAT.ShowDialog();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -97,8 +103,8 @@ namespace Punto_Venta
             else
                 cat.radioButton2.Checked = true; 
             cat.button1.Text = "Editar";
-            cat.Show();
-            this.Close();
+            cat.ShowDialog();
+         
         }
     }
 }

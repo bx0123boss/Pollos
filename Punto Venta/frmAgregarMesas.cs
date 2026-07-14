@@ -74,6 +74,11 @@ namespace Punto_Venta
                 e.Handled = true;
             }
         }
+
+        private void frmAgregarMesas_Load(object sender, EventArgs e)
+        {
+            EstilizarBotonPrimario(button1);
+        }
     }
 }
 

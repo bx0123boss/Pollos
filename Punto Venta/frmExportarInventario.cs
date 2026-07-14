@@ -67,6 +67,13 @@ namespace Punto_Venta
             MessageBox.Show("El inventario se ha actualizado con exito", "Exito!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
+
+        private void frmExportarInventario_Load(object sender, EventArgs e)
+        {
+            EstilizarDataGridView(dataGridView1);
+            EstilizarBotonPrimario(button1);
+            EstilizarBotonPrimario(button2);
+        }
     }
 }
 

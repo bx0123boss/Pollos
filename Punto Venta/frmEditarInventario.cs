@@ -49,6 +49,7 @@ namespace Punto_Venta
 
         private void frmEditarInventario_Load(object sender, EventArgs e)
         {
+            EstilizarBotonPrimario(button1);
             DataTable dt = new DataTable();
 
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))

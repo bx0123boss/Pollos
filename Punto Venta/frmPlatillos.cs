@@ -42,6 +42,15 @@ namespace Punto_Venta
                     comboBox2.DataSource = dt;
                 }
             }
+            EstilizarDataGridView(dgvInventario);
+            EstilizarBotonPrimario(button1);
+            EstilizarBotonAdvertencia(button2);
+            EstilizarBotonPeligro(button3);
+            EstilizarComboBox(comboBox2);
+            EstilizarTextBox(textBox1);
+            this.dgvInventario.ReadOnly = true;
+            this.dgvInventario.AllowUserToAddRows = false;
+            this.dgvInventario.AllowUserToDeleteRows = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -49,7 +58,6 @@ namespace Punto_Venta
             frmAgregarPlatillo platillo = new frmAgregarPlatillo();
             platillo.Text = "Agregar Platillo";
             platillo.ShowDialog();
-            this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -72,7 +80,6 @@ namespace Punto_Venta
             }
            
             platillo.ShowDialog();
-            this.Close();
 
         }
 

@@ -211,6 +211,12 @@ namespace Punto_Venta
                     }
                 }
             }
+            EstilizarBotonPrimario(button11);
+            EstilizarBotonPrimario(button2);
+            EstilizarComboBox(comboBox1);
+            EstilizarComboBox(comboBox2);
+            EstilizarTextBox(txtNombre);
+            EstilizarTextBox(txtPrecio);
         }
         private void btnArticulo1_Click(object sender, EventArgs e)
         {
@@ -451,7 +457,6 @@ namespace Punto_Venta
                         cmd2.Parameters.AddWithValue("@CostoTotal", GetTotal());
                         cmd2.Parameters.AddWithValue("@Comanda", comanda);
                         cmd2.Parameters.AddWithValue("@SubCategoria", comboBox2.SelectedValue);
-                        cmd2.ExecuteNonQuery();
                         idInventario = Convert.ToInt32(cmd2.ExecuteScalar());
 
                         string imagenUrl = GuardarImagenProducto(idInventario);
@@ -476,20 +481,20 @@ namespace Punto_Venta
                 else if (this.Text == "Editar Platillo")
                 {
                     string query = @"
-            UPDATE Inventario SET 
-                Nombre = @Nombre, Precio = @Precio, idProducto1 = @idProducto1, 
-                CantidadProducto1 = @CantidadProducto1, idProducto2 = @idProducto2, 
-                CantidadProducto2 = @CantidadProducto2, idProducto3 = @idProducto3, 
-                CantidadProducto3 = @CantidadProducto3, idProducto4 = @idProducto4, 
-                CantidadProducto4 = @CantidadProducto4, idProducto5 = @idProducto5, 
-                CantidadProducto5 = @CantidadProducto5, idProducto6 = @idProducto6, 
-                CantidadProducto6 = @CantidadProducto6, idProducto7 = @idProducto7, 
-                CantidadProducto7 = @CantidadProducto7, idProducto8 = @idProducto8, 
-                CantidadProducto8 = @CantidadProducto8, idProducto9 = @idProducto9, 
-                CantidadProducto9 = @CantidadProducto9, idProducto10 = @idProducto10, 
-                CantidadProducto10 = @CantidadProducto10, IdCategoria = @Categoria, 
-                CostoTotal = @CostoTotal, Comanda = @Comanda, IdSubCategoria = @SubCategoria 
-            WHERE IdInventario = @Id;";
+                                    UPDATE Inventario SET 
+                                        Nombre = @Nombre, Precio = @Precio, idProducto1 = @idProducto1, 
+                                        CantidadProducto1 = @CantidadProducto1, idProducto2 = @idProducto2, 
+                                        CantidadProducto2 = @CantidadProducto2, idProducto3 = @idProducto3, 
+                                        CantidadProducto3 = @CantidadProducto3, idProducto4 = @idProducto4, 
+                                        CantidadProducto4 = @CantidadProducto4, idProducto5 = @idProducto5, 
+                                        CantidadProducto5 = @CantidadProducto5, idProducto6 = @idProducto6, 
+                                        CantidadProducto6 = @CantidadProducto6, idProducto7 = @idProducto7, 
+                                        CantidadProducto7 = @CantidadProducto7, idProducto8 = @idProducto8, 
+                                        CantidadProducto8 = @CantidadProducto8, idProducto9 = @idProducto9, 
+                                        CantidadProducto9 = @CantidadProducto9, idProducto10 = @idProducto10, 
+                                        CantidadProducto10 = @CantidadProducto10, IdCategoria = @Categoria, 
+                                        CostoTotal = @CostoTotal, Comanda = @Comanda, IdSubCategoria = @SubCategoria 
+                                    WHERE IdInventario = @Id;";
 
                     using (SqlCommand cmd2 = new SqlCommand(query, conectar))
                     {
@@ -520,8 +525,22 @@ namespace Punto_Venta
                         cmd2.Parameters.AddWithValue("@Comanda", comanda);
                         cmd2.Parameters.AddWithValue("@SubCategoria", comboBox2.SelectedValue);
                         cmd2.Parameters.AddWithValue("@Id", int.Parse(id));
-
                         cmd2.ExecuteNonQuery();
+
+                        string imagenUrl = GuardarImagenProducto(int.Parse(id));
+
+                        using (SqlCommand cmd = new SqlCommand(
+                            @"UPDATE Inventario
+                              SET ImagenUrl=@Imagen
+                              WHERE IdInventario=@Id", conectar))
+                        {
+                            cmd.Parameters.AddWithValue("@Imagen",
+                                (object)imagenUrl ?? DBNull.Value);
+
+                            cmd.Parameters.AddWithValue("@Id", int.Parse(id));
+
+                            cmd.ExecuteNonQuery();
+                        }
                         MessageBox.Show("Se ha editado el platillo con éxito", "EDITADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }

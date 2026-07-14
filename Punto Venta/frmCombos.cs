@@ -17,8 +17,8 @@ namespace Punto_Venta
         public frmCombos()
         {
             InitializeComponent();
-            this.MinimumSize = new Size(890, 697);
-            this.MaximumSize= new Size(890, 697);
+            this.MinimumSize = new Size(1221, 872);
+            this.MaximumSize= new Size(1221, 872);
         }
 
         private void frmCombos_Load(object sender, EventArgs e)
@@ -37,12 +37,19 @@ namespace Punto_Venta
                     dataGridView1.Columns[0].Visible = false;
                 }
             }
+            EstilizarBotonPrimario(button2);
+            EstilizarBotonPrimario(button3);
+            EstilizarBotonPrimario(button1);
+            EstilizarDataGridView(dataGridView1);
+            EstilizarTextBox(textBox1);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
         }
         private void button2_Click(object sender, EventArgs e)
         {
             frmAgregarPromo prom = new frmAgregarPromo();
-            prom.Show();
-            this.Close();
+            prom.ShowDialog();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -61,7 +68,6 @@ namespace Punto_Venta
                 agg.cbSabado.Checked = bool.Parse(dataGridView1[9, dataGridView1.CurrentRow.Index].Value.ToString());
                 agg.cbDomingo.Checked = bool.Parse(dataGridView1[10, dataGridView1.CurrentRow.Index].Value.ToString());
                 agg.ShowDialog();
-                this.Close();
             }catch(Exception ex)
             {
                 Console.WriteLine(ex.ToString());

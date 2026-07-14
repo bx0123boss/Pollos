@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmDetallesPoliza : Form
+    public partial class frmDetallesPoliza : frmBase
     {
         public string Id { get; set; }
         public int que { get; set; }
@@ -36,6 +36,11 @@ namespace Punto_Venta
                 string[] fecha = lblFechaPoli.Text.Split(' ');
                 lblFechaPoli.Text = fecha[0];
             }
+            EstilizarBotonPeligro(button1);
+            EstilizarDataGridView(dataGridView1);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
         }
 
         private void CargarDetallePoliza()

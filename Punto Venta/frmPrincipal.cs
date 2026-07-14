@@ -2,22 +2,30 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
 
 namespace Punto_Venta
 {
     public partial class frmPrincipal : Form
     {
         public int id;
+        bool IsServidorActivo = false;
+        private Process _procesoWeb;
+        public string NombreUsuario = "";
+        public string idUsuario = "";
         public string usuario = "Administrador";
         public frmPrincipal()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
+            IsServidorActivo = ArrancarServidorWeb();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -31,12 +39,13 @@ namespace Punto_Venta
         {
             try
             {
-                pictureBox1.Image = Image.FromFile("C:\\Jaeger Soft\\logo2.png");
-                this.BackgroundImage = Image.FromFile("C:\\Jaeger Soft\\w2.jpg");
+                string bgPath = @"C:\Jaeger Soft\w2.jpg";
+                if (File.Exists(bgPath)) { this.BackgroundImage = Image.FromFile(bgPath); }
+
+                string logoPath = @"C:\Jaeger Soft\logo.png";
+                if (File.Exists(logoPath)) { pictureBox1.Image = Image.FromFile(logoPath); }
             }
-            catch
-            {
-            }
+            catch (Exception) { }
             if (lblUser.Text == "VENTAS")
             {
                 button6.Visible = false;
@@ -78,7 +87,7 @@ namespace Punto_Venta
             DialogResult dialogResult = MessageBox.Show("¿Estas seguro de salir?", "Alto!", MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
             if (dialogResult == DialogResult.Yes)
             {
-                
+                DetenerServidorWeb();
                 e.Cancel = false;
                 this.Dispose();
                 Application.Exit();
@@ -264,6 +273,63 @@ namespace Punto_Venta
                 mesa.ShowDialog();
             }        
         }
+
+
+        private bool ArrancarServidorWeb()
+        {
+            try
+            {
+                string rutaWebExe = @"C:\Jaeger Soft\ModuloWebFastFood\FastFoodWeb.exe";
+                if (!File.Exists(rutaWebExe))
+                {
+                    MessageBox.Show("Error iniciando servidor web");
+                    return false;
+                }
+
+                ProcessStartInfo info = new ProcessStartInfo();
+                info.FileName = rutaWebExe;
+                info.WindowStyle = ProcessWindowStyle.Hidden;
+                info.CreateNoWindow = true;
+                info.UseShellExecute = false;
+                info.WorkingDirectory = Path.GetDirectoryName(rutaWebExe);
+
+                _procesoWeb = Process.Start(info);
+
+                if (_procesoWeb != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error iniciando web: " + ex.Message);
+                return false;
+            }
+        }
+
+        public void DetenerServidorWeb()
+        {
+            try
+            {
+                if (_procesoWeb != null && !_procesoWeb.HasExited)
+                {
+                    _procesoWeb.Kill();
+                    _procesoWeb.WaitForExit(1000);
+                }
+            }
+            catch { }
+
+            try
+            {
+                foreach (var process in System.Diagnostics.Process.GetProcessesByName("PuntoVentaWeb"))
+                {
+                    process.Kill();
+                }
+            }
+            catch { }
+        }
+
 
     }
 }
