@@ -1,5 +1,4 @@
-﻿using MigraDoc.DocumentObjectModel.Tables;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,209 +9,285 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmCorte : frmBase
+    public partial class frmCorte : Form
     {
-        double mas = 0;
-        double menos = 0;
-        double credito = 0;
+        private double entradasEfectivo = 0;
+        private double salidasEfectivo = 0;
+        private double ventasTarjeta = 0;
         public string usuario = "";
-        string anoSQL = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
+
         public frmCorte()
         {
             InitializeComponent();
-            this.MinimumSize = new Size(800, 775);
+            this.MinimumSize = new Size(1024, 720);
         }
 
         private void frmCorte_Load(object sender, EventArgs e)
         {
-            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            CargarDatos();
+            CalcularTotales();
+            AplicarEstilosGrillas();
+        }
+
+        private void CargarDatos()
+        {
+            try
             {
-                DataSet ds = new DataSet();
-                using (SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM CORTE", conectar))
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
-                    da.Fill(ds, "Id");
-                    dgvCorte.DataSource = ds.Tables["Id"];
-                    dgvCorte.Columns[0].Visible = false;
-                }
-                ds = new DataSet();
-                using (SqlDataAdapter da = new SqlDataAdapter("select IdUsuario,Usuario As Mesero,Ventas, Mesas as MesasAtentidas from Usuarios;", conectar))
-                {
-                    da.Fill(ds, "Id");
-                    dataGridView4.DataSource = ds.Tables["Id"];
-                    dataGridView4.Columns[0].Visible = false;
-                }
-            }
+                    conectar.Open();
 
-
-            dgvCorte.Columns["Total"].DefaultCellStyle.Format = "N2";
-            dataGridView4.Columns["Ventas"].DefaultCellStyle.Format = "N2";
-
-            for (int i = 0; i < dgvCorte.RowCount; i++)
-            {
-                if (dgvCorte[4, i].Value.ToString() == "Efectivo")
-                {
-                    if (Convert.ToDouble(dgvCorte[2, i].Value.ToString()) > 0)
+                    // Carga de movimientos de caja
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT Concepto, Total, FormaPago, FechaHora FROM CORTE ORDER BY FechaHora DESC;", conectar))
                     {
-                        mas += Convert.ToDouble(dgvCorte[2, i].Value.ToString());
+                        DataTable dtCorte = new DataTable();
+                        da.Fill(dtCorte);
+                        dgvCorte.DataSource = dtCorte;
                     }
-                    else if (Convert.ToDouble(dgvCorte[2, i].Value.ToString()) < 0)
-                        menos += Convert.ToDouble(dgvCorte[2, i].Value.ToString());
-                }
-                else if (dgvCorte[4, i].Value.ToString() == "Tarjeta")
-                {
-                    credito += Convert.ToDouble(dgvCorte[2, i].Value.ToString());
-                }
-                else if (Convert.ToDouble(dgvCorte[2, i].Value.ToString()) > 0)
-                {
-                    mas += Convert.ToDouble(dgvCorte[2, i].Value.ToString());
-                }
-                else if (Convert.ToDouble(dgvCorte[2, i].Value.ToString()) < 0)
-                    menos += Convert.ToDouble(dgvCorte[2, i].Value.ToString());
 
+                    // Carga de desempeño por mesero
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT IdUsuario, Usuario AS Mesero, Ventas, Mesas AS MesasAtendidas FROM Usuarios WHERE Ventas > 0 OR Mesas > 0;", conectar))
+                    {
+                        DataTable dtMeseros = new DataTable();
+                        da.Fill(dtMeseros);
+                        dgvMeseros.DataSource = dtMeseros;
+                        if (dgvMeseros.Columns.Contains("IdUsuario"))
+                            dgvMeseros.Columns["IdUsuario"].Visible = false;
+                    }
+                }
             }
-            //if (usuario=="VENTAS")
-            //{
-            //    corte();
-            //}
-            //for (int i = 0; i < dataGridView3.RowCount; i++)
-            //{
-            //tarjeta += Convert.ToSingle(dataGridView3[2, i].Value.ToString(), CultureInfo.CreateSpecificCulture("es-ES"));
-            //} 
-
-            lblEntrada.Text = $"{mas:C}";
-            lblSalida.Text = $"{menos:C}";
-            lblCorte.Text = $"{(mas + menos):C}";
-            lblCredito.Text = $"{credito:C}";
-
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar los datos del corte: {ex.Message}", "Error de Conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void CalcularTotales()
         {
-            corteTicket();
+            entradasEfectivo = 0;
+            salidasEfectivo = 0;
+            ventasTarjeta = 0;
+
+            if (dgvCorte.DataSource is DataTable dt)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    double monto = Convert.ToDouble(row["Total"]);
+                    string formaPago = row["FormaPago"]?.ToString() ?? "";
+
+                    if (formaPago.Equals("Tarjeta", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ventasTarjeta += monto;
+                    }
+                    else
+                    {
+                        if (monto >= 0)
+                            entradasEfectivo += monto;
+                        else
+                            salidasEfectivo += monto; // acumulado negativo
+                    }
+                }
+            }
+
+            double corteNeto = entradasEfectivo + salidasEfectivo;
+
+            lblCredito.Text = $"{ventasTarjeta:C2}";
+            lblEntrada.Text = $"{entradasEfectivo:C2}";
+            lblSalida.Text = $"{Math.Abs(salidasEfectivo):C2}";
+            lblCorte.Text = $"{corteNeto:C2}";
         }
 
-        public void corteTicket()
+        private void AplicarEstilosGrillas()
         {
-            int idInsertado;
-            List<Producto> productos = new List<Producto>();
+            EstilarGrillaPOS(dgvCorte);
+            EstilarGrillaPOS(dgvMeseros);
+
+            if (dgvCorte.Columns.Contains("Total"))
+                dgvCorte.Columns["Total"].DefaultCellStyle.Format = "C2";
+
+            if (dgvMeseros.Columns.Contains("Ventas"))
+                dgvMeseros.Columns["Ventas"].DefaultCellStyle.Format = "C2";
+        }
+
+        private void EstilarGrillaPOS(DataGridView dgv)
+        {
+            dgv.EnableHeadersVisualStyles = false;
+            dgv.BorderStyle = BorderStyle.None;
+            dgv.BackgroundColor = Color.White;
+            dgv.GridColor = Color.FromArgb(230, 233, 239);
+
+            // Encabezados
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 45, 54);
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            dgv.ColumnHeadersHeight = 38;
+
+            // Filas
+            dgv.DefaultCellStyle.Font = new Font("Segoe UI", 10.5F);
+            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(226, 238, 255);
+            dgv.DefaultCellStyle.SelectionForeColor = Color.Black;
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);
+            dgv.RowTemplate.Height = 32;
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        }
+
+        private void btnCorte_Click(object sender, EventArgs e)
+        {
+            if (dgvCorte.Rows.Count == 0)
+            {
+                MessageBox.Show("No existen movimientos registrados para realizar el corte.", "Caja Vacía", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult confirmacion = MessageBox.Show(
+                "¿Está seguro que desea CERRAR LA CAJA?\nEsta acción procesará el historial y reiniciará las ventas del día.",
+                "Confirmación de Cierre de Caja",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirmacion == DialogResult.Yes)
+            {
+                ProcesarCierreCaja();
+            }
+        }
+
+        private void ProcesarCierreCaja()
+        {
+            List<Producto> productosTicket = new List<Producto>();
+            double corteNeto = entradasEfectivo + salidasEfectivo;
+
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
-                string query = @"INSERT INTO HistorialCortes (Monto,FechaHora) VALUES (@Monto, GETDATE());
-                                SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
-                using (SqlCommand cmd2 = new SqlCommand(query, conectar))
+                using (SqlTransaction transaccion = conectar.BeginTransaction())
                 {
-                    cmd2.Parameters.AddWithValue("@Monto", $"{(mas + menos)}");
-                    idInsertado = Convert.ToInt32(cmd2.ExecuteScalar());
-                }
-                for (int i = 0; i < dataGridView4.RowCount; i++)
-                {
-                    query = @"INSERT INTO CortesMeseros(IdHistorialCortes,Mesero,Ventas,Mesas) VALUES (@IdCorte,@Mesero,@Ventas,@Mesas);";
-                    using (SqlCommand cmd2 = new SqlCommand(query, conectar))
+                    try
                     {
-                        cmd2.Parameters.AddWithValue("@IdCorte", idInsertado);
-                        cmd2.Parameters.AddWithValue("@Mesero", dataGridView4.Rows[i].Cells["Mesero"].Value?.ToString());
-                        cmd2.Parameters.AddWithValue("@Ventas", dataGridView4.Rows[i].Cells["Ventas"].Value?.ToString());
-                        cmd2.Parameters.AddWithValue("@Mesas", dataGridView4.Rows[i].Cells["MesasAtentidas"].Value?.ToString());
-                        cmd2.ExecuteNonQuery();
+                        // 1. Insertar Historial del Corte
+                        int idCorteInsertado;
+                        string queryHistorial = @"INSERT INTO HistorialCortes (Monto, FechaHora) VALUES (@Monto, GETDATE());
+                                                 SELECT SCOPE_IDENTITY();";
+
+                        using (SqlCommand cmd = new SqlCommand(queryHistorial, conectar, transaccion))
+                        {
+                            cmd.Parameters.AddWithValue("@Monto", corteNeto);
+                            idCorteInsertado = Convert.ToInt32(cmd.ExecuteScalar());
+                        }
+
+                        // 2. Insertar Detalle de Meseros
+                        if (dgvMeseros.DataSource is DataTable dtMeseros)
+                        {
+                            string queryMeseros = @"INSERT INTO CortesMeseros(IdHistorialCortes, Mesero, Ventas, Mesas) 
+                                                   VALUES (@IdCorte, @Mesero, @Ventas, @Mesas);";
+
+                            foreach (DataRow row in dtMeseros.Rows)
+                            {
+                                using (SqlCommand cmd = new SqlCommand(queryMeseros, conectar, transaccion))
+                                {
+                                    cmd.Parameters.AddWithValue("@IdCorte", idCorteInsertado);
+                                    cmd.Parameters.AddWithValue("@Mesero", row["Mesero"]?.ToString() ?? "");
+                                    cmd.Parameters.AddWithValue("@Ventas", Convert.ToDouble(row["Ventas"]));
+                                    cmd.Parameters.AddWithValue("@Mesas", Convert.ToInt32(row["MesasAtendidas"]));
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                        }
+
+                        // 3. Insertar Detalle de Movimientos y preparar ticket
+                        if (dgvCorte.DataSource is DataTable dtCorte)
+                        {
+                            string queryCorte = @"INSERT INTO CORTES(Concepto, Total, FormaPago, FechaHora, IdHistorialCortes) 
+                                                 VALUES (@Concepto, @Total, @FormaPago, @FechaHora, @IdHistorialCortes);";
+
+                            foreach (DataRow row in dtCorte.Rows)
+                            {
+                                using (SqlCommand cmd = new SqlCommand(queryCorte, conectar, transaccion))
+                                {
+                                    cmd.Parameters.AddWithValue("@Concepto", row["Concepto"]?.ToString() ?? "");
+                                    cmd.Parameters.AddWithValue("@Total", Convert.ToDouble(row["Total"]));
+                                    cmd.Parameters.AddWithValue("@FormaPago", row["FormaPago"]?.ToString() ?? "");
+                                    cmd.Parameters.AddWithValue("@FechaHora", Convert.ToDateTime(row["FechaHora"]));
+                                    cmd.Parameters.AddWithValue("@IdHistorialCortes", idCorteInsertado);
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                                productosTicket.Add(new Producto
+                                {
+                                    Cantidad = 1,
+                                    Nombre = row["Concepto"]?.ToString() ?? "",
+                                    PrecioUnitario = Convert.ToDouble(row["Total"]),
+                                    Total = Convert.ToDouble(row["Total"])
+                                });
+                            }
+                        }
+
+                        // 4. Limpieza de tablas de operación diaria
+                        using (SqlCommand cmd = new SqlCommand("UPDATE Usuarios SET Ventas = 0, Mesas = 0;", conectar, transaccion))
+                            cmd.ExecuteNonQuery();
+
+                        using (SqlCommand cmd = new SqlCommand("DELETE FROM CORTE;", conectar, transaccion))
+                            cmd.ExecuteNonQuery();
+
+                        using (SqlCommand cmd = new SqlCommand("UPDATE inicio SET inicio = '0' WHERE id = 1;", conectar, transaccion))
+                            cmd.ExecuteNonQuery();
+
+                        transaccion.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaccion.Rollback();
+                        MessageBox.Show($"Error al guardar el corte de caja: {ex.Message}", "Error de Transacción", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                 }
-                for (int i = 0; i < dgvCorte.RowCount; i++)
-                {
-                    query = @"INSERT INTO CORTES(Concepto,Total, FormaPago,FechaHora, IdHistorialCortes) VALUES (@Concepto,@Total,@FormaPago,@FechaHora, @IdHistorialCortes);";
-                    using (SqlCommand cmd2 = new SqlCommand(query, conectar))
-                    {
-
-                        cmd2.Parameters.AddWithValue("@Concepto", dgvCorte.Rows[i].Cells["Concepto"].Value?.ToString());
-                        cmd2.Parameters.AddWithValue("@Total", dgvCorte.Rows[i].Cells["Total"].Value?.ToString());
-                        cmd2.Parameters.AddWithValue("@FormaPago", dgvCorte.Rows[i].Cells["FormaPago"].Value?.ToString());
-                        DateTime fechaHora = (DateTime)dgvCorte.Rows[i].Cells["FechaHora"].Value;
-                        cmd2.Parameters.AddWithValue("@FechaHora", fechaHora);
-                        cmd2.Parameters.AddWithValue("@IdHistorialCortes", idInsertado);
-                        cmd2.ExecuteNonQuery();
-                    }
-                    productos.Add(new Producto
-                    {
-                        Cantidad = 0,
-                        Nombre = dgvCorte.Rows[i].Cells["Concepto"].Value?.ToString(),
-                        PrecioUnitario = Convert.ToDouble(dgvCorte.Rows[i].Cells["Total"].Value?.ToString()),
-                        Total = Convert.ToDouble(dgvCorte.Rows[i].Cells["Total"].Value?.ToString()),
-                    });
-                    
-
-                }
-                using (SqlCommand cmd2 = new SqlCommand("UPDATE Usuarios set Ventas=0,Mesas=0;", conectar))
-                {
-                    cmd2.ExecuteNonQuery();
-                }
-                using (SqlCommand cmd2 = new SqlCommand("DELETE FROM CORTE;", conectar))
-                {
-                    cmd2.ExecuteNonQuery();
-                }
-                using (SqlCommand cmd2 = new SqlCommand("UPDATE inicio set inicio='0' Where id=1;", conectar))
-                {
-                    cmd2.ExecuteNonQuery();
-                }
-                using (SqlCommand cmd2 = new SqlCommand("UPDATE Usuarios set Ventas=0,Mesas=0;", conectar))
-                {
-                    cmd2.ExecuteNonQuery();
-                }
-
-
-
             }
-            DialogResult dialogResult = MessageBox.Show("¿Desea imprimir el corte de caja?", "Alto!", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                string[] encabezados = new string[] { "********** CORTE DE CAJA  ********", "               Corte de caja:", DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() };
-                Dictionary<string, double> totales = new Dictionary<string, double>();
-                totales.Add("Entradas", Convert.ToDouble(GetNumericValue(lblEntrada.Text)));
-                totales.Add("Salidas", Convert.ToDouble(GetNumericValue(lblSalida.Text)));
-                totales.Add("Total", Convert.ToDouble(GetNumericValue(lblCorte.Text)));
 
-                string[] pieDePagina = new string[] { "" };
-                TicketPrinter ticketPrinter = new TicketPrinter(encabezados, Conexion.pieDeTicket, Conexion.logoPath, productos, "", "", "", 0, true, totales);
+            // Impresión Opcional de Ticket
+            DialogResult dialogPrint = MessageBox.Show("Corte realizado con éxito.\n¿Desea imprimir el comprobante de caja?", "Impresión de Ticket", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogPrint == DialogResult.Yes)
+            {
+                string[] encabezados = new string[] {
+                    "********** CORTE DE CAJA **********",
+                    "Fecha: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
+                };
+
+                Dictionary<string, double> totales = new Dictionary<string, double>
+                {
+                    { "Entradas", entradasEfectivo },
+                    { "Salidas", salidasEfectivo },
+                    { "Total Neto", corteNeto }
+                };
+
+                TicketPrinter ticketPrinter = new TicketPrinter(encabezados, Conexion.pieDeTicket, Conexion.logoPath, productosTicket, "", "", "", 0, true, totales);
                 ticketPrinter.ImprimirTicket();
             }
-            MessageBox.Show("Corte relizado con exito", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             this.Close();
         }
-        string GetNumericValue(string input)
+
+        private void btnDetalleMesero_Click(object sender, EventArgs e)
         {
-            return Regex.Replace(input, @"[^\d.-]", "");
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void printDocument1_PrintPage_1(object sender, PrintPageEventArgs e)
-        {
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow == null)
+            if (dgvMeseros.CurrentRow == null)
             {
-                MessageBox.Show("Tiene que seleccionar un MESERO antes", "Corte de caja", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Por favor, seleccione un mesero de la lista para consultar su detalle.", "Selección requerida", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            else
-            {
-                frmCortesMesero cor = new frmCortesMesero();
-                cor.idMesero = dataGridView4.CurrentRow.Cells["IdUsuario"].Value.ToString();
-                cor.lblMonto.Text = dataGridView4.CurrentRow.Cells["Ventas"].Value.ToString();
-                cor.lblMesas.Text = dataGridView4.CurrentRow.Cells["MesasAtentidas"].Value.ToString();
-                cor.Text = "Corte de: " + dataGridView4.CurrentRow.Cells["Mesero"].Value.ToString();
-                cor.nombre = dataGridView4.CurrentRow.Cells["Mesero"].Value.ToString();
-                cor.Show();
-                this.Close();
-            }
 
+            string idUsuario = dgvMeseros.CurrentRow.Cells["IdUsuario"].Value?.ToString();
+            string nombreMesero = dgvMeseros.CurrentRow.Cells["Mesero"].Value?.ToString();
+            string ventas = dgvMeseros.CurrentRow.Cells["Ventas"].Value?.ToString();
+            string mesas = dgvMeseros.CurrentRow.Cells["MesasAtendidas"].Value?.ToString();
+
+            frmCortesMesero cor = new frmCortesMesero
+            {
+                idMesero = idUsuario,
+                lblMonto = { Text = ventas },
+                lblMesas = { Text = mesas },
+                Text = "Corte individual: " + nombreMesero,
+                nombre = nombreMesero
+            };
+            cor.ShowDialog();
+            CargarDatos(); // Refrescar vista
         }
     }
 }
-

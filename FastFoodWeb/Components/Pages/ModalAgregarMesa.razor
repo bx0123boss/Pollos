@@ -118,14 +118,14 @@
             await con.OpenAsync();
 
             // 1. Validar si ya existe
-            using (SqlCommand cmdCheck = new SqlCommand("SELECT Nombre FROM Mesas WHERE Nombre = @Nombre AND Estatus = 'COCINA';", con))
+            using (SqlCommand cmdCheck = new SqlCommand("SELECT Nombre FROM Mesas WHERE Nombre = @Nombre;", con))
             {
                 cmdCheck.Parameters.AddWithValue("@Nombre", txtNombre);
                 using (SqlDataReader reader = await cmdCheck.ExecuteReaderAsync())
                 {
                     if (reader.HasRows)
                     {
-                        await JS.InvokeVoidAsync("alert", "Existe una mesa similar activa (en COCINA), favor de verificar.");
+                        await JS.InvokeVoidAsync("alert", "Existe una mesa similar activa, favor de verificar.");
                         return;
                     }
                 }

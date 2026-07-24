@@ -42,8 +42,16 @@ namespace Punto_Venta
         private void button1_Click(object sender, EventArgs e)
         {
             frmAgregarUsuario add = new frmAgregarUsuario();
-            add.Show();
-            this.Close();
+            add.ShowDialog();
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            using (SqlDataAdapter da = new SqlDataAdapter("SELECT IdUsuario, Usuario, TipoUsuario FROM Usuarios;", conectar))
+            {
+                DataSet ds = new DataSet();
+                da.Fill(ds, "Id");
+                dataGridView1.DataSource = ds.Tables["Id"];
+                dataGridView1.Columns[0].Visible = false;
+            }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -54,8 +62,7 @@ namespace Punto_Venta
             }
             frmEditarPass edit = new frmEditarPass();
             edit.id = Convert.ToInt32(dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString());
-            edit.Show();
-            this.Close();
+            edit.ShowDialog();
         }
 
         private void button3_Click(object sender, EventArgs e)

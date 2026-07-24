@@ -56,9 +56,6 @@ namespace Punto_Venta
                         }
 
                         MessageBox.Show($"Se ha editado la {tipo} con éxito", "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        frmCategorias apart = new frmCategorias();
-                        apart.tipo = tipo;
-                        apart.ShowDialog();
                         this.Close();
                     }
                     else if (existe)
@@ -78,9 +75,6 @@ namespace Punto_Venta
                         }
 
                         MessageBox.Show($"Se ha creado la {tipo} con éxito", "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        frmCategorias apart = new frmCategorias();
-                        apart.tipo = tipo;
-                        apart.ShowDialog();
                         this.Close();
                     }
                 }

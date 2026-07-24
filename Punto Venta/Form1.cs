@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -147,6 +148,8 @@ namespace Punto_Venta
                 MessageBox.Show("Error inesperado: " + ex.Message,
                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            if(Conexion.AbrirTeclado)
+                CerrarTeclado();
         }
 
         private void CargarPermisosUsuario(string idUsuario)
@@ -497,5 +500,50 @@ namespace Punto_Venta
             return lista;
         }
 
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            
+        }
+        private void AbrirTeclado()
+        {
+            string RutaTeclado = @"C:\Jaeger Soft\FreeVK.exe";
+            try
+            {
+                // Verifica si el ejecutable existe en la ruta
+                if (File.Exists(RutaTeclado))
+                {
+                    // Si el proceso no está corriendo, lo inicia
+                    if (Process.GetProcessesByName("FreeVK").Length == 0)
+                    {
+                        Process.Start(RutaTeclado);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo silencioso o log de error
+                Console.WriteLine("Error al abrir el teclado: " + ex.Message);
+            }
+        }
+
+        private void txtContraseña_Enter(object sender, EventArgs e)
+        {
+            if(Conexion.AbrirTeclado)
+                AbrirTeclado();
+        }
+        private void CerrarTeclado()
+        {
+            try
+            {
+                foreach (var proceso in Process.GetProcessesByName("FreeVK"))
+                {
+                    proceso.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al cerrar el teclado: " + ex.Message);
+            }
+        }
     }
 }

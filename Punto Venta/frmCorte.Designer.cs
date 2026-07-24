@@ -2,15 +2,8 @@
 {
     partial class frmCorte
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,451 +15,398 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCorte));
+            this.pnlPrincipal = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlIzquierdo = new System.Windows.Forms.TableLayoutPanel();
+            this.lblTituloCorte = new System.Windows.Forms.Label();
             this.dgvCorte = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblCorte = new System.Windows.Forms.Label();
-            this.lblSalida = new System.Windows.Forms.Label();
-            this.lblEntrada = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.pnlHeaderMeseros = new System.Windows.Forms.Panel();
+            this.lblTituloMeseros = new System.Windows.Forms.Label();
+            this.btnDetalleMesero = new System.Windows.Forms.Button();
+            this.dgvMeseros = new System.Windows.Forms.DataGridView();
+            this.pnlDerecho = new System.Windows.Forms.Panel();
+            this.pnlMétricas = new System.Windows.Forms.TableLayoutPanel();
+            this.cardTarjeta = new System.Windows.Forms.Panel();
             this.lblCredito = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.label7 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.lblTitTarjeta = new System.Windows.Forms.Label();
+            this.cardEntradas = new System.Windows.Forms.Panel();
+            this.lblEntrada = new System.Windows.Forms.Label();
+            this.lblTitEntradas = new System.Windows.Forms.Label();
+            this.cardSalidas = new System.Windows.Forms.Panel();
+            this.lblSalida = new System.Windows.Forms.Label();
+            this.lblTitSalidas = new System.Windows.Forms.Label();
+            this.cardTotal = new System.Windows.Forms.Panel();
+            this.lblCorte = new System.Windows.Forms.Label();
+            this.lblTitTotal = new System.Windows.Forms.Label();
+            this.btnCorte = new System.Windows.Forms.Button();
+            this.pnlPrincipal.SuspendLayout();
+            this.pnlIzquierdo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCorte)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            this.pnlHeaderMeseros.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMeseros)).BeginInit();
+            this.pnlDerecho.SuspendLayout();
+            this.pnlMétricas.SuspendLayout();
+            this.cardTarjeta.SuspendLayout();
+            this.cardEntradas.SuspendLayout();
+            this.cardSalidas.SuspendLayout();
+            this.cardTotal.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // pnlPrincipal
+            // 
+            this.pnlPrincipal.ColumnCount = 2;
+            this.pnlPrincipal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62F));
+            this.pnlPrincipal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 38F));
+            this.pnlPrincipal.Controls.Add(this.pnlIzquierdo, 0, 0);
+            this.pnlPrincipal.Controls.Add(this.pnlDerecho, 1, 0);
+            this.pnlPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlPrincipal.Location = new System.Drawing.Point(0, 0);
+            this.pnlPrincipal.Name = "pnlPrincipal";
+            this.pnlPrincipal.Padding = new System.Windows.Forms.Padding(12);
+            this.pnlPrincipal.RowCount = 1;
+            this.pnlPrincipal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.pnlPrincipal.Size = new System.Drawing.Size(1084, 700);
+            this.pnlPrincipal.TabIndex = 0;
+            // 
+            // pnlIzquierdo
+            // 
+            this.pnlIzquierdo.ColumnCount = 1;
+            this.pnlIzquierdo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.pnlIzquierdo.Controls.Add(this.lblTituloCorte, 0, 0);
+            this.pnlIzquierdo.Controls.Add(this.dgvCorte, 0, 1);
+            this.pnlIzquierdo.Controls.Add(this.pnlHeaderMeseros, 0, 2);
+            this.pnlIzquierdo.Controls.Add(this.dgvMeseros, 0, 3);
+            this.pnlIzquierdo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlIzquierdo.Location = new System.Drawing.Point(15, 15);
+            this.pnlIzquierdo.Name = "pnlIzquierdo";
+            this.pnlIzquierdo.RowCount = 4;
+            this.pnlIzquierdo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.pnlIzquierdo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.pnlIzquierdo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.pnlIzquierdo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.pnlIzquierdo.Size = new System.Drawing.Size(651, 670);
+            this.pnlIzquierdo.TabIndex = 0;
+            // 
+            // lblTituloCorte
+            // 
+            this.lblTituloCorte.AutoSize = true;
+            this.lblTituloCorte.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            this.lblTituloCorte.ForeColor = System.Drawing.Color.White;
+            this.lblTituloCorte.Location = new System.Drawing.Point(3, 0);
+            this.lblTituloCorte.Name = "lblTituloCorte";
+            this.lblTituloCorte.Size = new System.Drawing.Size(209, 25);
+            this.lblTituloCorte.TabIndex = 0;
+            this.lblTituloCorte.Text = "Movimientos del Turno";
             // 
             // dgvCorte
             // 
             this.dgvCorte.AllowUserToAddRows = false;
             this.dgvCorte.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgvCorte.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvCorte.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvCorte.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvCorte.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCorte.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvCorte.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCorte.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvCorte.Location = new System.Drawing.Point(12, 57);
+            this.dgvCorte.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCorte.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvCorte.Location = new System.Drawing.Point(3, 38);
             this.dgvCorte.Name = "dgvCorte";
             this.dgvCorte.ReadOnly = true;
-            this.dgvCorte.Size = new System.Drawing.Size(629, 461);
-            this.dgvCorte.TabIndex = 0;
+            this.dgvCorte.RowHeadersVisible = false;
+            this.dgvCorte.Size = new System.Drawing.Size(645, 348);
+            this.dgvCorte.TabIndex = 1;
             // 
-            // button1
+            // pnlHeaderMeseros
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.BackColor = System.Drawing.Color.Black;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(654, 253);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(352, 85);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Realizar corte";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.pnlHeaderMeseros.Controls.Add(this.lblTituloMeseros);
+            this.pnlHeaderMeseros.Controls.Add(this.btnDetalleMesero);
+            this.pnlHeaderMeseros.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlHeaderMeseros.Location = new System.Drawing.Point(3, 392);
+            this.pnlHeaderMeseros.Name = "pnlHeaderMeseros";
+            this.pnlHeaderMeseros.Size = new System.Drawing.Size(645, 39);
+            this.pnlHeaderMeseros.TabIndex = 2;
             // 
-            // label1
+            // lblTituloMeseros
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(647, 100);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(175, 39);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Entradas:";
+            this.lblTituloMeseros.AutoSize = true;
+            this.lblTituloMeseros.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            this.lblTituloMeseros.ForeColor = System.Drawing.Color.White;
+            this.lblTituloMeseros.Location = new System.Drawing.Point(0, 8);
+            this.lblTituloMeseros.Name = "lblTituloMeseros";
+            this.lblTituloMeseros.Size = new System.Drawing.Size(171, 25);
+            this.lblTituloMeseros.TabIndex = 0;
+            this.lblTituloMeseros.Text = "Ventas por Mesero";
             // 
-            // label2
+            // btnDetalleMesero
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(676, 159);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(149, 39);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Salidas:";
+            this.btnDetalleMesero.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDetalleMesero.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(246)))));
+            this.btnDetalleMesero.FlatAppearance.BorderSize = 0;
+            this.btnDetalleMesero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDetalleMesero.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.btnDetalleMesero.ForeColor = System.Drawing.Color.White;
+            this.btnDetalleMesero.Location = new System.Drawing.Point(515, 3);
+            this.btnDetalleMesero.Name = "btnDetalleMesero";
+            this.btnDetalleMesero.Size = new System.Drawing.Size(130, 32);
+            this.btnDetalleMesero.TabIndex = 1;
+            this.btnDetalleMesero.Text = "Ver Detalle";
+            this.btnDetalleMesero.UseVisualStyleBackColor = false;
+            this.btnDetalleMesero.Click += new System.EventHandler(this.btnDetalleMesero_Click);
             // 
-            // label3
+            // dgvMeseros
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(697, 211);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 39);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Corte:";
+            this.dgvMeseros.AllowUserToAddRows = false;
+            this.dgvMeseros.AllowUserToDeleteRows = false;
+            this.dgvMeseros.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvMeseros.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMeseros.Location = new System.Drawing.Point(3, 437);
+            this.dgvMeseros.Name = "dgvMeseros";
+            this.dgvMeseros.ReadOnly = true;
+            this.dgvMeseros.RowHeadersVisible = false;
+            this.dgvMeseros.Size = new System.Drawing.Size(645, 230);
+            this.dgvMeseros.TabIndex = 3;
             // 
-            // lblCorte
+            // pnlDerecho
             // 
-            this.lblCorte.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblCorte.AutoSize = true;
-            this.lblCorte.BackColor = System.Drawing.Color.Transparent;
-            this.lblCorte.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCorte.ForeColor = System.Drawing.Color.White;
-            this.lblCorte.Location = new System.Drawing.Point(828, 211);
-            this.lblCorte.Name = "lblCorte";
-            this.lblCorte.Size = new System.Drawing.Size(118, 39);
-            this.lblCorte.TabIndex = 7;
-            this.lblCorte.Text = "Corte:";
+            this.pnlDerecho.Controls.Add(this.pnlMétricas);
+            this.pnlDerecho.Controls.Add(this.btnCorte);
+            this.pnlDerecho.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlDerecho.Location = new System.Drawing.Point(672, 15);
+            this.pnlDerecho.Name = "pnlDerecho";
+            this.pnlDerecho.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.pnlDerecho.Size = new System.Drawing.Size(397, 670);
+            this.pnlDerecho.TabIndex = 1;
             // 
-            // lblSalida
+            // pnlMétricas
             // 
-            this.lblSalida.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSalida.AutoSize = true;
-            this.lblSalida.BackColor = System.Drawing.Color.Transparent;
-            this.lblSalida.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSalida.ForeColor = System.Drawing.Color.White;
-            this.lblSalida.Location = new System.Drawing.Point(828, 159);
-            this.lblSalida.Name = "lblSalida";
-            this.lblSalida.Size = new System.Drawing.Size(149, 39);
-            this.lblSalida.TabIndex = 6;
-            this.lblSalida.Text = "Salidas:";
+            this.pnlMétricas.ColumnCount = 1;
+            this.pnlMétricas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.pnlMétricas.Controls.Add(this.cardTarjeta, 0, 0);
+            this.pnlMétricas.Controls.Add(this.cardEntradas, 0, 1);
+            this.pnlMétricas.Controls.Add(this.cardSalidas, 0, 2);
+            this.pnlMétricas.Controls.Add(this.cardTotal, 0, 3);
+            this.pnlMétricas.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlMétricas.Location = new System.Drawing.Point(10, 0);
+            this.pnlMétricas.Name = "pnlMétricas";
+            this.pnlMétricas.RowCount = 4;
+            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.pnlMétricas.Size = new System.Drawing.Size(387, 480);
+            this.pnlMétricas.TabIndex = 0;
             // 
-            // lblEntrada
+            // cardTarjeta
             // 
-            this.lblEntrada.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblEntrada.AutoSize = true;
-            this.lblEntrada.BackColor = System.Drawing.Color.Transparent;
-            this.lblEntrada.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEntrada.ForeColor = System.Drawing.Color.White;
-            this.lblEntrada.Location = new System.Drawing.Point(828, 100);
-            this.lblEntrada.Name = "lblEntrada";
-            this.lblEntrada.Size = new System.Drawing.Size(175, 39);
-            this.lblEntrada.TabIndex = 5;
-            this.lblEntrada.Text = "Entradas:";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridView1.Location = new System.Drawing.Point(388, 12);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(74, 44);
-            this.dataGridView1.TabIndex = 9;
-            this.dataGridView1.Visible = false;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridView2.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
-            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridView2.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dataGridView2.Location = new System.Drawing.Point(670, 677);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(430, 298);
-            this.dataGridView2.TabIndex = 10;
-            this.dataGridView2.Visible = false;
+            this.cardTarjeta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
+            this.cardTarjeta.Controls.Add(this.lblCredito);
+            this.cardTarjeta.Controls.Add(this.lblTitTarjeta);
+            this.cardTarjeta.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cardTarjeta.Location = new System.Drawing.Point(0, 0);
+            this.cardTarjeta.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.cardTarjeta.Name = "cardTarjeta";
+            this.cardTarjeta.Padding = new System.Windows.Forms.Padding(15);
+            this.cardTarjeta.Size = new System.Drawing.Size(387, 108);
+            this.cardTarjeta.TabIndex = 0;
             // 
             // lblCredito
             // 
-            this.lblCredito.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblCredito.AutoSize = true;
-            this.lblCredito.BackColor = System.Drawing.Color.Transparent;
-            this.lblCredito.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCredito.ForeColor = System.Drawing.Color.White;
-            this.lblCredito.Location = new System.Drawing.Point(828, 52);
+            this.lblCredito.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCredito.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
+            this.lblCredito.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
+            this.lblCredito.Location = new System.Drawing.Point(15, 38);
             this.lblCredito.Name = "lblCredito";
-            this.lblCredito.Size = new System.Drawing.Size(143, 39);
-            this.lblCredito.TabIndex = 12;
-            this.lblCredito.Text = "Tarjeta:";
+            this.lblCredito.Size = new System.Drawing.Size(357, 55);
+            this.lblCredito.TabIndex = 1;
+            this.lblCredito.Text = "$0.00";
+            this.lblCredito.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label5
+            // lblTitTarjeta
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lblTitTarjeta.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTitTarjeta.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblTitTarjeta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(64)))), ((int)(((byte)(175)))));
+            this.lblTitTarjeta.Location = new System.Drawing.Point(15, 15);
+            this.lblTitTarjeta.Name = "lblTitTarjeta";
+            this.lblTitTarjeta.Size = new System.Drawing.Size(357, 23);
+            this.lblTitTarjeta.TabIndex = 0;
+            this.lblTitTarjeta.Text = "💳 VENTAS TARJETA";
+            // 
+            // cardEntradas
+            // 
+            this.cardEntradas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(253)))), ((int)(((byte)(244)))));
+            this.cardEntradas.Controls.Add(this.lblEntrada);
+            this.cardEntradas.Controls.Add(this.lblTitEntradas);
+            this.cardEntradas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cardEntradas.Location = new System.Drawing.Point(0, 120);
+            this.cardEntradas.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.cardEntradas.Name = "cardEntradas";
+            this.cardEntradas.Padding = new System.Windows.Forms.Padding(15);
+            this.cardEntradas.Size = new System.Drawing.Size(387, 108);
+            this.cardEntradas.TabIndex = 1;
+            // 
+            // lblEntrada
+            // 
+            this.lblEntrada.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblEntrada.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
+            this.lblEntrada.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(128)))), ((int)(((byte)(61)))));
+            this.lblEntrada.Location = new System.Drawing.Point(15, 38);
+            this.lblEntrada.Name = "lblEntrada";
+            this.lblEntrada.Size = new System.Drawing.Size(357, 55);
+            this.lblEntrada.TabIndex = 1;
+            this.lblEntrada.Text = "$0.00";
+            this.lblEntrada.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblTitEntradas
+            // 
+            this.lblTitEntradas.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTitEntradas.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblTitEntradas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(101)))), ((int)(((byte)(52)))));
+            this.lblTitEntradas.Location = new System.Drawing.Point(15, 15);
+            this.lblTitEntradas.Name = "lblTitEntradas";
+            this.lblTitEntradas.Size = new System.Drawing.Size(357, 23);
+            this.lblTitEntradas.TabIndex = 0;
+            this.lblTitEntradas.Text = "📥 ENTRADAS EFECTIVO";
+            // 
+            // cardSalidas
+            // 
+            this.cardSalidas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.cardSalidas.Controls.Add(this.lblSalida);
+            this.cardSalidas.Controls.Add(this.lblTitSalidas);
+            this.cardSalidas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cardSalidas.Location = new System.Drawing.Point(0, 240);
+            this.cardSalidas.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.cardSalidas.Name = "cardSalidas";
+            this.cardSalidas.Padding = new System.Windows.Forms.Padding(15);
+            this.cardSalidas.Size = new System.Drawing.Size(387, 108);
+            this.cardSalidas.TabIndex = 2;
+            // 
+            // lblSalida
+            // 
+            this.lblSalida.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSalida.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
+            this.lblSalida.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.lblSalida.Location = new System.Drawing.Point(15, 38);
+            this.lblSalida.Name = "lblSalida";
+            this.lblSalida.Size = new System.Drawing.Size(357, 55);
+            this.lblSalida.TabIndex = 1;
+            this.lblSalida.Text = "$0.00";
+            this.lblSalida.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblTitSalidas
+            // 
+            this.lblTitSalidas.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTitSalidas.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblTitSalidas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(27)))), ((int)(((byte)(27)))));
+            this.lblTitSalidas.Location = new System.Drawing.Point(15, 15);
+            this.lblTitSalidas.Name = "lblTitSalidas";
+            this.lblTitSalidas.Size = new System.Drawing.Size(357, 23);
+            this.lblTitSalidas.TabIndex = 0;
+            this.lblTitSalidas.Text = "📤 SALIDAS CAJA";
+            // 
+            // cardTotal
+            // 
+            this.cardTotal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(251)))), ((int)(((byte)(235)))));
+            this.cardTotal.Controls.Add(this.lblCorte);
+            this.cardTotal.Controls.Add(this.lblTitTotal);
+            this.cardTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cardTotal.Location = new System.Drawing.Point(0, 360);
+            this.cardTotal.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.cardTotal.Name = "cardTotal";
+            this.cardTotal.Padding = new System.Windows.Forms.Padding(15);
+            this.cardTotal.Size = new System.Drawing.Size(387, 108);
+            this.cardTotal.TabIndex = 3;
+            // 
+            // lblCorte
+            // 
+            this.lblCorte.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCorte.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold);
+            this.lblCorte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(83)))), ((int)(((byte)(9)))));
+            this.lblCorte.Location = new System.Drawing.Point(15, 38);
+            this.lblCorte.Name = "lblCorte";
+            this.lblCorte.Size = new System.Drawing.Size(357, 55);
+            this.lblCorte.TabIndex = 1;
+            this.lblCorte.Text = "$0.00";
+            this.lblCorte.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblTitTotal
+            // 
+            this.lblTitTotal.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTitTotal.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblTitTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(64)))), ((int)(((byte)(14)))));
+            this.lblTitTotal.Location = new System.Drawing.Point(15, 15);
+            this.lblTitTotal.Name = "lblTitTotal";
+            this.lblTitTotal.Size = new System.Drawing.Size(357, 23);
+            this.lblTitTotal.TabIndex = 0;
+            this.lblTitTotal.Text = "💰 EFECTIVO NETO EN CAJA";
+            // 
+            // btnCorte
+            // 
+            this.btnCorte.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(676, 52);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(143, 39);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Tarjeta:";
-            // 
-            // dataGridView3
-            // 
-            this.dataGridView3.AllowUserToAddRows = false;
-            this.dataGridView3.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridView3.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
-            this.dataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            this.dataGridView3.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView3.DefaultCellStyle = dataGridViewCellStyle12;
-            this.dataGridView3.Location = new System.Drawing.Point(1106, 687);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.Size = new System.Drawing.Size(317, 55);
-            this.dataGridView3.TabIndex = 13;
-            this.dataGridView3.Visible = false;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(1119, 17);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(143, 39);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Tarjeta:";
-            this.label6.Visible = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(12, 17);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(161, 39);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "Efectivo:";
-            // 
-            // dataGridView4
-            // 
-            this.dataGridView4.AllowUserToAddRows = false;
-            this.dataGridView4.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridView4.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
-            this.dataGridView4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridView4.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView4.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView4.DefaultCellStyle = dataGridViewCellStyle15;
-            this.dataGridView4.Location = new System.Drawing.Point(12, 567);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.ReadOnly = true;
-            this.dataGridView4.Size = new System.Drawing.Size(629, 162);
-            this.dataGridView4.TabIndex = 16;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(12, 525);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(169, 39);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "Meseros:";
-            // 
-            // button3
-            // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.BackColor = System.Drawing.Color.Black;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(516, 525);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(125, 39);
-            this.button3.TabIndex = 18;
-            this.button3.Text = "Detalle";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnCorte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
+            this.btnCorte.FlatAppearance.BorderSize = 0;
+            this.btnCorte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCorte.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.btnCorte.ForeColor = System.Drawing.Color.White;
+            this.btnCorte.Location = new System.Drawing.Point(10, 580);
+            this.btnCorte.Name = "btnCorte";
+            this.btnCorte.Size = new System.Drawing.Size(387, 80);
+            this.btnCorte.TabIndex = 1;
+            this.btnCorte.Text = "🔒 REALIZAR CORTE";
+            this.btnCorte.UseVisualStyleBackColor = false;
+            this.btnCorte.Click += new System.EventHandler(this.btnCorte_Click);
             // 
             // frmCorte
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.DarkOrange;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1107, 738);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.dataGridView4);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.lblCredito);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.dataGridView2);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.lblCorte);
-            this.Controls.Add(this.lblSalida);
-            this.Controls.Add(this.lblEntrada);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.dgvCorte);
-            this.Controls.Add(this.dataGridView3);
+            this.BackColor = System.Drawing.Color.Black;
+            this.ClientSize = new System.Drawing.Size(1084, 700);
+            this.Controls.Add(this.pnlPrincipal);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmCorte";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Corte de Caja";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Text = "Cierre de Caja y Balance de Turno";
             this.Load += new System.EventHandler(this.frmCorte_Load);
+            this.pnlPrincipal.ResumeLayout(false);
+            this.pnlIzquierdo.ResumeLayout(false);
+            this.pnlIzquierdo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCorte)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            this.pnlHeaderMeseros.ResumeLayout(false);
+            this.pnlHeaderMeseros.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMeseros)).EndInit();
+            this.pnlDerecho.ResumeLayout(false);
+            this.pnlMétricas.ResumeLayout(false);
+            this.cardTarjeta.ResumeLayout(false);
+            this.cardEntradas.ResumeLayout(false);
+            this.cardSalidas.ResumeLayout(false);
+            this.cardTotal.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
+        private System.Windows.Forms.TableLayoutPanel pnlPrincipal;
+        private System.Windows.Forms.TableLayoutPanel pnlIzquierdo;
+        private System.Windows.Forms.Label lblTituloCorte;
         private System.Windows.Forms.DataGridView dgvCorte;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lblCorte;
-        private System.Windows.Forms.Label lblSalida;
-        private System.Windows.Forms.Label lblEntrada;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Panel pnlHeaderMeseros;
+        private System.Windows.Forms.Label lblTituloMeseros;
+        private System.Windows.Forms.Button btnDetalleMesero;
+        private System.Windows.Forms.DataGridView dgvMeseros;
+        private System.Windows.Forms.Panel pnlDerecho;
+        private System.Windows.Forms.TableLayoutPanel pnlMétricas;
+        private System.Windows.Forms.Panel cardTarjeta;
+        private System.Windows.Forms.Label lblTitTarjeta;
         private System.Windows.Forms.Label lblCredito;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridView dataGridView4;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button3;
-        public System.Windows.Forms.Button button1;
-        private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.Panel cardEntradas;
+        private System.Windows.Forms.Label lblTitEntradas;
+        private System.Windows.Forms.Label lblEntrada;
+        private System.Windows.Forms.Panel cardSalidas;
+        private System.Windows.Forms.Label lblTitSalidas;
+        private System.Windows.Forms.Label lblSalida;
+        private System.Windows.Forms.Panel cardTotal;
+        private System.Windows.Forms.Label lblTitTotal;
+        private System.Windows.Forms.Label lblCorte;
+        private System.Windows.Forms.Button btnCorte;
     }
 }

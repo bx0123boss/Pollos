@@ -74,8 +74,6 @@ namespace Punto_Venta
 
         private void frmAgregarUsuario_FormClosing(object sender, FormClosingEventArgs e)
         {
-            frmUsuarios users = new frmUsuarios();
-            users.Show();
         }
     }
 }

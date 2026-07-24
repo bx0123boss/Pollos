@@ -86,27 +86,27 @@
             // 
             // LblTotal
             // 
-            this.LblTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LblTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LblTotal.AutoSize = true;
             this.LblTotal.BackColor = System.Drawing.Color.Black;
-            this.LblTotal.Font = new System.Drawing.Font("Microsoft JhengHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblTotal.Font = new System.Drawing.Font("Microsoft JhengHei UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblTotal.ForeColor = System.Drawing.Color.White;
-            this.LblTotal.Location = new System.Drawing.Point(152, 552);
+            this.LblTotal.Location = new System.Drawing.Point(601, 552);
             this.LblTotal.Name = "LblTotal";
-            this.LblTotal.Size = new System.Drawing.Size(86, 35);
+            this.LblTotal.Size = new System.Drawing.Size(155, 61);
             this.LblTotal.TabIndex = 47;
             this.LblTotal.Text = "00.00";
             // 
             // label11
             // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.AutoSize = true;
             this.label11.BackColor = System.Drawing.Color.Black;
-            this.label11.Font = new System.Drawing.Font("Microsoft JhengHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Font = new System.Drawing.Font("Microsoft JhengHei UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(3, 550);
+            this.label11.Location = new System.Drawing.Point(400, 552);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(116, 35);
+            this.label11.Size = new System.Drawing.Size(206, 61);
             this.label11.TabIndex = 45;
             this.label11.Text = "TOTAL: ";
             // 
@@ -131,8 +131,7 @@
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
             this.DgvPedidoprevio.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.DgvPedidoprevio.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.DgvPedidoprevio.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DgvPedidoprevio.BackgroundColor = System.Drawing.Color.GhostWhite;
             this.DgvPedidoprevio.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -164,10 +163,10 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.DgvPedidoprevio.DefaultCellStyle = dataGridViewCellStyle3;
             this.DgvPedidoprevio.GridColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.DgvPedidoprevio.Location = new System.Drawing.Point(612, 266);
+            this.DgvPedidoprevio.Location = new System.Drawing.Point(612, 310);
             this.DgvPedidoprevio.Name = "DgvPedidoprevio";
             this.DgvPedidoprevio.ReadOnly = true;
-            this.DgvPedidoprevio.Size = new System.Drawing.Size(596, 277);
+            this.DgvPedidoprevio.Size = new System.Drawing.Size(596, 233);
             this.DgvPedidoprevio.TabIndex = 37;
             this.DgvPedidoprevio.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPedidoprevio_CellClick);
             // 
@@ -265,7 +264,7 @@
             this.lblMesero.BackColor = System.Drawing.Color.White;
             this.lblMesero.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.lblMesero.ForeColor = System.Drawing.Color.Black;
-            this.lblMesero.Location = new System.Drawing.Point(88, 68);
+            this.lblMesero.Location = new System.Drawing.Point(85, 83);
             this.lblMesero.Name = "lblMesero";
             this.lblMesero.Size = new System.Drawing.Size(23, 25);
             this.lblMesero.TabIndex = 77;
@@ -278,7 +277,7 @@
             this.label15.BackColor = System.Drawing.Color.White;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.label15.ForeColor = System.Drawing.Color.Black;
-            this.label15.Location = new System.Drawing.Point(6, 68);
+            this.label15.Location = new System.Drawing.Point(3, 83);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(84, 25);
             this.label15.TabIndex = 76;
@@ -287,10 +286,11 @@
             // CmbMesa
             // 
             this.CmbMesa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CmbMesa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CmbMesa.FormattingEnabled = true;
-            this.CmbMesa.Location = new System.Drawing.Point(79, 41);
+            this.CmbMesa.Location = new System.Drawing.Point(79, 38);
             this.CmbMesa.Name = "CmbMesa";
-            this.CmbMesa.Size = new System.Drawing.Size(199, 21);
+            this.CmbMesa.Size = new System.Drawing.Size(199, 28);
             this.CmbMesa.TabIndex = 79;
             // 
             // flpCategorias
@@ -302,13 +302,14 @@
             this.flpCategorias.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.flpCategorias.Location = new System.Drawing.Point(388, 8);
             this.flpCategorias.Name = "flpCategorias";
-            this.flpCategorias.Size = new System.Drawing.Size(826, 247);
+            this.flpCategorias.Size = new System.Drawing.Size(820, 247);
             this.flpCategorias.TabIndex = 1;
             // 
             // flpInventario
             // 
-            this.flpInventario.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.flpInventario.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flpInventario.AutoScroll = true;
             this.flpInventario.BackColor = System.Drawing.Color.Black;
             this.flpInventario.ForeColor = System.Drawing.SystemColors.ButtonFace;
@@ -478,6 +479,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(12, 8);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -493,10 +495,10 @@
             this.tabPage1.Controls.Add(this.lblMesero);
             this.tabPage1.Controls.Add(this.CmbMesa);
             this.tabPage1.Controls.Add(this.label15);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 40);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(362, 140);
+            this.tabPage1.Size = new System.Drawing.Size(362, 122);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Mesas:";
             // 
@@ -553,10 +555,10 @@
             this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.LblDomicilio);
             this.tabPage2.Controls.Add(this.LblNombre);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 40);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(362, 140);
+            this.tabPage2.Size = new System.Drawing.Size(362, 122);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "A domicilio";
             this.tabPage2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabPage2_MouseClick);
@@ -566,9 +568,9 @@
             this.tabPage3.BackColor = System.Drawing.Color.Black;
             this.tabPage3.Controls.Add(this.label14);
             this.tabPage3.Controls.Add(this.label1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 40);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(362, 140);
+            this.tabPage3.Size = new System.Drawing.Size(362, 122);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Llevar";
             // 
@@ -614,6 +616,7 @@
             this.Name = "frmPedido";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pedido";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmPedido_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DgvPedidoprevio)).EndInit();
             this.tabControl1.ResumeLayout(false);

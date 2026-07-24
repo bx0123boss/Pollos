@@ -64,6 +64,7 @@ namespace Punto_Venta
             EstilizarBotonPrimario(button7);
             EstilizarBotonPrimario(button10);
             EstilizarBotonPrimario(button6);
+            EstilizarBotonPrimario(button14);
             EstilizarDataGridView(dgvInventario);
             this.dgvInventario.ReadOnly = true;
             this.dgvInventario.AllowUserToAddRows = false;
@@ -358,6 +359,12 @@ namespace Punto_Venta
         {
             frmProveedores pro = new frmProveedores();
             pro.ShowDialog();
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            frmBotonesComentario bot = new frmBotonesComentario();
+            bot.ShowDialog();
         }
     }
 }

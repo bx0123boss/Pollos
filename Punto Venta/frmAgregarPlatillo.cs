@@ -204,7 +204,8 @@ namespace Punto_Venta
                                         lblCosto.Text = (Convert.ToDouble(cantidad) * Convert.ToDouble(precio)) + "";
                                        
                                     }
-                                    lblTotal.Text = $"{GetTotal():C}";
+                                    lblTotal.Text = GetTotal().ToString();
+                                    
                                 }
                             }
                         }
@@ -454,7 +455,7 @@ namespace Punto_Venta
                         cmd2.Parameters.AddWithValue("@idProducto10", idArticulo10 == "0" ? (object)DBNull.Value : int.Parse(idArticulo10));
                         cmd2.Parameters.AddWithValue("@CantidadProducto10", idArticulo10 == "0" ? (object)DBNull.Value : txtCantidad10.Text);
                         cmd2.Parameters.AddWithValue("@Categoria", comboBox1.SelectedValue);
-                        cmd2.Parameters.AddWithValue("@CostoTotal", GetTotal());
+                        cmd2.Parameters.AddWithValue("@CostoTotal", string.IsNullOrWhiteSpace(lblTotal.Text)? "0" : lblTotal.Text);
                         cmd2.Parameters.AddWithValue("@Comanda", comanda);
                         cmd2.Parameters.AddWithValue("@SubCategoria", comboBox2.SelectedValue);
                         idInventario = Convert.ToInt32(cmd2.ExecuteScalar());
@@ -521,7 +522,7 @@ namespace Punto_Venta
                         cmd2.Parameters.AddWithValue("@idProducto10", idArticulo10 == "0" ? (object)DBNull.Value : int.Parse(idArticulo10));
                         cmd2.Parameters.AddWithValue("@CantidadProducto10", idArticulo10 == "0" ? (object)DBNull.Value : txtCantidad10.Text);
                         cmd2.Parameters.AddWithValue("@Categoria", comboBox1.SelectedValue);
-                        cmd2.Parameters.AddWithValue("@CostoTotal", GetTotal());
+                        cmd2.Parameters.AddWithValue("@CostoTotal", string.IsNullOrWhiteSpace(lblTotal.Text) ? "0" : lblTotal.Text);
                         cmd2.Parameters.AddWithValue("@Comanda", comanda);
                         cmd2.Parameters.AddWithValue("@SubCategoria", comboBox2.SelectedValue);
                         cmd2.Parameters.AddWithValue("@Id", int.Parse(id));
@@ -569,12 +570,9 @@ namespace Punto_Venta
                 {
                     double cantidad = Convert.ToDouble(txtCantidad.Text);
                     lblPrecio.Text = (precioBase * cantidad).ToString(); // Calcular precio
-                }
+                }              
 
-                total = GetTotal() ;
-                
-
-                lblTotal.Text = $"{total:C}";
+                lblTotal.Text = GetTotal().ToString(); 
             }
             catch
             {

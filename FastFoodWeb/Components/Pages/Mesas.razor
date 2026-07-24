@@ -31,13 +31,24 @@
             @foreach (var mesa in listaMesas)
             {
                 <div class="col-6 col-md-4 col-lg-3">
-                    <div class="mesa-card @(mesa.Estatus.ToLower())"
+                    <div class="mesa-card @(mesa.Estatus?.ToLower() ?? "")"
                          @onclick="() => SeleccionarMesa(mesa)">
                         <div class="mesa-status-dot"></div>
+
+                        @* BOTÓN DE LAPICITO PARA EDITAR NOMBRE Y CANTIDAD DE PERSONAS *@
+                        <button class="btn-edit-mesa" title="Editar Mesa" @onclick:stopPropagation="true" @onclick="() => AbrirModalEditarMesa(mesa)">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+
                         <div class="mesa-content">
                             <i class="bi bi-grid-3x3-gap-fill mesa-icon"></i>
                             <h4 class="mesa-title">@mesa.Nombre</h4>
                             <span class="mesa-badge">@mesa.Estatus</span>
+
+                            @* CANTIDAD DE PERSONAS DESDE LA BD *@
+                            <div class="mt-2 text-muted small fw-bold">
+                                <i class="bi bi-people-fill me-1"></i>@mesa.CantidadPersonas @(mesa.CantidadPersonas == 1 ? "Persona" : "Personas")
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -50,9 +61,11 @@
 <button class="fab-btn shadow" @onclick="AbrirModal">
     <i class="bi bi-plus-lg"></i>
 </button>
+
 <ModalAgregarMesa Mostrar="mostrarModal"
                   OnCerrar="CerrarModal"
                   OnMesaAgregada="MesaCreadaDesdePantallaMesas" />
+
 @* --- MODAL DETALLE DE MESA --- *@
 @if (mostrarModalDetalle)
 {
@@ -61,11 +74,19 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0 shadow-lg">
 
-                @* Encabezado con el nombre de la mesa *@
-                <div class="modal-header bg-dark text-white">
-                    <h5 class="modal-title">
-                        <i class="bi bi-receipt-cutoff me-2"></i>
+                @* Encabezado *@
+                <div class="modal-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h5 class="modal-title d-flex align-items-center gap-2">
+                        <i class="bi bi-receipt-cutoff me-1"></i>
                         Orden: @mesaSeleccionadaNombre
+                        <span class="badge bg-secondary fs-6 ms-2">
+                            <i class="bi bi-people-fill me-1"></i>@mesaSeleccionadaPersonas @(mesaSeleccionadaPersonas == 1 ? "Persona" : "Personas")
+                        </span>
+                        <button class="btn btn-outline-warning btn-sm border-0 text-warning ms-1"
+                                title="Editar Mesa"
+                                @onclick="() => AbrirModalEditarMesa(new Mesa { Id = mesaSeleccionadaId, Nombre = mesaSeleccionadaNombre, CantidadPersonas = mesaSeleccionadaPersonas })">
+                            <i class="bi bi-pencil-fill fs-6"></i>
+                        </button>
                     </h5>
                     <button type="button" class="btn-close btn-close-white" @onclick="CerrarModalDetalle"></button>
                 </div>
@@ -95,29 +116,36 @@
                                         <th>Producto</th>
                                         <th>Comentario</th>
                                         <th class="text-end">Importe</th>
-                                        <th class="text-center">Acción</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in detallesMesa)
                                     {
                                         <tr>
-                                            <td class="fw-bold">@item.Cantidad.ToString("0.##")</td>
+                                            <td class="fw-bold fs-6">@item.Cantidad.ToString("0.##")</td>
                                             <td>
                                                 <span class="d-block fw-bold text-dark">@item.NombreProducto</span>
                                             </td>
                                             <td class="small text-muted fst-italic">
-                                                @item.Comentario
+                                                @(string.IsNullOrWhiteSpace(item.Comentario) ? "-" : item.Comentario)
                                             </td>
                                             <td class="text-end text-success fw-bold">
                                                 $@item.Total.ToString("N2")
                                             </td>
                                             <td class="text-center">
-                                                @* Botón para eliminar (Cancelar) *@
-                                                <button class="btn btn-outline-danger btn-sm"
-                                                        @onclick="() => EliminarArticulo(item.IdArticulosMesa)">
-                                                    <i class="bi bi-trash3-fill"></i>
-                                                </button>
+                                                <div class="btn-group" role="group">
+                                                    <button class="btn btn-outline-warning btn-sm me-1"
+                                                            title="Editar artículo"
+                                                            @onclick="() => AbrirEditarArticulo(item)">
+                                                        <i class="bi bi-pencil-fill"></i>
+                                                    </button>
+                                                    <button class="btn btn-outline-danger btn-sm"
+                                                            title="Cancelar artículo"
+                                                            @onclick="() => EliminarArticulo(item.IdArticulosMesa)">
+                                                        <i class="bi bi-trash3-fill"></i>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     }
@@ -134,13 +162,10 @@
                     }
                 </div>
 
-                @* Pie: Botones de acción *@
                 <div class="modal-footer bg-light">
-                    @* NUEVO BOTÓN PARA AGREGAR PRODUCTOS *@
                     <button type="button" class="btn btn-primary" @onclick="IrAAgregarProductos">
                         <i class="bi bi-cart-plus me-1"></i> Agregar productos
                     </button>
-
 
                     @if (detallesMesa != null && detallesMesa.Count > 0)
                     {
@@ -153,15 +178,81 @@
         </div>
     </div>
 }
-@* --- ESTILOS CSS --- *@
-<style>
-    /* ================================
-       DISEÑO MODERNO DE MESAS
-    ================================ */
 
+@* --- MODAL: EDITAR MESA (NOMBRE Y CANTIDAD DE PERSONAS) --- *@
+@if (mostrarModalEditarMesa)
+{
+    <div class="modal-backdrop fade show" style="z-index: 1060;"></div>
+    <div class="modal fade show d-block" tabindex="-1" style="z-index: 1065;">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content shadow border-0">
+                <div class="modal-header bg-warning text-dark">
+                    <h6 class="modal-title fw-bold">
+                        <i class="bi bi-pencil-square me-1"></i> Editar Mesa
+                    </h6>
+                    <button type="button" class="btn-close" @onclick="CerrarModalEditarMesa"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Nombre / Número de Mesa:</label>
+                        <input type="text" class="form-control" @bind="editMesaNombre" placeholder="Ej. Mesa 5..." />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label fw-bold small">
+                            <i class="bi bi-people-fill me-1"></i> Cantidad de Personas:
+                        </label>
+                        <input type="number" min="1" max="99" class="form-control" @bind="editMesaPersonas" />
+                    </div>
+                </div>
+                <div class="modal-footer bg-light p-2 d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="CerrarModalEditarMesa">Cancelar</button>
+                    <button type="button" class="btn btn-warning btn-sm fw-bold" @onclick="GuardarDatosMesa">
+                        <i class="bi bi-check-lg me-1"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@* --- MODAL SECUNDARIO: EDITAR ARTÍCULO --- *@
+@if (mostrarModalEditarArticulo && articuloEdicion != null)
+{
+    <div class="modal-backdrop fade show" style="z-index: 1060;"></div>
+    <div class="modal fade show d-block" tabindex="-1" style="z-index: 1065;">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content shadow border-0">
+                <div class="modal-header bg-warning text-dark">
+                    <h6 class="modal-title fw-bold">
+                        <i class="bi bi-pencil-square me-1"></i> Editar @articuloEdicion.NombreProducto
+                    </h6>
+                    <button type="button" class="btn-close" @onclick="CerrarModalEditar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Cantidad:</label>
+                        <input type="number" step="1" min="1" class="form-control" @bind="nuevaCantidadEdicion" />
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label fw-bold small">Comentario / Notas:</label>
+                        <textarea class="form-control" rows="2" @bind="nuevoComentarioEdicion" placeholder="Sin cebolla, extra salsa..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light p-2 d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="CerrarModalEditar">Cancelar</button>
+                    <button type="button" class="btn btn-warning btn-sm fw-bold" @onclick="GuardarEdicionArticulo">
+                        <i class="bi bi-check-lg me-1"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
     .mesa-card {
         position: relative;
-        height: 170px;
+        height: 180px;
         border-radius: 18px;
         background: #ffffff;
         cursor: pointer;
@@ -178,33 +269,52 @@
             box-shadow: 0 14px 30px rgba(0,0,0,0.15);
         }
 
-    /* Contenido interno */
+    .btn-edit-mesa {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(255, 255, 255, 0.8);
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-size: 0.85rem;
+        transition: all 0.22s ease;
+        z-index: 5;
+    }
+
+        .btn-edit-mesa:hover {
+            background: #ffc107;
+            color: #000;
+            transform: scale(1.15);
+        }
+
     .mesa-content {
         text-align: center;
     }
 
     .mesa-icon {
-        font-size: 2.2rem;
+        font-size: 2rem;
         opacity: 0.8;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
     }
 
     .mesa-title {
         font-weight: 700;
-        margin-bottom: 6px;
-        font-size: 1.2rem;
+        margin-bottom: 4px;
+        font-size: 1.15rem;
     }
 
     .mesa-badge {
-        font-size: 0.75rem;
-        padding: 5px 14px;
+        font-size: 0.72rem;
+        padding: 4px 12px;
         border-radius: 50px;
         font-weight: 600;
     }
-
-    /* ================================
-       INDICADOR DE ESTATUS (LED)
-    ================================ */
 
     .mesa-status-dot {
         position: absolute;
@@ -215,10 +325,6 @@
         border-radius: 50%;
         box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
-
-    /* ================================
-       ESTADO: COCINA
-    ================================ */
 
     .mesa-card.cocina {
         background: linear-gradient(135deg, #fff4e5, #ffe5cc);
@@ -235,10 +341,6 @@
             box-shadow: 0 0 12px #ff5722;
         }
 
-    /* ================================
-       ESTADO: NUEVA
-    ================================ */
-
     .mesa-card.nueva {
         background: linear-gradient(135deg, #e3f2fd, #d0e8ff);
         border-color: #2196f3;
@@ -253,29 +355,6 @@
             background-color: #2196f3;
             box-shadow: 0 0 12px #2196f3;
         }
-
-    /* ================================
-       ESTADO: LIBRE (si luego lo usas)
-    ================================ */
-
-    .mesa-card.libre {
-        background: linear-gradient(135deg, #e8f5e9, #d2f4d3);
-        border-color: #4caf50;
-    }
-
-        .mesa-card.libre .mesa-badge {
-            background-color: #4caf50;
-            color: white;
-        }
-
-        .mesa-card.libre .mesa-status-dot {
-            background-color: #4caf50;
-            box-shadow: 0 0 12px #4caf50;
-        }
-
-    /* ================================
-       BOTÓN FAB MEJORADO
-    ================================ */
 
     .fab-btn {
         position: fixed;
@@ -301,11 +380,6 @@
             transform: scale(1.1);
             box-shadow: 0 15px 35px rgba(13,110,253,0.6);
         }
-
-        .fab-btn:active {
-            transform: scale(0.95);
-        }
-
 </style>
 
 @code {
@@ -315,7 +389,20 @@
     private bool mostrarModalDetalle = false;
     private int mesaSeleccionadaId = 0;
     private string mesaSeleccionadaNombre = "";
+    private int mesaSeleccionadaPersonas = 1;
     private List<DetallePedido>? detallesMesa;
+
+    // Control de Edición de MESA
+    private bool mostrarModalEditarMesa = false;
+    private int editMesaId = 0;
+    private string editMesaNombre = "";
+    private int editMesaPersonas = 1;
+
+    // Control de Edición de ARTÍCULOS
+    private bool mostrarModalEditarArticulo = false;
+    private DetallePedido? articuloEdicion;
+    private decimal nuevaCantidadEdicion = 1;
+    private string nuevoComentarioEdicion = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -329,7 +416,8 @@
 
         using (SqlConnection con = new SqlConnection(connectionString))
         {
-            string query = "SELECT IdMesa, Nombre, Estatus FROM MESAS WHERE Estatus = 'COCINA' OR Estatus = 'NUEVA' ORDER BY Nombre";
+            // Leemos exactamente el campo CantidadPersonas
+            string query = "SELECT IdMesa, Nombre, Estatus, ISNULL(CantidadPersonas, 1) AS CantidadPersonas FROM MESAS WHERE Estatus = 'COCINA' OR Estatus = 'NUEVA' ORDER BY Nombre";
 
             SqlCommand cmd = new SqlCommand(query, con);
             await con.OpenAsync();
@@ -340,42 +428,90 @@
                 {
                     listaMesas.Add(new Mesa
                     {
-                        Id = Convert.ToInt32(reader["IdMesa"]), // Basado en 007.MESAS.sql
-                        Nombre = reader["Nombre"].ToString(),
-                        Estatus = reader["Estatus"].ToString()
+                        Id = Convert.ToInt32(reader["IdMesa"]),
+                        Nombre = reader["Nombre"].ToString() ?? "",
+                        Estatus = reader["Estatus"].ToString() ?? "",
+                        CantidadPersonas = Convert.ToInt32(reader["CantidadPersonas"])
                     });
                 }
             }
         }
     }
+
+    // --- MÉTODOS PARA EDITAR MESA (NOMBRE Y CANTIDAD DE PERSONAS) ---
+    private void AbrirModalEditarMesa(Mesa mesa)
+    {
+        editMesaId = mesa.Id;
+        editMesaNombre = mesa.Nombre;
+        editMesaPersonas = mesa.CantidadPersonas > 0 ? mesa.CantidadPersonas : 1;
+        mostrarModalEditarMesa = true;
+    }
+
+    private void CerrarModalEditarMesa()
+    {
+        mostrarModalEditarMesa = false;
+    }
+
+    private async Task GuardarDatosMesa()
+    {
+        if (string.IsNullOrWhiteSpace(editMesaNombre) || editMesaPersonas < 1) return;
+
+        string connectionString = Configuration.GetConnectionString("CadenaSQL");
+        using (SqlConnection con = new SqlConnection(connectionString))
+        {
+            // UPDATE con la columna CantidadPersonas
+            string query = "UPDATE MESAS SET Nombre = @Nombre, CantidadPersonas = @CantidadPersonas WHERE IdMesa = @Id";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@Nombre", editMesaNombre);
+            cmd.Parameters.AddWithValue("@CantidadPersonas", editMesaPersonas);
+            cmd.Parameters.AddWithValue("@Id", editMesaId);
+
+            await con.OpenAsync();
+            await cmd.ExecuteNonQueryAsync();
+        }
+
+        if (mesaSeleccionadaId == editMesaId)
+        {
+            mesaSeleccionadaNombre = editMesaNombre;
+            mesaSeleccionadaPersonas = editMesaPersonas;
+        }
+
+        CerrarModalEditarMesa();
+        await CargarMesas();
+    }
+
     private void IrAAgregarProductos()
     {
         CerrarModalDetalle();
         Nav.NavigateTo($"/pedido/{mesaSeleccionadaId}");
     }
+
     private async Task MesaCreadaDesdePantallaMesas(Mesa nuevaMesa)
     {
         mostrarModal = false;
-        await CargarMesas(); // Recarga el panel para ver la nueva tarjeta azul "NUEVA"
+        await CargarMesas();
     }
+
     private void AbrirModal()
     {
         nuevaMesaNombre = "";
         mostrarModal = true;
     }
-    private async Task SeleccionarMesa(Mesa mesa) // Cambié int id por el objeto completo
+
+    private async Task SeleccionarMesa(Mesa mesa)
     {
-        if (mesa.Estatus.Equals("NUEVA", StringComparison.OrdinalIgnoreCase) ||
-            mesa.Estatus.Equals("LIBRE", StringComparison.OrdinalIgnoreCase))
+        if (mesa.Estatus != null && (mesa.Estatus.Equals("NUEVA", StringComparison.OrdinalIgnoreCase) ||
+            mesa.Estatus.Equals("LIBRE", StringComparison.OrdinalIgnoreCase)))
         {
             Nav.NavigateTo($"/pedido/{mesa.Id}");
         }
         else
         {
-            mesaSeleccionadaId = mesa.Id; 
+            mesaSeleccionadaId = mesa.Id;
             mesaSeleccionadaNombre = mesa.Nombre;
+            mesaSeleccionadaPersonas = mesa.CantidadPersonas;
             mostrarModalDetalle = true;
-            detallesMesa = null; 
+            detallesMesa = null;
             await CargarDetalleMesa();
         }
     }
@@ -387,8 +523,6 @@
 
         using (SqlConnection con = new SqlConnection(connectionString))
         {
-            // JOIN para obtener el nombre del producto desde INVENTARIO
-            // Usamos IdProducto de ArticulosMesa vs IdInventario
             string query = @"
                 SELECT
                     am.IdArticulosMesa,
@@ -412,41 +546,82 @@
                     detallesMesa.Add(new DetallePedido
                     {
                         IdArticulosMesa = Convert.ToInt32(reader["IdArticulosMesa"]),
-                        NombreProducto = reader["Producto"].ToString(),
+                        NombreProducto = reader["Producto"].ToString() ?? "",
                         Cantidad = Convert.ToDecimal(reader["Cantidad"]),
                         Total = Convert.ToDecimal(reader["Total"]),
-                        Comentario = reader["Comentario"].ToString()
+                        Comentario = reader["Comentario"].ToString() ?? ""
                     });
                 }
             }
         }
     }
 
-    // 2. ELIMINAR ARTÍCULO 
-    private async Task EliminarArticulo(int idArticulo)
+    private void AbrirEditarArticulo(DetallePedido item)
     {
-        string motivo = await JS.InvokeAsync<string>("prompt", "¿Seguro que deseas cancelar este artículo?\nIngresa el motivo de cancelación:");
-        if (motivo == null || String.IsNullOrWhiteSpace(motivo)) return;
+        articuloEdicion = item;
+        nuevaCantidadEdicion = item.Cantidad;
+        nuevoComentarioEdicion = item.Comentario ?? "";
+        mostrarModalEditarArticulo = true;
+    }
+
+    private void CerrarModalEditar()
+    {
+        mostrarModalEditarArticulo = false;
+        articuloEdicion = null;
+    }
+
+    private async Task GuardarEdicionArticulo()
+    {
+        if (articuloEdicion == null || nuevaCantidadEdicion <= 0) return;
 
         string connectionString = Configuration.GetConnectionString("CadenaSQL");
         using (SqlConnection con = new SqlConnection(connectionString))
         {
-            string query = "UPDATE ArticulosMesa SET Comentario= @Comentario, Estatus = 'CANCELADO' WHERE IdArticulosMesa = @Id";
-            //string query = "DELETE FROM ArticulosMesa WHERE IdArticulosMesa = @Id";
+            decimal precioUnitario = articuloEdicion.Cantidad > 0 ? (articuloEdicion.Total / articuloEdicion.Cantidad) : 0;
+            decimal nuevoTotal = precioUnitario * nuevaCantidadEdicion;
+
+            string query = @"UPDATE ArticulosMesa
+                            SET Cantidad = @Cantidad,
+                                Total = @Total,
+                                Comentario = @Comentario
+                            WHERE IdArticulosMesa = @Id";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@Cantidad", nuevaCantidadEdicion);
+            cmd.Parameters.AddWithValue("@Total", nuevoTotal);
+            cmd.Parameters.AddWithValue("@Comentario", nuevoComentarioEdicion);
+            cmd.Parameters.AddWithValue("@Id", articuloEdicion.IdArticulosMesa);
+
+            await con.OpenAsync();
+            await cmd.ExecuteNonQueryAsync();
+        }
+
+        CerrarModalEditar();
+        await CargarDetalleMesa();
+    }
+
+    private async Task EliminarArticulo(int idArticulo)
+    {
+        string motivo = await JS.InvokeAsync<string>("prompt", "¿Seguro que deseas cancelar este artículo?\nIngresa el motivo de cancelación:");
+        if (string.IsNullOrWhiteSpace(motivo)) return;
+
+        string connectionString = Configuration.GetConnectionString("CadenaSQL");
+        using (SqlConnection con = new SqlConnection(connectionString))
+        {
+            string query = "UPDATE ArticulosMesa SET Comentario = @Comentario, Estatus = 'CANCELADO' WHERE IdArticulosMesa = @Id";
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@Id", idArticulo);
             cmd.Parameters.AddWithValue("@Comentario", motivo);
 
             await con.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
-            // Revisamos cuántos artículos quedan para esta mesa
+
             string sqlCount = "SELECT count(*) FROM ArticulosMesa WHERE IdMesa = @IdMesa AND Estatus != 'CANCELADO'";
             SqlCommand cmdCount = new SqlCommand(sqlCount, con);
             cmdCount.Parameters.AddWithValue("@IdMesa", mesaSeleccionadaId);
 
             int restantes = Convert.ToInt32(await cmdCount.ExecuteScalarAsync());
 
-            // Si la mesa se quedó en 0 artículos, la regresamos a estado 'NUEVA'
             if (restantes == 0)
             {
                 string sqlUpdate = "UPDATE MESAS SET Estatus = 'NUEVA' WHERE IdMesa = @IdMesa";
@@ -460,18 +635,13 @@
             else
             {
                 await CargarDetalleMesa();
-                await CargarMesas(); 
+                await CargarMesas();
             }
-
-
         }
-        await CargarDetalleMesa();
     }
 
-    private void CerrarModalDetalle()
-    {
-        mostrarModalDetalle = false;
-    }
+    private void CerrarModalDetalle() => mostrarModalDetalle = false;
+    private void CerrarModal() => mostrarModal = false;
 
     public class DetallePedido
     {
@@ -480,26 +650,5 @@
         public decimal Cantidad { get; set; }
         public decimal Total { get; set; }
         public string Comentario { get; set; } = "";
-    }
-    private void CerrarModal() => mostrarModal = false;
-
-    private async Task GuardarMesa()
-    {
-        if (string.IsNullOrWhiteSpace(nuevaMesaNombre)) return;
-
-        string connectionString = Configuration.GetConnectionString("CadenaSQL");
-        using (SqlConnection con = new SqlConnection(connectionString))
-        {
-            string query = "INSERT INTO MESAS (Nombre, Estatus, Mesero) VALUES (@nombre, 'NUEVA', '')";
-
-            SqlCommand cmd = new SqlCommand(query, con);
-            cmd.Parameters.AddWithValue("@nombre", nuevaMesaNombre);
-
-            await con.OpenAsync();
-            await cmd.ExecuteNonQueryAsync();
-        }
-
-        mostrarModal = false;
-        await CargarMesas();
     }
 }

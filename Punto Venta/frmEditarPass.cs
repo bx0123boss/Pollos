@@ -59,8 +59,6 @@ namespace Punto_Venta
 
         private void frmEditarPass_FormClosing(object sender, FormClosingEventArgs e)
         {
-            frmUsuarios user = new frmUsuarios();
-            user.Show();
         }
     }
 }

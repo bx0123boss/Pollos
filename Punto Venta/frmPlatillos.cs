@@ -58,6 +58,41 @@ namespace Punto_Venta
             frmAgregarPlatillo platillo = new frmAgregarPlatillo();
             platillo.Text = "Agregar Platillo";
             platillo.ShowDialog();
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
+
+                DataSet ds = new DataSet();
+
+                if (string.IsNullOrEmpty(textBox1.Text))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT A.IdInventario, A.Nombre, A.Precio, B.Nombre AS Categoria, A.Comanda, C.Nombre AS Subcategoria, A.IdCategoria, A.IdSubcategoria, A.CostoTotal " +
+                    " FROM Inventario A  " +
+                    " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
+                    " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
+                    "WHERE A.Estatus = 1 ORDER BY A.Nombre;", conectar))
+                    {
+                        da.Fill(ds, "Id");
+                    }
+                }
+                else
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT A.IdInventario, A.Nombre, A.Precio, B.Nombre AS Categoria, A.Comanda, C.Nombre AS Subcategoria, A.IdCategoria, A.IdSubcategoria, A.CostoTotal " +
+                    " FROM Inventario A  " +
+                    " INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria " +
+                    " LEFT JOIN SUBCATEGORIAS C ON A.IdSubcategoria = C.IdSubcategoria " +
+                    " WHERE A.Estatus = 1  AND A.Nombre LIKE @Nombre ORDER BY A.Nombre;", conectar))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("@Nombre", $"%{textBox1.Text}%");
+                        da.Fill(ds, "Id");
+                    }
+                }
+
+                dgvInventario.DataSource = ds.Tables["Id"];
+                dgvInventario.Columns[0].Visible = false;
+                dgvInventario.Columns[6].Visible = false;
+                dgvInventario.Columns[7].Visible = false;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -18,8 +18,8 @@ namespace Punto_Venta
         public frmBuscarClientes()
         {
             InitializeComponent();
-            this.MinimumSize = new System.Drawing.Size(883, 548);
-            this.MaximumSize = new System.Drawing.Size(883, 548);
+            this.MinimumSize = new System.Drawing.Size(1027, 705);
+            this.MaximumSize = new System.Drawing.Size(1027, 705);
         }
 
         private void frmBuscarClientes_Load(object sender, EventArgs e)
@@ -35,6 +35,13 @@ namespace Punto_Venta
                 }
                 dataGridView1.Columns[0].Visible = false;
             }
+            EstilizarBotonAdvertencia(button2);
+            EstilizarBotonPrimario(button1);
+            EstilizarDataGridView(dataGridView1);
+            EstilizarTextBox(textBox2);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
         }
 
         private void button1_Click(object sender, EventArgs e)

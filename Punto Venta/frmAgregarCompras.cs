@@ -26,6 +26,7 @@ namespace Punto_Venta
 
             // ESTILOS HEREDADOS DE frmBase
             EstilizarDataGridView(this.dataGridView1);
+
             EstilizarBotonPrimario(this.button2); // Botón Guardar
             EstilizarBotonPrimario(this.button1); // Botón Agregar
             EstilizarBotonAdvertencia(this.button4); // Buscar Producto

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Punto_Venta
@@ -19,6 +21,8 @@ namespace Punto_Venta
         {
             Clave();
         }
+        
+
 
         private void frmClaveVendendor_Load(object sender, EventArgs e)
         {
@@ -72,6 +76,10 @@ namespace Punto_Venta
                                 Id = int.Parse(readerSQL["IdUsuario"].ToString());
                                 Mesero = readerSQL["Usuario"].ToString();
                                 Tipo = readerSQL["TipoUsuario"].ToString();
+                                if(Conexion.AbrirTeclado)
+                                {
+                                    CerrarTeclado();
+                                }
                                 this.DialogResult = System.Windows.Forms.DialogResult.OK;
                             }
                             else
@@ -90,6 +98,48 @@ namespace Punto_Venta
         {
             this.Close();
         }
+
+        private void txtPass_Enter(object sender, EventArgs e)
+        {
+            if(Conexion.AbrirTeclado)
+                AbrirTeclado();
+        }
+        private void AbrirTeclado()
+        {
+            string RutaTeclado = @"C:\Jaeger Soft\FreeVK.exe";
+            try
+            {
+                // Verifica si el ejecutable existe en la ruta
+                if (File.Exists(RutaTeclado))
+                {
+                    // Si el proceso no está corriendo, lo inicia
+                    if (Process.GetProcessesByName("FreeVK").Length == 0)
+                    {
+                        Process.Start(RutaTeclado);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo silencioso o log de error
+                Console.WriteLine("Error al abrir el teclado: " + ex.Message);
+            }
+        }
+        private void CerrarTeclado()
+        {
+            try
+            {
+                foreach (var proceso in Process.GetProcessesByName("FreeVK"))
+                {
+                    proceso.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al cerrar el teclado: " + ex.Message);
+            }
+        }
+
     }
 }
 

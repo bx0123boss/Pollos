@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Printing;
-using System.Windows.Forms;
 using System.Globalization;
-using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace Punto_Venta
 {
@@ -137,18 +138,92 @@ namespace Punto_Venta
                     cmd.ExecuteNonQuery();
                 }
             }
+            List<Producto> listaProductos = new List<Producto>();
 
-            int width = 420;
-            int height = 540;
-            printDocument1.PrinterSettings.DefaultPageSettings.PaperSize = new PaperSize("", width, height);
-            PrintDocument pd = new PrintDocument();
-            pd.PrintPage += new PrintPageEventHandler(this.printDocument1_PrintPage_1);
-            PrintDialog printdlg = new PrintDialog();
-            PrintPreviewDialog printPrvDlg = new PrintPreviewDialog();
-            // preview the assigned document or you can create a different previewButton for it
-            printPrvDlg.Document = pd;
-            printdlg.Document = pd;
-            pd.Print();
+            for (int i = 0; i < dataGridView1.RowCount; i++)
+            {
+                var row = dataGridView1.Rows[i];
+
+                // Producto principal
+                listaProductos.Add(new Producto
+                {
+                    Nombre = row.Cells["Nombre"].Value?.ToString() ?? "",
+                    Cantidad = Convert.ToDouble(row.Cells["Cantidad"].Value),
+                    PrecioUnitario = Convert.ToDouble(row.Cells["Precio"].Value),
+                    Total = Convert.ToDouble(row.Cells["Total"].Value),
+                    Comentario = row.Cells["Comentario"].Value?.ToString()
+                });
+
+                // Verificación si es combo/paquete con Ids secundarios
+                string idInventario = row.Cells["IdInventario"].Value?.ToString() ?? "";
+                string ids = row.Cells["Ids"].Value?.ToString() ?? "";
+
+                if (idInventario.StartsWith("C") && !string.IsNullOrEmpty(ids))
+                {
+                    string[] itemsCombo = ids.Split(';');
+                    foreach (var item in itemsCombo)
+                    {
+                        string[] partes = item.Split(',');
+                        if (partes.Length >= 2)
+                        {
+                            double cantidadSub = Convert.ToDouble(partes[0]);
+                            string idProductoSub = partes[1];
+
+                            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                            {
+                                conectar.Open();
+                                using (SqlCommand cmd = new SqlCommand("SELECT Nombre FROM Inventario WHERE IdInventario = @Id;", conectar))
+                                {
+                                    cmd.Parameters.AddWithValue("@Id", idProductoSub);
+                                    object nombreSub = cmd.ExecuteScalar();
+
+                                    if (nombreSub != null)
+                                    {
+                                        listaProductos.Add(new Producto
+                                        {
+                                            Nombre = $"  - {nombreSub}",
+                                            Cantidad = cantidadSub,
+                                            PrecioUnitario = 0,
+                                            Total = 0
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 3. Preparar los totales para el ticket respetando el orden
+            Dictionary<string, double> totalesDict = new Dictionary<string, double>();
+
+            if (descuento > 0)
+            {
+                totalesDict.Add("DESCUENTO", descuento);
+            }
+
+            totalesDict.Add("TOTAL", total - descuento);
+
+            // 4. Instanciar y llamar a TicketPrinter
+            string[] encabezados = Conexion.datosTicket ?? new string[] { };
+            string[] pie = Conexion.pieDeTicket ?? new string[] { };
+            string logoPath = @"C:\Jaeger Soft\logo.jpg";
+
+            TicketPrinter printer = new TicketPrinter(
+                encabezados: encabezados,
+                pieDePagina: pie,
+                logoPath: logoPath,
+                productos: listaProductos,
+                folio: folio.ToString(),
+                mesa: lblMesa.Text,
+                mesero: lblMesero.Text,
+                total: (total - descuento),
+                corte: false,
+                totales: totalesDict,
+                formaPago: "EFECTIVO"
+            );
+            printer.ImprimirTicket();
+
             button1.Hide();
         }
         private void button1_Click(object sender, EventArgs e)
@@ -614,7 +689,7 @@ namespace Punto_Venta
                     return;
                 }
             }
-            lblTotal.Text = $"{Math.Round(RecalcularTotal - descuento, 0):C}";
+            lblTotal.Text = $"{RecalcularTotal:C}";
             lblDescuento.Text = $"{descuento:C}";
             label10.Visible = true;
             lblDescuento.Visible = true;

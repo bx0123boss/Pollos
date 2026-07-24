@@ -53,6 +53,11 @@ namespace Punto_Venta
                 e.Handled = true;
             }
         }
+
+        private void frmEgresos_Load(object sender, EventArgs e)
+        {
+            EstilizarBotonPrimario(button1);
+        }
     }
 }
 

@@ -58,6 +58,10 @@ namespace Punto_Venta
                     da.Fill(ds, "IdFolio");
                     dataGridView1.DataSource = ds.Tables["IdFolio"];
                 }
+                EstilizarDataGridView(dataGridView1);
+                this.dataGridView1.ReadOnly = true;
+                this.dataGridView1.AllowUserToAddRows = false;
+                this.dataGridView1.AllowUserToDeleteRows = false;
             }
         }
 

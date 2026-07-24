@@ -330,6 +330,27 @@ namespace Punto_Venta
             catch { }
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (!FormularioEstaAbierto(typeof(frmConfiguracionTicket)))
+            {
+                frmConfiguracionTicket config = new frmConfiguracionTicket();
+                config.Show();
+            }
+        }
+        private bool FormularioEstaAbierto(Type tipoFormulario)
+        {
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm.GetType() == tipoFormulario)
+                {
+                    MessageBox.Show("Este módulo ya se encuentra abierto.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    frm.BringToFront();
+                    return true;
+                }
+            }
+            return false;
+        }
 
     }
 }

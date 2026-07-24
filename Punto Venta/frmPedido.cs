@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics.Metrics;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -12,6 +12,8 @@ namespace Punto_Venta
 {
     public partial class frmPedido : Form
     {
+        private TextBox txtBuscarProducto;
+
         public class ProductoInventario
         {
             public int IdInventario { get; set; }
@@ -22,26 +24,44 @@ namespace Punto_Venta
             public string Color { get; set; }
             public string Letra { get; set; }
         }
+
         List<ProductoInventario> productos;
         int idMesero = 0;
         string idCliente;
-        public String Usuario;
+        public string Usuario;
         double total = 0;
         bool mesaNueva = false;
         int idMesa = 0;
         int categoriaSeleccionada = 0;
+
         public frmPedido()
         {
             InitializeComponent();
             this.MinimumSize = new Size(810, 600);
-
         }
+
         private void frmPedido_Load(object sender, EventArgs e)
         {
             DgvPedidoprevio.Columns["Pre"].DefaultCellStyle.Format = "N2";
             DgvPedidoprevio.Columns["Tot"].DefaultCellStyle.Format = "N2";
+
             productos = ObtenerProductosDesdeBD();
 
+            this.KeyPreview = true;
+            this.KeyDown += FrmPedido_KeyDown;
+
+            InicializarBuscador();
+
+            flpInventario.Resize += (s, ev) =>
+            {
+                // Re-filtrar para recalcular posiciones y tamaños dinámicos
+                FiltrarProductos(txtBuscarProducto != null ? txtBuscarProducto.Text.Trim() : "");
+            };
+            flpCategorias.Resize += (s, ev) =>
+            {
+                // Re-filtrar para recalcular posiciones y tamaños dinámicos
+                FiltrarProductos(txtBuscarProducto != null ? txtBuscarProducto.Text.Trim() : "");
+            };  
             cargarMesas();
             cargarCategoriasAutomatico();
             cargarCombo();
@@ -57,40 +77,160 @@ namespace Punto_Venta
                 else
                     this.Close();
             }
-            
         }
+        private void InicializarBuscador()
+        {
+            // 1. Guardamos las dimensiones y posición original de flpInventario desde el Designer
+            Point posicionOriginal = flpInventario.Location;
+            Size tamanoOriginal = flpInventario.Size;
+            Control padreOriginal = flpInventario.Parent;
+
+            int altoBuscador = 30;
+            int separacion = 5; // Espacio entre el TextBox y los botones
+
+            // 2. Creación del TextBox de Búsqueda sobre el área de productos (flpInventario)
+            txtBuscarProducto = new TextBox
+            {
+                Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point),
+                Location = new Point(posicionOriginal.X, posicionOriginal.Y),
+                Width = tamanoOriginal.Width,
+                Height = altoBuscador,
+                // Anchor dinámico: crecerá junto con el panel de botones
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+            };
+
+            txtBuscarProducto.TextChanged += TxtBuscarProducto_TextChanged;
+            txtBuscarProducto.Enter += TxtBuscarProducto_AbrirTeclado;
+            txtBuscarProducto.Click += TxtBuscarProducto_AbrirTeclado;
+            flpInventario.Location = new Point(
+                posicionOriginal.X,
+                posicionOriginal.Y + altoBuscador + separacion
+            );
+
+            // 4. Reducimos la altura del flpInventario para que no se desborde abajo
+            flpInventario.Size = new Size(
+                tamanoOriginal.Width,
+                tamanoOriginal.Height - (altoBuscador + separacion)
+            );
+
+            // 5. Agregamos el TextBox al formulario
+            padreOriginal.Controls.Add(txtBuscarProducto);
+            txtBuscarProducto.BringToFront();
+        }
+        private void FrmPedido_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2 && txtBuscarProducto != null)
+            {
+                txtBuscarProducto.Focus();
+                txtBuscarProducto.SelectAll();
+                e.Handled = true;
+            }
+        }
+
+        private void TxtBuscarProducto_TextChanged(object sender, EventArgs e)
+        {
+            FiltrarProductos(txtBuscarProducto.Text.Trim());
+        }
+
+        private void FiltrarProductos(string busqueda)
+        {
+            if (productos == null) return;
+
+            flpInventario.SuspendLayout();
+            flpInventario.Controls.Clear();
+
+            var listaFiltrada = productos.Where(p =>
+                (categoriaSeleccionada == 0 || p.IdCategoria == categoriaSeleccionada) &&
+                (string.IsNullOrEmpty(busqueda) || p.Nombre.IndexOf(busqueda, StringComparison.OrdinalIgnoreCase) >= 0)
+            ).ToList();
+            Size tamanoResponsivo = CalcularTamanoBotonProducto();
+            float tamañoFuente = tamanoResponsivo.Width > 140 ? 14F : 12.5F;
+            Font fuenteDinamica = new Font("Segoe UI", tamañoFuente, FontStyle.Bold);
+            foreach (var producto in listaFiltrada)
+            {
+                Button but = new Button
+                {
+                    FlatStyle = FlatStyle.Flat,
+                    Size = tamanoResponsivo,
+                    Text = producto.Nombre,
+                    BackColor = ColorTranslator.FromHtml($"#{producto.Color}"),
+                    ForeColor = Color.FromName(producto.Letra),
+                    Font = fuenteDinamica,
+                    Tag = producto // Guardamos la entidad completa directamente
+                };
+
+                but.FlatAppearance.BorderSize = 0;
+                but.FlatAppearance.MouseOverBackColor = ControlPaint.Light(ColorTranslator.FromHtml($"#{producto.Color}"), 0.15f);
+                but.FlatAppearance.MouseDownBackColor = ControlPaint.Dark(Color.FromName(producto.Letra), 0.15f);
+                but.Click += AgregarProducto;
+
+                flpInventario.Controls.Add(but);
+            }
+
+            flpInventario.ResumeLayout();
+        }
+
+        private void CambiarCategoria(object sender, EventArgs e)
+        {
+            txtBuscarProducto.Clear();
+            if (!(sender is Button boton)) return;
+
+            int idCat = 0;
+
+            // Extraer ID de manera segura probando los dos formatos (entero directo u objeto anónimo)
+            if (boton.Tag is int idInt)
+            {
+                idCat = idInt;
+            }
+            else if (boton.Tag != null)
+            {
+                var tagDynamic = boton.Tag as dynamic;
+                try { idCat = int.Parse(tagDynamic.Id.ToString()); } catch { idCat = 0; }
+            }
+
+            categoriaSeleccionada = idCat;
+            FiltrarProductos(txtBuscarProducto != null ? txtBuscarProducto.Text.Trim() : "");
+        }
+
+        // --- MÉTODOS DE DATOS Y LÓGICA EXISTENTES ---
+
         public void cargarCombo()
         {
+            Size tamanoResponsivo = CalcularTamanoBotonCategoria();
+            float tamañoFuente = tamanoResponsivo.Width > 110 ? 11.5F : 10F;
+            Font fuenteDinamica = new Font("Segoe UI", tamañoFuente, FontStyle.Bold);
 
             Button butC = new Button();
             butC.FlatStyle = FlatStyle.Flat;
             butC.FlatAppearance.BorderSize = 0;
-            butC.Font = new Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
+            butC.Font = fuenteDinamica;
             butC.BackColor = ColorTranslator.FromHtml("#654321");
             butC.ForeColor = Color.FromName("White");
-            butC.Size = new Size(104, 56);
+            butC.Size = tamanoResponsivo;
             butC.Text = "COMBOS";
             butC.Click += new EventHandler(this.Combos);
             flpCategorias.Controls.Add(butC);
         }
+
         public void cargarBotonTodos()
         {
+            Size tamanoResponsivo = CalcularTamanoBotonCategoria();
+            float tamañoFuente = tamanoResponsivo.Width > 110 ? 11.5F : 10F;
+            Font fuenteDinamica = new Font("Segoe UI", tamañoFuente, FontStyle.Bold);
 
             Button butC = new Button();
             butC.FlatStyle = FlatStyle.Flat;
             butC.FlatAppearance.BorderSize = 0;
-            butC.Font = new Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
+            butC.Font = fuenteDinamica;
             butC.BackColor = ColorTranslator.FromHtml("#FFFFFF");
             butC.ForeColor = Color.FromName("Black");
-            butC.Size = new Size(104, 56);
+            butC.Size = tamanoResponsivo;
             butC.Text = "TODOS";
-            butC.Tag = new
-            {
-                Id = "0",
-            };
+            butC.Tag = 0; // Guardamos directamente el entero 0
             butC.Click += new EventHandler(this.CambiarCategoria);
             flpCategorias.Controls.Add(butC);
         }
+
         public void cargarPizzas()
         {
             Button butP = new Button();
@@ -104,15 +244,19 @@ namespace Punto_Venta
             butP.Click += new EventHandler(this.Pizzas);
             flpCategorias.Controls.Add(butP);
         }
+
         private void cargarCategoriasAutomatico()
         {
             flpCategorias.Controls.Clear();
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
-
                 string query = @"SELECT * FROM CATEGORIAS ORDER BY Nombre";
+                Size tamanoResponsivo = CalcularTamanoBotonCategoria();
 
+                // Fuente un poco más moderada para no saturar la pestaña (11pt a 12pt)
+                float tamañoFuente = tamanoResponsivo.Width > 110 ? 11.5F : 10F;
+                Font fuenteDinamica = new Font("Segoe UI", tamañoFuente, FontStyle.Bold);
                 using (SqlCommand cmd = new SqlCommand(query, conectar))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -121,44 +265,23 @@ namespace Punto_Venta
                         Button but = new Button();
                         but.FlatStyle = FlatStyle.Flat;
                         but.FlatAppearance.BorderSize = 0;
-                        but.Font = new Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                        but.BackColor = ColorTranslator.FromHtml($"#{reader["Color"].ToString()}");
+                        but.Font = fuenteDinamica;
+                        but.BackColor = ColorTranslator.FromHtml($"#{reader["Color"]}");
                         but.ForeColor = Color.FromName(reader["Letra"].ToString());
-                        but.Size = new Size(104, 56);
-                        but.Text = reader[1].ToString();
+                        but.Size = tamanoResponsivo;
+                        but.Text = reader["Nombre"].ToString();
                         but.Click += new EventHandler(this.CambiarCategoria);
-                        but.Tag = new
-                        {
-                            Id = reader["IdCategoria"].ToString(),
-                            Nombre = reader["Nombre"].ToString(),
-                        };
+
+                        // Guardamos el ID parseado como int
+                        but.Tag = Convert.ToInt32(reader["IdCategoria"]);
 
                         flpCategorias.Controls.Add(but);
                     }
                 }
             }
-            flpInventario.Controls.Clear();
-            foreach (var producto in productos)
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = ColorTranslator.FromHtml($"#{producto.Color}");
-                but.ForeColor = Color.FromName(producto.Letra);
-                but.Font = new Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.Size = new Size(135, 70);
-                but.Text = producto.Nombre;
-                but.Tag = new
-                {
-                    IdInventario = producto.IdInventario,
-                    Nombre = producto.Nombre,
-                    Precio = producto.Precio,
-                    Comanda = producto.Comanda,
-                };
-                but.Click += new EventHandler(this.AgregarProducto);
-                flpInventario.Controls.Add(but);
-            }
+
+            // Muestra todos los productos inicialmente en la cuadrícula
+            FiltrarProductos("");
         }
 
         private void cargarMesas()
@@ -176,16 +299,15 @@ namespace Punto_Venta
                 }
             }
         }
+
         public List<ProductoInventario> ObtenerProductosDesdeBD()
         {
             List<ProductoInventario> productos = new List<ProductoInventario>();
 
-
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
-
-                string query = @"SELECT A.IdInventario, A.IdCategoria, A.Nombre, A.Precio, A.Comanda, B.Color, B.Letra
+                string query = @"SELECT A.IdInventario, A.IdCategoria, A.Nombre, A.Precio, A.Comanda, B.Color, B.Letra, A.Comanda
                                 FROM INVENTARIO A
                                 INNER JOIN CATEGORIAS B ON A.IdCategoria = B.IdCategoria WHERE A.Estatus = 1;";
 
@@ -210,45 +332,7 @@ namespace Punto_Venta
 
             return productos;
         }
-        private void CambiarCategoria(object sender, EventArgs e)   
-        {
-            Button boton = sender as Button;
-            var tag = boton.Tag as dynamic;
-            int idCategoria = int.Parse(tag.Id);
-            if (categoriaSeleccionada == idCategoria)
-                return;
-            categoriaSeleccionada = idCategoria;
-            var productosFiltrados = productos
-                   .Where(p => p.IdCategoria == idCategoria)
-                   .ToList();
-            // Filtrar los productos por IdCategoria usando LINQ
-            if (idCategoria == 0)
-            {
-                productosFiltrados = productos
-                    .ToList();
-            }
-            flpInventario.Controls.Clear();
-            foreach (var producto in productosFiltrados)
-            {
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new Font(new FontFamily("Calibri"), 12, FontStyle.Bold);
-                but.BackColor = ColorTranslator.FromHtml($"#{producto.Color}");
-                but.ForeColor = Color.FromName(producto.Letra);
-                but.Size = new Size(135, 70);
-                but.Text = producto.Nombre;
-                but.Tag = new
-                {
-                    IdInventario = producto.IdInventario,
-                    Nombre = producto.Nombre,
-                    Precio = producto.Precio,
-                    Comanda = producto.Comanda,
-                };
-                but.Click += new EventHandler(this.AgregarProducto);
-                flpInventario.Controls.Add(but);
-            }
-        }
+
         private void AgregarProducto(object sender, EventArgs e)
         {
             using (frmCantidad ori = new frmCantidad())
@@ -256,20 +340,41 @@ namespace Punto_Venta
                 if (ori.ShowDialog() == DialogResult.OK)
                 {
                     Button boton = sender as Button;
-                    var tag = boton.Tag as dynamic;
-                    int id = tag.IdInventario;
+
+                    // Manejo robusto del objeto Tag (ProductoInventario directo o dynamic)
+                    int id;
+                    string nombre;
+                    double precio;
+                    bool comanda;
+
+                    if (boton.Tag is ProductoInventario p)
+                    {
+                        id = p.IdInventario;
+                        nombre = p.Nombre;
+                        precio = p.Precio;
+                        comanda = p.Comanda;
+                    }
+                    else
+                    {
+                        var tag = boton.Tag as dynamic;
+                        id = tag.IdInventario;
+                        nombre = tag.Nombre;
+                        precio = tag.Precio;
+                        comanda = tag.Comanda;
+                    }
+
                     double cantidad = ori.cantidad;
-                    string nombre = tag.Nombre;
-                    double precio = tag.Precio;
                     string comentario = ori.comentario;
-                    bool comanda = tag.Comanda;
                     string idExtra = "";
+
                     DgvPedidoprevio.Rows.Add(id, cantidad, nombre, precio, (cantidad * precio), "X", comentario, comanda, idExtra);
                     total += cantidad * precio;
                     LblTotal.Text = $"{total:C}";
+                    txtBuscarProducto.Clear();
                 }
             }
         }
+
         private void Pizzas(object sender, EventArgs e)
         {
             using (frmPizzas pi = new frmPizzas())
@@ -278,16 +383,10 @@ namespace Punto_Venta
                 {
                     if (pi.tipo == "MITAD")
                     {
-                        //ESTRUCTURA DE IDES EXTRAS: CANTIDAD1,ID1;CANTIDAD2,ID2;...
                         string ides = "1," + pi.id1 + ";1," + pi.id2 + ";1," + pi.idMasa + ";";
                         DgvPedidoprevio.Rows.Add("P" + pi.id1, "1", pi.nombre, pi.precio, pi.precio, pi.comentarios, "1", ides);
-                        //SEPARAR IDES
-                        //string[] ids = ides.Split(';');
-                        //foreach (var word in ids)
-                        //{
-                        //    MessageBox.Show(ids[0] + " " + ids[1]);
-                        //}
                         total += Convert.ToDouble(Convert.ToString(pi.precio));
+
                         for (int i = 0; i < pi.dataGridView1.RowCount; i++)
                         {
                             DgvPedidoprevio.Rows.Add(pi.dataGridView1[0, i].Value.ToString(), pi.dataGridView1[1, i].Value.ToString(), pi.dataGridView1[2, i].Value.ToString(), pi.dataGridView1[3, i].Value.ToString(), pi.dataGridView1[4, i].Value.ToString(), pi.dataGridView1[5, i].Value.ToString(), "1", "");
@@ -308,10 +407,11 @@ namespace Punto_Venta
                         }
                     }
                     LblTotal.Text = String.Format("{0:0.00}", total);
-
                 }
             }
+            txtBuscarProducto.Clear();
         }
+
         private void Combos(object sender, EventArgs e)
         {
             using (frmSeleccionarCombo pi = new frmSeleccionarCombo())
@@ -319,7 +419,6 @@ namespace Punto_Venta
                 if (pi.ShowDialog() == DialogResult.OK)
                 {
                     total += Convert.ToDouble(Convert.ToString(pi.total));
-                    //ESTRUCTURA DE IDES EXTRAS: CANTIDAD1,ID1;CANTIDAD2,ID2;CANTIDADn,IDn...
                     string ides = "";
                     for (int i = 0; i < pi.DgvPedidoprevio.RowCount; i++)
                     {
@@ -332,6 +431,7 @@ namespace Punto_Venta
                 LblTotal.Text = $"{RecalcularTotal:C}";
             }
         }
+
         private bool ordenVacia()
         {
             if (1 > DgvPedidoprevio.RowCount)
@@ -347,30 +447,38 @@ namespace Punto_Venta
             else
                 return false;
         }
-        public void TicketComanda(List<(string id,string Cantidad, string Descripcion, string Comentario, string ides)> itemsComanda)
-        {          
+
+        public void TicketComanda(List<(string id, string Cantidad, string Descripcion, string Comentario, string ides, bool comanda)> itemsComanda)
+        {
+            ImprimirComanda(itemsComanda.Where(x => x.comanda).ToList());
+            ImprimirComanda(itemsComanda.Where(x => !x.comanda).ToList());
+        }
+
+        private void ImprimirComanda(List<(string id, string Cantidad, string Descripcion, string Comentario, string ides, bool comanda)> items)
+        {
+            // Si no hay artículos de este tipo, no imprimir
+            if (items == null || items.Count == 0)
+                return;
+
             string modalidad = "";
-            string RESULT = "";
-            //Llevar
+
             if (tabControl1.SelectedIndex == 2)
             {
-                modalidad= "****PARA LLEVAR****";
+                modalidad = "****PARA LLEVAR****";
             }
-            //mesa
             else if (tabControl1.SelectedIndex == 0)
             {
                 modalidad = "****MESA " + CmbMesa.Text + "****";
             }
-            //domicilio
             else if (tabControl1.SelectedIndex == 1)
             {
-                modalidad ="****ENTREGA A DOMICILIO****";
+                modalidad = "****ENTREGA A DOMICILIO****";
                 modalidad += "\nCliente: " + LblNombre.Text;
-                //domicilio();
             }
+
             List<Producto> productosParaImprimir = new List<Producto>();
 
-            foreach (var (id, cantidad, descripcion, comentario, ide) in itemsComanda)
+            foreach (var (id, cantidad, descripcion, comentario, ide, comanda) in items)
             {
                 productosParaImprimir.Add(new Producto
                 {
@@ -381,7 +489,6 @@ namespace Punto_Venta
                     Total = 0
                 });
 
-                // 1.2 Desglosar los extras/mitades si los hay
                 if ((id.StartsWith("C") || id.StartsWith("P") || !string.IsNullOrEmpty(ide)) && !string.IsNullOrWhiteSpace(ide))
                 {
                     string[] idsExtras = ide.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
@@ -389,6 +496,7 @@ namespace Punto_Venta
                     foreach (var extra in idsExtras)
                     {
                         string[] detallesId = extra.Split(',');
+
                         if (detallesId.Length >= 2)
                         {
                             double subCantidad = Convert.ToDouble(detallesId[0]);
@@ -410,6 +518,10 @@ namespace Punto_Venta
                     }
                 }
             }
+
+            if (productosParaImprimir.Count == 0)
+                return;
+
             TicketPrinter ticket = new TicketPrinter(productosParaImprimir, lblMesa.Text, lblMesero.Text);
             ticket.ImprimirComanda(Conexion.impresora2);
         }
@@ -418,7 +530,6 @@ namespace Punto_Venta
             string nombre = "";
             try
             {
-                // Usamos la cadena de conexión de SQL de tu clase compartida
                 using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
                     conectar.Open();
@@ -437,21 +548,21 @@ namespace Punto_Venta
             }
             return nombre;
         }
+
         private void BtnEntregar_Click(object sender, EventArgs e)
         {
             if (!ordenVacia())
             {
                 BtnEntregar.Visible = false;
-                var listado = new List<(string,string, string, string, string)>();
+                var listado = new List<(string, string, string, string, string, bool)>();
                 using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
                     conectar.Open();
                     if (tabControl1.SelectedIndex == 1)
                     {
-                        //domicilio
                         string query = "INSERT INTO Mesas (Nombre, IdMesero,Impresion,Estatus, IdCliente) " +
-                                           "VALUES ('Domicilio " + (LblNombre.Text.Length > 20 ? LblNombre.Text.Substring(0, 20) : LblNombre.Text) + "', @IdMesero, 0, @Estatus, @IdCliente);" +
-                                             "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
+                                       "VALUES ('Domicilio " + (LblNombre.Text.Length > 20 ? LblNombre.Text.Substring(0, 20) : LblNombre.Text) + "', @IdMesero, 0, @Estatus, @IdCliente);" +
+                                       "SELECT SCOPE_IDENTITY();";
                         using (SqlCommand cmd = new SqlCommand(query, conectar))
                         {
                             cmd.Parameters.AddWithValue("@IdMesero", idMesero);
@@ -460,40 +571,34 @@ namespace Punto_Venta
                             idMesa = Convert.ToInt32(cmd.ExecuteScalar());
                         }
                     }
-                    else if(tabControl1.SelectedIndex == 2)
+                    else if (tabControl1.SelectedIndex == 2)
                     {
-                        //llevar
                         string query = "INSERT INTO Mesas (Nombre, IdMesero,Impresion,Estatus) " +
-                                          "VALUES ('Para llevar', @IdMesero, 0, @Estatus);" +
-                                            "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
+                                       "VALUES ('Para llevar', @IdMesero, 0, @Estatus);" +
+                                       "SELECT SCOPE_IDENTITY();";
                         using (SqlCommand cmd = new SqlCommand(query, conectar))
                         {
                             cmd.Parameters.AddWithValue("@IdMesero", idMesero);
                             cmd.Parameters.AddWithValue("@Estatus", "COCINA");
                             idMesa = Convert.ToInt32(cmd.ExecuteScalar());
                         }
-
                     }
-                    else if (checkBox3.Checked ==false && CmbMesa.SelectedValue != null)
+                    else if (checkBox3.Checked == false && CmbMesa.SelectedValue != null)
                         idMesa = (int)CmbMesa.SelectedValue;
-                    else if(CmbMesa.SelectedValue == null && checkBox3.Checked == false)
+                    else if (CmbMesa.SelectedValue == null && checkBox3.Checked == false)
                     {
                         BtnEntregar.Visible = true;
                         MessageBox.Show("NO SE HA SELECCIONADO MESA", "Alto!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    
-                    
+
                     if (checkBox3.Checked)
                     {
                         using (SqlCommand cmd2 = new SqlCommand("UPDATE MESAS SET Estatus = 'COCINA' WHERE IdMesa = @IdMesa;", conectar))
                         {
                             cmd2.Parameters.AddWithValue("@IdMesa", idMesa);
-
                             cmd2.ExecuteNonQuery();
                         }
-
-
                     }
                     else if (idMesa != 0)
                     {
@@ -501,9 +606,9 @@ namespace Punto_Venta
                         {
                             cmd.ExecuteNonQuery();
                         }
-
                     }
                 }
+
                 for (int i = 0; i < DgvPedidoprevio.RowCount; i++)
                 {
                     string id = DgvPedidoprevio.Rows[i].Cells["Aidi"].Value.ToString();
@@ -513,11 +618,12 @@ namespace Punto_Venta
                     string idInventario = DgvPedidoprevio.Rows[i].Cells["Aidi"].Value.ToString();
                     string totalArticulo = DgvPedidoprevio.Rows[i].Cells["Tot"].Value.ToString();
                     string ides = DgvPedidoprevio.Rows[i].Cells["idExtra"].Value.ToString();
-                    listado.Add((id, cantidad, descripcion, comentario, ides));
+                    bool comanda = Convert.ToBoolean(DgvPedidoprevio.Rows[i].Cells["Comanda"].Value);
+                    listado.Add((id, cantidad, descripcion, comentario, ides,comanda));
+
                     using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                     {
                         conectar.Open();
-
                         string insertFolioQuery = "INSERT INTO ArticulosMesa (IdInventario, Cantidad, Total,Comentario,IdMesa, IdMesero, FechaHora, Estatus,Ids, IdPromo) " +
                                                   "VALUES (@IdInventario, @Cantidad, @Total, @Comentario, @IdMesa, @IdMesero, GETDATE(),@Estatus, @Ids, @IdPromo); ";
 
@@ -527,7 +633,7 @@ namespace Punto_Venta
                             {
                                 cmd.Parameters.AddWithValue("@IdInventario", 0);
                                 cmd.Parameters.AddWithValue("@Ids", ides);
-                                cmd.Parameters.AddWithValue("@IdPromo", idInventario.Substring(1, idInventario.Length-1));
+                                cmd.Parameters.AddWithValue("@IdPromo", idInventario.Substring(1, idInventario.Length - 1));
                             }
                             else
                             {
@@ -541,15 +647,14 @@ namespace Punto_Venta
                             cmd.Parameters.AddWithValue("@IdMesa", idMesa);
                             cmd.Parameters.AddWithValue("@IdMesero", idMesero);
                             cmd.Parameters.AddWithValue("@Estatus", "COCINA");
-                           
 
                             cmd.ExecuteNonQuery();
                         }
                     }
                 }
-                
+
                 TicketComanda(listado);
-               
+
                 MessageBox.Show("SE HA REALIZADO LA ORDEN CON EXITO!", "ORDEN REALIZADA", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (tabControl1.SelectedIndex == 2)
                 {
@@ -568,9 +673,9 @@ namespace Punto_Venta
                 {
                     ReiniciarForm();
                 }
-                
             }
         }
+
         private void ReiniciarForm()
         {
             #region domicilio
@@ -581,6 +686,8 @@ namespace Punto_Venta
             LblNombre.Text = "";
             idCliente = "0";
             #endregion
+
+            txtBuscarProducto.Clear();
             BtnEntregar.Visible = true;
             tabControl1.SelectedIndex = 0;
             checkBox3.Checked = false;
@@ -590,13 +697,15 @@ namespace Punto_Venta
             LblTotal.Text = $"{RecalcularTotal:C}";
             mesaNueva = false;
             idMesa = 0;
-            cargarMesas(); 
-            Button botonFicticio = new Button();
-            var tag = new { Id = "0" }; 
-            botonFicticio.Tag = tag; 
+            cargarMesas();
+
+            if (txtBuscarProducto != null)
+                txtBuscarProducto.Clear();
+
+            Button botonFicticio = new Button { Tag = 0 };
             CambiarCategoria(botonFicticio, EventArgs.Empty);
-            
         }
+
         private double RecalcularTotal
         {
             get
@@ -609,18 +718,18 @@ namespace Punto_Venta
                 return total;
             }
         }
+
         private void button2_Click(object sender, EventArgs e)
         {
-            if (DgvPedidoprevio.CurrentRow == null)
-            {
-                return;
-            }
+            if (DgvPedidoprevio.CurrentRow == null) return;
+
             if (DgvPedidoprevio.RowCount > 0)
             {
                 DgvPedidoprevio.Rows.RemoveAt(DgvPedidoprevio.CurrentRow.Index);
                 LblTotal.Text = $"{RecalcularTotal:C}";
             }
         }
+
         private void DgvPedidoprevio_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == DgvPedidoprevio.Columns["btnEliminar"].Index && e.RowIndex >= 0)
@@ -629,6 +738,7 @@ namespace Punto_Venta
                 LblTotal.Text = $"{RecalcularTotal:C}";
             }
         }
+
         private void tabPage2_MouseClick(object sender, MouseEventArgs e)
         {
             using (frmBuscarClientes ori = new frmBuscarClientes())
@@ -647,7 +757,6 @@ namespace Punto_Venta
                     lblColonia.Text = ori.Colonia;
                     lblColonia.Visible = true;
                 }
-
             }
         }
 
@@ -655,7 +764,7 @@ namespace Punto_Venta
         {
             if (checkBox3.Checked)
             {
-                if(!mesaNueva)
+                if (!mesaNueva)
                 {
                     using (frmAgregarMesas ori = new frmAgregarMesas())
                     {
@@ -699,6 +808,69 @@ namespace Punto_Venta
                 else
                     this.Close();
             }
+        }
+        private void TxtBuscarProducto_AbrirTeclado(object sender, EventArgs e)
+        {
+            if(Conexion.AbrirTeclado)
+                AbrirTeclado();
+        }
+
+        private void AbrirTeclado()
+        {
+            try
+            {
+                string rutaTeclado = @"C:\Jaeger Soft\FreeVK.exe";
+
+                if (System.IO.File.Exists(rutaTeclado))
+                {
+                    // Solo lo inicia si no existe una instancia activa en ejecución
+                    if (Process.GetProcessesByName("FreeVK").Length == 0)
+                    {
+                        Process.Start(rutaTeclado);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al intentar abrir el teclado virtual: " + ex.Message);
+            }
+        }
+        private Size CalcularTamanoBotonProducto()
+        {
+            int anchoDisponible = flpInventario.ClientSize.Width - SystemInformation.VerticalScrollBarWidth;
+
+            if (anchoDisponible <= 0) anchoDisponible = 500; // Valor fallback de seguridad
+
+            // Determinamos número de columnas según el tamaño del área
+            int columnas = 3; // Por defecto 3 columnas
+            if (anchoDisponible > 700) columnas = 5;
+            else if (anchoDisponible > 450) columnas = 4;
+
+            int margenHorizontal = 8; // Espacio entre botones
+            int anchoBoton = (anchoDisponible / columnas) - margenHorizontal;
+
+            // Proporción táctil: la altura es aproximadamente el 55% del ancho
+            int altoBoton = Math.Max((int)(anchoBoton * 0.35), 65);
+
+            return new Size(anchoBoton, altoBoton);
+        }
+        private Size CalcularTamanoBotonCategoria()
+        {
+            int anchoDisponible = flpCategorias.ClientSize.Width - SystemInformation.VerticalScrollBarWidth;
+            if (anchoDisponible <= 0) anchoDisponible = 500;
+
+            // Queremos que quepan más categorías por fila (ej. 5 a 7 según la pantalla)
+            int columnas = 5;
+            if (anchoDisponible > 1000) columnas = 7;
+            else if (anchoDisponible > 700) columnas = 6;
+
+            int margenHorizontal = 6;
+            int anchoBoton = (anchoDisponible / columnas) - margenHorizontal;
+
+            // Altura compacta y fija para categorías (entre 45px y 50px es lo ideal para POS)
+            int altoBoton = 48;
+
+            return new Size(anchoBoton, altoBoton);
         }
     }
 }

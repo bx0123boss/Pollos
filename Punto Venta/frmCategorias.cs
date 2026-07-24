@@ -48,6 +48,14 @@ namespace Punto_Venta
             frmAgregarCategorias CAT = new frmAgregarCategorias();
             CAT.tipo = tipo;
             CAT.ShowDialog();
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            using (SqlDataAdapter da = new SqlDataAdapter($"SELECT * FROM {tipo};", conectar))
+            {
+                conectar.Open();
+                da.Fill(ds, "Id");
+                dataGridView1.DataSource = ds.Tables["Id"];
+                dataGridView1.Columns[0].Visible = false;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -104,7 +112,14 @@ namespace Punto_Venta
                 cat.radioButton2.Checked = true; 
             cat.button1.Text = "Editar";
             cat.ShowDialog();
-         
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            using (SqlDataAdapter da = new SqlDataAdapter($"SELECT * FROM {tipo};", conectar))
+            {
+                conectar.Open();
+                da.Fill(ds, "Id");
+                dataGridView1.DataSource = ds.Tables["Id"];
+                dataGridView1.Columns[0].Visible = false;
+            }
         }
     }
 }
