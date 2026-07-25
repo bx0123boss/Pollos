@@ -36,15 +36,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.BtnEntregar = new System.Windows.Forms.Button();
             this.DgvPedidoprevio = new System.Windows.Forms.DataGridView();
-            this.Aidi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Pre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tot = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Comentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Comanda = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idExtra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button2 = new System.Windows.Forms.Button();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
@@ -77,6 +68,15 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.Aidi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Prod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Pre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tot = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnEliminar = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Comentario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Comanda = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idExtra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPedidoprevio)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -169,70 +169,6 @@
             this.DgvPedidoprevio.Size = new System.Drawing.Size(596, 233);
             this.DgvPedidoprevio.TabIndex = 37;
             this.DgvPedidoprevio.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPedidoprevio_CellClick);
-            // 
-            // Aidi
-            // 
-            this.Aidi.HeaderText = "Id";
-            this.Aidi.Name = "Aidi";
-            this.Aidi.ReadOnly = true;
-            this.Aidi.Visible = false;
-            // 
-            // Cantidad
-            // 
-            this.Cantidad.HeaderText = "Cant";
-            this.Cantidad.Name = "Cantidad";
-            this.Cantidad.ReadOnly = true;
-            this.Cantidad.Width = 50;
-            // 
-            // Prod
-            // 
-            this.Prod.HeaderText = "Producto";
-            this.Prod.Name = "Prod";
-            this.Prod.ReadOnly = true;
-            this.Prod.Width = 125;
-            // 
-            // Pre
-            // 
-            this.Pre.HeaderText = "Precio";
-            this.Pre.Name = "Pre";
-            this.Pre.ReadOnly = true;
-            this.Pre.Width = 70;
-            // 
-            // Tot
-            // 
-            this.Tot.HeaderText = "Total";
-            this.Tot.Name = "Tot";
-            this.Tot.ReadOnly = true;
-            this.Tot.Width = 70;
-            // 
-            // btnEliminar
-            // 
-            this.btnEliminar.HeaderText = "Eliminar";
-            this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.ReadOnly = true;
-            this.btnEliminar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.btnEliminar.Width = 90;
-            // 
-            // Comentario
-            // 
-            this.Comentario.HeaderText = "Comentario";
-            this.Comentario.Name = "Comentario";
-            this.Comentario.ReadOnly = true;
-            this.Comentario.Width = 150;
-            // 
-            // Comanda
-            // 
-            this.Comanda.HeaderText = "Comanda";
-            this.Comanda.Name = "Comanda";
-            this.Comanda.ReadOnly = true;
-            this.Comanda.Visible = false;
-            // 
-            // idExtra
-            // 
-            this.idExtra.HeaderText = "idExtra";
-            this.idExtra.Name = "idExtra";
-            this.idExtra.ReadOnly = true;
-            this.idExtra.Visible = false;
             // 
             // button2
             // 
@@ -597,6 +533,70 @@
             this.label1.Size = new System.Drawing.Size(330, 33);
             this.label1.TabIndex = 46;
             this.label1.Text = "PEDIDO PARA LLEVAR";
+            // 
+            // Aidi
+            // 
+            this.Aidi.HeaderText = "Id";
+            this.Aidi.Name = "Aidi";
+            this.Aidi.ReadOnly = true;
+            this.Aidi.Visible = false;
+            // 
+            // Cantidad
+            // 
+            this.Cantidad.HeaderText = "Cant";
+            this.Cantidad.Name = "Cantidad";
+            this.Cantidad.ReadOnly = true;
+            this.Cantidad.Width = 50;
+            // 
+            // Prod
+            // 
+            this.Prod.HeaderText = "Producto";
+            this.Prod.Name = "Prod";
+            this.Prod.ReadOnly = true;
+            this.Prod.Width = 215;
+            // 
+            // Pre
+            // 
+            this.Pre.HeaderText = "Precio";
+            this.Pre.Name = "Pre";
+            this.Pre.ReadOnly = true;
+            this.Pre.Width = 70;
+            // 
+            // Tot
+            // 
+            this.Tot.HeaderText = "Total";
+            this.Tot.Name = "Tot";
+            this.Tot.ReadOnly = true;
+            this.Tot.Width = 70;
+            // 
+            // btnEliminar
+            // 
+            this.btnEliminar.HeaderText = "Eliminar";
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.ReadOnly = true;
+            this.btnEliminar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.btnEliminar.Width = 90;
+            // 
+            // Comentario
+            // 
+            this.Comentario.HeaderText = "Comentario";
+            this.Comentario.Name = "Comentario";
+            this.Comentario.ReadOnly = true;
+            this.Comentario.Width = 150;
+            // 
+            // Comanda
+            // 
+            this.Comanda.HeaderText = "Comanda";
+            this.Comanda.Name = "Comanda";
+            this.Comanda.ReadOnly = true;
+            this.Comanda.Visible = false;
+            // 
+            // idExtra
+            // 
+            this.idExtra.HeaderText = "idExtra";
+            this.idExtra.Name = "idExtra";
+            this.idExtra.ReadOnly = true;
+            this.idExtra.Visible = false;
             // 
             // frmPedido
             // 

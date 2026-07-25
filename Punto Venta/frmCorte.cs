@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -13,7 +14,8 @@ namespace Punto_Venta
     {
         private double entradasEfectivo = 0;
         private double salidasEfectivo = 0;
-        private double ventasTarjeta = 0;
+        private double ventasTarjetaOtros = 0; // Agrupa cobros con tarjeta, transferencia, etc.
+        private Dictionary<string, double> desglosadosMetodos = new Dictionary<string, double>();
         public string usuario = "";
 
         public frmCorte()
@@ -66,7 +68,8 @@ namespace Punto_Venta
         {
             entradasEfectivo = 0;
             salidasEfectivo = 0;
-            ventasTarjeta = 0;
+            ventasTarjetaOtros = 0;
+            desglosadosMetodos.Clear();
 
             if (dgvCorte.DataSource is DataTable dt)
             {
@@ -75,26 +78,39 @@ namespace Punto_Venta
                     double monto = Convert.ToDouble(row["Total"]);
                     string formaPago = row["FormaPago"]?.ToString() ?? "";
 
-                    if (formaPago.Equals("Tarjeta", StringComparison.OrdinalIgnoreCase))
-                    {
-                        ventasTarjeta += monto;
-                    }
-                    else
+                    // Limpiamos o estandarizamos el nombre del método (ej. "01=EFECTIVO" -> "EFECTIVO")
+                    string formaPagoLimpia = formaPago.ToUpper();
+
+                    // Acumular desglose general para impresión o auditoría
+                    if (!desglosadosMetodos.ContainsKey(formaPagoLimpia))
+                        desglosadosMetodos.Add(formaPagoLimpia, 0);
+
+                    desglosadosMetodos[formaPagoLimpia] += monto;
+
+                    // Si el método es EFECTIVO (o viene vacío)
+                    if (string.IsNullOrEmpty(formaPagoLimpia) || formaPagoLimpia.Contains("EFECTIVO"))
                     {
                         if (monto >= 0)
                             entradasEfectivo += monto;
                         else
-                            salidasEfectivo += monto; // acumulado negativo
+                            salidasEfectivo += monto; // Acumulado negativo (retiros)
+                    }
+                    else
+                    {
+                        // Tarjetas, Transferencias, Vales, Cheques, etc.
+                        ventasTarjetaOtros += monto;
                     }
                 }
             }
 
-            double corteNeto = entradasEfectivo + salidasEfectivo;
+            double corteEfectivoNeto = entradasEfectivo + salidasEfectivo;
+            double granTotalCaja = corteEfectivoNeto + ventasTarjetaOtros;
 
-            lblCredito.Text = $"{ventasTarjeta:C2}";
-            lblEntrada.Text = $"{entradasEfectivo:C2}";
-            lblSalida.Text = $"{Math.Abs(salidasEfectivo):C2}";
-            lblCorte.Text = $"{corteNeto:C2}";
+            // Reflejar en la interfaz
+            lblCredito.Text = $"{ventasTarjetaOtros:C2}";            // Otros Métodos (Banco / Tarjeta)
+            lblEntrada.Text = $"{entradasEfectivo:C2}";             // Entradas Efectivo
+            lblSalida.Text = $"{Math.Abs(salidasEfectivo):C2}";       // Salidas Efectivo
+            lblCorte.Text = $"{corteEfectivoNeto:C2}";              // Total Efectivo en Fondo/Caja
         }
 
         private void AplicarEstilosGrillas()
@@ -154,7 +170,8 @@ namespace Punto_Venta
         private void ProcesarCierreCaja()
         {
             List<Producto> productosTicket = new List<Producto>();
-            double corteNeto = entradasEfectivo + salidasEfectivo;
+            double corteEfectivoNeto = entradasEfectivo + salidasEfectivo;
+            double granTotal = corteEfectivoNeto + ventasTarjetaOtros;
 
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
@@ -163,14 +180,14 @@ namespace Punto_Venta
                 {
                     try
                     {
-                        // 1. Insertar Historial del Corte
+                        // 1. Insertar Historial del Corte (Efectivo Neto)
                         int idCorteInsertado;
                         string queryHistorial = @"INSERT INTO HistorialCortes (Monto, FechaHora) VALUES (@Monto, GETDATE());
                                                  SELECT SCOPE_IDENTITY();";
 
                         using (SqlCommand cmd = new SqlCommand(queryHistorial, conectar, transaccion))
                         {
-                            cmd.Parameters.AddWithValue("@Monto", corteNeto);
+                            cmd.Parameters.AddWithValue("@Monto", granTotal);
                             idCorteInsertado = Convert.ToInt32(cmd.ExecuteScalar());
                         }
 
@@ -193,7 +210,7 @@ namespace Punto_Venta
                             }
                         }
 
-                        // 3. Insertar Detalle de Movimientos y preparar ticket
+                        // 3. Insertar Detalle de Movimientos en CORTES
                         if (dgvCorte.DataSource is DataTable dtCorte)
                         {
                             string queryCorte = @"INSERT INTO CORTES(Concepto, Total, FormaPago, FechaHora, IdHistorialCortes) 
@@ -221,7 +238,7 @@ namespace Punto_Venta
                             }
                         }
 
-                        // 4. Limpieza de tablas de operación diaria
+                        // 4. Resetear tablas operativas diarias
                         using (SqlCommand cmd = new SqlCommand("UPDATE Usuarios SET Ventas = 0, Mesas = 0;", conectar, transaccion))
                             cmd.ExecuteNonQuery();
 
@@ -242,7 +259,7 @@ namespace Punto_Venta
                 }
             }
 
-            // Impresión Opcional de Ticket
+            // Impresión Opcional de Ticket con desglose de métodos
             DialogResult dialogPrint = MessageBox.Show("Corte realizado con éxito.\n¿Desea imprimir el comprobante de caja?", "Impresión de Ticket", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogPrint == DialogResult.Yes)
             {
@@ -251,14 +268,16 @@ namespace Punto_Venta
                     "Fecha: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
                 };
 
-                Dictionary<string, double> totales = new Dictionary<string, double>
+                Dictionary<string, double> totalesTicket = new Dictionary<string, double>
                 {
-                    { "Entradas", entradasEfectivo },
-                    { "Salidas", salidasEfectivo },
-                    { "Total Neto", corteNeto }
+                    { "Efectivo Entradas", entradasEfectivo },
+                    { "Efectivo Salidas", salidasEfectivo },
+                    { "Total Efectivo", corteEfectivoNeto },
+                    { "Otros (Banco/Tarj)", ventasTarjetaOtros },
+                    { "Gran Total Venta", granTotal }
                 };
 
-                TicketPrinter ticketPrinter = new TicketPrinter(encabezados, Conexion.pieDeTicket, Conexion.logoPath, productosTicket, "", "", "", 0, true, totales);
+                TicketPrinter ticketPrinter = new TicketPrinter(encabezados, Conexion.pieDeTicket, Conexion.logoPath, productosTicket, "", "", "", 0, true, totalesTicket);
                 ticketPrinter.ImprimirTicket();
             }
 
@@ -287,7 +306,7 @@ namespace Punto_Venta
                 nombre = nombreMesero
             };
             cor.ShowDialog();
-            CargarDatos(); // Refrescar vista
+            CargarDatos();
         }
     }
 }

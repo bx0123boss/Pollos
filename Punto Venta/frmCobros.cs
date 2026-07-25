@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Punto_Venta
@@ -277,68 +278,110 @@ namespace Punto_Venta
         }
         private void button2_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.RowCount == 0)
+            {
+                MessageBox.Show("No hay productos cargados para cobrar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            double totalCobrar = RecalcularTotal;
+            double efectivoRecibido = 0;
+            double cambioDevuelto = 0;
+            Dictionary<string, double> pagosFinales = new Dictionary<string, double>();
+
+            // 1. Invocación al formulario de pagos
+            using (frmPago formPago = new frmPago())
+            {
+                formPago.total = totalCobrar;
+                if (formPago.ShowDialog() == DialogResult.OK)
+                {
+                    efectivoRecibido = formPago.efectivo;
+                    cambioDevuelto = formPago.cambio;
+                    pagosFinales = formPago.PagosRealizados;
+                }
+                else
+                {
+                    return; // El usuario canceló la pantalla de pago
+                }
+            }
+
+            // Determinar la etiqueta principal de la forma de pago
+            string formaPagoPrincipal = pagosFinales.Count > 1 ? "MIXTO" : (pagosFinales.FirstOrDefault().Key ?? "EFECTIVO");
+
             double ventas = 0;
             int mesas = 0;
+
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
+                SqlTransaction transaccion = conectar.BeginTransaction();
 
-                string insertFolioQuery = "INSERT INTO Folios (ModalidadVenta, Estatus, idCliente, FechaHora, Total, Descuento, Utilidad, IdMesa) " +
-                                          "VALUES (@ModalidadVenta, @Estatus, @idCliente, @FechaHora, @Total, @Descuento,@Utilidad, @IdMesa); " +
-                                          "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
-
-                using (SqlCommand cmd = new SqlCommand(insertFolioQuery, conectar))
+                try
                 {
-                    string modalidadVenta;
-                    if (lblMesa.Text == "Para llevar")
-                        modalidadVenta = "PARA LLEVAR";
-                    else if (idCliente == 0)
-                        modalidadVenta = "MESA";
-                    else modalidadVenta = "DOMICILIO";
-                    cmd.Parameters.AddWithValue("@ModalidadVenta", modalidadVenta);
-                    cmd.Parameters.AddWithValue("@Estatus", "COBRADO");
-                    cmd.Parameters.AddWithValue("@idCliente", idCliente == 0 ? (object)DBNull.Value : idCliente);
-                    cmd.Parameters.AddWithValue("@FechaHora", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@Total", total);
-                    cmd.Parameters.AddWithValue("@Descuento", descuento);
-                    cmd.Parameters.AddWithValue("@Utilidad", (total -descuento - precioVenta));
-                    cmd.Parameters.AddWithValue("@IdMesa", lblID.Text);
+                    // 2. Insertar el folio principal con la forma de pago agregada
+                    string insertFolioQuery = @"INSERT INTO Folios (ModalidadVenta, Estatus, idCliente, FechaHora, Total, Descuento, Utilidad, IdMesa, FormaPago) 
+                                        VALUES (@ModalidadVenta, @Estatus, @idCliente, @FechaHora, @Total, @Descuento, @Utilidad, @IdMesa, @FormaPago); 
+                                        SELECT SCOPE_IDENTITY();";
 
-                    // Ejecutar la inserción y obtener el último ID insertado
-                    int lastIdFolio = Convert.ToInt32(cmd.ExecuteScalar());
+                    int lastIdFolio = 0;
 
-                   
+                    using (SqlCommand cmd = new SqlCommand(insertFolioQuery, conectar, transaccion))
+                    {
+                        string modalidadVenta;
+                        if (lblMesa.Text == "Para llevar")
+                            modalidadVenta = "PARA LLEVAR";
+                        else if (idCliente == 0)
+                            modalidadVenta = "MESA";
+                        else
+                            modalidadVenta = "DOMICILIO";
 
+                        cmd.Parameters.AddWithValue("@ModalidadVenta", modalidadVenta);
+                        cmd.Parameters.AddWithValue("@Estatus", "COBRADO");
+                        cmd.Parameters.AddWithValue("@idCliente", idCliente == 0 ? (object)DBNull.Value : idCliente);
+                        cmd.Parameters.AddWithValue("@FechaHora", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@Total", totalCobrar);
+                        cmd.Parameters.AddWithValue("@Descuento", descuento);
+                        cmd.Parameters.AddWithValue("@Utilidad", (totalCobrar - precioVenta));
+                        cmd.Parameters.AddWithValue("@IdMesa", lblID.Text);
+                        cmd.Parameters.AddWithValue("@FormaPago", formaPagoPrincipal);
+
+                        lastIdFolio = Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+
+                    // 3. Guardar el detalle de los artículos cobrados
                     for (int i = 0; i < dataGridView1.RowCount; i++)
                     {
-                        string insertArticuloQuery = "INSERT INTO ArticulosFolio (IdInventario, IdFolio, Cantidad, Comentario, Total, IdExtra, IdPromo) " +
-                                                 "VALUES (@IdProducto, @IdFolio, @Cantidad, @Comentario, @Total, @IdExtra, @IdPromo);";
+                        string insertArticuloQuery = @"INSERT INTO ArticulosFolio (IdInventario, IdFolio, Cantidad, Comentario, Total, IdExtra, IdPromo) 
+                                               VALUES (@IdProducto, @IdFolio, @Cantidad, @Comentario, @Total, @IdExtra, @IdPromo);";
+
                         string ide = null;
-                        if (dataGridView1.Rows[i].Cells["Ids"].Value.ToString().Length > 0)
+                        if (dataGridView1.Rows[i].Cells["Ids"].Value != null && dataGridView1.Rows[i].Cells["Ids"].Value.ToString().Length > 0)
                         {
-                            ide = dataGridView1.Rows[i].Cells["Ids"].Value?.ToString();
+                            ide = dataGridView1.Rows[i].Cells["Ids"].Value.ToString();
                         }
-                        using (SqlCommand cmd2 = new SqlCommand(insertArticuloQuery, conectar))
+
+                        using (SqlCommand cmd2 = new SqlCommand(insertArticuloQuery, conectar, transaccion))
                         {
                             cmd2.Parameters.AddWithValue("@IdProducto", dataGridView1.Rows[i].Cells["IdInventario"].Value);
                             cmd2.Parameters.AddWithValue("@IdFolio", lastIdFolio);
                             cmd2.Parameters.AddWithValue("@Cantidad", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Cantidad"].Value));
-                            cmd2.Parameters.AddWithValue("@Comentario", dataGridView1.Rows[i].Cells["Comentario"].Value?.ToString());
+                            cmd2.Parameters.AddWithValue("@Comentario", dataGridView1.Rows[i].Cells["Comentario"].Value?.ToString() ?? (object)DBNull.Value);
                             cmd2.Parameters.AddWithValue("@Total", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Total"].Value));
                             cmd2.Parameters.AddWithValue("@IdExtra", (object)ide ?? DBNull.Value);
                             cmd2.Parameters.AddWithValue("@IdPromo",
-                                                                    dataGridView1.Rows[i].Cells["IdInventario"].Value?.ToString() == "0"
-                                                                        ? (object)dataGridView1.Rows[i].Cells["IdPromo"].Value ?? DBNull.Value
-                                                                        : DBNull.Value
-                                                                );
+                                dataGridView1.Rows[i].Cells["IdInventario"].Value?.ToString() == "0"
+                                    ? (object)dataGridView1.Rows[i].Cells["IdPromo"].Value ?? DBNull.Value
+                                    : DBNull.Value
+                            );
                             cmd2.ExecuteNonQuery();
                         }
-                        insertArticuloQuery = @"INSERT INTO tempInventario(id,cantidad, ide) 
-                                            values (@id, @cantidad, @ide);";
-                        using (SqlCommand cmd2 = new SqlCommand(insertArticuloQuery, conectar))
+
+                        // Descontar temporal de inventario
+                        string tempInvQuery = @"INSERT INTO tempInventario(id, cantidad, ide) VALUES (@id, @cantidad, @ide);";
+                        using (SqlCommand cmd2 = new SqlCommand(tempInvQuery, conectar, transaccion))
                         {
-                            cmd2.Parameters.AddWithValue("@id", dataGridView1.Rows[i].Cells["IdInventario"].Value?.ToString() == "0" 
-                                                                                ? dataGridView1.Rows[i].Cells["IdPromo"].Value 
+                            cmd2.Parameters.AddWithValue("@id", dataGridView1.Rows[i].Cells["IdInventario"].Value?.ToString() == "0"
+                                                                                ? dataGridView1.Rows[i].Cells["IdPromo"].Value
                                                                                 : dataGridView1.Rows[i].Cells["IdInventario"].Value);
                             cmd2.Parameters.AddWithValue("@cantidad", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Cantidad"].Value));
                             cmd2.Parameters.AddWithValue("@ide", (object)ide ?? DBNull.Value);
@@ -346,74 +389,99 @@ namespace Punto_Venta
                             cmd2.ExecuteNonQuery();
                         }
                     }
-                    string query = @"INSERT INTO CORTE (Concepto, Total,FechaHora,FormaPago) VALUES
-                                    (@Concepto, @Total, GETDATE(), 'EFECTIVO')";
-                    using (SqlCommand cmd2 = new SqlCommand(query, conectar))
-                    {
-                        cmd2.Parameters.AddWithValue("@Concepto", $"VENTA DE FOLIO: {lastIdFolio}");
-                        cmd2.Parameters.AddWithValue("@Total", total);
-                        cmd2.ExecuteNonQuery();
-                    }
-                    folio = lastIdFolio;
 
-                }
-                using (SqlCommand cmd = new SqlCommand("SELECT Ventas, Mesas FROM Usuarios WHERE IdUsuario = @IdMesero;", conectar))
-                {
-                    cmd.Parameters.AddWithValue("@IdMesero", idMesero);
-
-                    using (SqlDataReader sqlDataReader = cmd.ExecuteReader())
+                    // 4. REGISTRAR LOS PAGOS INDIVIDUALES EN VentasPagos Y EN EL CORTE DE CAJA
+                    foreach (KeyValuePair<string, double> pago in pagosFinales)
                     {
-                        if (sqlDataReader.Read())
+                        if (pago.Value > 0)
                         {
-                            ventas = Convert.ToDouble(sqlDataReader["Ventas"]);
-                            mesas = Convert.ToInt32(sqlDataReader["Mesas"]);
+                            // Guardar en tabla de desglose VentasPagos
+                            string queryVentaPago = "INSERT INTO VentasPagos (IdFolio, MetodoPago, Monto) VALUES (@IdFolio, @Metodo, @Monto)";
+                            using (SqlCommand cmdVP = new SqlCommand(queryVentaPago, conectar, transaccion))
+                            {
+                                cmdVP.Parameters.AddWithValue("@IdFolio", lastIdFolio);
+                                cmdVP.Parameters.AddWithValue("@Metodo", pago.Key);
+                                cmdVP.Parameters.AddWithValue("@Monto", pago.Value);
+                                cmdVP.ExecuteNonQuery();
+                            }
+
+                            // Guardar movimiento de Corte por cada método de pago
+                            string queryCorte = @"INSERT INTO CORTE (Concepto, Total, FechaHora, FormaPago) 
+                                          VALUES (@Concepto, @Total, GETDATE(), @FormaPago)";
+                            using (SqlCommand cmdCorte = new SqlCommand(queryCorte, conectar, transaccion))
+                            {
+                                cmdCorte.Parameters.AddWithValue("@Concepto", $"VENTA FOLIO: {lastIdFolio} [{pago.Key}]");
+                                cmdCorte.Parameters.AddWithValue("@Total", pago.Value);
+                                cmdCorte.Parameters.AddWithValue("@FormaPago", pago.Key);
+                                cmdCorte.ExecuteNonQuery();
+                            }
                         }
                     }
 
-                    // Actualizar las ventas y mesas
-                    ventas += total;
+                    // 5. Actualizar estadísticas del mesero y estatus del sistema
+                    folio = lastIdFolio;
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT Ventas, Mesas FROM Usuarios WHERE IdUsuario = @IdMesero;", conectar, transaccion))
+                    {
+                        cmd.Parameters.AddWithValue("@IdMesero", idMesero);
+                        using (SqlDataReader sqlDataReader = cmd.ExecuteReader())
+                        {
+                            if (sqlDataReader.Read())
+                            {
+                                ventas = Convert.ToDouble(sqlDataReader["Ventas"]);
+                                mesas = Convert.ToInt32(sqlDataReader["Mesas"]);
+                            }
+                        }
+                    }
+
+                    ventas += totalCobrar;
                     mesas++;
 
-                    using (SqlCommand cmd2 = new SqlCommand("UPDATE Usuarios SET Ventas = @Ventas, Mesas = @Mesas WHERE IdUsuario = @IdMesero;", conectar))
+                    using (SqlCommand cmd2 = new SqlCommand("UPDATE Usuarios SET Ventas = @Ventas, Mesas = @Mesas WHERE IdUsuario = @IdMesero;", conectar, transaccion))
                     {
                         cmd2.Parameters.AddWithValue("@Ventas", ventas);
                         cmd2.Parameters.AddWithValue("@Mesas", mesas);
                         cmd2.Parameters.AddWithValue("@IdMesero", idMesero);
-
                         cmd2.ExecuteNonQuery();
                     }
-                    using (SqlCommand cmd2 = new SqlCommand("UPDATE MESAS SET Estatus = 'COBRADO' WHERE IdMesa = @IdMesa;", conectar))
+
+                    using (SqlCommand cmd2 = new SqlCommand("UPDATE MESAS SET Estatus = 'COBRADO' WHERE IdMesa = @IdMesa;", conectar, transaccion))
                     {
                         cmd2.Parameters.AddWithValue("@IdMesa", lblID.Text);
-
                         cmd2.ExecuteNonQuery();
                     }
-                    using (SqlCommand cmd2 = new SqlCommand("UPDATE ArticulosMesa SET Estatus = 'COBRADO' WHERE IdMesa = @IdMesa;", conectar))
+
+                    using (SqlCommand cmd2 = new SqlCommand("UPDATE ArticulosMesa SET Estatus = 'COBRADO' WHERE IdMesa = @IdMesa;", conectar, transaccion))
                     {
                         cmd2.Parameters.AddWithValue("@IdMesa", lblID.Text);
-
                         cmd2.ExecuteNonQuery();
                     }
 
-                  
+                    // Si todo salió bien, confirmamos la transacción
+                    transaccion.Commit();
+
+                    // 6. Impresión de Ticket
+                    if (print == "0")
+                    {
+                        imprimir();
+                    }
+
+                    DialogResult dialogResult = MessageBox.Show("¿Imprimir otro ticket?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        imprimir();
+                    }
+
+                    MessageBox.Show("¡EL COBRO SE HA REALIZADO CON ÉXITO!", "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
                 }
-
-
+                catch (Exception ex)
+                {
+                    transaccion.Rollback();
+                    MessageBox.Show("Error crítico al procesar el cobro: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            if (print == "0")
-                imprimir();
-            DialogResult dialogResult = MessageBox.Show("¿Imprimir otro ticket?", "Alto!", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                imprimir();
-            }
-            MessageBox.Show("EL COBRO SE HA REALIZADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //frmMesasOcupadas mesa = new frmMesasOcupadas();
-            //mesa.Show();
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
-            //this.Close();
         }
-
         private void button3_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null) // Verifica si hay una fila seleccionada
