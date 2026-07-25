@@ -26,6 +26,13 @@ namespace Punto_Venta
                 }
                 dataGridView1.Columns[0].Visible = false;
             }
+            EstilizarBotonPrimario(button3);
+            EstilizarBotonAdvertencia(button2);
+            EstilizarBotonPeligro(button1);
+            EstilizarDataGridView(dataGridView1);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

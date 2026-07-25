@@ -1,36 +1,47 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using Punto_Venta;
+
 namespace FastFoodWeb.Services
 {
     public class ServicioImpresion
     {
-        // Ya no necesitamos inyectar configuración local, todo viene de Conexion.cs
         public ServicioImpresion()
         {
         }
 
         // ==========================================
-        // 1. MÉTODO PARA IMPRIMIR COMANDA (COCINA)
+        // 1. MÉTODO PARA IMPRIMIR COMANDA (COCINA / BARRA)
         // ==========================================
-        public void ImprimirComandaCocina(List<(string id, string Cantidad, string Descripcion, string Comentario, string ides)> itemsComanda, string mesa, string mesero)
+        public void ImprimirComandaCocina(
+            List<(string id, string Cantidad, string Descripcion, string Comentario, string ides)> itemsComanda,
+            string mesa,
+            string mesero,
+            string impresoraDestino = null) // 👈 Ahora acepta la impresora dinámicamente
         {
+            if (itemsComanda == null || itemsComanda.Count == 0) return;
+
             List<Producto> productosParaImprimir = new List<Producto>();
 
-            foreach (var (id, cantidad, descripcion, comentario, ide) in itemsComanda)
+            foreach (var (id, cantidadStr, descripcion, comentario, ide) in itemsComanda)
             {
+                // Manejo seguro de la cantidad
+                double.TryParse(cantidadStr, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double cantidad);
+                if (cantidad <= 0) cantidad = 1;
+
                 // 1.1 Agregar el producto principal
                 productosParaImprimir.Add(new Producto
                 {
                     Nombre = descripcion,
-                    Cantidad = Convert.ToDouble(cantidad),
+                    Cantidad = cantidad,
                     Comentario = comentario,
                     PrecioUnitario = 0,
                     Total = 0
                 });
 
                 // 1.2 Desglosar los extras/mitades si los hay
-                if ((id.StartsWith("C") || id.StartsWith("P") || !string.IsNullOrEmpty(ide)) && !string.IsNullOrWhiteSpace(ide))
+                if (!string.IsNullOrWhiteSpace(ide) && (id.StartsWith("C") || id.StartsWith("P") || !string.IsNullOrEmpty(ide)))
                 {
                     string[] idsExtras = ide.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -39,7 +50,7 @@ namespace FastFoodWeb.Services
                         string[] detallesId = extra.Split(',');
                         if (detallesId.Length >= 2)
                         {
-                            double subCantidad = Convert.ToDouble(detallesId[0]);
+                            double.TryParse(detallesId[0], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double subCantidad);
                             string idInventario = detallesId[1];
                             string nombreExtra = ObtenerNombreProducto(idInventario);
 
@@ -61,7 +72,10 @@ namespace FastFoodWeb.Services
 
             TicketPrinter ticket = new TicketPrinter(productosParaImprimir, mesa, mesero);
 
-            ticket.ImprimirComanda(Conexion.impresora2);
+            // 👈 Si no se especifica impresora, usa la de cocina por defecto (impresora2)
+            string targetPrinter = string.IsNullOrEmpty(impresoraDestino) ? Conexion.impresora2 : impresoraDestino;
+
+            ticket.ImprimirComanda(targetPrinter);
         }
 
         // ==========================================
@@ -69,12 +83,9 @@ namespace FastFoodWeb.Services
         // ==========================================
         public void ImprimirTicketVenta(string folio, string mesa, string mesero, double total, Dictionary<string, double> totales, string formaPago, List<Producto> productosParaImprimir)
         {
-            // Tomamos los datos compartidos de WinForms!
             string[] encabezados = Conexion.datosTicket;
             string[] pieDePagina = Conexion.pieDeTicket;
-
-            // Puedes agregar el "logoPath" a Conexion.cs en un futuro, por ahora usamos ruta física:
-            string logoPath = @"C:\Jaeger Soft\LOGO.png"; // Ajusta a la ruta de tu logo en la PC Servidor
+            string logoPath = @"C:\Jaeger Soft\LOGO.png";
 
             TicketPrinter ticket = new TicketPrinter(
                 encabezados,
@@ -90,7 +101,6 @@ namespace FastFoodWeb.Services
                 formaPago
             );
 
-            // Usamos impresora1 de tu archivo Conexion.cs (la de mostrador/caja)
             ticket.ImprimirTicket(Conexion.impresora);
         }
 
@@ -102,7 +112,6 @@ namespace FastFoodWeb.Services
             string nombre = "";
             try
             {
-                // Usamos la cadena de conexión de SQL de tu clase compartida
                 using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
                     conectar.Open();

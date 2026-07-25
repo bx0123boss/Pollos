@@ -106,6 +106,11 @@ namespace Punto_Venta
             EstilizarTextBox(txtColonia);
             EstilizarBotonPrimario(button2);
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            CerrarTeclado();
+        }
     }
 }
 

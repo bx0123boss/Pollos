@@ -25,7 +25,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>244</ApplicationRevision>
+    <ApplicationRevision>246</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -734,6 +734,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCompras.resx">
       <DependentUpon>frmCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConfiguracionTicket.resx">
+      <DependentUpon>frmConfiguracionTicket.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCorte.resx">
       <DependentUpon>frmCorte.cs</DependentUpon>

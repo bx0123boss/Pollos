@@ -41,6 +41,7 @@
             this.txtWhatsapp = new System.Windows.Forms.TextBox();
             this.ckbMediaCarta = new System.Windows.Forms.CheckBox();
             this.ckbBascula = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.grpEncabezado.SuspendLayout();
             this.grpPie.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
@@ -192,6 +193,7 @@
             this.ckbMediaCarta.TabIndex = 58;
             this.ckbMediaCarta.Text = "Ticket Media Carta";
             this.ckbMediaCarta.UseVisualStyleBackColor = true;
+            this.ckbMediaCarta.Visible = false;
             // 
             // ckbBascula
             // 
@@ -205,12 +207,26 @@
             this.ckbBascula.Text = "Bascula";
             this.ckbBascula.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Green;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(260, 373);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(120, 40);
+            this.button1.TabIndex = 60;
+            this.button1.Text = "Probar Cajón";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmConfiguracionTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(800, 425);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.ckbBascula);
             this.Controls.Add(this.ckbMediaCarta);
             this.Controls.Add(this.label1);
@@ -245,5 +261,6 @@
         private System.Windows.Forms.TextBox txtWhatsapp;
         private System.Windows.Forms.CheckBox ckbMediaCarta;
         private System.Windows.Forms.CheckBox ckbBascula;
+        private System.Windows.Forms.Button button1;
     }
 }

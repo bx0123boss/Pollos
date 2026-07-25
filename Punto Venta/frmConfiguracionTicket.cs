@@ -1,6 +1,6 @@
 ﻿using Punto_Venta;
 using System;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.IO;
 using System.Windows.Forms;
 
@@ -8,8 +8,9 @@ namespace Punto_Venta
 {
     public partial class frmConfiguracionTicket : Form
     {
-        private string CadCon = Conexion.CadCon;
+        private string CadCon = Conexion.CadConSql;
         private int idConfiguracion = 1;
+
         public frmConfiguracionTicket()
         {
             InitializeComponent();
@@ -30,11 +31,11 @@ namespace Punto_Venta
         {
             try
             {
-                using (var conexion = new OleDbConnection(CadCon))
+                using (var conexion = new SqlConnection(CadCon))
                 {
                     conexion.Open();
                     string query = "SELECT * FROM Configuracion WHERE Id = @id";
-                    using (var cmd = new OleDbCommand(query, conexion))
+                    using (var cmd = new SqlCommand(query, conexion))
                     {
                         cmd.Parameters.AddWithValue("@id", idConfiguracion);
                         using (var reader = cmd.ExecuteReader())
@@ -55,6 +56,7 @@ namespace Punto_Venta
                                 txtWhatsapp.Text = whatsapp;
                                 ckbBascula.Checked = bascula;
                                 ckbMediaCarta.Checked = mediaCarta;
+
                                 if (File.Exists(logo))
                                     picLogo.Image = System.Drawing.Image.FromFile(logo);
                             }
@@ -79,13 +81,20 @@ namespace Punto_Venta
         {
             try
             {
-                using (var conexion = new OleDbConnection(CadCon))
+                using (var conexion = new SqlConnection(CadCon))
                 {
                     conexion.Open();
 
-                    string query = "UPDATE Configuracion SET DatosTicket = @datos, PieDeTicket = @pie, LogoPath = @logo, Whatsapp = @whats, Bascula = @bascula, MediaCarta = @mediaCarta WHERE Id = @id";
+                    string query = @"UPDATE Configuracion 
+                                     SET DatosTicket = @datos, 
+                                         PieDeTicket = @pie, 
+                                         LogoPath = @logo, 
+                                         Whatsapp = @whats, 
+                                         Bascula = @bascula, 
+                                         MediaCarta = @mediaCarta 
+                                     WHERE Id = @id";
 
-                    using (var cmd = new OleDbCommand(query, conexion))
+                    using (var cmd = new SqlCommand(query, conexion))
                     {
                         // Convertir las líneas de texto de vuelta a | para la base de datos
                         string datos = txtEncabezado.Text.Replace(Environment.NewLine, "|");
@@ -95,7 +104,6 @@ namespace Punto_Venta
                         bool bascula = ckbBascula.Checked;
                         bool mediaCarta = ckbMediaCarta.Checked;
 
-                        // IMPORTANTE: Los parámetros en el MISMO ORDEN que en la consulta
                         cmd.Parameters.AddWithValue("@datos", datos);
                         cmd.Parameters.AddWithValue("@pie", pie);
                         cmd.Parameters.AddWithValue("@logo", logo);
@@ -104,10 +112,10 @@ namespace Punto_Venta
                         cmd.Parameters.AddWithValue("@mediaCarta", mediaCarta);
                         cmd.Parameters.AddWithValue("@id", idConfiguracion);
 
-                        // Ejecutar la actualización sin preocuparse por el resultado
                         cmd.ExecuteNonQuery();
+
                         Conexion.CargarConfiguracion(idConfiguracion);
-                        MessageBox.Show("Configuración guardada correctamente. Los datos surgiran efecto al reinicar el programa.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Configuración guardada correctamente. Los datos surtirán efecto al reiniciar el programa.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
                 }
@@ -142,6 +150,11 @@ namespace Punto_Venta
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TicketPrinter.AbrirCajon(Conexion.impresora);
         }
     }
 }

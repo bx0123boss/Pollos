@@ -6,64 +6,113 @@ namespace Punto_Venta
 {
     public partial class frmAgregarMesas : frmBase
     {
-        public int IdMesa { get; set; }
+        public int IdMesa { get; set; } = 0; // Si es 0 es Nueva, si es > 0 es Edición
         public int IdMesero { get; set; }
         public string Mesa { get; set; }
         public int CantidadPersonas { get; set; }
-       
+        public bool EsEdicion { get; set; } = false; // Flag para controlar la acción
+
         public frmAgregarMesas()
         {
             InitializeComponent();
         }
 
+        private void frmAgregarMesas_Load(object sender, EventArgs e)
+        {
+            EstilizarBotonPrimario(button1);
+
+            // Si viene en modo edición, cargar los datos actuales en las cajas de texto
+            if (EsEdicion || IdMesa > 0)
+            {
+                txtNombre.Text = Mesa;
+                txtUbicacion.Text = CantidadPersonas.ToString(); // txtUbicacion guarda la CantidadPersonas
+                button1.Text = "Guardar Cambios";
+                this.Text = "Editar Mesa";
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(txtNombre.Text) && !String.IsNullOrEmpty(txtUbicacion.Text))
+            if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtUbicacion.Text))
             {
-                bool existe = false;
+                MessageBox.Show("Favor de llenar todos los campos.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                conectar.Open();
+
+                // 1. Validar que no exista otra mesa activa con el mismo nombre
+                // Excluimos la mesa actual si estamos en modo Edición
+                string checkQuery = "SELECT Nombre FROM Mesas WHERE Nombre = @Nombre AND Estatus = 'COCINA'";
+                if (EsEdicion || IdMesa > 0)
                 {
-                    conectar.Open();
-                    using (SqlCommand cmd = new SqlCommand("SELECT Nombre FROM Mesas WHERE Nombre = @Nombre AND Estatus = 'COCINA';", conectar))
-                    {
-                        cmd.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+                    checkQuery += " AND IdMesa <> @IdMesa";
+                }
 
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                existe = true;
-                            }
-                        }
-                    }
-                    if (existe)
+                bool existe = false;
+                using (SqlCommand cmdCheck = new SqlCommand(checkQuery, conectar))
+                {
+                    cmdCheck.Parameters.AddWithValue("@Nombre", txtNombre.Text.Trim());
+                    if (EsEdicion || IdMesa > 0)
                     {
-                        MessageBox.Show("Existe una mesa similar, favor de verificar", "Agregar Mesas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        cmdCheck.Parameters.AddWithValue("@IdMesa", IdMesa);
                     }
-                    else
-                    {
-                        string query = "INSERT INTO Mesas (Nombre, IdMesero, CantidadPersonas,Impresion,Estatus) " +
-                                             "VALUES (@Nombre, @IdMesero, @CantidadPersonas,@Impresion,@Estatus); " +
-                                             "SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
 
-                        using (SqlCommand cmd = new SqlCommand(query, conectar))
-                        {
-                            // Usar parámetros para evitar SQL Injection
-                            cmd.Parameters.AddWithValue("@Nombre", txtNombre.Text);
-                            cmd.Parameters.AddWithValue("@IdMesero", IdMesero);
-                            cmd.Parameters.AddWithValue("@CantidadPersonas", txtUbicacion.Text);
-                            cmd.Parameters.AddWithValue("@Impresion", 0);
-                            cmd.Parameters.AddWithValue("@Estatus", "NUEVA");
-                            int lastIdFolio = Convert.ToInt32(cmd.ExecuteScalar());
-                            //MessageBox.Show("¡Se ha agregado la mesa con éxito!", "Agregar Mesas", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            IdMesa = lastIdFolio;
-                            Mesa = txtNombre.Text;
-                            CantidadPersonas = int.Parse(txtUbicacion.Text);
-                            this.DialogResult = System.Windows.Forms.DialogResult.OK;
-                        }
+                    using (SqlDataReader reader = cmdCheck.ExecuteReader())
+                    {
+                        if (reader.Read()) existe = true;
                     }
-                } 
+                }
+
+                if (existe)
+                {
+                    MessageBox.Show("Existe una mesa similar activa, favor de verificar.", "Agregar / Editar Mesas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 2. Ejecutar UPDATE o INSERT según sea el caso
+                if (EsEdicion || IdMesa > 0)
+                {
+                    string updateQuery = @"UPDATE Mesas 
+                                           SET Nombre = @Nombre, 
+                                               CantidadPersonas = @CantidadPersonas 
+                                           WHERE IdMesa = @IdMesa";
+
+                    using (SqlCommand cmdUpdate = new SqlCommand(updateQuery, conectar))
+                    {
+                        cmdUpdate.Parameters.AddWithValue("@Nombre", txtNombre.Text.Trim());
+                        cmdUpdate.Parameters.AddWithValue("@CantidadPersonas", int.Parse(txtUbicacion.Text));
+                        cmdUpdate.Parameters.AddWithValue("@IdMesa", IdMesa);
+
+                        cmdUpdate.ExecuteNonQuery();
+                    }
+                }
+                else
+                {
+                    string insertQuery = @"INSERT INTO Mesas (Nombre, IdMesero, CantidadPersonas, Impresion, Estatus) 
+                                           VALUES (@Nombre, @IdMesero, @CantidadPersonas, @Impresion, @Estatus); 
+                                           SELECT SCOPE_IDENTITY();";
+
+                    using (SqlCommand cmdInsert = new SqlCommand(insertQuery, conectar))
+                    {
+                        cmdInsert.Parameters.AddWithValue("@Nombre", txtNombre.Text.Trim());
+                        cmdInsert.Parameters.AddWithValue("@IdMesero", IdMesero);
+                        cmdInsert.Parameters.AddWithValue("@CantidadPersonas", int.Parse(txtUbicacion.Text));
+                        cmdInsert.Parameters.AddWithValue("@Impresion", 0);
+                        cmdInsert.Parameters.AddWithValue("@Estatus", "NUEVA");
+
+                        IdMesa = Convert.ToInt32(cmdInsert.ExecuteScalar());
+                    }
+                }
+
+                // Asignar los valores actualizados/nuevos a las propiedades públicas
+                Mesa = txtNombre.Text.Trim();
+                CantidadPersonas = int.Parse(txtUbicacion.Text);
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
         }
 
@@ -74,11 +123,5 @@ namespace Punto_Venta
                 e.Handled = true;
             }
         }
-
-        private void frmAgregarMesas_Load(object sender, EventArgs e)
-        {
-            EstilizarBotonPrimario(button1);
-        }
     }
 }
-

@@ -6,4 +6,5 @@ public class Producto
     public double Precio { get; set; }
     public double CostoTotal { get; set; }
     public string? ImagenUrl { get; set; }
+    public bool Comanda { get; set; }
 }

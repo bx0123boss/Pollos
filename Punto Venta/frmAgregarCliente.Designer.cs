@@ -46,7 +46,7 @@
             // 
             this.txtNombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNombre.Location = new System.Drawing.Point(175, 48);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(4);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(513, 25);
             this.txtNombre.TabIndex = 1;
@@ -76,12 +76,13 @@
             this.label1.Size = new System.Drawing.Size(99, 24);
             this.label1.TabIndex = 11;
             this.label1.Text = "Telefono:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // txtTelefono
             // 
             this.txtTelefono.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtTelefono.Location = new System.Drawing.Point(175, 16);
-            this.txtTelefono.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTelefono.Margin = new System.Windows.Forms.Padding(4);
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(513, 25);
             this.txtTelefono.TabIndex = 0;
@@ -91,7 +92,7 @@
             // 
             this.txtDireccion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtDireccion.Location = new System.Drawing.Point(175, 116);
-            this.txtDireccion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtDireccion.Margin = new System.Windows.Forms.Padding(4);
             this.txtDireccion.Multiline = true;
             this.txtDireccion.Name = "txtDireccion";
             this.txtDireccion.Size = new System.Drawing.Size(513, 116);
@@ -114,7 +115,7 @@
             // 
             this.txtReferencia.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtReferencia.Location = new System.Drawing.Point(175, 242);
-            this.txtReferencia.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtReferencia.Margin = new System.Windows.Forms.Padding(4);
             this.txtReferencia.Multiline = true;
             this.txtReferencia.Name = "txtReferencia";
             this.txtReferencia.Size = new System.Drawing.Size(513, 135);
@@ -137,7 +138,7 @@
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.Location = new System.Drawing.Point(303, 386);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(210, 51);
             this.button2.TabIndex = 5;
@@ -149,7 +150,7 @@
             // 
             this.txtColonia.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtColonia.Location = new System.Drawing.Point(175, 82);
-            this.txtColonia.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtColonia.Margin = new System.Windows.Forms.Padding(4);
             this.txtColonia.Name = "txtColonia";
             this.txtColonia.Size = new System.Drawing.Size(513, 25);
             this.txtColonia.TabIndex = 2;
@@ -185,7 +186,7 @@
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.label3);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmAgregarCliente";
             this.Text = "frmAgregarCliente";
             this.Load += new System.EventHandler(this.frmAgregarCliente_Load);
