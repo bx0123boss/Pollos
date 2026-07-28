@@ -166,7 +166,7 @@ namespace Punto_Venta
 
                 if (!abierto)
                 {
-                    if(boton.BackColor == Color.SkyBlue)
+                    if (boton.BackColor == Color.SkyBlue)
                     {
                         using (frmPedido pedido = new frmPedido())
                         {
@@ -177,22 +177,37 @@ namespace Punto_Venta
                             }
                         }
                     }
-                    using (frmCobros cobrar = new frmCobros())
+                    else if (boton.BackColor == Color.DarkOrange)
                     {
-                        cobrar.lblID.Text = data.Id;
-                        cobrar.lblMesa.Text = boton.Text;
-                        cobrar.lblMesero.Text = data.Mesero;
-                        cobrar.idMesero = int.Parse(data.IdMesero);
-                        cobrar.print = data.Impresion == "True" ? "1" : "0";
-
-                        if (boton.BackColor == Color.SkyBlue)
-                            cobrar.lblPersonas.Text = data.CantPersonas;
-                        else
-                            cobrar.idCliente = data.IdCliente;
-
-                        if (cobrar.ShowDialog() == DialogResult.OK)
+                        using (frmCobros cobrar = new frmCobros())
                         {
-                            CargarMesas();
+                            cobrar.lblID.Text = data.Id;
+                            cobrar.lblMesa.Text = boton.Text;
+                            cobrar.lblMesero.Text = data.Mesero;
+                            cobrar.idMesero = int.Parse(data.IdMesero);
+                            cobrar.print = data.Impresion == "True" ? "1" : "0";
+                            cobrar.lblPersonas.Text = data.CantPersonas;
+                            if (cobrar.ShowDialog() == DialogResult.OK)
+                            {
+                                CargarMesas();
+                            }
+                        }
+                    }
+                    else if(boton.BackColor ==  Color.YellowGreen)
+                    {
+                        using (frmCobros cobrar = new frmCobros())
+                        {
+                            cobrar.idCliente = data.IdCliente;
+                            cobrar.lblID.Text = data.Id;
+                            cobrar.lblMesa.Text = boton.Text;
+                            cobrar.lblMesero.Text = data.Mesero;
+                            cobrar.idMesero = int.Parse(data.IdMesero);
+                            cobrar.print = data.Impresion == "True" ? "1" : "0";
+                            cobrar.lblPersonas.Text = data.CantPersonas;
+                            if (cobrar.ShowDialog() == DialogResult.OK)
+                            {
+                                CargarMesas();
+                            }
                         }
                     }
                 }

@@ -1,0 +1,293 @@
+﻿@page "/reporte-ventas"
+@using System.Data
+@using Microsoft.Data.SqlClient
+@using FastFoodWeb.Services
+@using FastFoodWeb.Models
+@inject UserSessionService Session
+@inject IConfiguration Configuration
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<PageTitle>Reporte de Ventas | Punto de Venta</PageTitle>
+
+<div class="container-fluid py-3 px-4">
+
+    <!-- ENCABEZADO Y FILTROS -->
+    <div class="card shadow-sm border-0 mb-3">
+        <div class="card-body bg-light">
+            <div class="row g-3 align-items-center">
+
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-bold mb-1"><i class="bi bi-calendar-event me-1"></i>Fecha de Búsqueda:</label>
+                    <input type="date"
+                           class="form-control form-control-lg fw-bold"
+                           value="@fechaBusqueda.ToString("yyyy-MM-dd")"
+                           @onchange="OnFechaChanged" />
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-bold mb-1"><i class="bi bi-search me-1"></i>Buscar Folio Específico:</label>
+                    <div class="input-group input-group-lg">
+                        <input type="number"
+                               class="form-control fw-bold"
+                               placeholder="Ej. 2085"
+                               @bind="txtFolio"
+                               @bind:event="oninput"
+                               @onkeyup="HandleKeyUpFolio" />
+                        <button class="btn btn-primary" @onclick="BuscarPorFolio">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 text-md-end mt-md-4">
+                    <button class="btn btn-success btn-lg fw-bold shadow-sm"
+                            disabled="@(folioSeleccionado == null)"
+                            @onclick="() => mostrarModalDetalles = true">
+                        <i class="bi bi-file-earmark-text-fill me-1"></i>Ver Detalle de Venta
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLA DE FOLIOS DE VENTA -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-dark text-white fw-bold d-flex justify-content-between align-items-center py-2">
+            <span><i class="bi bi-receipt-cutoff me-2"></i>Historial de Folios</span>
+            <span class="badge bg-secondary">Total Folios: @listaFolios.Count</span>
+        </div>
+        <div class="card-body p-0 table-responsive" style="max-height: 550px; overflow-y: auto;">
+            <table class="table table-hover table-striped align-middle m-0">
+                <thead class="table-dark sticky-top">
+                    <tr>
+                        <th>Folio</th>
+                        <th>Fecha / Hora</th>
+                        <th>Modalidad</th>
+                        <th>Mesa</th>
+                        <th>Mesero</th>
+                        <th>Estatus</th>
+                        <th class="text-end">Descuento</th>
+                        <th class="text-end">Utilidad</th>
+                        <th class="text-end">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (cargando)
+                    {
+                        <tr>
+                            <td colspan="9" class="text-center py-4 text-muted">
+                                <div class="spinner-border text-primary me-2"></div>
+                                Consultando registros...
+                            </td>
+                        </tr>
+                    }
+                    else if (listaFolios.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="9" class="text-center py-4 text-muted">
+                                <i class="bi bi-inbox fs-2 d-block mb-1"></i>
+                                No se encontraron ventas para la fecha o folio ingresado.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var f in listaFolios)
+                        {
+                            bool isSelected = folioSeleccionado?.IdFolio == f.IdFolio;
+                            <tr class="@(isSelected ? "table-primary" : "")"
+                                style="cursor: pointer;"
+                                @onclick="() => folioSeleccionado = f"
+                                @ondblclick="() => AbrirDetallesDobleClic(f)">
+
+                                <td class="fw-bold">#@f.IdFolio</td>
+                                <td>@f.FechaHora.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td><span class="badge bg-info text-dark">@f.ModalidadVenta</span></td>
+                                <td class="fw-semibold">@f.Mesa</td>
+                                <td>@f.Mesero</td>
+                                <td>
+                                    <span class="badge @(f.Estatus == "CANCELADO" ? "bg-danger" : "bg-success")">
+                                        @f.Estatus
+                                    </span>
+                                </td>
+                                <td class="text-end text-muted">$@f.Descuento.ToString("N2")</td>
+                                <td class="text-end text-success fw-bold">$@f.Utilidad.ToString("N2")</td>
+                                <td class="text-end fw-bold text-primary fs-6">$@f.Total.ToString("N2")</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- COMPONENTE MODAL DE DETALLES DE VENTA -->
+<ModalVentaDetallada Mostrar="mostrarModalDetalles"
+                     FolioSeleccionado="folioSeleccionado"
+                     OnCerrar="() => mostrarModalDetalles = false" />
+
+@code {
+    private DateTime fechaBusqueda = DateTime.Now;
+    private string txtFolio = "";
+    private bool cargando = false;
+    private bool mostrarModalDetalles = false;
+
+    private List<FolioVenta> listaFolios = new();
+    private FolioVenta? folioSeleccionado;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Session.IsLoggedIn)
+        {
+            Nav.NavigateTo("/");
+            return;
+        }
+
+        await CargarFoliosPorFecha(fechaBusqueda);
+    }
+
+    private async Task OnFechaChanged(ChangeEventArgs e)
+    {
+        if (DateTime.TryParse(e.Value?.ToString(), out DateTime nuevaFecha))
+        {
+            fechaBusqueda = nuevaFecha;
+            txtFolio = "";
+            await CargarFoliosPorFecha(fechaBusqueda);
+        }
+    }
+
+    private async Task CargarFoliosPorFecha(DateTime dia)
+    {
+        cargando = true;
+        listaFolios.Clear();
+        folioSeleccionado = null;
+
+        string cadenaSql = Configuration.GetConnectionString("CadenaSQL")!;
+
+        try
+        {
+            using var con = new SqlConnection(cadenaSql);
+            await con.OpenAsync();
+
+            string query = @"
+                SELECT A.IdFolio, A.ModalidadVenta, A.Estatus, ISNULL(A.IdCliente,0) AS IdCliente,
+                       A.FechaHora, A.Total, A.Descuento, A.Utilidad, B.Nombre AS Mesa,
+                       ISNULL(CAST(B.CantidadPersonas AS VARCHAR), 'N/A') AS CantidadPersonas,
+                       C.Usuario AS Mesero, A.IdMesa, B.IdMesero
+                FROM Folios A
+                INNER JOIN MESAS B ON A.IdMesa = B.IdMesa
+                INNER JOIN USUARIOS C ON B.IdMesero = C.IdUsuario
+                WHERE A.FechaHora >= @StartDate AND A.FechaHora <= @EndDate
+                ORDER BY A.FechaHora DESC;";
+
+            using var cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@StartDate", dia.Date);
+            cmd.Parameters.AddWithValue("@EndDate", dia.Date.AddDays(1).AddSeconds(-1));
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                listaFolios.Add(MapearFolio(reader));
+            }
+        }
+        catch (Exception ex)
+        {
+            await JS.InvokeVoidAsync("alert", $"Error al cargar reporte de ventas: {ex.Message}");
+        }
+        finally
+        {
+            cargando = false;
+        }
+    }
+
+    private async Task HandleKeyUpFolio(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await BuscarPorFolio();
+        }
+    }
+
+    private async Task BuscarPorFolio()
+    {
+        if (string.IsNullOrWhiteSpace(txtFolio))
+        {
+            await CargarFoliosPorFecha(fechaBusqueda);
+            return;
+        }
+
+        cargando = true;
+        listaFolios.Clear();
+        folioSeleccionado = null;
+
+        string cadenaSql = Configuration.GetConnectionString("CadenaSQL")!;
+
+        try
+        {
+            using var con = new SqlConnection(cadenaSql);
+            await con.OpenAsync();
+
+            string query = @"
+                SELECT A.IdFolio, A.ModalidadVenta, A.Estatus, ISNULL(A.IdCliente,0) AS IdCliente,
+                       A.FechaHora, A.Total, A.Descuento, A.Utilidad, B.Nombre AS Mesa,
+                       ISNULL(CAST(B.CantidadPersonas AS VARCHAR), 'N/A') AS CantidadPersonas,
+                       C.Usuario AS Mesero, A.IdMesa, B.IdMesero
+                FROM Folios A
+                INNER JOIN MESAS B ON A.IdMesa = B.IdMesa
+                INNER JOIN USUARIOS C ON B.IdMesero = C.IdUsuario
+                WHERE A.IdFolio = @IdFolio;";
+
+            using var cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@IdFolio", txtFolio.Trim());
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                listaFolios.Add(MapearFolio(reader));
+            }
+
+            if (listaFolios.Count > 0)
+            {
+                folioSeleccionado = listaFolios[0];
+            }
+        }
+        catch (Exception ex)
+        {
+            await JS.InvokeVoidAsync("alert", $"Error al filtrar por folio: {ex.Message}");
+        }
+        finally
+        {
+            cargando = false;
+        }
+    }
+
+    private void AbrirDetallesDobleClic(FolioVenta folio)
+    {
+        folioSeleccionado = folio;
+        mostrarModalDetalles = true;
+    }
+
+    private FolioVenta MapearFolio(SqlDataReader reader)
+    {
+        return new FolioVenta
+        {
+            IdFolio = Convert.ToInt32(reader["IdFolio"]),
+            ModalidadVenta = reader["ModalidadVenta"]?.ToString() ?? "",
+            Estatus = reader["Estatus"]?.ToString() ?? "",
+            IdCliente = Convert.ToInt32(reader["IdCliente"]),
+            FechaHora = Convert.ToDateTime(reader["FechaHora"]),
+            Total = Convert.ToDouble(reader["Total"]),
+            Descuento = Convert.ToDouble(reader["Descuento"]),
+            Utilidad = Convert.ToDouble(reader["Utilidad"]),
+            Mesa = reader["Mesa"]?.ToString() ?? "",
+            CantidadPersonas = reader["CantidadPersonas"]?.ToString() ?? "",
+            Mesero = reader["Mesero"]?.ToString() ?? "",
+            IdMesa = Convert.ToInt32(reader["IdMesa"]),
+            IdMesero = Convert.ToInt32(reader["IdMesero"])
+        };
+    }
+}

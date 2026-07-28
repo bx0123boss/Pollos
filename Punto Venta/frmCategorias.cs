@@ -52,7 +52,13 @@ namespace Punto_Venta
             using (SqlDataAdapter da = new SqlDataAdapter($"SELECT * FROM {tipo};", conectar))
             {
                 conectar.Open();
+
+                if (ds.Tables.Contains("Id"))
+                {
+                    ds.Tables["Id"].Clear();
+                }
                 da.Fill(ds, "Id");
+
                 dataGridView1.DataSource = ds.Tables["Id"];
                 dataGridView1.Columns[0].Visible = false;
             }
@@ -116,9 +122,18 @@ namespace Punto_Venta
             using (SqlDataAdapter da = new SqlDataAdapter($"SELECT * FROM {tipo};", conectar))
             {
                 conectar.Open();
+                if (ds.Tables.Contains("Id"))
+                {
+                    ds.Tables["Id"].Clear();
+                }
+
                 da.Fill(ds, "Id");
                 dataGridView1.DataSource = ds.Tables["Id"];
-                dataGridView1.Columns[0].Visible = false;
+
+                if (dataGridView1.Columns.Count > 0)
+                {
+                    dataGridView1.Columns[0].Visible = false;
+                }
             }
         }
     }

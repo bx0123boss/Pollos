@@ -14,7 +14,10 @@ namespace Punto_Venta
     {
         private double entradasEfectivo = 0;
         private double salidasEfectivo = 0;
-        private double ventasTarjetaOtros = 0; // Agrupa cobros con tarjeta, transferencia, etc.
+        private double ventasTarjeta = 0;
+        private double ventasTransferencia = 0; // <--- NUEVA VARIABLE SEPARADA
+        private double ventasOtros = 0;          // Para vales, cheques u otros si aplica
+
         private Dictionary<string, double> desglosadosMetodos = new Dictionary<string, double>();
         public string usuario = "";
 
@@ -68,7 +71,9 @@ namespace Punto_Venta
         {
             entradasEfectivo = 0;
             salidasEfectivo = 0;
-            ventasTarjetaOtros = 0;
+            ventasTarjeta = 0;
+            ventasTransferencia = 0;
+            ventasOtros = 0;
             desglosadosMetodos.Clear();
 
             if (dgvCorte.DataSource is DataTable dt)
@@ -77,40 +82,45 @@ namespace Punto_Venta
                 {
                     double monto = Convert.ToDouble(row["Total"]);
                     string formaPago = row["FormaPago"]?.ToString() ?? "";
-
-                    // Limpiamos o estandarizamos el nombre del método (ej. "01=EFECTIVO" -> "EFECTIVO")
                     string formaPagoLimpia = formaPago.ToUpper();
 
-                    // Acumular desglose general para impresión o auditoría
                     if (!desglosadosMetodos.ContainsKey(formaPagoLimpia))
                         desglosadosMetodos.Add(formaPagoLimpia, 0);
 
                     desglosadosMetodos[formaPagoLimpia] += monto;
 
-                    // Si el método es EFECTIVO (o viene vacío)
+                    // Lógica de separación de formas de pago
                     if (string.IsNullOrEmpty(formaPagoLimpia) || formaPagoLimpia.Contains("EFECTIVO"))
                     {
                         if (monto >= 0)
                             entradasEfectivo += monto;
                         else
-                            salidasEfectivo += monto; // Acumulado negativo (retiros)
+                            salidasEfectivo += monto;
+                    }
+                    else if (formaPagoLimpia.Contains("TRANSFER") || formaPagoLimpia.Contains("TRANFER"))
+                    {
+                        ventasTransferencia += monto; // <--- SEPARACIÓN TRANSFERENCIAS
+                    }
+                    else if (formaPagoLimpia.Contains("TARJETA") || formaPagoLimpia.Contains("CREDITO") || formaPagoLimpia.Contains("DEBITO"))
+                    {
+                        ventasTarjeta += monto;       // <--- SEPARACIÓN TARJETAS
                     }
                     else
                     {
-                        // Tarjetas, Transferencias, Vales, Cheques, etc.
-                        ventasTarjetaOtros += monto;
+                        ventasOtros += monto;
                     }
                 }
             }
 
             double corteEfectivoNeto = entradasEfectivo + salidasEfectivo;
-            double granTotalCaja = corteEfectivoNeto + ventasTarjetaOtros;
+            double granTotalCaja = corteEfectivoNeto + ventasTarjeta + ventasTransferencia + ventasOtros;
 
             // Reflejar en la interfaz
-            lblCredito.Text = $"{ventasTarjetaOtros:C2}";            // Otros Métodos (Banco / Tarjeta)
-            lblEntrada.Text = $"{entradasEfectivo:C2}";             // Entradas Efectivo
-            lblSalida.Text = $"{Math.Abs(salidasEfectivo):C2}";       // Salidas Efectivo
-            lblCorte.Text = $"{corteEfectivoNeto:C2}";              // Total Efectivo en Fondo/Caja
+            lblCredito.Text = $"{ventasTarjeta:C2}";               // Ventas Tarjeta
+            lblTransferencia.Text = $"{ventasTransferencia:C2}";   // Ventas Transferencia
+            lblEntrada.Text = $"{entradasEfectivo:C2}";            // Entradas Efectivo
+            lblSalida.Text = $"{Math.Abs(salidasEfectivo):C2}";      // Salidas Efectivo
+            lblCorte.Text = $"{corteEfectivoNeto:C2}";             // Total Efectivo en Fondo/Caja
         }
 
         private void AplicarEstilosGrillas()
@@ -171,7 +181,7 @@ namespace Punto_Venta
         {
             List<Producto> productosTicket = new List<Producto>();
             double corteEfectivoNeto = entradasEfectivo + salidasEfectivo;
-            double granTotal = corteEfectivoNeto + ventasTarjetaOtros;
+            double granTotal = corteEfectivoNeto + ventasTarjeta + ventasTransferencia + ventasOtros;
 
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
@@ -180,7 +190,7 @@ namespace Punto_Venta
                 {
                     try
                     {
-                        // 1. Insertar Historial del Corte (Efectivo Neto)
+                        // 1. Insertar Historial del Corte
                         int idCorteInsertado;
                         string queryHistorial = @"INSERT INTO HistorialCortes (Monto, FechaHora) VALUES (@Monto, GETDATE());
                                                  SELECT SCOPE_IDENTITY();";
@@ -248,7 +258,7 @@ namespace Punto_Venta
                         using (SqlCommand cmd = new SqlCommand("UPDATE inicio SET inicio = '0' WHERE id = 1;", conectar, transaccion))
                             cmd.ExecuteNonQuery();
 
-                        //transaccion.Commit();
+                        transaccion.Commit();
                     }
                     catch (Exception ex)
                     {
@@ -259,7 +269,7 @@ namespace Punto_Venta
                 }
             }
 
-            // Impresión Opcional de Ticket con desglose de métodos
+            // Impresión Opcional de Ticket con desglose de tarjetas y transferencias separadas
             DialogResult dialogPrint = MessageBox.Show("Corte realizado con éxito.\n¿Desea imprimir el comprobante de caja?", "Impresión de Ticket", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogPrint == DialogResult.Yes)
             {
@@ -273,7 +283,8 @@ namespace Punto_Venta
                     { "Efectivo Entradas", entradasEfectivo },
                     { "Efectivo Salidas", salidasEfectivo },
                     { "Total Efectivo", corteEfectivoNeto },
-                    { "Otros (Banco/Tarj)", ventasTarjetaOtros },
+                    { "Ventas Tarjeta", ventasTarjeta },
+                    { "Ventas Transferencia", ventasTransferencia },
                     { "Gran Total Venta", granTotal }
                 };
 

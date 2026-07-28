@@ -30,14 +30,8 @@ namespace Punto_Venta
 
             string[] opcionesPago = {
                 "01=EFECTIVO",
-                "02=CHEQUE NOMINATIVO",
-                "03=TRANFERENCIA ELECTRONICA DE FONDOS",
-                "04=TARJETA DE CREDITO",
-                "28=TARJETA DE DEBITO",
-                "05=MONEDERO ELECTRONICO",
-                "06=DINERO ELECTRONICO",
-                "08=VALES DE DESPENSA",
-                "99=POR DEFINIR"
+                "03=TRANSFERENCIA ELECTRONICA DE FONDOS",
+                "04=TARJETA BANCARIA"
             };
             cmbPago.Items.AddRange(opcionesPago);
             cmbPago.SelectedIndex = 0;

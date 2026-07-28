@@ -591,8 +591,16 @@ namespace Punto_Venta
                 var listado = new List<(string, string, string, string, string, bool)>();
                 using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
+                    if ((CmbMesa.SelectedValue == null || CmbMesa.SelectedValue.ToString() == "0") && tabControl1.SelectedIndex == 0 && !checkBox3.Checked)
+                    {
+                        BtnEntregar.Visible = true;
+                        MessageBox.Show("NO SE HA SELECCIONADO MESA", "Alto!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     conectar.Open();
-                    if (tabControl1.SelectedIndex == 1)
+                    if ((tabControl1.SelectedIndex == 0 && checkBox3.Checked == false && CmbMesa.SelectedValue != null))
+                            idMesa = (int)CmbMesa.SelectedValue;
+                        if (tabControl1.SelectedIndex == 1)
                     {
                         string query = "INSERT INTO Mesas (Nombre, IdMesero,Impresion,Estatus, IdCliente) " +
                                        "VALUES ('Domicilio " + (LblNombre.Text.Length > 20 ? LblNombre.Text.Substring(0, 20) : LblNombre.Text) + "', @IdMesero, 0, @Estatus, @IdCliente);" +
@@ -617,15 +625,6 @@ namespace Punto_Venta
                             idMesa = Convert.ToInt32(cmd.ExecuteScalar());
                         }
                     }
-                    else if (checkBox3.Checked == false && CmbMesa.SelectedValue != null)
-                        idMesa = (int)CmbMesa.SelectedValue;
-                    if(CmbMesa.SelectedValue == null || CmbMesa.SelectedValue.ToString() == "0")
-                    {
-                        BtnEntregar.Visible = true;
-                        MessageBox.Show("NO SE HA SELECCIONADO MESA", "Alto!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
                     if (checkBox3.Checked)
                     {
                         using (SqlCommand cmd2 = new SqlCommand("UPDATE MESAS SET Estatus = 'COCINA' WHERE IdMesa = @IdMesa;", conectar))
@@ -798,27 +797,38 @@ namespace Punto_Venta
         {
             if (checkBox3.Checked)
             {
-                    using (frmAgregarMesas ori = new frmAgregarMesas())
+                using (frmAgregarMesas ori = new frmAgregarMesas())
+                {
+                    ori.IdMesero = idMesero;
+                    if (ori.ShowDialog() == DialogResult.OK)
                     {
-                        ori.IdMesero = idMesero;
-                        if (ori.ShowDialog() == DialogResult.OK)
-                        {
-                            idMesa = ori.IdMesa;
-                            lblMesa.Text = ori.Mesa;
-                            lblMesa.Visible = true;
-                            CmbMesa.Visible = false;
-                            mesaNueva = true;
-                        }
-                        else
-                        {
-                            checkBox3.Checked = false;
-                        }
+                        idMesa = ori.IdMesa;
+                        lblMesa.Text = ori.Mesa;
+
+                        // Deseleccionar el ComboBox para no arrastrar selecciones previas de CmbMesa
+                        CmbMesa.SelectedIndex = -1;
+
+                        lblMesa.Visible = true;
+                        CmbMesa.Visible = false;
+                        mesaNueva = true;
                     }
+                    else
+                    {
+                        // Si canceló la ventana de agregar mesa, se desmarca sin disparar lógica de mesa nueva
+                        checkBox3.Checked = false;
+                    }
+                }
             }
             else
             {
+                mesaNueva = false;
                 lblMesa.Visible = false;
                 CmbMesa.Visible = true;
+
+                if (CmbMesa.SelectedIndex == -1 && CmbMesa.Items.Count > 0)
+                {
+                    CmbMesa.SelectedIndex = 0;
+                }
             }
         }
 

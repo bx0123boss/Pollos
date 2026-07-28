@@ -31,6 +31,9 @@
             this.cardTarjeta = new System.Windows.Forms.Panel();
             this.lblCredito = new System.Windows.Forms.Label();
             this.lblTitTarjeta = new System.Windows.Forms.Label();
+            this.cardTransferencia = new System.Windows.Forms.Panel();
+            this.lblTransferencia = new System.Windows.Forms.Label();
+            this.lblTitTransferencia = new System.Windows.Forms.Label();
             this.cardEntradas = new System.Windows.Forms.Panel();
             this.lblEntrada = new System.Windows.Forms.Label();
             this.lblTitEntradas = new System.Windows.Forms.Label();
@@ -49,6 +52,7 @@
             this.pnlDerecho.SuspendLayout();
             this.pnlMétricas.SuspendLayout();
             this.cardTarjeta.SuspendLayout();
+            this.cardTransferencia.SuspendLayout();
             this.cardEntradas.SuspendLayout();
             this.cardSalidas.SuspendLayout();
             this.cardTotal.SuspendLayout();
@@ -179,18 +183,20 @@
             this.pnlMétricas.ColumnCount = 1;
             this.pnlMétricas.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.pnlMétricas.Controls.Add(this.cardTarjeta, 0, 0);
-            this.pnlMétricas.Controls.Add(this.cardEntradas, 0, 1);
-            this.pnlMétricas.Controls.Add(this.cardSalidas, 0, 2);
-            this.pnlMétricas.Controls.Add(this.cardTotal, 0, 3);
+            this.pnlMétricas.Controls.Add(this.cardTransferencia, 0, 1);
+            this.pnlMétricas.Controls.Add(this.cardEntradas, 0, 2);
+            this.pnlMétricas.Controls.Add(this.cardSalidas, 0, 3);
+            this.pnlMétricas.Controls.Add(this.cardTotal, 0, 4);
             this.pnlMétricas.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlMétricas.Location = new System.Drawing.Point(10, 0);
             this.pnlMétricas.Name = "pnlMétricas";
-            this.pnlMétricas.RowCount = 4;
-            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.pnlMétricas.Size = new System.Drawing.Size(387, 480);
+            this.pnlMétricas.RowCount = 5;
+            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.pnlMétricas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.pnlMétricas.Size = new System.Drawing.Size(387, 560);
             this.pnlMétricas.TabIndex = 0;
             // 
             // cardTarjeta
@@ -200,20 +206,20 @@
             this.cardTarjeta.Controls.Add(this.lblTitTarjeta);
             this.cardTarjeta.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cardTarjeta.Location = new System.Drawing.Point(0, 0);
-            this.cardTarjeta.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.cardTarjeta.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.cardTarjeta.Name = "cardTarjeta";
-            this.cardTarjeta.Padding = new System.Windows.Forms.Padding(15);
-            this.cardTarjeta.Size = new System.Drawing.Size(387, 108);
+            this.cardTarjeta.Padding = new System.Windows.Forms.Padding(12);
+            this.cardTarjeta.Size = new System.Drawing.Size(387, 104);
             this.cardTarjeta.TabIndex = 0;
             // 
             // lblCredito
             // 
             this.lblCredito.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblCredito.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
+            this.lblCredito.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
             this.lblCredito.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
-            this.lblCredito.Location = new System.Drawing.Point(15, 38);
+            this.lblCredito.Location = new System.Drawing.Point(12, 32);
             this.lblCredito.Name = "lblCredito";
-            this.lblCredito.Size = new System.Drawing.Size(357, 55);
+            this.lblCredito.Size = new System.Drawing.Size(363, 60);
             this.lblCredito.TabIndex = 1;
             this.lblCredito.Text = "$0.00";
             this.lblCredito.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -221,13 +227,49 @@
             // lblTitTarjeta
             // 
             this.lblTitTarjeta.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitTarjeta.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblTitTarjeta.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblTitTarjeta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(64)))), ((int)(((byte)(175)))));
-            this.lblTitTarjeta.Location = new System.Drawing.Point(15, 15);
+            this.lblTitTarjeta.Location = new System.Drawing.Point(12, 12);
             this.lblTitTarjeta.Name = "lblTitTarjeta";
-            this.lblTitTarjeta.Size = new System.Drawing.Size(357, 23);
+            this.lblTitTarjeta.Size = new System.Drawing.Size(363, 20);
             this.lblTitTarjeta.TabIndex = 0;
             this.lblTitTarjeta.Text = "💳 VENTAS TARJETA";
+            // 
+            // cardTransferencia
+            // 
+            this.cardTransferencia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(232)))), ((int)(((byte)(255)))));
+            this.cardTransferencia.Controls.Add(this.lblTransferencia);
+            this.cardTransferencia.Controls.Add(this.lblTitTransferencia);
+            this.cardTransferencia.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cardTransferencia.Location = new System.Drawing.Point(0, 112);
+            this.cardTransferencia.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.cardTransferencia.Name = "cardTransferencia";
+            this.cardTransferencia.Padding = new System.Windows.Forms.Padding(12);
+            this.cardTransferencia.Size = new System.Drawing.Size(387, 104);
+            this.cardTransferencia.TabIndex = 4;
+            // 
+            // lblTransferencia
+            // 
+            this.lblTransferencia.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTransferencia.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.lblTransferencia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(126)))), ((int)(((byte)(34)))), ((int)(((byte)(206)))));
+            this.lblTransferencia.Location = new System.Drawing.Point(12, 32);
+            this.lblTransferencia.Name = "lblTransferencia";
+            this.lblTransferencia.Size = new System.Drawing.Size(363, 60);
+            this.lblTransferencia.TabIndex = 1;
+            this.lblTransferencia.Text = "$0.00";
+            this.lblTransferencia.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblTitTransferencia
+            // 
+            this.lblTitTransferencia.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTitTransferencia.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblTitTransferencia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(33)))), ((int)(((byte)(168)))));
+            this.lblTitTransferencia.Location = new System.Drawing.Point(12, 12);
+            this.lblTitTransferencia.Name = "lblTitTransferencia";
+            this.lblTitTransferencia.Size = new System.Drawing.Size(363, 20);
+            this.lblTitTransferencia.TabIndex = 0;
+            this.lblTitTransferencia.Text = "🏛️ VENTAS TRANSFERENCIA";
             // 
             // cardEntradas
             // 
@@ -235,21 +277,21 @@
             this.cardEntradas.Controls.Add(this.lblEntrada);
             this.cardEntradas.Controls.Add(this.lblTitEntradas);
             this.cardEntradas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cardEntradas.Location = new System.Drawing.Point(0, 120);
-            this.cardEntradas.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.cardEntradas.Location = new System.Drawing.Point(0, 224);
+            this.cardEntradas.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.cardEntradas.Name = "cardEntradas";
-            this.cardEntradas.Padding = new System.Windows.Forms.Padding(15);
-            this.cardEntradas.Size = new System.Drawing.Size(387, 108);
+            this.cardEntradas.Padding = new System.Windows.Forms.Padding(12);
+            this.cardEntradas.Size = new System.Drawing.Size(387, 104);
             this.cardEntradas.TabIndex = 1;
             // 
             // lblEntrada
             // 
             this.lblEntrada.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEntrada.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
+            this.lblEntrada.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
             this.lblEntrada.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(128)))), ((int)(((byte)(61)))));
-            this.lblEntrada.Location = new System.Drawing.Point(15, 38);
+            this.lblEntrada.Location = new System.Drawing.Point(12, 32);
             this.lblEntrada.Name = "lblEntrada";
-            this.lblEntrada.Size = new System.Drawing.Size(357, 55);
+            this.lblEntrada.Size = new System.Drawing.Size(363, 60);
             this.lblEntrada.TabIndex = 1;
             this.lblEntrada.Text = "$0.00";
             this.lblEntrada.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -257,11 +299,11 @@
             // lblTitEntradas
             // 
             this.lblTitEntradas.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitEntradas.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblTitEntradas.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblTitEntradas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(101)))), ((int)(((byte)(52)))));
-            this.lblTitEntradas.Location = new System.Drawing.Point(15, 15);
+            this.lblTitEntradas.Location = new System.Drawing.Point(12, 12);
             this.lblTitEntradas.Name = "lblTitEntradas";
-            this.lblTitEntradas.Size = new System.Drawing.Size(357, 23);
+            this.lblTitEntradas.Size = new System.Drawing.Size(363, 20);
             this.lblTitEntradas.TabIndex = 0;
             this.lblTitEntradas.Text = "📥 ENTRADAS EFECTIVO";
             // 
@@ -271,21 +313,21 @@
             this.cardSalidas.Controls.Add(this.lblSalida);
             this.cardSalidas.Controls.Add(this.lblTitSalidas);
             this.cardSalidas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cardSalidas.Location = new System.Drawing.Point(0, 240);
-            this.cardSalidas.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.cardSalidas.Location = new System.Drawing.Point(0, 336);
+            this.cardSalidas.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.cardSalidas.Name = "cardSalidas";
-            this.cardSalidas.Padding = new System.Windows.Forms.Padding(15);
-            this.cardSalidas.Size = new System.Drawing.Size(387, 108);
+            this.cardSalidas.Padding = new System.Windows.Forms.Padding(12);
+            this.cardSalidas.Size = new System.Drawing.Size(387, 104);
             this.cardSalidas.TabIndex = 2;
             // 
             // lblSalida
             // 
             this.lblSalida.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSalida.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
+            this.lblSalida.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
             this.lblSalida.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.lblSalida.Location = new System.Drawing.Point(15, 38);
+            this.lblSalida.Location = new System.Drawing.Point(12, 32);
             this.lblSalida.Name = "lblSalida";
-            this.lblSalida.Size = new System.Drawing.Size(357, 55);
+            this.lblSalida.Size = new System.Drawing.Size(363, 60);
             this.lblSalida.TabIndex = 1;
             this.lblSalida.Text = "$0.00";
             this.lblSalida.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -293,11 +335,11 @@
             // lblTitSalidas
             // 
             this.lblTitSalidas.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitSalidas.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblTitSalidas.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblTitSalidas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(27)))), ((int)(((byte)(27)))));
-            this.lblTitSalidas.Location = new System.Drawing.Point(15, 15);
+            this.lblTitSalidas.Location = new System.Drawing.Point(12, 12);
             this.lblTitSalidas.Name = "lblTitSalidas";
-            this.lblTitSalidas.Size = new System.Drawing.Size(357, 23);
+            this.lblTitSalidas.Size = new System.Drawing.Size(363, 20);
             this.lblTitSalidas.TabIndex = 0;
             this.lblTitSalidas.Text = "📤 SALIDAS CAJA";
             // 
@@ -307,21 +349,21 @@
             this.cardTotal.Controls.Add(this.lblCorte);
             this.cardTotal.Controls.Add(this.lblTitTotal);
             this.cardTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cardTotal.Location = new System.Drawing.Point(0, 360);
-            this.cardTotal.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.cardTotal.Location = new System.Drawing.Point(0, 448);
+            this.cardTotal.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.cardTotal.Name = "cardTotal";
-            this.cardTotal.Padding = new System.Windows.Forms.Padding(15);
-            this.cardTotal.Size = new System.Drawing.Size(387, 108);
+            this.cardTotal.Padding = new System.Windows.Forms.Padding(12);
+            this.cardTotal.Size = new System.Drawing.Size(387, 104);
             this.cardTotal.TabIndex = 3;
             // 
             // lblCorte
             // 
             this.lblCorte.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblCorte.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold);
+            this.lblCorte.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
             this.lblCorte.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(83)))), ((int)(((byte)(9)))));
-            this.lblCorte.Location = new System.Drawing.Point(15, 38);
+            this.lblCorte.Location = new System.Drawing.Point(12, 32);
             this.lblCorte.Name = "lblCorte";
-            this.lblCorte.Size = new System.Drawing.Size(357, 55);
+            this.lblCorte.Size = new System.Drawing.Size(363, 60);
             this.lblCorte.TabIndex = 1;
             this.lblCorte.Text = "$0.00";
             this.lblCorte.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -329,26 +371,26 @@
             // lblTitTotal
             // 
             this.lblTitTotal.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitTotal.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblTitTotal.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.lblTitTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(64)))), ((int)(((byte)(14)))));
-            this.lblTitTotal.Location = new System.Drawing.Point(15, 15);
+            this.lblTitTotal.Location = new System.Drawing.Point(12, 12);
             this.lblTitTotal.Name = "lblTitTotal";
-            this.lblTitTotal.Size = new System.Drawing.Size(357, 23);
+            this.lblTitTotal.Size = new System.Drawing.Size(363, 20);
             this.lblTitTotal.TabIndex = 0;
             this.lblTitTotal.Text = "💰 EFECTIVO NETO EN CAJA";
             // 
             // btnCorte
             // 
-            this.btnCorte.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.btnCorte.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCorte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.btnCorte.FlatAppearance.BorderSize = 0;
             this.btnCorte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCorte.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.btnCorte.ForeColor = System.Drawing.Color.White;
-            this.btnCorte.Location = new System.Drawing.Point(10, 580);
+            this.btnCorte.Location = new System.Drawing.Point(10, 590);
             this.btnCorte.Name = "btnCorte";
-            this.btnCorte.Size = new System.Drawing.Size(387, 80);
+            this.btnCorte.Size = new System.Drawing.Size(387, 70);
             this.btnCorte.TabIndex = 1;
             this.btnCorte.Text = "🔒 REALIZAR CORTE";
             this.btnCorte.UseVisualStyleBackColor = false;
@@ -377,6 +419,7 @@
             this.pnlDerecho.ResumeLayout(false);
             this.pnlMétricas.ResumeLayout(false);
             this.cardTarjeta.ResumeLayout(false);
+            this.cardTransferencia.ResumeLayout(false);
             this.cardEntradas.ResumeLayout(false);
             this.cardSalidas.ResumeLayout(false);
             this.cardTotal.ResumeLayout(false);
@@ -399,6 +442,9 @@
         private System.Windows.Forms.Panel cardTarjeta;
         private System.Windows.Forms.Label lblTitTarjeta;
         private System.Windows.Forms.Label lblCredito;
+        private System.Windows.Forms.Panel cardTransferencia;
+        private System.Windows.Forms.Label lblTitTransferencia;
+        private System.Windows.Forms.Label lblTransferencia;
         private System.Windows.Forms.Panel cardEntradas;
         private System.Windows.Forms.Label lblTitEntradas;
         private System.Windows.Forms.Label lblEntrada;
