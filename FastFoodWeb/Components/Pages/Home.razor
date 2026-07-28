@@ -1,37 +1,84 @@
 ﻿@page "/"
 @using System.IO
-
+@using System.Data.SqlClient
+@using FastFoodWeb.Services
+@using Microsoft.Data.SqlClient;
+@using System.Data.Odbc;
+@inject NavigationManager Navigation
+@inject IConfiguration Configuration
+@inject UserSessionService Session
 <PageTitle>Inicio | Punto de Venta</PageTitle>
 
-<div class="container mt-5">
+<div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6 col-lg-5">
 
             <div class="card shadow-lg border-0 rounded-3 text-center">
-                <div class="card-body p-5">
+                <div class="card-body p-4">
 
-                    <div class="mb-4">
+                    <!-- LOGO -->
+                    <div class="mb-3">
                         @if (!string.IsNullOrEmpty(ImagenBase64))
                         {
-                            <img src="@ImagenBase64" alt="Logo" style="max-height: 150px; width: auto;" />
+                            <img src="@ImagenBase64" alt="Logo" style="max-height: 120px; width: auto;" />
                         }
                         else
                         {
                             <div class="text-primary">
-                                <span class="oi oi-graph" style="font-size: 5rem;"></span>
+                                <span class="oi oi-graph" style="font-size: 4rem;"></span>
                             </div>
                         }
                     </div>
 
-                    <h1 class="display-6 fw-bold mb-3">
-                        Bienvenido a tu punto de venta web
-                    </h1>
+                    <h2 class="h4 fw-bold mb-2">Punto de Venta Web</h2>
 
-                    <p class="lead text-muted mb-4">
-                        Sistema de gestión web sincronizado.
-                    </p>
+                    @if (Session.IsLoggedIn)
+                    {
+                        <!-- VISTA CUANDO EL MESERO YA SE AUTENTICÓ -->
+                        <div class="alert alert-success mt-3" role="alert">
+                            <h5 class="alert-heading fw-bold">¡Hola, @Session.Usuario!</h5>
+                            <p class="mb-0">Rol: <strong>@Session.TipoUsuario</strong></p>
+                        </div>
 
-                    <div class="text-secondary small">
+                        <div class="d-grid gap-2 my-3">
+                            <button class="btn btn-primary btn-lg fw-bold" @onclick="IrATomarPedido">
+                                <span class="oi oi-cart me-2"></span> Tomar Pedido
+                            </button>
+                            <button class="btn btn-outline-secondary" @onclick="CerrarSesion">
+                                Cambiar de Mesero
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- CAPTURA DE CLAVE / CONTRASEÑA -->
+                        <p class="text-muted small mb-3">Ingresa tu clave de usuario para tomar pedidos</p>
+
+                        @if (!string.IsNullOrEmpty(MensajeError))
+                        {
+                            <div class="alert alert-danger py-2 small" role="alert">
+                                @MensajeError
+                            </div>
+                        }
+
+                        <div class="mb-3">
+                            <input type="password"
+                                   class="form-control form-control-lg text-center"
+                                   placeholder="****"
+                                   @bind="ClaveIngresada"
+                                   @bind:event="oninput"
+                                   @onkeyup="HandleKeyUp"
+                                   autofocus />
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-lg fw-bold" @onclick="ValidarClave">
+                                Ingresar
+                            </button>
+                        </div>
+                    }
+
+                    <div class="text-secondary small mt-4">
                         <span class="oi oi-check me-1"></span> Jaegersoft
                     </div>
 
@@ -44,11 +91,17 @@
 
 @code {
     private string ImagenBase64 = "";
+    private string ClaveIngresada = "";
+    private string MensajeError = "";
 
     protected override void OnInitialized()
     {
-        string rutaImagen = @"C:\Jaeger Soft\LogoJ.jpg";
+        CargarLogo();
+    }
 
+    private void CargarLogo()
+    {
+        string rutaImagen = @"C:\Jaeger Soft\LogoJ.jpg";
         try
         {
             if (File.Exists(rutaImagen))
@@ -58,8 +111,77 @@
                 ImagenBase64 = $"data:image/jpeg;base64,{base64}";
             }
         }
-        catch
+        catch { }
+    }
+
+    private void HandleKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
         {
+            ValidarClave();
         }
+    }
+
+    private void ValidarClave()
+    {
+        MensajeError = "";
+
+        if (string.IsNullOrWhiteSpace(ClaveIngresada))
+        {
+            MensajeError = "Por favor, ingresa tu clave.";
+            return;
+        }
+
+        try
+        {
+            string cadenaConexion = Configuration.GetConnectionString("CadenaSQL");
+            using (SqlConnection conectar = new SqlConnection(cadenaConexion))
+            {
+                conectar.Open();
+                string query = @"SELECT IdUsuario, Usuario, TipoUsuario FROM USUARIOS WHERE Contraseña = @Contraseña";
+
+                using (SqlCommand cmd = new SqlCommand(query, conectar))
+                {
+                    cmd.Parameters.AddWithValue("@Contraseña", ClaveIngresada.Trim());
+
+                    using (SqlDataReader readerSQL = cmd.ExecuteReader())
+                    {
+                        if (readerSQL.Read())
+                        {
+                            int id = Convert.ToInt32(readerSQL["IdUsuario"]);
+                            string usuario = readerSQL["Usuario"].ToString();
+                            string tipo = readerSQL["TipoUsuario"].ToString();
+
+                            // Asignar el mesero a la sesión activa
+                            Session.SetUser(id, usuario, tipo);
+
+                            ClaveIngresada = "";
+
+                            // Redireccionar automáticamente a la pantalla de pedidos
+                            Navigation.NavigateTo("/pedido");
+                        }
+                        else
+                        {
+                            MensajeError = "No se encuentra el usuario, favor de verificar.";
+                            ClaveIngresada = "";
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MensajeError = "Error al conectar con la base de datos: " + ex.Message;
+        }
+    }
+
+    private void IrATomarPedido()
+    {
+        Navigation.NavigateTo("/pedido");
+    }
+
+    private void CerrarSesion()
+    {
+        Session.Logout();
     }
 }

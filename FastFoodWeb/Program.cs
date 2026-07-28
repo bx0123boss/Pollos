@@ -9,6 +9,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddScoped<ConfiguracionService>();
 builder.Services.AddScoped<ServicioImpresion>();
+builder.Services.AddScoped<UserSessionService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

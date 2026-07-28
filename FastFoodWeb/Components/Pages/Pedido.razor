@@ -9,6 +9,7 @@
 @inject IConfiguration Configuration
 @inject NavigationManager Nav
 @inject IJSRuntime JS
+@inject UserSessionService Session
 
 <div class="main-container">
 
@@ -37,6 +38,13 @@
                     }
 
                     <span class="ms-2 fw-bold text-dark small">Folio: @folioActual</span>
+                    <button class="btn btn-sm btn-cambiar-mesero ms-2 shadow-sm"
+                            @onclick="CambiarMesero"
+                            title="Clic para cambiar de mesero / Volver al inicio">
+                        <i class="bi bi-person-badge-fill me-1 text-primary"></i>
+                        <span class="fw-semibold">@(Session.IsLoggedIn? Session.Usuario: "Sin Sesión")</span>
+                        <i class="bi bi-arrow-repeat ms-1 text-muted icon-spin-hover"></i>
+                    </button>
                 </div>
 
                 @* --- MODAL DE SELECCIÓN DE MESA --- *@
@@ -268,7 +276,6 @@
 
                             @if (listaBotonesComentario != null && listaBotonesComentario.Count > 0)
                             {
-                                @* Añadimos la clase 'scroll-comentarios' y estilo directo de respaldo *@
                                 <div class="d-flex flex-wrap gap-2 mb-3 p-2 border rounded-3 bg-light scroll-comentarios"
                                      style="max-height: 130px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
                                     @foreach (var btnNota in listaBotonesComentario)
@@ -294,7 +301,7 @@
                                       rows="2"
                                       placeholder="Ej. Sin cebolla, extra aderezo..."
                                       @bind="comentarioTemporal">
-        </textarea>
+                                </textarea>
                         </div>
 
                     </div>
@@ -330,33 +337,61 @@
         </div>
     }
 </div>
+
 <style>
-/* Estilo para el contenedor de comentarios rápidos con scroll */
-.scroll-comentarios {
-    max-height: 135px; /* Ajusta este valor si quieres ver más o menos filas (ej. 2 o 3 filas fijas) */
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Deslizamiento fluido e inercial en iPads/Android */
-}
+    .scroll-comentarios {
+        max-height: 135px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 
-/* Personalización de la barra de scroll (Chrome, Edge, Safari) */
-.scroll-comentarios::-webkit-scrollbar {
-    width: 6px;
-}
+        .scroll-comentarios::-webkit-scrollbar {
+            width: 6px;
+        }
 
-.scroll-comentarios::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
+        .scroll-comentarios::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
 
-.scroll-comentarios::-webkit-scrollbar-thumb {
-    background: #0d6efd;
-    border-radius: 10px;
-}
+        .scroll-comentarios::-webkit-scrollbar-thumb {
+            background: #0d6efd;
+            border-radius: 10px;
+        }
 
-.scroll-comentarios::-webkit-scrollbar-thumb:hover {
-    background: #0b5ed7;
-}
+            .scroll-comentarios::-webkit-scrollbar-thumb:hover {
+                background: #0b5ed7;
+            }
+    /* Botón estilizado para el badge del mesero */
+    .btn-cambiar-mesero {
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        color: #333333;
+        border-radius: 20px;
+        padding: 4px 12px;
+        font-size: 0.85rem;
+        transition: all 0.25s ease-in-out;
+        display: inline-flex;
+        align-items: center;
+    }
+
+        /* Efecto Hover: resalta y simula que es clickeable para salir/cambiar */
+        .btn-cambiar-mesero:hover {
+            background-color: #f8f9fa;
+            border-color: #0d6efd;
+            color: #0d6efd;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.15) !important;
+        }
+
+            /* Rotación suave del icono de cambio al pasar el mouse */
+            .btn-cambiar-mesero:hover .icon-spin-hover {
+                transform: rotate(180deg);
+                color: #0d6efd !important;
+                transition: transform 0.4s ease;
+            }
 </style>
+
 <ModalAgregarMesa Mostrar="mostrarModalCrearMesa"
                   OnCerrar="() => mostrarModalCrearMesa = false"
                   OnMesaAgregada="MesaRecienCreadaHandler" />
@@ -399,11 +434,17 @@
     private bool mostrarModalClientes = false;
     private Cliente? clienteSeleccionado;
 
-    // LISTA DE NOTAS RÁPIDAS DESDE LA TABLA BotonesComentario
     private List<string> listaBotonesComentario = new();
 
     protected override async Task OnInitializedAsync()
     {
+        // Verificar si existe sesión de usuario activa
+        if (!Session.IsLoggedIn)
+        {
+            Nav.NavigateTo("/");
+            return;
+        }
+
         if (MesaId > 0)
         {
             modalidad = "MESA";
@@ -413,7 +454,6 @@
         await CargarBotonesComentario();
     }
 
-    // --- CARGAR BOTONES DE COMENTARIO DESDE BD ---
     private async Task CargarBotonesComentario()
     {
         listaBotonesComentario.Clear();
@@ -438,8 +478,12 @@
             Console.WriteLine($"Error al cargar BotonesComentario: {ex.Message}");
         }
     }
+    private void CambiarMesero()
+    {
+        Session.Logout();
+        Nav.NavigateTo("/");
+    }
 
-    // --- CONCATENAR COMENTARIOS RÁPIDOS AL TEXTAREA ---
     private void AgregarComentarioRapido(string textoComentario)
     {
         if (string.IsNullOrWhiteSpace(comentarioTemporal))
@@ -647,6 +691,10 @@
             return;
         }
 
+        // Obtener el ID del mesero autenticado
+        int idMeseroActivo = Session.IdUsuario > 0 ? Session.IdUsuario : 1;
+        string nombreMeseroActivo = !string.IsNullOrEmpty(Session.Usuario) ? Session.Usuario : "Mesero";
+
         try
         {
             string connectionString = Configuration.GetConnectionString("CadenaSQL");
@@ -665,10 +713,11 @@
 
                             if (mesaSeleccionada.Estatus != "COCINA")
                             {
-                                string updateMesaQuery = "UPDATE MESAS SET Estatus = 'COCINA' WHERE IdMesa = @IdMesa;";
+                                string updateMesaQuery = "UPDATE MESAS SET Estatus = 'COCINA', IdMesero = @IdMesero WHERE IdMesa = @IdMesa;";
                                 using (SqlCommand cmdMesa = new SqlCommand(updateMesaQuery, con, transaction))
                                 {
                                     cmdMesa.Parameters.AddWithValue("@IdMesa", idMesaFinal);
+                                    cmdMesa.Parameters.AddWithValue("@IdMesero", idMeseroActivo);
                                     await cmdMesa.ExecuteNonQueryAsync();
                                 }
                             }
@@ -678,7 +727,7 @@
                             string insertMesaQuery = "INSERT INTO MESAS (Nombre, IdMesero, Impresion, Estatus) VALUES ('Para llevar', @IdMesero, 0, 'COCINA'); SELECT SCOPE_IDENTITY();";
                             using (SqlCommand cmdMesa = new SqlCommand(insertMesaQuery, con, transaction))
                             {
-                                cmdMesa.Parameters.AddWithValue("@IdMesero", 1);
+                                cmdMesa.Parameters.AddWithValue("@IdMesero", idMeseroActivo);
                                 idMesaFinal = Convert.ToInt32(await cmdMesa.ExecuteScalarAsync());
                             }
                         }
@@ -689,7 +738,7 @@
                             using (SqlCommand cmdMesa = new SqlCommand(insertMesaQuery, con, transaction))
                             {
                                 cmdMesa.Parameters.AddWithValue("@Nombre", nombreMesa);
-                                cmdMesa.Parameters.AddWithValue("@IdMesero", 1);
+                                cmdMesa.Parameters.AddWithValue("@IdMesero", idMeseroActivo);
                                 cmdMesa.Parameters.AddWithValue("@IdCliente", clienteSeleccionado.Id);
                                 idMesaFinal = Convert.ToInt32(await cmdMesa.ExecuteScalarAsync());
                             }
@@ -720,17 +769,16 @@
                                 cmdArticulo.Parameters.AddWithValue("@Total", item.Precio * item.Cantidad);
                                 cmdArticulo.Parameters.AddWithValue("@Comentario", string.IsNullOrWhiteSpace(item.Comentario) ? "" : item.Comentario);
                                 cmdArticulo.Parameters.AddWithValue("@IdMesa", idMesaFinal);
-                                cmdArticulo.Parameters.AddWithValue("@IdMesero", 1);
+                                cmdArticulo.Parameters.AddWithValue("@IdMesero", idMeseroActivo);
                                 cmdArticulo.Parameters.AddWithValue("@Estatus", "COCINA");
                                 cmdArticulo.Parameters.AddWithValue("@Ids", DBNull.Value);
 
                                 await cmdArticulo.ExecuteNonQueryAsync();
                             }
                         }
-                        
+
                         using (SqlCommand cmdMesa = new SqlCommand("DELETE FROM MESAS WHERE ESTATUS = 'NUEVA';", con, transaction))
                         {
-                            cmdMesa.Parameters.AddWithValue("@IdMesa", idMesaFinal);
                             await cmdMesa.ExecuteNonQueryAsync();
                         }
 
@@ -749,7 +797,6 @@
             try
             {
                 string nombreMesa = modalidad == "MESA" ? mesaSeleccionada.Nombre : (modalidad == "DOMICILIO" ? "****ENTREGA A DOMICILIO****" : "Mostrador / Domicilio");
-                string nombreMesero = "Mesero 1";
 
                 // 🟢 1. FILTRAR ITEMS PARA COMANDA 1
                 var itemsComanda1 = carrito.Where(x => x.Comanda == true).ToList();
@@ -763,8 +810,7 @@
                         ""
                     )).ToList();
 
-                    // Imprime el primer ticket (Cocina / Principal)
-                    PrintService.ImprimirComandaCocina(listaComanda1, nombreMesa, nombreMesero, Conexion.impresora2);
+                    PrintService.ImprimirComandaCocina(listaComanda1, nombreMesa, nombreMeseroActivo, Conexion.impresora2);
                 }
 
                 // 🔵 2. FILTRAR ITEMS PARA COMANDA 0 (Ej. Bebidas / Barra)
@@ -779,8 +825,7 @@
                         ""
                     )).ToList();
 
-                    // Imprime el segundo ticket (Barra / Secundario)
-                    PrintService.ImprimirComandaCocina(listaComanda0, nombreMesa, nombreMesero, Conexion.impresora);
+                    PrintService.ImprimirComandaCocina(listaComanda0, nombreMesa, nombreMeseroActivo, Conexion.impresora);
                 }
             }
             catch (Exception exPrint)
