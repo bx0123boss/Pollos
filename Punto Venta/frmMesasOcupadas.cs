@@ -22,6 +22,9 @@ namespace Punto_Venta
             ToolStripMenuItem itemEditar = new ToolStripMenuItem("Editar Mesa");
             itemEditar.Click += new EventHandler(EditarMesa_Click);
             menuClicDerecho.Items.Add(itemEditar);
+            ToolStripMenuItem itemAgregar= new ToolStripMenuItem("Agregar Productos");
+            itemAgregar.Click += new EventHandler(AgregarProductosMesa_Click);
+            menuClicDerecho.Items.Add(itemAgregar);
         }
 
         private void frmMesasOcupadas_Load(object sender, EventArgs e)
@@ -48,7 +51,7 @@ namespace Punto_Venta
                 {
                     while (reader.Read())
                     {
-                        Button but = CrearBotonMesa(reader, Color.SkyBlue);
+                        Button but = CrearBotonMesa(reader, Color.DarkOrange);
 
                         but.Tag = new
                         {
@@ -86,6 +89,33 @@ namespace Punto_Venta
                             Mesero = reader["Mesero"].ToString(),
                             CantPersonas = reader["CantidadPersonas"] != DBNull.Value ? reader["CantidadPersonas"].ToString() : "1",
                             IdCliente = int.Parse(reader["IdCliente"].ToString())
+                        };
+
+                        flowBotones.Controls.Add(but);
+                    }
+                }
+
+                // 3. Mesas NUEVAS
+                query = @"SELECT A.IdMesa, A.Nombre, B.Usuario AS Mesero, A.CantidadPersonas, A.Impresion, A.IdMesero, A.IdCliente
+                          FROM MESAS A INNER JOIN USUARIOS B ON A.IdMesero = B.IdUsuario
+                          WHERE A.Estatus = 'NUEVA'
+                          ORDER BY Nombre";
+
+                using (SqlCommand cmd = new SqlCommand(query, conectar))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Button but = CrearBotonMesa(reader, Color.SkyBlue);
+
+                        but.Tag = new
+                        {
+                            Id = reader["IdMesa"].ToString(),
+                            Nombre = reader["Nombre"].ToString(),
+                            Impresion = reader["Impresion"].ToString(),
+                            IdMesero = reader["IdMesero"].ToString(),
+                            Mesero = reader["Mesero"].ToString(),
+                            CantPersonas = reader["CantidadPersonas"] != DBNull.Value ? reader["CantidadPersonas"].ToString() : "1"
                         };
 
                         flowBotones.Controls.Add(but);
@@ -136,6 +166,17 @@ namespace Punto_Venta
 
                 if (!abierto)
                 {
+                    if(boton.BackColor == Color.SkyBlue)
+                    {
+                        using (frmPedido pedido = new frmPedido())
+                        {
+                            pedido.idMesa = int.Parse(data.Id);
+                            if (pedido.ShowDialog() == DialogResult.OK)
+                            {
+                                CargarMesas(); // Recarga la cuadrícula con el nuevo nombre/personas
+                            }
+                        }
+                    }
                     using (frmCobros cobrar = new frmCobros())
                     {
                         cobrar.lblID.Text = data.Id;
@@ -157,7 +198,26 @@ namespace Punto_Venta
                 }
             }
         }
+        // Evento que se ejecuta al seleccionar "Editar Mesa" en el menú contextual
+        private void AgregarProductosMesa_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            ContextMenuStrip strip = item.Owner as ContextMenuStrip;
+            Button botonTarget = strip.SourceControl as Button;
+            if (botonTarget != null)
+            {
+                var data = (dynamic)botonTarget.Tag;
 
+                using (frmPedido pedido = new frmPedido())
+                {
+                    pedido.idMesa = int.Parse(data.Id);
+                    if (pedido.ShowDialog() == DialogResult.OK)
+                    {
+                        CargarMesas(); // Recarga la cuadrícula con el nuevo nombre/personas
+                    }
+                }
+            }
+        }
         // Evento que se ejecuta al seleccionar "Editar Mesa" en el menú contextual
         private void EditarMesa_Click(object sender, EventArgs e)
         {

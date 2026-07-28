@@ -118,7 +118,7 @@
             await con.OpenAsync();
 
             // 1. Validar si ya existe
-            using (SqlCommand cmdCheck = new SqlCommand("SELECT Nombre FROM Mesas WHERE Nombre = @Nombre;", con))
+            using (SqlCommand cmdCheck = new SqlCommand("SELECT Nombre FROM Mesas WHERE Nombre = @Nombre AND ESTATUS = 'COCINA';", con))
             {
                 cmdCheck.Parameters.AddWithValue("@Nombre", txtNombre);
                 using (SqlDataReader reader = await cmdCheck.ExecuteReaderAsync())

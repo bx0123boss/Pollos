@@ -365,6 +365,7 @@
             this.Name = "frmCorte";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cierre de Caja y Balance de Turno";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmCorte_Load);
             this.pnlPrincipal.ResumeLayout(false);
             this.pnlIzquierdo.ResumeLayout(false);

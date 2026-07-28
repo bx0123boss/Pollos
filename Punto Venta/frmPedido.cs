@@ -31,7 +31,7 @@ namespace Punto_Venta
         public string Usuario;
         double total = 0;
         bool mesaNueva = false;
-        int idMesa = 0;
+        public int idMesa = 0;
         int categoriaSeleccionada = 0;
 
         public frmPedido()
@@ -62,7 +62,16 @@ namespace Punto_Venta
                 // Re-filtrar para recalcular posiciones y tamaños dinámicos
                 FiltrarProductos(txtBuscarProducto != null ? txtBuscarProducto.Text.Trim() : "");
             };  
-            cargarMesas();
+            if (idMesa > 0)
+            {
+                CargarMesa(idMesa);
+                mesaNueva = false;
+            }
+            else
+            {
+                mesaNueva = true;
+                cargarMesas();
+            }
             cargarCategoriasAutomatico();
             cargarCombo();
             cargarBotonTodos();
@@ -293,13 +302,38 @@ namespace Punto_Venta
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                 {
                     da.Fill(dt);
+                    DataRow fila = dt.NewRow();
+                    fila["IdMesa"] = 0;
+                    fila["Nombre"] = "-- Seleccione una mesa --";
+                    dt.Rows.InsertAt(fila, 0);
                     CmbMesa.DisplayMember = "Nombre";
                     CmbMesa.ValueMember = "IdMesa";
                     CmbMesa.DataSource = dt;
                 }
             }
         }
+        private void CargarMesa(int idMesa)
+        {
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            {
+                DataTable dt = new DataTable();
 
+                using (SqlCommand cmd = new SqlCommand(
+                    "SELECT IdMesa, Nombre FROM MESAS WHERE IdMesa = @IdMesa;", conectar))
+                {
+                    cmd.Parameters.AddWithValue("@IdMesa", idMesa);
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                        CmbMesa.DisplayMember = "Nombre";
+                        CmbMesa.ValueMember = "IdMesa";
+                        CmbMesa.DataSource = dt;
+                    }
+                }
+            }
+        }
         public List<ProductoInventario> ObtenerProductosDesdeBD()
         {
             List<ProductoInventario> productos = new List<ProductoInventario>();
@@ -585,7 +619,7 @@ namespace Punto_Venta
                     }
                     else if (checkBox3.Checked == false && CmbMesa.SelectedValue != null)
                         idMesa = (int)CmbMesa.SelectedValue;
-                    else if (CmbMesa.SelectedValue == null && checkBox3.Checked == false)
+                    if(CmbMesa.SelectedValue == null || CmbMesa.SelectedValue.ToString() == "0")
                     {
                         BtnEntregar.Visible = true;
                         MessageBox.Show("NO SE HA SELECCIONADO MESA", "Alto!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -764,8 +798,6 @@ namespace Punto_Venta
         {
             if (checkBox3.Checked)
             {
-                if (!mesaNueva)
-                {
                     using (frmAgregarMesas ori = new frmAgregarMesas())
                     {
                         ori.IdMesero = idMesero;
@@ -782,12 +814,6 @@ namespace Punto_Venta
                             checkBox3.Checked = false;
                         }
                     }
-                }
-                else
-                {
-                    lblMesa.Visible = true;
-                    CmbMesa.Visible = false;
-                }
             }
             else
             {

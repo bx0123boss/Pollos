@@ -463,7 +463,7 @@ namespace Punto_Venta
                     // 6. Impresión de Ticket
                     if (print == "0")
                     {
-                        imprimir();
+                       // imprimir();
                     }
 
                     DialogResult dialogResult = MessageBox.Show("¿Imprimir otro ticket?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -486,8 +486,6 @@ namespace Punto_Venta
         {
             if (dataGridView1.CurrentRow != null) // Verifica si hay una fila seleccionada
             {
-                if (print == "0")
-                {
                     using (frmComentarios com = new frmComentarios())
                     {
                         if (com.ShowDialog() == DialogResult.OK)
@@ -585,7 +583,7 @@ namespace Punto_Venta
                         }
                     }
                 }
-            }
+            
         }
 
         private void printDocument1_PrintPage_1(object sender, PrintPageEventArgs e)

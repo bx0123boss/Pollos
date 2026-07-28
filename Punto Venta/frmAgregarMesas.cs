@@ -45,7 +45,7 @@ namespace Punto_Venta
 
                 // 1. Validar que no exista otra mesa activa con el mismo nombre
                 // Excluimos la mesa actual si estamos en modo Edición
-                string checkQuery = "SELECT Nombre FROM Mesas WHERE Nombre = @Nombre AND Estatus = 'COCINA'";
+                string checkQuery = "SELECT Nombre FROM Mesas WHERE Nombre = @Nombre AND Estatus IN ('COCINA','NUEVA')";
                 if (EsEdicion || IdMesa > 0)
                 {
                     checkQuery += " AND IdMesa <> @IdMesa";

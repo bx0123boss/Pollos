@@ -248,7 +248,7 @@ namespace Punto_Venta
                         using (SqlCommand cmd = new SqlCommand("UPDATE inicio SET inicio = '0' WHERE id = 1;", conectar, transaccion))
                             cmd.ExecuteNonQuery();
 
-                        transaccion.Commit();
+                        //transaccion.Commit();
                     }
                     catch (Exception ex)
                     {

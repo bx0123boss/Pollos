@@ -727,6 +727,12 @@
                                 await cmdArticulo.ExecuteNonQueryAsync();
                             }
                         }
+                        
+                        using (SqlCommand cmdMesa = new SqlCommand("DELETE FROM MESAS WHERE ESTATUS = 'NUEVA';", con, transaction))
+                        {
+                            cmdMesa.Parameters.AddWithValue("@IdMesa", idMesaFinal);
+                            await cmdMesa.ExecuteNonQueryAsync();
+                        }
 
                         transaction.Commit();
                     }
