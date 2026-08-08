@@ -498,7 +498,7 @@ namespace Punto_Venta
 
             if (tabControl1.SelectedIndex == 2)
             {
-                modalidad = "****PARA LLEVAR****";
+                modalidad = "Para llevar - " + idMesa;
             }
             else if (tabControl1.SelectedIndex == 0)
             {
@@ -556,7 +556,7 @@ namespace Punto_Venta
             if (productosParaImprimir.Count == 0)
                 return;
 
-            TicketPrinter ticket = new TicketPrinter(productosParaImprimir, lblMesa.Text, lblMesero.Text);
+            TicketPrinter ticket = new TicketPrinter(productosParaImprimir, lblMesa.Text, lblMesero.Text, modalidad, false);
             ticket.ImprimirComanda(Conexion.impresora2);
         }
         private string ObtenerNombreProducto(string idInventario)
@@ -616,13 +616,18 @@ namespace Punto_Venta
                     else if (tabControl1.SelectedIndex == 2)
                     {
                         string query = "INSERT INTO Mesas (Nombre, IdMesero,Impresion,Estatus) " +
-                                       "VALUES ('Para llevar', @IdMesero, 0, @Estatus);" +
+                                       "VALUES ('', @IdMesero, 0, @Estatus);" +
                                        "SELECT SCOPE_IDENTITY();";
                         using (SqlCommand cmd = new SqlCommand(query, conectar))
                         {
                             cmd.Parameters.AddWithValue("@IdMesero", idMesero);
                             cmd.Parameters.AddWithValue("@Estatus", "COCINA");
                             idMesa = Convert.ToInt32(cmd.ExecuteScalar());
+                            using (SqlCommand cmd2 = new SqlCommand("UPDATE MESAS SET Nombre = CONCAT('Para llevar - ', @IdMesa)  WHERE IdMesa = @IdMesa;", conectar))
+                            {
+                                cmd2.Parameters.AddWithValue("@IdMesa", idMesa);
+                                cmd2.ExecuteNonQuery();
+                            }
                         }
                     }
                     if (checkBox3.Checked)
@@ -635,7 +640,7 @@ namespace Punto_Venta
                     }
                     else if (idMesa != 0)
                     {
-                        using (SqlCommand cmd = new SqlCommand("DELETE AM FROM ArticulosMesa AM INNER JOIN MESAS M ON AM.IdMesa = M.IdMesa WHERE M.Estatus = 'NUEVA';", conectar))
+                        using (SqlCommand cmd = new SqlCommand("DELETE FROM MESAS WHERE Estatus = 'NUEVA';", conectar))
                         {
                             cmd.ExecuteNonQuery();
                         }
@@ -699,7 +704,7 @@ namespace Punto_Venta
                     cobrar.print = "0";
                     cobrar.lblPersonas.Text = "N/A";
                     cobrar.FormBorderStyle = FormBorderStyle.None;
-                    cobrar.ShowDialog();
+                    //cobrar.ShowDialog();
                     ReiniciarForm();
                 }
                 else

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -13,7 +12,6 @@ namespace Punto_Venta
         public double efectivo { get; set; }
         public double total { get; set; }
 
-        // El Diccionario donde guardaremos cada pago separado
         public Dictionary<string, double> PagosRealizados { get; set; }
 
         public frmPago()
@@ -28,16 +26,41 @@ namespace Punto_Venta
             txtRestante.Text = $"{total:C}";
             textBox3.Text = "$0.00";
 
+            // Vincular el objetivo de escritura de UC_Numpad a textBox2
+            ucNumpad1.TargetTextBox = textBox2;
+            ucNumpad1.EnterPressed += UcNumpad1_EnterPressed;
+
             string[] opcionesPago = {
                 "01=EFECTIVO",
                 "03=TRANSFERENCIA ELECTRONICA DE FONDOS",
-                "04=TARJETA BANCARIA"
+                "04=TARJETA BANCARIA",
+                "PROPINA"
             };
             cmbPago.Items.AddRange(opcionesPago);
             cmbPago.SelectedIndex = 0;
-            // Forzar el diseño Normal al abrir
+
             chkMixto.Checked = false;
             ConfigurarDiseno();
+        }
+
+        // Evento disparado al pulsar 'OK' en el UC_Numpad
+        private void UcNumpad1_EnterPressed(object sender, EventArgs e)
+        {
+            if (chkMixto.Checked)
+            {
+                AgregarMonto();
+            }
+            else
+            {
+                if (double.TryParse(textBox2.Text.Replace("$", ""), out double capturado))
+                {
+                    ProcesarCobroSimple(capturado);
+                }
+                else
+                {
+                    MessageBox.Show("Ingresa una cantidad válida", "ALTO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void chkMixto_CheckedChanged(object sender, EventArgs e)
@@ -45,7 +68,6 @@ namespace Punto_Venta
             ConfigurarDiseno();
         }
 
-        // Esta función encoge o agranda el formulario
         private void ConfigurarDiseno()
         {
             bool mixto = chkMixto.Checked;
@@ -60,102 +82,91 @@ namespace Punto_Venta
 
             if (mixto)
             {
-                // --- MODO MIXTO (Formulario Grande) ---
-                this.Height = 480;
-
                 label2.Top = 115;
                 textBox2.Top = 109;
                 label2.Text = "MONTO:";
 
                 label3.Top = 365;
                 textBox3.Top = 361;
-                button1.Top = 415;
-                btnAceptar.Top = 415;
 
                 PagosRealizados.Clear();
                 ActualizarPagos();
                 cmbPago.SelectedIndex = 0;
                 textBox2.Clear();
-                textBox2.Focus();
             }
             else
             {
-                // --- MODO ORIGINAL (Formulario Pequeño) ---
-                this.Height = 230;
-
                 label2.Top = 65;
                 textBox2.Top = 59;
                 label2.Text = "EFECTIVO:";
 
                 label3.Top = 115;
                 textBox3.Top = 109;
-                button1.Top = 165;
-                btnAceptar.Top = 165;
 
                 PagosRealizados.Clear();
                 textBox2.Clear();
                 textBox3.Text = "$0.00";
                 efectivo = 0;
                 cambio = 0;
-                textBox2.Focus();
-            }
-        }
-
-        private void cmbPago_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                textBox2.Focus();
             }
         }
 
         private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Solo permitir números y punto decimal
-            if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back) && (e.KeyChar != (char)Keys.Enter) && e.KeyChar != '.')
+            if (!char.IsNumber(e.KeyChar) && e.KeyChar != (char)Keys.Back && e.KeyChar != (char)Keys.Enter && e.KeyChar != '.')
             {
                 e.Handled = true;
                 return;
             }
-            if ((e.KeyChar == '.') && ((sender as System.Windows.Forms.TextBox).Text.IndexOf('.') > -1))
+
+            if (e.KeyChar == '.' && (sender as TextBox).Text.IndexOf('.') > -1)
             {
                 e.Handled = true;
+                return;
             }
 
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
-                if (chkMixto.Checked)
+                UcNumpad1_EnterPressed(sender, e);
+            }
+        }
+
+        #region --- BOTONERA RÁPIDA DE BILLETES (TOUCH) ---
+
+        private void btnBillete_Click(object sender, EventArgs e)
+        {
+            if (sender is Button btn)
+            {
+                string valorLimpio = new string(btn.Text.Where(char.IsDigit).ToArray());
+                if (double.TryParse(valorLimpio, out double billete))
                 {
-                    AgregarMonto();
-                }
-                else
-                {
-                    // LÓGICA DE COBRO NORMAL (Original)
-                    if (string.IsNullOrWhiteSpace(textBox2.Text))
-                    {
-                        MessageBox.Show("Ingresa una cantidad valida", "ALTO", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    double.TryParse(textBox2.Text.Replace("$", ""), out double actual);
 
-                    double capturado = Convert.ToDouble(textBox2.Text);
+                    double nuevoMonto = actual + billete;
+                    textBox2.Text = nuevoMonto.ToString("0.00");
 
-                    if (capturado < total)
+                    if (!chkMixto.Checked && nuevoMonto >= total)
                     {
-                        textBox2.Clear();
-                        MessageBox.Show("Ingresa una cantidad valida", "ALTO", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        efectivo = capturado;
-                        cambio = capturado - total;
-                        textBox3.Text = $"{cambio:C}";
-                        textBox2.Text = $"{capturado:C}";
-
-                        btnAceptar.Focus(); // Pasa el foco al botón Aceptar
+                        ProcesarCobroSimple(nuevoMonto);
                     }
                 }
             }
         }
+
+        private void btnExacto_Click(object sender, EventArgs e)
+        {
+            double sumaActual = PagosRealizados.Where(p => !p.Key.Contains("PROPINA")).Sum(p => p.Value);
+            double restante = total - sumaActual;
+
+            textBox2.Text = restante > 0 ? restante.ToString("0.00") : total.ToString("0.00");
+
+            if (!chkMixto.Checked)
+            {
+                ProcesarCobroSimple(total);
+            }
+        }
+
+        #endregion
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -165,23 +176,20 @@ namespace Punto_Venta
         private void AgregarMonto()
         {
             if (string.IsNullOrWhiteSpace(textBox2.Text)) return;
+            if (!double.TryParse(textBox2.Text.Replace("$", ""), out double montoAgregado)) return;
 
-            double montoAgregado = Convert.ToDouble(textBox2.Text);
             string metodo = cmbPago.Text;
 
-            double sumaActual = PagosRealizados.Values.Sum();
+            double sumaActual = PagosRealizados.Where(p => !p.Key.Contains("PROPINA")).Sum(p => p.Value);
             double restante = total - sumaActual;
 
             if (montoAgregado > 0)
             {
-                // Regla: Si no es Efectivo, no puede exceder el límite
-                if (!metodo.Contains("EFECTIVO") && montoAgregado > restante)
+                if (!metodo.Contains("EFECTIVO") && !metodo.Contains("PROPINA") && montoAgregado > restante)
                 {
                     MessageBox.Show($"El pago con {metodo} no puede ser mayor al saldo restante ({restante:C}).\n\nSolo el Efectivo puede generar cambio.",
                                     "Monto Excedido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
                     textBox2.SelectAll();
-                    textBox2.Focus();
                     return;
                 }
 
@@ -202,13 +210,17 @@ namespace Punto_Venta
         private void ActualizarPagos()
         {
             dgvPagos.Rows.Clear();
-            double suma = 0;
+            double sumaVenta = 0;
             efectivo = 0;
 
             foreach (var pago in PagosRealizados)
             {
                 dgvPagos.Rows.Add(pago.Key, $"{pago.Value:C}");
-                suma += pago.Value;
+
+                if (!pago.Key.Contains("PROPINA"))
+                {
+                    sumaVenta += pago.Value;
+                }
 
                 if (pago.Key.Contains("EFECTIVO"))
                 {
@@ -216,14 +228,13 @@ namespace Punto_Venta
                 }
             }
 
-            double restante = total - suma;
+            double restante = total - sumaVenta;
 
             if (restante <= 0)
             {
                 txtRestante.Text = "$0.00";
                 cambio = Math.Abs(restante);
                 textBox3.Text = $"{cambio:C}";
-
                 btnAceptar.Focus();
             }
             else
@@ -231,7 +242,23 @@ namespace Punto_Venta
                 txtRestante.Text = $"{restante:C}";
                 cambio = 0;
                 textBox3.Text = "$0.00";
-                cmbPago.Focus();
+            }
+        }
+
+        private void ProcesarCobroSimple(double capturado)
+        {
+            if (capturado < total)
+            {
+                textBox2.Clear();
+                MessageBox.Show("Ingresa una cantidad válida o mayor al total.", "Monto Insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                efectivo = capturado;
+                cambio = capturado - total;
+                textBox3.Text = $"{cambio:C}";
+                textBox2.Text = $"{capturado:C}";
+                btnAceptar.Focus();
             }
         }
 
@@ -239,18 +266,18 @@ namespace Punto_Venta
         {
             PagosRealizados.Clear();
             ActualizarPagos();
-            textBox2.Focus();
+            textBox2.Clear();
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (!btnAceptar.Enabled) return; // Anti-Doble Clic
+            if (!btnAceptar.Enabled) return;
 
             if (chkMixto.Checked)
             {
-                // FINALIZACIÓN MODO MIXTO
-                double suma = PagosRealizados.Values.Sum();
-                if (suma >= total)
+                double sumaVenta = PagosRealizados.Where(p => !p.Key.Contains("PROPINA")).Sum(p => p.Value);
+
+                if (sumaVenta >= total)
                 {
                     btnAceptar.Enabled = false;
 
@@ -264,7 +291,6 @@ namespace Punto_Venta
                         }
                     }
                     this.DialogResult = DialogResult.OK;
-                    CerrarTeclado();
                 }
                 else
                 {
@@ -273,77 +299,30 @@ namespace Punto_Venta
             }
             else
             {
-                // FINALIZACIÓN MODO ORIGINAL
+                if (double.TryParse(textBox2.Text.Replace("$", ""), out double capturado) && capturado >= total)
+                {
+                    efectivo = capturado;
+                    cambio = capturado - total;
+                }
+
                 if (efectivo >= total)
                 {
                     btnAceptar.Enabled = false;
                     PagosRealizados.Clear();
-
-                    // Emulamos el diccionario para que frmVentas lo procese igual de fácil
                     PagosRealizados.Add("01=EFECTIVO", total);
 
                     this.DialogResult = DialogResult.OK;
-                    CerrarTeclado();
                 }
                 else
                 {
                     MessageBox.Show("Aún no ha ingresado el efectivo correcto.", "Alto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    textBox2.Focus();
                 }
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Botón: Seguir Cobrando / Cancelar
             this.DialogResult = DialogResult.Cancel;
-            if (Conexion.AbrirTeclado)
-                CerrarTeclado();
-        }
-
-        private void textBox2_Enter(object sender, EventArgs e)
-        {
-            if (Conexion.AbrirTeclado)
-            {
-                AbrirTeclado();
-            }
-        }
-
-        /// <summary>
-        /// Abre el ejecutable FreeVK solo si no se encuentra en ejecución actualmente.
-        /// </summary>
-        private void AbrirTeclado()
-        {
-            string RutaTeclado = @"C:\Jaeger Soft\FreeVK.exe";
-            try
-            {
-                if (File.Exists(RutaTeclado))
-                {
-                    // Verifica si el proceso YA está corriendo para evitar abrir múltiples instancias
-                    if (Process.GetProcessesByName("FreeVK").Length == 0)
-                    {
-                        Process.Start(RutaTeclado);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error al abrir el teclado: " + ex.Message);
-            }
-        }
-        public void CerrarTeclado()
-        {
-            try
-            {
-                foreach (var proceso in Process.GetProcessesByName("FreeVK"))
-                {
-                    proceso.Kill();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error al cerrar el teclado: " + ex.Message);
-            }
         }
     }
 }

@@ -72,7 +72,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(4, 70);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(712, 404);
+            this.dataGridView1.Size = new System.Drawing.Size(995, 477);
             this.dataGridView1.TabIndex = 12;
             // 
             // label1
@@ -105,6 +105,7 @@
             this.button1.TabIndex = 9;
             this.button1.Text = "Imprimir";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label2
@@ -142,7 +143,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(720, 477);
+            this.ClientSize = new System.Drawing.Size(1003, 550);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dateTimePicker2);

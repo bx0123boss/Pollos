@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JaegerSoft;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -79,6 +80,8 @@ namespace Punto_Venta
             dataGridView1.Columns[0].Visible = false;
             lblMonto.Text = $"{total:C}";
             lblUtilidad.Text = $"{utilidad:C}";
+            button1.Visible = Sesion.TienePermiso("REIM_TICKET");
+            button2.Visible = Sesion.TienePermiso("MOD_CANC_VENTAS");
 
         }
 

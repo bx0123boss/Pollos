@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JaegerSoft;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -22,11 +23,15 @@ namespace Punto_Venta
         public int idCliente = 0;
         private int folio;
 
+        // Propiedad para conservar el desglose de pagos procesados
+        private Dictionary<string, double> ultimosPagosRealizados = new Dictionary<string, double>();
+
         public frmCobros()
         {
             InitializeComponent();
             this.MinimumSize = new Size(810, 400);
         }
+
         private double RecalcularTotal
         {
             get
@@ -46,12 +51,13 @@ namespace Punto_Venta
         {
             if (print == "1")
                 button1.Visible = false;
+
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
                 DataSet ds = new DataSet();
                 string query = @"
-                   SELECT 
+                    SELECT 
                         A.IdInventario, 
                         A.IdArticulosMesa, 
                         A.Cantidad, 
@@ -68,15 +74,14 @@ namespace Punto_Venta
                         A.Comentario, 
                         A.Ids, 
                         CASE 
-                            WHEN A.Ids IS NOT NULL THEN ISNULL(SumCostoTotal.SumCosto, 0) -- Usar la sumatoria calculada
-                            ELSE B.CostoTotal -- Usar el CostoTotal normal
+                            WHEN A.Ids IS NOT NULL THEN ISNULL(SumCostoTotal.SumCosto, 0)
+                            ELSE B.CostoTotal 
                         END AS CostoTotal, 
                         A.IdPromo
                     FROM ArticulosMesa A
                     INNER JOIN INVENTARIO B ON A.IdInventario = B.IdInventario
                     LEFT JOIN Promos P ON A.IdPromo = P.IdPromo
                     OUTER APPLY (
-                        -- Extraer IdProducto desde A.Ids y calcular la sumatoria de CostoTotal
                         SELECT SUM(I.CostoTotal) AS SumCosto
                         FROM dbo.SplitString(A.Ids, ';') S
                         CROSS APPLY (
@@ -87,11 +92,13 @@ namespace Punto_Venta
                     WHERE A.IdUsuarioCancelo IS NULL 
                     AND A.Estatus = 'COCINA'
                     AND A.IdMesa = @Mesa";
+
                 using (SqlDataAdapter da = new SqlDataAdapter(query, conectar))
                 {
                     da.SelectCommand.Parameters.AddWithValue("@Mesa", $"{lblID.Text}");
-                    da.Fill(ds, "Articulos"); // Cambia "Id" por "Origen" para mayor claridad
+                    da.Fill(ds, "Articulos");
                 }
+
                 if (idCliente != 0)
                 {
                     using (SqlCommand cmd = new SqlCommand("SELECT * FROM Clientes WHERE IdCliente= @IdCliente;", conectar))
@@ -111,9 +118,9 @@ namespace Punto_Venta
                                 gbClientes.Visible = true;
                             }
                         }
-
                     }
                 }
+
                 dataGridView1.DataSource = ds.Tables["Articulos"];
                 dataGridView1.Columns["Precio"].DefaultCellStyle.Format = "N2";
                 dataGridView1.Columns["Total"].DefaultCellStyle.Format = "N2";
@@ -124,7 +131,6 @@ namespace Punto_Venta
                 dataGridView1.Columns[1].Visible = false;
                 lblTotal.Text = $"{RecalcularTotal:C}";
             }
-
         }
 
         public void imprimir()
@@ -132,20 +138,19 @@ namespace Punto_Venta
             using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
             {
                 conectar.Open();
-
                 using (SqlCommand cmd = new SqlCommand("UPDATE MESAS SET Impresion = 1 WHERE IdMesa = @IdMesa;", conectar))
                 {
                     cmd.Parameters.AddWithValue("@IdMesa", lblID.Text);
                     cmd.ExecuteNonQuery();
                 }
             }
+
             List<Producto> listaProductos = new List<Producto>();
 
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
                 var row = dataGridView1.Rows[i];
 
-                // Producto principal
                 listaProductos.Add(new Producto
                 {
                     Nombre = row.Cells["Nombre"].Value?.ToString() ?? "",
@@ -155,7 +160,6 @@ namespace Punto_Venta
                     Comentario = row.Cells["Comentario"].Value?.ToString()
                 });
 
-                // Verificación si es combo/paquete con Ids secundarios
                 string idInventario = row.Cells["IdInventario"].Value?.ToString() ?? "";
                 string ids = row.Cells["Ids"].Value?.ToString() ?? "";
 
@@ -195,7 +199,7 @@ namespace Punto_Venta
                 }
             }
 
-            // 3. Preparar los totales para el ticket respetando el orden
+            // Preparar los totales para el ticket respetando los conceptos adicionales
             Dictionary<string, double> totalesDict = new Dictionary<string, double>();
 
             if (descuento > 0)
@@ -205,10 +209,30 @@ namespace Punto_Venta
 
             totalesDict.Add("TOTAL", total - descuento);
 
-            // 4. Instanciar y llamar a TicketPrinter
+            // Incluir el desglose de Propina en los totales del TicketPrinter si existe
+            if (ultimosPagosRealizados != null)
+            {
+                double propina = ultimosPagosRealizados
+                    .Where(p => p.Key.Contains("PROPINA"))
+                    .Sum(p => p.Value);
+
+                if (propina > 0)
+                {
+                    totalesDict.Add("PROPINA", propina);
+                }
+            }
+
             string[] encabezados = Conexion.datosTicket ?? new string[] { };
             string[] pie = Conexion.pieDeTicket ?? new string[] { };
             string logoPath = @"C:\Jaeger Soft\logo.jpg";
+
+            // Determinar la forma de pago excluyendo la propina para el resumen principal
+            string formaPagoImpresion = "EFECTIVO";
+            if (ultimosPagosRealizados != null && ultimosPagosRealizados.Count > 0)
+            {
+                var pagosSinPropina = ultimosPagosRealizados.Where(p => !p.Key.Contains("PROPINA")).ToList();
+                formaPagoImpresion = pagosSinPropina.Count > 1 ? "MIXTO" : (pagosSinPropina.FirstOrDefault().Key ?? "EFECTIVO");
+            }
 
             TicketPrinter printer = new TicketPrinter(
                 encabezados: encabezados,
@@ -221,17 +245,18 @@ namespace Punto_Venta
                 total: (total - descuento),
                 corte: false,
                 totales: totalesDict,
-                formaPago: "EFECTIVO"
+                formaPago: formaPagoImpresion
             );
             printer.ImprimirTicket();
 
-            button1.Hide();
+            //button1.Hide();
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             imprimir();
-
         }
+
         private void txtPago_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
@@ -239,7 +264,6 @@ namespace Punto_Venta
                 e.Handled = true;
             }
 
-            // only allow one decimal point
             if ((e.KeyChar == '.') && ((sender as System.Windows.Forms.TextBox).Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
@@ -265,17 +289,14 @@ namespace Punto_Venta
                         lol = Math.Truncate((lol * (iva / 100 + 1)) * 100) / 100;
                         lblTotal.Text = $"{lol:C}";
                     }
-
                 }
-
             }
             else
             {
                 lblTotal.Text = $"{total:C}";
             }
-
-
         }
+
         private void button2_Click(object sender, EventArgs e)
         {
             if (dataGridView1.RowCount == 0)
@@ -298,6 +319,7 @@ namespace Punto_Venta
                     efectivoRecibido = formPago.efectivo;
                     cambioDevuelto = formPago.cambio;
                     pagosFinales = formPago.PagosRealizados;
+                    ultimosPagosRealizados = new Dictionary<string, double>(formPago.PagosRealizados);
                 }
                 else
                 {
@@ -305,8 +327,9 @@ namespace Punto_Venta
                 }
             }
 
-            // Determinar la etiqueta principal de la forma de pago
-            string formaPagoPrincipal = pagosFinales.Count > 1 ? "MIXTO" : (pagosFinales.FirstOrDefault().Key ?? "EFECTIVO");
+            // Excluir PROPINA para determinar la FormaPago del Folio
+            var pagosVenta = pagosFinales.Where(p => !p.Key.Contains("PROPINA")).ToList();
+            string formaPagoPrincipal = pagosVenta.Count > 1 ? "MIXTO" : (pagosVenta.FirstOrDefault().Key ?? "EFECTIVO");
 
             double ventas = 0;
             int mesas = 0;
@@ -318,7 +341,7 @@ namespace Punto_Venta
 
                 try
                 {
-                    // 2. Insertar el folio principal con la forma de pago agregada
+                    // 2. Insertar el folio principal
                     string insertFolioQuery = @"INSERT INTO Folios (ModalidadVenta, Estatus, idCliente, FechaHora, Total, Descuento, Utilidad, IdMesa, FormaPago) 
                                         VALUES (@ModalidadVenta, @Estatus, @idCliente, @FechaHora, @Total, @Descuento, @Utilidad, @IdMesa, @FormaPago); 
                                         SELECT SCOPE_IDENTITY();";
@@ -348,7 +371,7 @@ namespace Punto_Venta
                         lastIdFolio = Convert.ToInt32(cmd.ExecuteScalar());
                     }
 
-                    // 3. Guardar el detalle de los artículos cobrados
+                    // 3. Guardar detalle de los artículos cobrados
                     for (int i = 0; i < dataGridView1.RowCount; i++)
                     {
                         string insertArticuloQuery = @"INSERT INTO ArticulosFolio (IdInventario, IdFolio, Cantidad, Comentario, Total, IdExtra, IdPromo) 
@@ -381,8 +404,8 @@ namespace Punto_Venta
                         using (SqlCommand cmd2 = new SqlCommand(tempInvQuery, conectar, transaccion))
                         {
                             cmd2.Parameters.AddWithValue("@id", dataGridView1.Rows[i].Cells["IdInventario"].Value?.ToString() == "0"
-                                                                                ? dataGridView1.Rows[i].Cells["IdPromo"].Value
-                                                                                : dataGridView1.Rows[i].Cells["IdInventario"].Value);
+                                                                ? dataGridView1.Rows[i].Cells["IdPromo"].Value
+                                                                : dataGridView1.Rows[i].Cells["IdInventario"].Value);
                             cmd2.Parameters.AddWithValue("@cantidad", Convert.ToDecimal(dataGridView1.Rows[i].Cells["Cantidad"].Value));
                             cmd2.Parameters.AddWithValue("@ide", (object)ide ?? DBNull.Value);
 
@@ -390,12 +413,12 @@ namespace Punto_Venta
                         }
                     }
 
-                    // 4. REGISTRAR LOS PAGOS INDIVIDUALES EN VentasPagos Y EN EL CORTE DE CAJA
+                    // 4. REGISTRAR LOS PAGOS E INCLUIR LA PROPINA EN VentasPagos Y EN CORTE
                     foreach (KeyValuePair<string, double> pago in pagosFinales)
                     {
                         if (pago.Value > 0)
                         {
-                            // Guardar en tabla de desglose VentasPagos
+                            // Guardar en VentasPagos (incluye PROPINA)
                             string queryVentaPago = "INSERT INTO VentasPagos (IdFolio, MetodoPago, Monto) VALUES (@IdFolio, @Metodo, @Monto)";
                             using (SqlCommand cmdVP = new SqlCommand(queryVentaPago, conectar, transaccion))
                             {
@@ -405,12 +428,16 @@ namespace Punto_Venta
                                 cmdVP.ExecuteNonQuery();
                             }
 
-                            // Guardar movimiento de Corte por cada método de pago
+                            // Guardar en CORTE identificando la propina
+                            string conceptoCorte = pago.Key.Contains("PROPINA")
+                                ? $"PROPINA FOLIO: {lastIdFolio}"
+                                : $"VENTA FOLIO: {lastIdFolio} [{pago.Key}]";
+
                             string queryCorte = @"INSERT INTO CORTE (Concepto, Total, FechaHora, FormaPago) 
                                           VALUES (@Concepto, @Total, GETDATE(), @FormaPago)";
                             using (SqlCommand cmdCorte = new SqlCommand(queryCorte, conectar, transaccion))
                             {
-                                cmdCorte.Parameters.AddWithValue("@Concepto", $"VENTA FOLIO: {lastIdFolio} [{pago.Key}]");
+                                cmdCorte.Parameters.AddWithValue("@Concepto", conceptoCorte);
                                 cmdCorte.Parameters.AddWithValue("@Total", pago.Value);
                                 cmdCorte.Parameters.AddWithValue("@FormaPago", pago.Key);
                                 cmdCorte.ExecuteNonQuery();
@@ -457,13 +484,13 @@ namespace Punto_Venta
                         cmd2.ExecuteNonQuery();
                     }
 
-                    // Si todo salió bien, confirmamos la transacción
+                    // Confirmamos la transacción
                     transaccion.Commit();
 
                     // 6. Impresión de Ticket
                     if (print == "0")
                     {
-                       // imprimir();
+                        // imprimir();
                     }
 
                     DialogResult dialogResult = MessageBox.Show("¿Imprimir otro ticket?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -482,117 +509,151 @@ namespace Punto_Venta
                 }
             }
         }
+
         private void button3_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.CurrentRow != null) // Verifica si hay una fila seleccionada
+            if (dataGridView1.CurrentRow == null)
             {
-                    using (frmComentarios com = new frmComentarios())
-                    {
-                        if (com.ShowDialog() == DialogResult.OK)
-                        {
-                            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
-                            {
-                                conectar.Open();
+                MessageBox.Show("Seleccione un producto PARA CANCELAR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                                using (SqlCommand cmd = new SqlCommand("UPDATE ArticulosMesa SET Comentario= @Comentario, Estatus = 'CANCELADO', IdUsuarioCancelo = @IdUsuarioCancelo WHERE IdArticulosMesa = @IdArticulosMesa;", conectar))
-                                {
-                                    cmd.Parameters.AddWithValue("@Comentario", com.Comentario);
-                                    cmd.Parameters.AddWithValue("@Estatus", "CANCELADO");
-                                    cmd.Parameters.AddWithValue("@IdUsuarioCancelo", idMesero);
-                                    cmd.Parameters.AddWithValue("@IdArticulosMesa", dataGridView1[1, dataGridView1.CurrentRow.Index].Value);
+            bool permisoMeseroMesa = idMesero > 0 && UsuarioTienePermiso(idMesero, "MOD_CANC_MESA");
 
-                                    cmd.ExecuteNonQuery();
-                                }
-                                if (dataGridView1.RowCount == 1)
-                                {
-                                    using (SqlCommand cmd = new SqlCommand("UPDATE Mesas SET Estatus = 'CANCELADO' WHERE IdMesa = @IdMesa;", conectar))
-                                    {
-                                        cmd.Parameters.AddWithValue("@IdMesa", lblID.Text);
-
-                                        cmd.ExecuteNonQuery();
-                                        MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        this.Close();
-                                    }
-
-                                }
-                                else
-                                {
-                                    dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
-                                    ResetearDescuento();
-                                    MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                }
-                            }
-                        }
-                        else
-                            MessageBox.Show("SE REQUIERE UN COMENTARIO PARA CANCELAR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else
+            // 1. Si no tiene permiso, pedir la contraseña de un usuario autorizado (Administrador)
+            if (!permisoMeseroMesa)
+            {
+                using (frmClaveVendendor ori = new frmClaveVendendor())
                 {
-                    using (frmClaveVendendor ori = new frmClaveVendendor())
+                    if (ori.ShowDialog() == DialogResult.OK)
                     {
-                        if (ori.ShowDialog() == DialogResult.OK)
+                        tipoUser = ori.Tipo;
+                        if (tipoUser != "ADMINISTRADOR")
                         {
-                            tipoUser = ori.Tipo;
-                            if (tipoUser == "Administrador" || tipoUser == "SUPERVISOR")
-                            {
-
-                                using (frmComentarios com = new frmComentarios())
-                                {
-                                    if (com.ShowDialog() == DialogResult.OK)
-                                    {
-                                        using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
-                                        {
-                                            conectar.Open();
-
-                                            using (SqlCommand cmd = new SqlCommand("UPDATE ArticulosMesa SET Comentario= @Comentario, Estatus = 'CANCELADO', IdUsuarioCancelo = @IdUsuarioCancelo WHERE IdArticulosMesa = @IdArticulosMesa;", conectar))
-                                            {
-                                                cmd.Parameters.AddWithValue("@Comentario", com.Comentario);
-                                                cmd.Parameters.AddWithValue("@Estatus", "CANCELADO");
-                                                cmd.Parameters.AddWithValue("@IdUsuarioCancelo", idMesero);
-                                                cmd.Parameters.AddWithValue("@IdArticulosMesa", dataGridView1[0, dataGridView1.CurrentRow.Index].Value);
-
-                                                cmd.ExecuteNonQuery();
-                                            }
-                                            if (dataGridView1.RowCount == 1)
-                                            {
-                                                using (SqlCommand cmd = new SqlCommand("UPDATE Mesas SET Estatus = 'CANCELADO' WHERE IdMesa = @IdMesa;", conectar))
-                                                {
-                                                    cmd.Parameters.AddWithValue("@IdMesa", lblID.Text);
-
-                                                    cmd.ExecuteNonQuery();
-                                                    MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                                    this.Close();
-                                                }
-
-                                            }
-                                            else
-                                            {
-                                                dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
-                                                ResetearDescuento();
-                                                MessageBox.Show("EL PRODUCTO SE HA ELIMINADO CON EXITO!", "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                            }
-                                        }
-                                    }
-                                    else
-                                        MessageBox.Show("SE REQUIERE UN COMENTARIO PARA CANCELAR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
-                            else
-                                MessageBox.Show("SE REQUIERE CLAVE DE ADMINISTRADOR PARA CANCELAR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("El usuario ingresado no cuenta con privilegios de Administrador para autorizar la cancelación.",
+                                            "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            return;
                         }
                     }
+                    else
+                    {
+                        return; // El usuario cerró o canceló la ventana de autorización
+                    }
                 }
-            
-        }
+            }
 
+            // 2. Solicitar el motivo/comentario obligatorio para la auditoría de cancelación
+            using (frmComentarios com = new frmComentarios())
+            {
+                if (com.ShowDialog() != DialogResult.OK || string.IsNullOrWhiteSpace(com.Comentario))
+                {
+                    MessageBox.Show("SE REQUIERE UN COMENTARIO PARA CANCELAR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    conectar.Open();
+
+                    // 3. Cancelar el artículo seleccionado
+                    string queryCancelArticulo = @"UPDATE ArticulosMesa 
+                                         SET Comentario = @Comentario, 
+                                             Estatus = 'CANCELADO', 
+                                             IdUsuarioCancelo = @IdUsuarioCancelo 
+                                         WHERE IdArticulosMesa = @IdArticulosMesa;";
+
+                    using (SqlCommand cmd = new SqlCommand(queryCancelArticulo, conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@Comentario", com.Comentario);
+                        cmd.Parameters.AddWithValue("@IdUsuarioCancelo", idMesero);
+                        cmd.Parameters.AddWithValue("@IdArticulosMesa", dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["IdArticulosMesa"].Value);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // 4. SELECT COUNT: Verificar en la BD si quedan artículos ACTIVOS en la mesa
+                    string queryCount = @"SELECT COUNT(1) 
+                                 FROM ArticulosMesa 
+                                 WHERE IdMesa = @IdMesa 
+                                   AND Estatus = 'COCINA' 
+                                   AND IdUsuarioCancelo IS NULL;";
+
+                    int articulosRestantes = 0;
+                    using (SqlCommand cmdCount = new SqlCommand(queryCount, conectar))
+                    {
+                        cmdCount.Parameters.AddWithValue("@IdMesa", lblID.Text);
+                        articulosRestantes = Convert.ToInt32(cmdCount.ExecuteScalar());
+                    }
+                    List<Producto> productosParaImprimir = new List<Producto>();
+                    productosParaImprimir.Add(new Producto
+                    {
+                        Nombre = dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Nombre"].Value?.ToString() ?? "",
+                        Cantidad = Convert.ToDouble(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Cantidad"].Value),
+                        PrecioUnitario = Convert.ToDouble(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Precio"].Value),
+                        Total = Convert.ToDouble(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Total"].Value),
+                        Comentario = com.Comentario
+                    });
+                    TicketPrinter ticket = new TicketPrinter(productosParaImprimir, lblMesa.Text, lblMesero.Text, null, true);
+                    ticket.ImprimirComanda(Conexion.impresora2);
+                    // 5. Si ya NO quedan artículos activos en la mesa, cancelar la mesa completa
+                    if (articulosRestantes == 0)
+                    {
+                        using (SqlCommand cmdMesa = new SqlCommand("UPDATE MESAS SET Estatus = 'CANCELADO' WHERE IdMesa = @IdMesa;", conectar))
+                        {
+                            cmdMesa.Parameters.AddWithValue("@IdMesa", lblID.Text);
+                            cmdMesa.ExecuteNonQuery();
+                        }
+
+                        MessageBox.Show("¡EL PRODUCTO SE HA ELIMINADO Y LA MESA FUE CANCELADA CON ÉXITO AL NO QUEDAR MÁS ARTÍCULOS!", "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.DialogResult = DialogResult.OK;
+                    }
+                    else
+                    {
+                        // Si aún quedan más artículos, solo remover de la vista local y recalcular totals
+                        dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+                        ResetearDescuento();
+                        MessageBox.Show("¡EL PRODUCTO SE HA ELIMINADO CON ÉXITO!", "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// Consulta en la Base de Datos si un usuario específico (ej. el mesero de la mesa) 
+        /// tiene un permiso asignado o acceso total (ADMIN_TODO).
+        /// </summary>
+        private bool UsuarioTienePermiso(int idUsuario, string clavePermiso)
+        {
+            try
+            {
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+                {
+                    conectar.Open();
+                    string query = @"SELECT COUNT(1) 
+                             FROM PermisosUsuario 
+                             WHERE IdUsuario = @IdUsuario 
+                               AND (Permiso = @Permiso OR Permiso= 'ADMIN_TODO');";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conectar))
+                    {
+                        cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                        cmd.Parameters.AddWithValue("@Permiso", clavePermiso);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
         private void printDocument1_PrintPage_1(object sender, PrintPageEventArgs e)
         {
             int posicion = 10;
-            //RESIZE
             Image logo = Image.FromFile("C:\\Jaeger Soft\\logo.jpg");
             e.Graphics.DrawImage(logo, new PointF(1, 10));
-            //LOGO
+
             posicion += 200;
             e.Graphics.DrawString("********  NOTA DE CONSUMO  ********", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
             posicion += 20;
@@ -604,18 +665,16 @@ namespace Punto_Venta
             posicion += 20;
             e.Graphics.DrawString("FECHA: " + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
             posicion += 50;
-            //Titulo Columna
+
             e.Graphics.DrawString("Cant   Producto        P.Unit  Importe", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new Point(1, posicion));
             posicion += 20;
             e.Graphics.DrawLine(new Pen(Color.Black), 1, posicion, 420, posicion);
             posicion += 10;
-            //Lista de Productos
+
             StringFormat sf = new StringFormat();
             sf.Alignment = StringAlignment.Far;
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
-
-
                 double precio = Convert.ToDouble(dataGridView1.Rows[i].Cells["Total"].Value);
                 string producto = dataGridView1.Rows[i].Cells["Nombre"].Value.ToString();
                 double cant = Convert.ToDouble(dataGridView1.Rows[i].Cells["Cantidad"].Value);
@@ -633,6 +692,7 @@ namespace Punto_Venta
                 e.Graphics.DrawString(uni, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(230, posicion), sf);
                 e.Graphics.DrawString(String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", precio), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(280, posicion), sf);
                 posicion += 20;
+
                 string ide;
                 if (dataGridView1[0, i].Value.ToString().Substring(0, 1) == "C")
                 {
@@ -678,22 +738,37 @@ namespace Punto_Venta
                                                 RESULT += ids2[0] + " : " + sqlDataReader[1].ToString() + "\n";
                                             }
                                         }
-
                                     }
-
                                 }
                             }
                         }
                     }
                 }
-                //ticket.AddItem(item, producto, uni + "|" + String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", precio));
             }
-            double to = Convert.ToDouble(total);
+
+            double to = Convert.ToDouble(total - descuento);
             string toty = String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", to);
             e.Graphics.DrawLine(new Pen(Color.Black), 210, posicion + 10, 420, posicion + 10);
             posicion += 15;
             e.Graphics.DrawString("TOTAL: $" + toty, new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new Point(280, posicion), sf);
-            posicion += 50;
+            posicion += 20;
+
+            // Imprimir línea de PROPINA si existe en la impresión tradicional de GDI+
+            if (ultimosPagosRealizados != null)
+            {
+                double propina = ultimosPagosRealizados
+                    .Where(p => p.Key.Contains("PROPINA"))
+                    .Sum(p => p.Value);
+
+                if (propina > 0)
+                {
+                    string propinaStr = String.Format(CultureInfo.InvariantCulture, "{0:0,0.00}", propina);
+                    e.Graphics.DrawString("PROPINA: $" + propinaStr, new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new Point(280, posicion), sf);
+                    posicion += 20;
+                }
+            }
+
+            posicion += 30;
 
             for (int i = 0; i < Conexion.pieDeTicket.Length; i++)
             {
@@ -702,7 +777,6 @@ namespace Punto_Venta
             }
             posicion += 20;
             e.Graphics.DrawLine(new Pen(Color.Black), 1, posicion, 2, posicion);
-
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -719,8 +793,6 @@ namespace Punto_Venta
 
         private void txtDescuento_KeyPress(object sender, KeyPressEventArgs e)
         {
-
-
             if (!(char.IsNumber(e.KeyChar)) && (e.KeyChar != (char)Keys.Back) && (e.KeyChar != (char)Keys.Enter))
             {
                 MessageBox.Show("Solo se permiten numeros", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -732,6 +804,7 @@ namespace Punto_Venta
                 RealizarDescuento();
             }
         }
+
         private void RealizarDescuento()
         {
             if (radioButton1.Checked)
@@ -761,6 +834,7 @@ namespace Punto_Venta
             lblDescuento.Visible = true;
             MessageBox.Show($"DESCUENTO REALIZADO POR LA CANTIDAD DE: {descuento:C}", "DESCUENTO", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         public void ResetearDescuento()
         {
             radioButton1.Checked = false;
@@ -773,6 +847,7 @@ namespace Punto_Venta
             lblDescuento.Visible = false;
             lblTotal.Text = $"{RecalcularTotal:C}";
         }
+
         private void txtDescuento_Leave(object sender, EventArgs e)
         {
             if (descuento != 0)
@@ -794,4 +869,3 @@ namespace Punto_Venta
         }
     }
 }
-

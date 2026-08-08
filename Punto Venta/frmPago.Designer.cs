@@ -35,7 +35,21 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.chkMixto = new System.Windows.Forms.CheckBox();
+
+            // Paneles y Botonera Touch
+            this.pnlTouch = new System.Windows.Forms.Panel();
+            this.flpBilletes = new System.Windows.Forms.FlowLayoutPanel();
+            this.btn50 = new System.Windows.Forms.Button();
+            this.btn100 = new System.Windows.Forms.Button();
+            this.btn200 = new System.Windows.Forms.Button();
+            this.btn500 = new System.Windows.Forms.Button();
+            this.btn1000 = new System.Windows.Forms.Button();
+            this.btnExacto = new System.Windows.Forms.Button();
+            this.ucNumpad1 = new Punto_Venta.UC_Numpad();
+
             ((System.ComponentModel.ISupportInitialize)(this.dgvPagos)).BeginInit();
+            this.pnlTouch.SuspendLayout();
+            this.flpBilletes.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -80,7 +94,6 @@
             this.cmbPago.Size = new System.Drawing.Size(319, 32);
             this.cmbPago.TabIndex = 0;
             this.cmbPago.Visible = false;
-            this.cmbPago.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbPago_KeyPress);
             // 
             // label2
             // 
@@ -100,7 +113,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(167, 38);
             this.textBox2.TabIndex = 1;
-            this.textBox2.Enter += new System.EventHandler(this.textBox2_Enter);
             this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             // 
             // btnAgregar
@@ -205,7 +217,7 @@
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(17, 165);
+            this.button1.Location = new System.Drawing.Point(17, 415);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(200, 48);
             this.button1.TabIndex = 5;
@@ -218,7 +230,7 @@
             this.btnAceptar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold);
             this.btnAceptar.ForeColor = System.Drawing.Color.Black;
-            this.btnAceptar.Location = new System.Drawing.Point(322, 165);
+            this.btnAceptar.Location = new System.Drawing.Point(322, 415);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(200, 48);
             this.btnAceptar.TabIndex = 3;
@@ -239,12 +251,113 @@
             this.chkMixto.UseVisualStyleBackColor = true;
             this.chkMixto.CheckedChanged += new System.EventHandler(this.chkMixto_CheckedChanged);
             // 
+            // pnlTouch
+            // 
+            this.pnlTouch.Controls.Add(this.ucNumpad1);
+            this.pnlTouch.Controls.Add(this.flpBilletes);
+            this.pnlTouch.Location = new System.Drawing.Point(540, 12);
+            this.pnlTouch.Name = "pnlTouch";
+            this.pnlTouch.Size = new System.Drawing.Size(430, 450);
+            this.pnlTouch.TabIndex = 26;
+            // 
+            // flpBilletes
+            // 
+            this.flpBilletes.Controls.Add(this.btn50);
+            this.flpBilletes.Controls.Add(this.btn100);
+            this.flpBilletes.Controls.Add(this.btn200);
+            this.flpBilletes.Controls.Add(this.btn500);
+            this.flpBilletes.Controls.Add(this.btn1000);
+            this.flpBilletes.Controls.Add(this.btnExacto);
+            this.flpBilletes.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flpBilletes.Location = new System.Drawing.Point(0, 0);
+            this.flpBilletes.Name = "flpBilletes";
+            this.flpBilletes.Size = new System.Drawing.Size(430, 130);
+            this.flpBilletes.TabIndex = 0;
+            // 
+            // btn50
+            // 
+            this.btn50.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btn50.Location = new System.Drawing.Point(3, 3);
+            this.btn50.Name = "btn50";
+            this.btn50.Size = new System.Drawing.Size(135, 55);
+            this.btn50.TabIndex = 0;
+            this.btn50.Text = "$50";
+            this.btn50.UseVisualStyleBackColor = true;
+            this.btn50.Click += new System.EventHandler(this.btnBillete_Click);
+            // 
+            // btn100
+            // 
+            this.btn100.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btn100.Location = new System.Drawing.Point(144, 3);
+            this.btn100.Name = "btn100";
+            this.btn100.Size = new System.Drawing.Size(135, 55);
+            this.btn100.TabIndex = 1;
+            this.btn100.Text = "$100";
+            this.btn100.UseVisualStyleBackColor = true;
+            this.btn100.Click += new System.EventHandler(this.btnBillete_Click);
+            // 
+            // btn200
+            // 
+            this.btn200.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btn200.Location = new System.Drawing.Point(285, 3);
+            this.btn200.Name = "btn200";
+            this.btn200.Size = new System.Drawing.Size(135, 55);
+            this.btn200.TabIndex = 2;
+            this.btn200.Text = "$200";
+            this.btn200.UseVisualStyleBackColor = true;
+            this.btn200.Click += new System.EventHandler(this.btnBillete_Click);
+            // 
+            // btn500
+            // 
+            this.btn500.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btn500.Location = new System.Drawing.Point(3, 64);
+            this.btn500.Name = "btn500";
+            this.btn500.Size = new System.Drawing.Size(135, 55);
+            this.btn500.TabIndex = 3;
+            this.btn500.Text = "$500";
+            this.btn500.UseVisualStyleBackColor = true;
+            this.btn500.Click += new System.EventHandler(this.btnBillete_Click);
+            // 
+            // btn1000
+            // 
+            this.btn1000.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btn1000.Location = new System.Drawing.Point(144, 64);
+            this.btn1000.Name = "btn1000";
+            this.btn1000.Size = new System.Drawing.Size(135, 55);
+            this.btn1000.TabIndex = 4;
+            this.btn1000.Text = "$1000";
+            this.btn1000.UseVisualStyleBackColor = true;
+            this.btn1000.Click += new System.EventHandler(this.btnBillete_Click);
+            // 
+            // btnExacto
+            // 
+            this.btnExacto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(252)))), ((int)(((byte)(231)))));
+            this.btnExacto.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnExacto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(101)))), ((int)(((byte)(52)))));
+            this.btnExacto.Location = new System.Drawing.Point(285, 64);
+            this.btnExacto.Name = "btnExacto";
+            this.btnExacto.Size = new System.Drawing.Size(135, 55);
+            this.btnExacto.TabIndex = 5;
+            this.btnExacto.Text = "PAGO EXACTO";
+            this.btnExacto.UseVisualStyleBackColor = false;
+            this.btnExacto.Click += new System.EventHandler(this.btnExacto_Click);
+            // 
+            // ucNumpad1
+            // 
+            this.ucNumpad1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucNumpad1.Location = new System.Drawing.Point(0, 130);
+            this.ucNumpad1.Name = "ucNumpad1";
+            this.ucNumpad1.Size = new System.Drawing.Size(430, 320);
+            this.ucNumpad1.TabIndex = 1;
+            this.ucNumpad1.TargetTextBox = null;
+            // 
             // frmPago
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(540, 230);
+            this.ClientSize = new System.Drawing.Size(980, 480);
+            this.Controls.Add(this.pnlTouch);
             this.Controls.Add(this.chkMixto);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.txtRestante);
@@ -267,6 +380,8 @@
             this.Text = "Pagos";
             this.Load += new System.EventHandler(this.frmPago_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPagos)).EndInit();
+            this.pnlTouch.ResumeLayout(false);
+            this.flpBilletes.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -292,5 +407,16 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.CheckBox chkMixto;
+
+        // Controles Touch
+        private System.Windows.Forms.Panel pnlTouch;
+        private System.Windows.Forms.FlowLayoutPanel flpBilletes;
+        private System.Windows.Forms.Button btn50;
+        private System.Windows.Forms.Button btn100;
+        private System.Windows.Forms.Button btn200;
+        private System.Windows.Forms.Button btn500;
+        private System.Windows.Forms.Button btn1000;
+        private System.Windows.Forms.Button btnExacto;
+        private UC_Numpad ucNumpad1;
     }
 }

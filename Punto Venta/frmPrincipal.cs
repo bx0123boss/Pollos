@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JaegerSoft;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,21 +47,14 @@ namespace Punto_Venta
                 if (File.Exists(logoPath)) { pictureBox1.Image = Image.FromFile(logoPath); }
             }
             catch (Exception) { }
-            if (lblUser.Text == "VENTAS")
-            {
-                button6.Visible = false;
-                button11.Visible = false;
-                button10.Visible = false;
-                button14.Visible = false;
-            }
-            else if (lblUser.Text=="SUPERVISOR")
-            {
-                button6.Visible = false;
-                button10.Visible = false;
-                button11.Visible = false;
-                button14.Visible = false;
-                button9.Visible = false;
-            }
+            button4.Visible = Sesion.TienePermiso("MOD_ENTRADAS");
+            button5.Visible = Sesion.TienePermiso("MOD_SALIDAS");
+            button6.Visible = Sesion.TienePermiso("INVENTARIO");
+            button7.Visible = Sesion.TienePermiso("MOD_CORTES");
+            button10.Visible = Sesion.TienePermiso("HISTORIAL_CORTES");
+            button11.Visible = Sesion.TienePermiso("MOD_REPORTES");
+            button14.Visible = Sesion.TienePermiso("MOD_USUARIOS");
+            button3.Visible = Sesion.TienePermiso("MOD_CONFIGURACION");
         }
 
         private void button2_Click(object sender, EventArgs e)

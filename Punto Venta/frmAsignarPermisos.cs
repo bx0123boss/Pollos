@@ -13,31 +13,24 @@ namespace Punto_Venta
         // Variable de control para evitar bucles infinitos al marcar casillas por código
         private bool _isUpdating = false;
 
-        // Lista de todos los módulos disponibles en el sistema
+        // Lista de módulos esenciales disponibles en el sistema
         private Dictionary<string, string> ModulosDisponibles = new Dictionary<string, string>
         {
             { "ADMIN_TODO", "★ ACCESO TOTAL (Administrador) ★" },
 
-            { "VER_ANALITICO_INVENTARIO", "Analiticos de Inventario" },
-            { "MOD_CORTES", "Cortes de Caja" },
-            { "MOD_CONFIGURACION", "Configuración General y Ticket" },
-            { "MOD_ENTRADAS", "Entradas / Depósitos" },
-            { "EXISTENCIAS", "Ver existencias actuales" },
-            { "MOD_CLIENTES", "Gestión de Clientes" },
-            { "MOD_USUARIOS", "Gestión de Usuarios" },
-            { "HISTORIAL_CORTES", "Historial de Cortes de Caja" },
-            { "IMPRESION_CORTE", "Imprimir corte detallado" },
-            { "MOD_ALMACENES", "Módulo de Almacenes" },
-            { "MOD_APARTADOS", "Módulo de Apartados" },
-            { "MOD_DEVOLUCIONES", "Módulo de Devoluciones" },
-            { "MOD_FACTURACION", "Módulo de Facturación en línea" },
-            { "MOD_INVENTARIO", "Módulo de Inventario" },
-            { "MOD_PROVEEDORES", "Proveedores / Cotizaciones" },
-            { "MOD_REPORTES", "Reportes y Estadísticas" },
-            { "MOD_SALIDAS", "Salidas / Retiros" },
             { "MOD_VENTAS", "Módulo de Ventas / Cobro" },
-            { "MOD_VENTAS_CREDITO", "Módulo de Ventas Credito" },
-            { "MOD_WEB", "Módulo Web (Cotizador)" }
+            { "MOD_CANC_VENTAS", "Módulo de Cancelación de Ventas" },
+            { "MOD_CANC_MESA", "Módulo de Cancelación en Mesa" },
+            { "REIM_TICKET", "Reimpresión de Ticket" },
+            { "MOD_SALIDAS", "Salidas / Retiros" },
+            { "MOD_ENTRADAS", "Entradas / Depósitos" },
+            { "INVENTARIO", "Módulo de Inventario" },
+            { "MOD_CORTES", "Cortes de Caja" },
+            { "MOD_INVENTARIO", "Módulo de Inventario" },
+            { "HISTORIAL_CORTES", "Historial de Cortes de Caja" },
+            { "MOD_REPORTES", "Reportes y Estadísticas" },
+            { "MOD_USUARIOS", "Gestión de Usuarios" },
+            { "MOD_CONFIGURACION", "Configuración General y Ticket" }
         };
 
         public frmAsignarPermisos()

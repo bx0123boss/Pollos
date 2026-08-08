@@ -40,6 +40,11 @@ namespace Punto_Venta
                     dataGridView1.Columns["Monto"].DefaultCellStyle.Format = "N2";
                 }
             }
+            EstilizarBotonAdvertencia(button1);
+            EstilizarDataGridView(dataGridView1);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
         }
 
         private void dateTimePicker1_CloseUp(object sender, EventArgs e)
@@ -72,8 +77,7 @@ namespace Punto_Venta
                 detail.ID = Convert.ToInt32(dataGridView1.CurrentRow.Cells["IdHistorialCortes"].Value.ToString());
                 detail.lblMonto.Text = $"{Convert.ToDouble(dataGridView1.CurrentRow.Cells["Monto"].Value.ToString()):C}";
                 detail.lblFecha.Text = dataGridView1.CurrentRow.Cells["FechaHora"].Value.ToString();
-                detail.Show();
-                this.Close();
+                detail.ShowDialog();
             }
             catch (Exception ex)
             {

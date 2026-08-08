@@ -42,6 +42,12 @@ namespace Punto_Venta
                 comentario();
             }
         }
+
+        private void frmComentarios_Load(object sender, EventArgs e)
+        {
+            EstilizarBotonPrimario(button1);
+            EstilizarTextBox(txtPass);
+        }
     }
 }
 

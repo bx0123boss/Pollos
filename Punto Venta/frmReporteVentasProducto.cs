@@ -10,7 +10,7 @@ using static ComandasReportPdf;
 
 namespace Punto_Venta
 {
-    public partial class frmReporteVentasProducto : Form
+    public partial class frmReporteVentasProducto : frmBase
     {
         List<ComandasReportPdf.ComandaRow> datos = new List<ComandasReportPdf.ComandaRow>();
         string anoSQL = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + " " + DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();            
@@ -61,6 +61,11 @@ namespace Punto_Venta
                     dataGridView1.DataSource = ds.Tables["IdFolio"];
                 }
             }
+            EstilizarDataGridView(dataGridView1);
+            EstilizarBotonPrimario(button2);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -77,14 +82,14 @@ namespace Punto_Venta
         {
             var hdr = new ReportHeader
             {
-                Empresa = "WINGS LAS ALITAS",
-                Rfc = "FERIA",
-                Direccion = "FERIA TEZIUTLAN PUEBLA MEXICO  CP",
-                CiudadCpTel = "FERIA, Tel.",
+                Empresa = Conexion.datosTicket[0],
+                Rfc = "",
+                Direccion = "",
+                CiudadCpTel = "",
                 Desde = new System.DateTime(2025, 7, 31, 6, 0, 0),
                 Hasta = new System.DateTime(2025, 8, 1, 5, 59, 59),
                 MeseroFiltro = "(TODOS)",
-                FooterNote = "SoftRestaurant® Copyright National Soft "
+                FooterNote = "Jaeger Soft"
             };
             using (var sfd = new SaveFileDialog { Filter = "PDF (*.pdf)|*.pdf", FileName = "ReporteComandas.pdf" })
             {
@@ -144,22 +149,39 @@ namespace Punto_Venta
             var lista = new List<ComandasReportPdf.ComandaRow>();
 
             const string sql = @"
-                SELECT 
-                    D.folio                              AS FolioComanda,
-                    D.orden                              AS Orden,
-                    D.fecha                              AS FechaApertura,
-                    D.cierre                             AS FechaCierre,
-                    RIGHT('0'+CAST(D.idmesero AS varchar(2)),2) AS MeseroCuenta, 
-                    RIGHT('0'+CAST(ISNULL(D.idmesero,D.idmesero) AS varchar(2)),2) AS MeseroProd, 
-                    CAST(C.cantidad AS decimal(10,3))    AS Cantidad,
-                    C.hora                                AS FechaCaptura,      
-                    CONCAT(A.idproducto,'-',A.descripcion) AS Producto,
-                    CAST(C.precio AS decimal(10,2))      AS Importe,
-                    CAST(ISNULL(C.descuento,0) AS decimal(10,2)) AS Descuento  
-                FROM productos A
-                JOIN cheqdet  C ON A.idproducto = C.idproducto
-                JOIN cheques  D ON C.foliodet   = D.folio
-                WHERE D.fecha >= @Desde AND D.fecha < @Hasta;";
+                        SELECT
+                            F.IdFolio                                    AS FolioCuenta,
+                            AF.Orden                                     AS Orden,
+                            F.FechaHora                                  AS FechaApertura,
+                            F.FechaHoraCobro                             AS FechaCierre,
+                            U.Nombre                                     AS MeseroCuenta,
+                            U.Nombre                                     AS MeseroProd,
+                            AF.Cantidad                                  AS Cantidad,
+                            AF.FechaHora                                 AS FechaCaptura,
+                            CASE
+                                WHEN AF.IdInventario = 0 THEN P.Nombre
+                                ELSE I.Nombre
+                            END                                          AS Producto,
+                            CASE
+                                WHEN AF.IdInventario = 0 THEN P.Precio
+                                ELSE I.Precio
+                            END                                          AS Importe,
+                            ISNULL(AF.Descuento,0)                       AS Descuento
+                        FROM ArticulosFolio AF
+                            INNER JOIN Folios F
+                                ON AF.IdFolio = F.IdFolio
+                            LEFT JOIN INVENTARIO I
+                                ON AF.IdInventario = I.IdInventario
+                            LEFT JOIN Promos P
+                                ON AF.IdPromo = P.IdPromo
+                            LEFT JOIN USUARIOS U
+                                ON F.IdUsuario = U.IdUsuario
+                        WHERE
+                            F.Estatus = 'COBRADO'
+                            AND F.FechaHora >= @Desde
+                            AND F.FechaHora < @Hasta
+
+                        ORDER BY F.IdFolio, AF.Orden;";
 
             using (var cn = new SqlConnection(Conexion.CadConRestaurantSoft))
             using (var cmd = new SqlCommand(sql, cn))

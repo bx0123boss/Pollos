@@ -419,29 +419,64 @@ namespace Punto_Venta
 
             try
             {
+                // Cambiar el cursor a espera
                 this.Cursor = Cursors.WaitCursor;
 
+                // 1. Crear la aplicación de Excel
                 Excel.Application excelApp = new Excel.Application();
+
+                // 2. Crear un libro nuevo
                 Excel.Workbook workbook = excelApp.Workbooks.Add();
                 Excel.Worksheet worksheet = (Excel.Worksheet)workbook.Worksheets[1];
 
-                int colIndex = 1;
+                // -------------------------------------------------------------
+                // ENCABEZADO CON FECHA COMPLETA Y TÍTULO DEL REPORTE
+                // -------------------------------------------------------------
+                DateTime fechaActual = DateTime.Now;
+                string fechaCompleta = fechaActual.ToString("dddd, d 'de' MMMM 'de' yyyy hh:mm tt", new System.Globalization.CultureInfo("es-MX"));
+
+                // Fila 1: Título general del reporte / exportación
+                worksheet.Cells[1, 1] = "REPORTE DE INVENTARIO Y DATOS GENERALES";
+                Excel.Range titleRange = worksheet.Range[worksheet.Cells[1, 1], worksheet.Cells[1, 5]];
+                titleRange.Font.Bold = true;
+                titleRange.Font.Size = 13;
+
+                // Fila 2: Fecha completa de generación y total de registros
+                int totalRegistros = dgv.AllowUserToAddRows ? dgv.Rows.Count - 1 : dgv.Rows.Count;
+                worksheet.Cells[2, 1] = $"Fecha de exportación: {fechaCompleta} | Total de registros: {totalRegistros}";
+                Excel.Range subTitleRange = worksheet.Range[worksheet.Cells[2, 1], worksheet.Cells[2, 5]];
+                subTitleRange.Font.Italic = true;
+                subTitleRange.Font.Color = System.Drawing.ColorTranslator.ToOle(Color.DimGray);
+
+                // -------------------------------------------------------------
+                // 3. EXPORTAR ENCABEZADOS DE LA TABLA (Fila 4)
+                // -------------------------------------------------------------
+                int colIndex = 1; // Excel empieza en 1
+                int headerRowIndex = 4; // Dejamos espacio en las filas 1 y 2
+
                 for (int i = 0; i < dgv.Columns.Count; i++)
                 {
+                    // Solo exportamos columnas visibles
                     if (dgv.Columns[i].Visible)
                     {
-                        worksheet.Cells[1, colIndex] = dgv.Columns[i].HeaderText;
+                        worksheet.Cells[headerRowIndex, colIndex] = dgv.Columns[i].HeaderText;
                         colIndex++;
                     }
                 }
 
-                Excel.Range headerRange = worksheet.Range[worksheet.Cells[1, 1], worksheet.Cells[1, colIndex - 1]];
+                // Estilo visual a la cabecera de la tabla
+                Excel.Range headerRange = worksheet.Range[worksheet.Cells[headerRowIndex, 1], worksheet.Cells[headerRowIndex, colIndex - 1]];
                 headerRange.Font.Bold = true;
                 headerRange.Interior.Color = System.Drawing.ColorTranslator.ToOle(Color.LightGray);
 
-                int rowIndex = 2;
+                // -------------------------------------------------------------
+                // 4. EXPORTAR FILAS DE DATOS (A partir de la Fila 5)
+                // -------------------------------------------------------------
+                int rowIndex = 5;
+
                 foreach (DataGridViewRow row in dgv.Rows)
                 {
+                    // Evitar la fila de 'nuevo registro' si existe
                     if (row.IsNewRow) continue;
 
                     colIndex = 1;
@@ -453,9 +488,10 @@ namespace Punto_Venta
 
                             if (valor != null)
                             {
-                                if (valor is DateTime)
+                                // Manejo básico de fechas para la celda individual
+                                if (valor is DateTime dtVal)
                                 {
-                                    worksheet.Cells[rowIndex, colIndex] = ((DateTime)valor).ToString("dd/MM/yyyy HH:mm");
+                                    worksheet.Cells[rowIndex, colIndex] = dtVal.ToString("dd/MM/yyyy HH:mm");
                                 }
                                 else
                                 {
@@ -468,7 +504,10 @@ namespace Punto_Venta
                     rowIndex++;
                 }
 
+                // 5. Ajustar columnas automáticamente
                 worksheet.Columns.AutoFit();
+
+                // 6. Mostrar Excel
                 excelApp.Visible = true;
             }
             catch (Exception ex)
@@ -480,7 +519,6 @@ namespace Punto_Venta
                 this.Cursor = Cursors.Default;
             }
         }
-
         private void ConfigurarBotonBase(Button btn)
         {
             btn.FlatStyle = FlatStyle.Flat;
