@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmArticulosCancelados : Form
+    public partial class frmArticulosCancelados : frmBase
     {
         public frmArticulosCancelados()
         {
@@ -58,6 +58,10 @@ namespace Punto_Venta
                     da.Fill(ds, "IdFolio");
                     dataGridView1.DataSource = ds.Tables["IdFolio"];
                 }
+                EstilizarDataGridView(dataGridView1);
+                this.dataGridView1.ReadOnly = true;
+                this.dataGridView1.AllowUserToAddRows = false;
+                this.dataGridView1.AllowUserToDeleteRows = false;
             }
         }
 
@@ -99,3 +103,4 @@ namespace Punto_Venta
         }
     }
 }
+

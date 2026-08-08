@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmEntregar : Form
+    public partial class frmEntregar : frmBase
     {
         public frmEntregar()
         {
@@ -23,3 +23,4 @@ namespace Punto_Venta
         }
     }
 }
+

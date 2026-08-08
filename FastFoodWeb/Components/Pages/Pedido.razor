@@ -1,15 +1,19 @@
-﻿@page "/pedido"
+@page "/pedido"
+@page "/pedido/{MesaId:int}"
 @using FastFoodWeb.Models
 @using Microsoft.Data.SqlClient
 @using System.Data
+@using FastFoodWeb.Services
+@using Punto_Venta
+@inject ServicioImpresion PrintService
 @inject IConfiguration Configuration
 @inject NavigationManager Nav
 @inject IJSRuntime JS
+@inject UserSessionService Session
 
 <div class="main-container">
 
     @* --- GRUPO SUPERIOR PEGAGOSO (HEADER + CATEGORÍAS) --- *@
-    @* Al agruparlos, ambos se quedan pegados arriba sin taparse entre sí *@
     <div class="sticky-header-group">
 
         @* --- BARRA DE ESTADO Y MODALIDAD --- *@
@@ -17,8 +21,71 @@
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <div>
                     <span class="badge rounded-pill bg-dark">@modalidad</span>
+
+                    @if (modalidad == "MESA")
+                    {
+                        <button class="btn btn-sm btn-outline-primary ms-2 fw-bold bg-white" @onclick="AbrirSeleccionMesa">
+                            <i class="bi bi-geo-alt-fill text-danger"></i>
+                            @(mesaSeleccionada?.Nombre ?? "Seleccionar Mesa")
+                        </button>
+                    }
+                    else if (modalidad == "DOMICILIO")
+                    {
+                        <button class="btn btn-sm btn-outline-primary ms-2 fw-bold bg-white" @onclick="() => mostrarModalClientes = true">
+                            <i class="bi bi-person-fill text-danger"></i>
+                            @(clienteSeleccionado?.Nombre ?? "Seleccionar Cliente")
+                        </button>
+                    }
+
                     <span class="ms-2 fw-bold text-dark small">Folio: @folioActual</span>
+                    <button class="btn btn-sm btn-cambiar-mesero ms-2 shadow-sm"
+                            @onclick="CambiarMesero"
+                            title="Clic para cambiar de mesero / Volver al inicio">
+                        <i class="bi bi-person-badge-fill me-1 text-primary"></i>
+                        <span class="fw-semibold">@(Session.IsLoggedIn? Session.Usuario: "Sin Sesión")</span>
+                        <i class="bi bi-arrow-repeat ms-1 text-muted icon-spin-hover"></i>
+                    </button>
                 </div>
+
+                @* --- MODAL DE SELECCIÓN DE MESA --- *@
+                @if (mostrarModalMesas)
+                {
+                    <div class="modal-backdrop fade show"></div>
+                    <div class="modal fade show d-block" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content border-0 shadow-lg">
+                                <div class="modal-header mesas-modal-header">
+                                    <h5 class="modal-title"><i class="bi bi-ui-radios-grid me-2"></i>Seleccionar Mesa</h5>
+                                    <button type="button" class="btn-close btn-close-white" @onclick="() => mostrarModalMesas = false"></button>
+                                </div>
+
+                                <div class="modal-body mesas-modal-body" style="max-height: 60vh; overflow-y: auto; padding-bottom: 80px;">
+                                    <div class="row g-3">
+                                        @foreach (var m in listaMesasDisponibles)
+                                        {
+                                            <div class="col-6 col-md-4 col-lg-3">
+                                                <div class="mesa-card @(m.Estatus.ToLower()) @(mesaSeleccionada?.Id == m.Id ? "seleccionada" : "")"
+                                                     @onclick="() => SeleccionarMesa(m)">
+                                                    <div class="mesa-status-dot"></div>
+                                                    <div class="mesa-content">
+                                                        <i class="bi bi-grid-3x3-gap-fill mesa-icon"></i>
+                                                        <h4 class="mesa-title">@m.Nombre</h4>
+                                                        <span class="mesa-badge">@m.Estatus</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <button class="fab-btn-modal" @onclick="() => mostrarModalCrearMesa = true" title="Agregar Nueva Mesa">
+                                    <i class="bi bi-plus-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+
                 <button class="btn btn-light position-relative border shadow-sm" @onclick="ToggleCarrito">
                     <i class="bi bi-cart3 fs-5"></i>
                     @if (carrito.Count > 0)
@@ -31,13 +98,13 @@
             </div>
 
             <div class="modalidad-selector">
-                <button class="@(modalidad == "MESA" ? "active" : "")" @onclick='() => modalidad = "MESA"'>Mesa</button>
-                <button class="@(modalidad == "RAPIDO" ? "active" : "")" @onclick='() => modalidad = "RAPIDO"'>Llevar</button>
-                <button class="@(modalidad == "DOMICILIO" ? "active" : "")" @onclick='() => modalidad = "DOMICILIO"'>Domicilio</button>
+                <button class="@(modalidad == "MESA" ? "active" : "")" @onclick='() => CambiarModalidad("MESA")'>Mesa</button>
+                <button class="@(modalidad == "RAPIDO" ? "active" : "")" @onclick='() => CambiarModalidad("RAPIDO")'>Llevar</button>
+                <button class="@(modalidad == "DOMICILIO" ? "active" : "")" @onclick='() => CambiarModalidad("DOMICILIO")'>Domicilio</button>
             </div>
         </div>
 
-        @* --- CATEGORÍAS (2 RENGLONES) --- *@
+        @* --- CATEGORÍAS --- *@
         <div class="categories-wrapper">
             <div class="categories-scroll">
                 @foreach (var cat in categorias)
@@ -70,11 +137,29 @@
                 @foreach (var prod in productosMostrados)
                 {
                     <div class="col-6 col-md-4 col-lg-3">
-                        <div class="card product-card h-100 border-0 shadow-sm" @onclick="() => AbrirModalCantidad(prod)">
+                        <div class="card product-card h-100 border-0 shadow-sm position-relative" @onclick="() => AbrirModalCantidad(prod)">
+
+                            @* Badge de cantidad en carrito *@
+                            @{
+                                var cantEnCarrito = carrito.Where(x => x.ProductoId == prod.Id).Sum(x => x.Cantidad);
+                            }
+                            @if (cantEnCarrito > 0)
+                            {
+                                <span class="position-absolute top-0 end-0 badge rounded-circle bg-success m-2 p-2 shadow fs-6">
+                                    @cantEnCarrito.ToString("0.##")
+                                </span>
+                            }
+
                             <div class="card-body p-2 d-flex flex-column text-center">
-                                @* Espacio para imagen *@
                                 <div class="img-placeholder rounded-3 mb-2">
-                                    <span class="fs-2">🍔</span>
+                                    @if (!string.IsNullOrEmpty(prod.ImagenUrl))
+                                    {
+                                        <img src="@prod.ImagenUrl" alt="@prod.Nombre" class="img-fluid rounded-3" style="max-height: 80px; object-fit: cover;" />
+                                    }
+                                    else
+                                    {
+                                        <span class="fs-2">🍔</span>
+                                    }
                                 </div>
                                 <h6 class="card-title text-dark fw-bold mb-1 text-truncate-2 small">@prod.Nombre</h6>
                                 <div class="mt-auto price-tag">
@@ -89,18 +174,19 @@
     </div>
 
     @* --- BARRA INFERIOR (TOTAL) --- *@
-    <div class="bottom-bar shadow-lg">
-        <div class="d-flex justify-content-between align-items-center w-100">
-            <div class="d-flex flex-column">
-                <span class="small text-muted">Total Orden</span>
-                <span class="fs-4 fw-bolder text-dark">$@total.ToString("N2")</span>
+    <div class="bottom-bar">
+        <div class="d-flex w-100">
+            <div class="total-block me-3">
+                <span class="total-label">Total Orden</span>
+                <span class="total-amount">$@total.ToString("N2")</span>
             </div>
-            <button class="btn btn-primary rounded-pill px-4 fw-bold" disabled="@(carrito.Count == 0)" @onclick="FinalizarOrden">
-                Confirmar <i class="bi bi-check2"></i>
+            <button class="btn-confirmar" disabled="@(carrito.Count == 0)" @onclick="FinalizarOrden">
+                <i class="bi bi-check2-circle"></i> Confirmar Pedido
             </button>
         </div>
     </div>
 
+    @* --- DRAWER DEL CARRITO --- *@
     @if (mostrarCarrito)
     {
         <div class="cart-overlay" @onclick="ToggleCarrito">
@@ -116,7 +202,10 @@
                     }
                     @foreach (var item in carrito)
                     {
-                        <div class="cart-item d-flex justify-content-between align-items-start mb-3 border-bottom pb-2">
+                        <div class="cart-item d-flex justify-content-between align-items-start mb-3 border-bottom pb-2"
+                             style="cursor: pointer; transition: background 0.2s;"
+                             @onclick="() => AbrirModalEdicion(item)">
+
                             <div class="pe-2">
                                 <div class="fw-bold text-dark">@item.Nombre</div>
                                 <div class="text-muted small mb-1">$@item.Precio.ToString("0.##") x @item.Cantidad.ToString("0.##")</div>
@@ -131,7 +220,10 @@
                             </div>
                             <div class="d-flex align-items-center mt-1">
                                 <span class="fw-bold me-3 text-primary">$@((item.Precio * item.Cantidad).ToString("0.##"))</span>
-                                <button class="btn btn-outline-danger btn-sm rounded-circle flex-shrink-0" @onclick="() => EliminarDelCarrito(item)">
+
+                                <button class="btn btn-outline-danger btn-sm rounded-circle flex-shrink-0"
+                                        @onclick:stopPropagation="true"
+                                        @onclick="() => EliminarDelCarrito(item)">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
@@ -141,7 +233,8 @@
             </div>
         </div>
     }
-    @* --- MODAL DE CANTIDAD Y COMENTARIOS --- *@
+
+    @* --- MODAL DE CANTIDAD Y COMENTARIOS CON BOTONES DE BD --- *@
     @if (mostrarModal && productoSeleccionado != null)
     {
         <div class="modal fade show modal-animado @(cerrandoModal ? "closing" : "")"
@@ -152,52 +245,92 @@
                 <div class="modal-content">
 
                     <div class="modal-header pedido-header">
-                        <h5 class="modal-title">@productoSeleccionado?.Nombre</h5>
-                        <button type="button"
-                                class="btn-cerrar"
-                                @onclick="CerrarModalCantidad">
+                        <h5 class="modal-title fw-bold">@productoSeleccionado?.Nombre</h5>
+                        <button type="button" class="btn-cerrar" @onclick="CerrarModalCantidad">
                             <i class="bi bi-x-lg"></i>
                         </button>
-
                     </div>
 
                     <div class="modal-body modal-body-flex">
-                        <p class="text-success fw-bold fs-4 mb-3">Precio U: $@productoSeleccionado.Precio.ToString("N2")</p>
+                        <p class="text-success fw-bold fs-4 mb-3 text-center">Precio Unitario: $@productoSeleccionado.Precio.ToString("N2")</p>
 
                         @* Controles de Cantidad (+ y -) *@
-                        <div class="d-flex justify-content-center align-items-center mb-4">
-                            <button class="btn btn-outline-secondary rounded-circle" style="width: 50px; height: 50px;" @onclick="RestarCantidad">
-                                <i class="bi bi-dash fs-4"></i>
+                        <div class="d-flex justify-content-center align-items-center mb-3">
+                            <button class="btn btn-outline-secondary rounded-circle shadow-sm" style="width: 55px; height: 55px;" @onclick="RestarCantidad">
+                                <i class="bi bi-dash fs-2"></i>
                             </button>
 
-                            <input type="number" class="form-control text-center mx-3 fw-bold fs-4 border-0 shadow-sm"
-                                   style="width: 80px;" min="1" @bind="cantidadTemporal" />
+                            <input type="number" class="form-control text-center mx-3 fw-bold fs-3 border-0 shadow-sm"
+                                   style="width: 90px;" min="1" @bind="cantidadTemporal" />
 
-                            <button class="btn btn-outline-secondary rounded-circle" style="width: 50px; height: 50px;" @onclick="SumarCantidad">
-                                <i class="bi bi-plus fs-4"></i>
+                            <button class="btn btn-outline-secondary rounded-circle shadow-sm" style="width: 55px; height: 55px;" @onclick="SumarCantidad">
+                                <i class="bi bi-plus fs-2"></i>
                             </button>
                         </div>
 
-                        @* Cuadro de Comentarios *@
+                        @* --- BOTONES DE COMENTARIO RÁPIDO CON SCROLL --- *@
                         <div class="comentarios-container">
-                            <label class="comentarios-label">
-                                Comentarios <span>(Opcional)</span>
+                            <label class="comentarios-label mb-1 fw-bold small text-muted d-block">
+                                <i class="bi bi-tags-fill me-1"></i> Comentarios Rápidos:
                             </label>
 
-                            <textarea class="comentarios-input"
+                            @if (listaBotonesComentario != null && listaBotonesComentario.Count > 0)
+                            {
+                                <div class="d-flex flex-wrap gap-2 mb-3 p-2 border rounded-3 bg-light scroll-comentarios"
+                                     style="max-height: 130px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
+                                    @foreach (var btnNota in listaBotonesComentario)
+                                    {
+                                        <button type="button"
+                                                class="btn btn-outline-primary btn-sm rounded-pill fw-semibold py-2 px-3 shadow-sm border-2 bg-white"
+                                                @onclick="() => AgregarComentarioRapido(btnNota)">
+                                            + @btnNota
+                                        </button>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-muted small mb-2 fst-italic">No hay notas rápidas configuradas.</div>
+                            }
+
+                            <label class="comentarios-label mb-1 fw-bold small">
+                                Detalle / Comentarios opcionales
+                            </label>
+
+                            <textarea class="comentarios-input form-control"
+                                      rows="2"
                                       placeholder="Ej. Sin cebolla, extra aderezo..."
                                       @bind="comentarioTemporal">
-                            </textarea>
+                                </textarea>
                         </div>
 
                     </div>
-                    <div class="modal-footer pedido-footer">
-                        <div class="fw-bold fs-5">
-                            Total: <span class="text-primary">$@((productoSeleccionado.Precio * cantidadTemporal).ToString("N2"))</span>
+
+                    <div class="modal-footer pedido-footer p-0">
+                        <div class="pedido-footer-inner w-100 d-flex align-items-center">
+
+                            <div class="pedido-footer-total me-auto">
+                                <span class="pedido-footer-total-label">Total</span>
+                                <span class="pedido-footer-total-amount">$@((productoSeleccionado.Precio * cantidadTemporal).ToString("N2"))</span>
+                            </div>
+
+                            @if (itemEnEdicion == null)
+                            {
+                                <button type="button" class="btn-agregar" @onclick="ConfirmarAgregarAlCarrito">
+                                    <i class="bi bi-cart-plus"></i> Agregar
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-outline-danger bg-white me-2" @onclick="EliminarDelCarritoDesdeModal" style="border-radius: 12px; padding: 10px 15px; border-width: 2px;">
+                                    <i class="bi bi-trash fw-bold"></i>
+                                </button>
+                                <button type="button" class="btn-agregar px-4" @onclick="ConfirmarActualizarCarrito">
+                                    <i class="bi bi-check-lg me-1"></i> Guardar
+                                </button>
+                            }
+
                         </div>
-                        <button type="button" class="btn-agregar" @onclick="ConfirmarAgregarAlCarrito">
-                            <i class="bi bi-cart-plus me-1"></i> Agregar
-                        </button>
                     </div>
                 </div>
             </div>
@@ -205,12 +338,78 @@
     }
 </div>
 
-@code {
-    // --- LÓGICA C# ---
-    // (Exactamente la misma lógica corregida de la respuesta anterior,
-    // asegúrate de mantener los métodos CargarCategorias con int, etc.)
+<style>
+    .scroll-comentarios {
+        max-height: 135px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 
-    private string modalidad = "MESA";
+        .scroll-comentarios::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scroll-comentarios::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .scroll-comentarios::-webkit-scrollbar-thumb {
+            background: #0d6efd;
+            border-radius: 10px;
+        }
+
+            .scroll-comentarios::-webkit-scrollbar-thumb:hover {
+                background: #0b5ed7;
+            }
+    /* Botón estilizado para el badge del mesero */
+    .btn-cambiar-mesero {
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        color: #333333;
+        border-radius: 20px;
+        padding: 4px 12px;
+        font-size: 0.85rem;
+        transition: all 0.25s ease-in-out;
+        display: inline-flex;
+        align-items: center;
+    }
+
+        /* Efecto Hover: resalta y simula que es clickeable para salir/cambiar */
+        .btn-cambiar-mesero:hover {
+            background-color: #f8f9fa;
+            border-color: #0d6efd;
+            color: #0d6efd;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.15) !important;
+        }
+
+            /* Rotación suave del icono de cambio al pasar el mouse */
+            .btn-cambiar-mesero:hover .icon-spin-hover {
+                transform: rotate(180deg);
+                color: #0d6efd !important;
+                transition: transform 0.4s ease;
+            }
+</style>
+
+<ModalAgregarMesa Mostrar="mostrarModalCrearMesa"
+                  OnCerrar="() => mostrarModalCrearMesa = false"
+                  OnMesaAgregada="MesaRecienCreadaHandler" />
+
+<ModalBuscarCliente Mostrar="mostrarModalClientes"
+                    OnCerrar="() => mostrarModalClientes = false"
+                    OnClienteSeleccionado="ClienteSeleccionadoHandler" />
+
+@if (mostrarModalCobro)
+{
+    <ModalCobro MesaId="idMesaCobro" Total="totalCobro"
+                OnCerrar="CerrarModalCobro"
+                OnCobroExitoso="CobroExitosoHandler" />
+}
+
+@code {
+    [Parameter]
+    public int MesaId { get; set; }
     private string folioActual = "NUEVO";
     private int categoriaSeleccionadaId = 0;
     private double total = 0;
@@ -219,26 +418,179 @@
     private double cantidadTemporal = 1;
     private string comentarioTemporal = "";
     private bool mostrarModal = false;
+    private bool mostrarModalCobro = false;
+    private int idMesaCobro = 0;
+    private double totalCobro = 0;
     private bool cerrandoModal = false;
+    private bool mostrarModalMesas = false;
+    private List<Mesa> listaMesasDisponibles = new();
+    private Mesa? mesaSeleccionada;
+    private ItemCarrito? itemEnEdicion = null;
 
     private List<Categoria> categorias = new();
     private List<Producto> productosMostrados = new();
     private List<ItemCarrito> carrito = new();
+    private bool mostrarModalCrearMesa = false;
+    private bool mostrarModalClientes = false;
+    private Cliente? clienteSeleccionado;
 
-    protected override void OnInitialized()
+    private List<string> listaBotonesComentario = new();
+
+    protected override async Task OnInitializedAsync()
     {
+        // Verificar si existe sesión de usuario activa
+        if (!Session.IsLoggedIn)
+        {
+            Nav.NavigateTo("/");
+            return;
+        }
+
+        if (MesaId > 0)
+        {
+            modalidad = "MESA";
+            CargarDatosMesaSeleccionada();
+        }
         CargarCategorias();
+        await CargarBotonesComentario();
     }
-    private async Task CerrarModal()
+
+    private async Task CargarBotonesComentario()
     {
-        cerrandoModal = true;
-        StateHasChanged();
-
-        await Task.Delay(250); // Debe coincidir con duración CSS
-
-        mostrarModal = false;
-        cerrandoModal = false;
+        listaBotonesComentario.Clear();
+        try
+        {
+            using var con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL"));
+            string sql = "SELECT Nombre FROM BotonesComentario ORDER BY Nombre";
+            await con.OpenAsync();
+            using var cmd = new SqlCommand(sql, con);
+            using var reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                string nombreNota = reader["Nombre"].ToString() ?? "";
+                if (!string.IsNullOrWhiteSpace(nombreNota))
+                {
+                    listaBotonesComentario.Add(nombreNota);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar BotonesComentario: {ex.Message}");
+        }
     }
+    private void CambiarMesero()
+    {
+        Session.Logout();
+        Nav.NavigateTo("/");
+    }
+
+    private void AgregarComentarioRapido(string textoComentario)
+    {
+        if (string.IsNullOrWhiteSpace(comentarioTemporal))
+        {
+            comentarioTemporal = textoComentario;
+        }
+        else if (!comentarioTemporal.Contains(textoComentario, StringComparison.OrdinalIgnoreCase))
+        {
+            comentarioTemporal += $", {textoComentario}";
+        }
+    }
+
+    private void ClienteSeleccionadoHandler(Cliente cliente)
+    {
+        clienteSeleccionado = cliente;
+        mostrarModalClientes = false;
+    }
+
+    private async Task MesaRecienCreadaHandler(Mesa nuevaMesa)
+    {
+        mostrarModalCrearMesa = false;
+        await CargarMesas();
+        var mesaCreada = listaMesasDisponibles.FirstOrDefault(m => m.Id == nuevaMesa.Id);
+        if (mesaCreada != null)
+        {
+            SeleccionarMesa(mesaCreada);
+        }
+    }
+
+    private void AbrirModalCantidad(Producto prod)
+    {
+        itemEnEdicion = null;
+        productoSeleccionado = prod;
+        cantidadTemporal = 1;
+        comentarioTemporal = "";
+        mostrarModal = true;
+    }
+
+    private void AbrirModalEdicion(ItemCarrito item)
+    {
+        itemEnEdicion = item;
+
+        productoSeleccionado = new Producto
+        {
+            Id = item.ProductoId,
+            Nombre = item.Nombre,
+            Precio = item.Precio,
+            CostoTotal = item.Costo,
+            Comanda = item.Comanda
+        };
+
+        cantidadTemporal = item.Cantidad;
+        comentarioTemporal = item.Comentario;
+        mostrarCarrito = false;
+        mostrarModal = true;
+    }
+
+    private async Task ConfirmarActualizarCarrito()
+    {
+        if (itemEnEdicion != null && cantidadTemporal > 0)
+        {
+            itemEnEdicion.Cantidad = cantidadTemporal;
+            itemEnEdicion.Comentario = comentarioTemporal;
+
+            CalcularTotal();
+            await CerrarModalCantidad();
+        }
+    }
+
+    private async Task EliminarDelCarritoDesdeModal()
+    {
+        if (itemEnEdicion != null)
+        {
+            carrito.Remove(itemEnEdicion);
+            CalcularTotal();
+            await CerrarModalCantidad();
+        }
+    }
+
+    private void CargarDatosMesaSeleccionada()
+    {
+        try
+        {
+            using var con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL"));
+            string sql = "SELECT IdMesa, Nombre, Estatus FROM MESAS WHERE IdMesa = @Id";
+            con.Open();
+
+            using var cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@Id", MesaId);
+
+            using var reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                mesaSeleccionada = new Mesa
+                {
+                    Id = Convert.ToInt32(reader["IdMesa"]),
+                    Nombre = reader["Nombre"].ToString() ?? "",
+                    Estatus = reader["Estatus"].ToString() ?? ""
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
     private void CargarCategorias()
     {
         categorias.Clear();
@@ -254,22 +606,271 @@
                 categorias.Add(new Categoria
                 {
                     Id = Convert.ToInt32(reader["IdCategoria"]),
-                    Nombre = reader["Nombre"].ToString(),
-                    Color = reader["Color"].ToString(),
-                    Letra = reader["Letra"].ToString()
+                    Nombre = reader["Nombre"].ToString() ?? "",
+                    Color = reader["Color"].ToString() ?? "",
+                    Letra = reader["Letra"].ToString() ?? ""
                 });
             }
             if (categorias.Count > 0) CargarProductos(categorias[0].Id);
         }
         catch (Exception ex) { Console.WriteLine(ex.Message); }
     }
-    private void AbrirModalCantidad(Producto prod)
+
+    private string modalidad = "MESA";
+
+    private async Task CambiarModalidad(string nuevaModalidad)
     {
-        productoSeleccionado = prod;
-        cantidadTemporal = 1;
-        comentarioTemporal = "";
-        mostrarModal = true;   
+        modalidad = nuevaModalidad;
+        if (modalidad == "MESA")
+        {
+            await AbrirSeleccionMesa();
+        }
+        else if (modalidad == "DOMICILIO")
+        {
+            mesaSeleccionada = null;
+            if (clienteSeleccionado == null)
+            {
+                mostrarModalClientes = true;
+            }
+        }
+        else
+        {
+            mesaSeleccionada = null;
+            clienteSeleccionado = null;
+        }
     }
+
+    private async Task AbrirSeleccionMesa()
+    {
+        await CargarMesas();
+        mostrarModalMesas = true;
+    }
+
+    private async Task CargarMesas()
+    {
+        listaMesasDisponibles.Clear();
+        using var con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL"));
+        string sql = "SELECT IdMesa, Nombre, Estatus FROM MESAS WHERE Estatus IN ('NUEVA', 'COCINA') ORDER BY Nombre";
+        await con.OpenAsync();
+        using var cmd = new SqlCommand(sql, con);
+        using var reader = await cmd.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            listaMesasDisponibles.Add(new Mesa
+            {
+                Id = Convert.ToInt32(reader["IdMesa"]),
+                Nombre = reader["Nombre"].ToString()!,
+                Estatus = reader["Estatus"].ToString()!
+            });
+        }
+    }
+
+    private void SeleccionarMesa(Mesa m)
+    {
+        mesaSeleccionada = m;
+        mostrarModalMesas = false;
+    }
+
+    private async Task FinalizarOrden()
+    {
+        if (modalidad == "MESA" && mesaSeleccionada == null)
+        {
+            await JS.InvokeVoidAsync("alert", "Por favor selecciona una mesa antes de confirmar.");
+            return;
+        }
+
+        if (modalidad == "DOMICILIO" && clienteSeleccionado == null)
+        {
+            await JS.InvokeVoidAsync("alert", "Por favor selecciona un cliente para el pedido a domicilio.");
+            return;
+        }
+
+        if (carrito.Count == 0)
+        {
+            await JS.InvokeVoidAsync("alert", "El carrito está vacío.");
+            return;
+        }
+
+        // Obtener el ID del mesero autenticado
+        int idMeseroActivo = Session.IdUsuario > 0 ? Session.IdUsuario : 1;
+        string nombreMeseroActivo = !string.IsNullOrEmpty(Session.Usuario) ? Session.Usuario : "Mesero";
+
+        try
+        {
+            string connectionString = Configuration.GetConnectionString("CadenaSQL");
+            int idMesaFinal = 0;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlTransaction transaction = con.BeginTransaction())
+                {
+                    try
+                    {
+                        if (modalidad == "MESA")
+                        {
+                            idMesaFinal = mesaSeleccionada.Id;
+
+                            if (mesaSeleccionada.Estatus != "COCINA")
+                            {
+                                string updateMesaQuery = "UPDATE MESAS SET Estatus = 'COCINA', IdMesero = @IdMesero WHERE IdMesa = @IdMesa;";
+                                using (SqlCommand cmdMesa = new SqlCommand(updateMesaQuery, con, transaction))
+                                {
+                                    cmdMesa.Parameters.AddWithValue("@IdMesa", idMesaFinal);
+                                    cmdMesa.Parameters.AddWithValue("@IdMesero", idMeseroActivo);
+                                    await cmdMesa.ExecuteNonQueryAsync();
+                                }
+                            }
+                        }
+                        else if (modalidad == "RAPIDO")
+                        {
+                            string insertMesaQuery = "INSERT INTO MESAS (Nombre, IdMesero, Impresion, Estatus) VALUES ('Para llevar', @IdMesero, 0, 'COCINA'); SELECT SCOPE_IDENTITY();";
+                            using (SqlCommand cmdMesa = new SqlCommand(insertMesaQuery, con, transaction))
+                            {
+                                cmdMesa.Parameters.AddWithValue("@IdMesero", idMeseroActivo);
+                                idMesaFinal = Convert.ToInt32(await cmdMesa.ExecuteScalarAsync());
+                            }
+                        }
+                        else if (modalidad == "DOMICILIO")
+                        {
+                            string nombreMesa = "Domicilio " + (clienteSeleccionado.Nombre.Length > 20 ? clienteSeleccionado.Nombre.Substring(0, 20) : clienteSeleccionado.Nombre);
+                            string insertMesaQuery = "INSERT INTO MESAS (Nombre, IdMesero, Impresion, Estatus, IdCliente) VALUES (@Nombre, @IdMesero, 0, 'COCINA', @IdCliente); SELECT SCOPE_IDENTITY();";
+                            using (SqlCommand cmdMesa = new SqlCommand(insertMesaQuery, con, transaction))
+                            {
+                                cmdMesa.Parameters.AddWithValue("@Nombre", nombreMesa);
+                                cmdMesa.Parameters.AddWithValue("@IdMesero", idMeseroActivo);
+                                cmdMesa.Parameters.AddWithValue("@IdCliente", clienteSeleccionado.Id);
+                                idMesaFinal = Convert.ToInt32(await cmdMesa.ExecuteScalarAsync());
+                            }
+                        }
+
+                        string insertArticuloQuery = @"
+                        INSERT INTO ArticulosMesa
+                        (IdInventario, Cantidad, Total, Comentario, IdMesa, IdMesero, FechaHora, Estatus, Ids, IdPromo)
+                        VALUES
+                        (@IdInventario, @Cantidad, @Total, @Comentario, @IdMesa, @IdMesero, GETDATE(), @Estatus, @Ids, @IdPromo);";
+
+                        foreach (var item in carrito)
+                        {
+                            using (SqlCommand cmdArticulo = new SqlCommand(insertArticuloQuery, con, transaction))
+                            {
+                                if (item.ProductoId.StartsWith("C"))
+                                {
+                                    cmdArticulo.Parameters.AddWithValue("@IdInventario", 0);
+                                    cmdArticulo.Parameters.AddWithValue("@IdPromo", item.ProductoId.Substring(1));
+                                }
+                                else
+                                {
+                                    cmdArticulo.Parameters.AddWithValue("@IdInventario", item.ProductoId);
+                                    cmdArticulo.Parameters.AddWithValue("@IdPromo", DBNull.Value);
+                                }
+
+                                cmdArticulo.Parameters.AddWithValue("@Cantidad", item.Cantidad);
+                                cmdArticulo.Parameters.AddWithValue("@Total", item.Precio * item.Cantidad);
+                                cmdArticulo.Parameters.AddWithValue("@Comentario", string.IsNullOrWhiteSpace(item.Comentario) ? "" : item.Comentario);
+                                cmdArticulo.Parameters.AddWithValue("@IdMesa", idMesaFinal);
+                                cmdArticulo.Parameters.AddWithValue("@IdMesero", idMeseroActivo);
+                                cmdArticulo.Parameters.AddWithValue("@Estatus", "COCINA");
+                                cmdArticulo.Parameters.AddWithValue("@Ids", DBNull.Value);
+
+                                await cmdArticulo.ExecuteNonQueryAsync();
+                            }
+                        }
+
+                        using (SqlCommand cmdMesa = new SqlCommand("DELETE FROM MESAS WHERE ESTATUS = 'NUEVA';", con, transaction))
+                        {
+                            await cmdMesa.ExecuteNonQueryAsync();
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+
+            await JS.InvokeVoidAsync("alert", "¡SE HA REALIZADO LA ORDEN CON ÉXITO!");
+
+            try
+            {
+                string nombreMesa = modalidad == "MESA" ? mesaSeleccionada.Nombre : (modalidad == "DOMICILIO" ? "****ENTREGA A DOMICILIO****" : "Mostrador / Domicilio");
+
+                // 🟢 1. FILTRAR ITEMS PARA COMANDA 1
+                var itemsComanda1 = carrito.Where(x => x.Comanda == true).ToList();
+                if (itemsComanda1.Count > 0)
+                {
+                    var listaComanda1 = itemsComanda1.Select(item => (
+                        item.ProductoId,
+                        item.Cantidad.ToString(),
+                        item.Nombre,
+                        item.Comentario ?? "",
+                        ""
+                    )).ToList();
+
+                    PrintService.ImprimirComandaCocina(listaComanda1, nombreMesa, nombreMeseroActivo, Conexion.impresora2);
+                }
+
+                // 🔵 2. FILTRAR ITEMS PARA COMANDA 0 (Ej. Bebidas / Barra)
+                var itemsComanda0 = carrito.Where(x => x.Comanda == false).ToList();
+                if (itemsComanda0.Count > 0)
+                {
+                    var listaComanda0 = itemsComanda0.Select(item => (
+                        item.ProductoId,
+                        item.Cantidad.ToString(),
+                        item.Nombre,
+                        item.Comentario ?? "",
+                        ""
+                    )).ToList();
+
+                    PrintService.ImprimirComandaCocina(listaComanda0, nombreMesa, nombreMeseroActivo, Conexion.impresora);
+                }
+            }
+            catch (Exception exPrint)
+            {
+                await JS.InvokeVoidAsync("alert", $"La orden se guardó, pero hubo un error al imprimir comanda: {exPrint.Message}");
+            }
+
+            if (modalidad == "RAPIDO")
+            {
+                idMesaCobro = idMesaFinal;
+                totalCobro = total;
+                mostrarModalCobro = true;
+            }
+            else
+            {
+                mostrarCarrito = false;
+                carrito.Clear();
+                total = 0;
+                mesaSeleccionada = null;
+                clienteSeleccionado = null;
+                folioActual = "NUEVO";
+            }
+        }
+        catch (Exception ex)
+        {
+            await JS.InvokeVoidAsync("alert", $"Ocurrió un error al guardar la orden: {ex.Message}");
+        }
+    }
+
+    private void CerrarModalCobro()
+    {
+        mostrarModalCobro = false;
+    }
+
+    private void CobroExitosoHandler()
+    {
+        mostrarModalCobro = false;
+        mostrarCarrito = false;
+        carrito.Clear();
+        total = 0;
+        mesaSeleccionada = null;
+        folioActual = "NUEVO";
+        StateHasChanged();
+    }
+
     private async Task CerrarModalCantidad()
     {
         cerrandoModal = true;
@@ -280,23 +881,24 @@
         mostrarModal = false;
         cerrandoModal = false;
         productoSeleccionado = null;
+        itemEnEdicion = null;
+        StateHasChanged();
     }
-
 
     private void SumarCantidad() => cantidadTemporal++;
 
     private void RestarCantidad()
     {
         if (cantidadTemporal > 1)
-            cantidadTemporal--; 
+            cantidadTemporal--;
         else if (cantidadTemporal > 0.1)
             cantidadTemporal = 0;
     }
-    private void ConfirmarAgregarAlCarrito()
+
+    private async Task ConfirmarAgregarAlCarrito()
     {
         if (productoSeleccionado == null || cantidadTemporal <= 0) return;
 
-        // Buscamos si ya existe el MISMO producto con el MISMO comentario
         var itemExistente = carrito.FirstOrDefault(x =>
             x.ProductoId == productoSeleccionado.Id &&
             x.Comentario == comentarioTemporal);
@@ -314,19 +916,21 @@
                 Precio = productoSeleccionado.Precio,
                 Cantidad = cantidadTemporal,
                 Costo = productoSeleccionado.CostoTotal,
-                Comentario = comentarioTemporal
+                Comentario = comentarioTemporal,
+                Comanda = productoSeleccionado.Comanda
             });
         }
 
         CalcularTotal();
-        CerrarModalCantidad();
+        await CerrarModalCantidad();
     }
+
     private void CargarProductos(int idCategoria)
     {
         categoriaSeleccionadaId = idCategoria;
         productosMostrados.Clear();
         using var con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL"));
-        string sql = "SELECT IdInventario, Nombre, Precio, CostoTotal FROM Inventario WHERE IdCategoria = @cat ORDER BY Nombre";
+        string sql = "SELECT IdInventario, Nombre, Precio, CostoTotal, ImagenUrl, Comanda FROM Inventario WHERE IdCategoria = @cat ORDER BY Nombre";
         con.Open();
         using var cmd = new SqlCommand(sql, con);
         cmd.Parameters.AddWithValue("@cat", idCategoria);
@@ -335,20 +939,14 @@
         {
             productosMostrados.Add(new Producto
             {
-                Id = reader["IdInventario"].ToString(),
-                Nombre = reader["Nombre"].ToString(),
+                Id = reader["IdInventario"].ToString() ?? "",
+                Nombre = reader["Nombre"].ToString() ?? "",
                 Precio = Convert.ToDouble(reader["Precio"]),
-                CostoTotal = reader["CostoTotal"] != DBNull.Value ? Convert.ToDouble(reader["CostoTotal"]) : 0
+                CostoTotal = reader["CostoTotal"] != DBNull.Value ? Convert.ToDouble(reader["CostoTotal"]) : 0,
+                ImagenUrl = reader["ImagenUrl"].ToString() ?? "",
+                Comanda = Convert.ToBoolean(reader["Comanda"])
             });
         }
-    }
-
-    private void AgregarAlCarrito(Producto prod)
-    {
-        var item = carrito.FirstOrDefault(x => x.ProductoId == prod.Id);
-        if (item != null) item.Cantidad++;
-        else carrito.Add(new ItemCarrito { ProductoId = prod.Id, Nombre = prod.Nombre, Precio = prod.Precio, Cantidad = 1, Costo = prod.CostoTotal });
-        CalcularTotal();
     }
 
     private void EliminarDelCarrito(ItemCarrito item)
@@ -359,7 +957,6 @@
 
     private void CalcularTotal() => total = carrito.Sum(x => x.Precio * x.Cantidad);
     private void ToggleCarrito() => mostrarCarrito = !mostrarCarrito;
-    private void FinalizarOrden() { mostrarCarrito = false; carrito.Clear(); total = 0; }
 
-    public class ItemCarrito { public string ProductoId { get; set; } = ""; public string Nombre { get; set; } = ""; public double Precio { get; set; } public double Cantidad { get; set; } public double Costo { get; set; } public string Comentario { get; set; } = ""; }
+    public class ItemCarrito { public string ProductoId { get; set; } = ""; public string Nombre { get; set; } = ""; public double Precio { get; set; } public double Cantidad { get; set; } public double Costo { get; set; } public string Comentario { get; set; } = ""; public bool Comanda { get; set; } = true; }
 }

@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmAgregarInventario : Form
+    public partial class frmAgregarInventario : frmBase
     {
         public string lista = "";
         public frmAgregarInventario()
@@ -82,7 +82,7 @@ namespace Punto_Venta
                 comboBox2.ValueMember = "IdOrigen";
                 comboBox2.DataSource = dt;
             }
-
+            EstilizarBotonPrimario(button1);
         }
 
         private void txtCantidad_KeyPress(object sender, KeyPressEventArgs e)
@@ -136,3 +136,4 @@ namespace Punto_Venta
         }
     }
 }
+

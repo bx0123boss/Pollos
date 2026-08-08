@@ -5,4 +5,5 @@ public class Mesa
     public string Nombre { get; set; } = string.Empty;
     public string Estatus { get; set; } = "NUEVA"; // Valor por defecto
     public string Mesero { get; set; } = "";
+    public int CantidadPersonas { get; set; } = 1;
 }

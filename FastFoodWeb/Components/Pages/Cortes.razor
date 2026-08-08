@@ -1,0 +1,425 @@
+﻿@page "/corte"
+@using System.Data
+@using Microsoft.Data.SqlClient
+@using FastFoodWeb.Services
+@using Punto_Venta
+@inject UserSessionService Session
+@inject IConfiguration Configuration
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+@inject ServicioImpresion PrintService
+
+<PageTitle>Corte de Caja | Punto de Venta</PageTitle>
+
+@if (!Session.IsLoggedIn || Session.TipoUsuario?.ToUpper() != "ADMINISTRADOR")
+{
+    <div class="container mt-5 text-center">
+        <div class="alert alert-danger shadow">
+            <h4 class="fw-bold"><i class="bi bi-shield-lock-fill me-2"></i>Acceso Restringido</h4>
+            <p class="mb-0">Esta pantalla es exclusiva para usuarios con rol <strong>ADMINISTRADOR</strong>.</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container-fluid py-3 px-4">
+
+        <!-- ENCABEZADO PRINCIPAL -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h3 class="fw-bold text-dark m-0">Cierre de Caja y Balance de Turno</h3>
+                <small class="text-muted">Administrador activo: <strong>@Session.Usuario</strong></small>
+            </div>
+          @*   <button class="btn btn-danger btn-lg fw-bold px-4 shadow" @onclick="ConfirmarCierreCaja">
+                <i class="bi bi-lock-fill me-2"></i>REALIZAR CORTE
+            </button> *@
+        </div>
+
+        <div class="row g-3">
+            <!-- COLUMNA IZQUIERDA: TABLAS -->
+            <div class="col-lg-8">
+
+                <!-- TABLA 1: MOVIMIENTOS DEL TURNO -->
+                <div class="card shadow-sm border-0 mb-3">
+                    <div class="card-header bg-dark text-white fw-bold py-2">
+                        <i class="bi bi-list-check me-2"></i>Movimientos del Turno
+                    </div>
+                    <div class="card-body p-0 table-responsive" style="max-height: 320px;">
+                        <table class="table table-hover table-striped m-0 align-middle">
+                            <thead class="table-dark sticky-top">
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th>Forma Pago</th>
+                                    <th>Fecha / Hora</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (movimientosCorte.Count == 0)
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center py-3 text-muted">No hay movimientos registrados en el turno.</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var mov in movimientosCorte)
+                                    {
+                                        <tr>
+                                            <td>@mov.Concepto</td>
+                                            <td><span class="badge bg-secondary">@mov.FormaPago</span></td>
+                                            <td>@mov.FechaHora.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                            <td class="text-end fw-bold @(mov.Total < 0 ? "text-danger" : "text-success")">
+                                                $@mov.Total.ToString("N2")
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TABLA 2: VENTAS POR MESERO -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-2">
+                        <span class="fw-bold"><i class="bi bi-people-fill me-2"></i>Ventas por Mesero</span>
+                        <button class="btn btn-sm btn-primary fw-bold" @onclick="AbrirDetalleMesero" disabled="@(meseroSeleccionado == null)">
+                            <i class="bi bi-eye-fill me-1"></i>Ver Detalle
+                        </button>
+                    </div>
+                    <div class="card-body p-0 table-responsive" style="max-height: 220px;">
+                        <table class="table table-hover table-striped m-0 align-middle">
+                            <thead class="table-dark sticky-top">
+                                <tr>
+                                    <th>Mesero</th>
+                                    <th class="text-center">Mesas Atendidas</th>
+                                    <th class="text-end">Ventas Totales</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ventasMeseros.Count == 0)
+                                {
+                                    <tr>
+                                        <td colspan="3" class="text-center py-3 text-muted">No hay registros de ventas por mesero.</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var mesero in ventasMeseros)
+                                    {
+                                        bool isSelected = meseroSeleccionado?.IdUsuario == mesero.IdUsuario;
+                                        <tr class="@(isSelected ? "table-primary" : "")"
+                                            style="cursor: pointer;"
+                                            @onclick="() => meseroSeleccionado = mesero">
+                                            <td class="fw-bold">@mesero.NombreMesero</td>
+                                            <td class="text-center"><span class="badge bg-info text-dark">@mesero.MesasAtendidas</span></td>
+                                            <td class="text-end fw-bold text-primary">$@mesero.Ventas.ToString("N2")</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLUMNA DERECHA: MÉTRICAS Y TOTALES -->
+            <div class="col-lg-4">
+                <div class="row g-3">
+
+                    <!-- METRICA 1: TARJETAS / OTROS -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm bg-primary bg-opacity-10 border-start border-primary border-4">
+                            <div class="card-body">
+                                <span class="text-primary fw-bold small"><i class="bi bi-credit-card-fill me-1"></i>VENTAS TARJETA / BANCOS</span>
+                                <h2 class="text-primary fw-bold text-end m-0">$@ventasTarjetaOtros.ToString("N2")</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- METRICA 2: ENTRADAS EFECTIVO -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm bg-success bg-opacity-10 border-start border-success border-4">
+                            <div class="card-body">
+                                <span class="text-success fw-bold small"><i class="bi bi-box-arrow-in-down me-1"></i>ENTRADAS EFECTIVO</span>
+                                <h2 class="text-success fw-bold text-end m-0">$@entradasEfectivo.ToString("N2")</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- METRICA 3: SALIDAS CAJA -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm bg-danger bg-opacity-10 border-start border-danger border-4">
+                            <div class="card-body">
+                                <span class="text-danger fw-bold small"><i class="bi bi-box-arrow-up me-1"></i>SALIDAS CAJA</span>
+                                <h2 class="text-danger fw-bold text-end m-0">$@Math.Abs(salidasEfectivo).ToString("N2")</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- METRICA 4: EFECTIVO NETO -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm bg-warning bg-opacity-10 border-start border-warning border-4">
+                            <div class="card-body">
+                                <span class="text-warning-emphasis fw-bold small"><i class="bi bi-cash-stack me-1"></i>EFECTIVO NETO EN CAJA</span>
+                                <h1 class="text-warning-emphasis fw-bold text-end m-0">$@corteEfectivoNeto.ToString("N2")</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+<!-- MODAL: DETALLE DEL MESERO -->
+@if (mostrarModalDetalleMesero && meseroSeleccionado != null)
+{
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show d-block" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold">Corte Individual: @meseroSeleccionado.NombreMesero</h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="() => mostrarModalDetalleMesero = false"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <div class="row">
+                        <div class="col-6 border-end">
+                            <span class="text-muted d-block mb-1">Mesas Atendidas</span>
+                            <h3 class="fw-bold text-dark">@meseroSeleccionado.MesasAtendidas</h3>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-muted d-block mb-1">Monto Total Ventas</span>
+                            <h3 class="fw-bold text-success">$@meseroSeleccionado.Ventas.ToString("N2")</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary w-100" @onclick="() => mostrarModalDetalleMesero = false">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<MovimientoCorteModel> movimientosCorte = new();
+    private List<VentaMeseroModel> ventasMeseros = new();
+    private VentaMeseroModel? meseroSeleccionado;
+
+    private double entradasEfectivo = 0;
+    private double salidasEfectivo = 0;
+    private double ventasTarjetaOtros = 0;
+    private double corteEfectivoNeto => entradasEfectivo + salidasEfectivo;
+    private double granTotalCaja => corteEfectivoNeto + ventasTarjetaOtros;
+
+    private bool mostrarModalDetalleMesero = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Redirección si no es Administrador
+        if (!Session.IsLoggedIn || Session.TipoUsuario?.ToUpper() != "ADMINISTRADOR")
+        {
+            Nav.NavigateTo("/");
+            return;
+        }
+
+        await CargarDatos();
+    }
+
+    private async Task CargarDatos()
+    {
+        movimientosCorte.Clear();
+        ventasMeseros.Clear();
+        entradasEfectivo = 0;
+        salidasEfectivo = 0;
+        ventasTarjetaOtros = 0;
+
+        string cadenaSql = Configuration.GetConnectionString("CadenaSQL")!;
+
+        try
+        {
+            using var con = new SqlConnection(cadenaSql);
+            await con.OpenAsync();
+
+            // 1. Cargar Movimientos
+            string queryCorte = "SELECT Concepto, Total, FormaPago, FechaHora FROM CORTE ORDER BY FechaHora DESC;";
+            using (var cmd = new SqlCommand(queryCorte, con))
+            using (var reader = await cmd.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    double totalMov = Convert.ToDouble(reader["Total"]);
+                    string formaPago = reader["FormaPago"]?.ToString() ?? "";
+                    string formaPagoLimpia = formaPago.ToUpper();
+
+                    movimientosCorte.Add(new MovimientoCorteModel
+                    {
+                        Concepto = reader["Concepto"]?.ToString() ?? "",
+                        Total = totalMov,
+                        FormaPago = formaPago,
+                        FechaHora = Convert.ToDateTime(reader["FechaHora"])
+                    });
+
+                    // Totales
+                    if (string.IsNullOrEmpty(formaPagoLimpia) || formaPagoLimpia.Contains("EFECTIVO"))
+                    {
+                        if (totalMov >= 0) entradasEfectivo += totalMov;
+                        else salidasEfectivo += totalMov;
+                    }
+                    else
+                    {
+                        ventasTarjetaOtros += totalMov;
+                    }
+                }
+            }
+
+            // 2. Cargar Meseros
+            string queryMeseros = "SELECT IdUsuario, Usuario AS Mesero, Ventas, Mesas AS MesasAtendidas FROM Usuarios WHERE Ventas > 0 OR Mesas > 0;";
+            using (var cmd = new SqlCommand(queryMeseros, con))
+            using (var reader = await cmd.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
+                {
+                    ventasMeseros.Add(new VentaMeseroModel
+                    {
+                        IdUsuario = Convert.ToInt32(reader["IdUsuario"]),
+                        NombreMesero = reader["Mesero"]?.ToString() ?? "",
+                        Ventas = Convert.ToDouble(reader["Ventas"]),
+                        MesasAtendidas = Convert.ToInt32(reader["MesasAtendidas"])
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await JS.InvokeVoidAsync("alert", $"Error al cargar los datos del corte: {ex.Message}");
+        }
+    }
+
+    private void AbrirDetalleMesero()
+    {
+        if (meseroSeleccionado != null)
+        {
+            mostrarModalDetalleMesero = true;
+        }
+    }
+
+    private async Task ConfirmarCierreCaja()
+    {
+        if (movimientosCorte.Count == 0)
+        {
+            await JS.InvokeVoidAsync("alert", "No existen movimientos registrados para realizar el corte.");
+            return;
+        }
+
+        bool confirmado = await JS.InvokeAsync<bool>("confirm", "¿Está seguro que desea CERRAR LA CAJA?\nEsta acción procesará el historial y reiniciará las ventas del día.");
+        if (confirmado)
+        {
+            await ProcesarCierreCaja();
+        }
+    }
+
+    private async Task ProcesarCierreCaja()
+    {
+        string cadenaSql = Configuration.GetConnectionString("CadenaSQL")!;
+
+        try
+        {
+            using (var con = new SqlConnection(cadenaSql))
+            {
+                await con.OpenAsync();
+                using (var transaccion = con.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Insertar Historial del Corte
+                        int idCorteInsertado;
+                        string queryHistorial = @"INSERT INTO HistorialCortes (Monto, FechaHora) VALUES (@Monto, GETDATE());
+                                                 SELECT SCOPE_IDENTITY();";
+                        using (var cmd = new SqlCommand(queryHistorial, con, transaccion))
+                        {
+                            cmd.Parameters.AddWithValue("@Monto", granTotalCaja);
+                            idCorteInsertado = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                        }
+
+                        // 2. Insertar Detalle de Meseros
+                        string queryMeseros = @"INSERT INTO CortesMeseros(IdHistorialCortes, Mesero, Ventas, Mesas)
+                                               VALUES (@IdCorte, @Mesero, @Ventas, @Mesas);";
+                        foreach (var m in ventasMeseros)
+                        {
+                            using var cmd = new SqlCommand(queryMeseros, con, transaccion);
+                            cmd.Parameters.AddWithValue("@IdCorte", idCorteInsertado);
+                            cmd.Parameters.AddWithValue("@Mesero", m.NombreMesero);
+                            cmd.Parameters.AddWithValue("@Ventas", m.Ventas);
+                            cmd.Parameters.AddWithValue("@Mesas", m.MesasAtendidas);
+                            await cmd.ExecuteNonQueryAsync();
+                        }
+
+                        // 3. Insertar Detalle en CORTES
+                        string queryCorte = @"INSERT INTO CORTES(Concepto, Total, FormaPago, FechaHora, IdHistorialCortes)
+                                             VALUES (@Concepto, @Total, @FormaPago, @FechaHora, @IdHistorialCortes);";
+                        foreach (var mov in movimientosCorte)
+                        {
+                            using var cmd = new SqlCommand(queryCorte, con, transaccion);
+                            cmd.Parameters.AddWithValue("@Concepto", mov.Concepto);
+                            cmd.Parameters.AddWithValue("@Total", mov.Total);
+                            cmd.Parameters.AddWithValue("@FormaPago", mov.FormaPago);
+                            cmd.Parameters.AddWithValue("@FechaHora", mov.FechaHora);
+                            cmd.Parameters.AddWithValue("@IdHistorialCortes", idCorteInsertado);
+                            await cmd.ExecuteNonQueryAsync();
+                        }
+
+                        // 4. Resetear tablas operativas diarias
+                        using (var cmd = new SqlCommand("UPDATE Usuarios SET Ventas = 0, Mesas = 0;", con, transaccion))
+                            await cmd.ExecuteNonQueryAsync();
+
+                        using (var cmd = new SqlCommand("DELETE FROM CORTE;", con, transaccion))
+                            await cmd.ExecuteNonQueryAsync();
+
+                        using (var cmd = new SqlCommand("UPDATE inicio SET inicio = '0' WHERE id = 1;", con, transaccion))
+                            await cmd.ExecuteNonQueryAsync();
+
+                        transaccion.Commit();
+                    }
+                    catch
+                    {
+                        transaccion.Rollback();
+                        throw;
+                    }
+                }
+            }
+
+            await JS.InvokeVoidAsync("alert", "Corte realizado con éxito.");
+
+            // Recargar vista para reflejar la caja limpia
+            await CargarDatos();
+        }
+        catch (Exception ex)
+        {
+            await JS.InvokeVoidAsync("alert", $"Error al realizar el corte: {ex.Message}");
+        }
+    }
+
+    // MODELOS LOCALES
+    public class MovimientoCorteModel
+    {
+        public string Concepto { get; set; } = "";
+        public double Total { get; set; }
+        public string FormaPago { get; set; } = "";
+        public DateTime FechaHora { get; set; }
+    }
+
+    public class VentaMeseroModel
+    {
+        public int IdUsuario { get; set; }
+        public string NombreMesero { get; set; } = "";
+        public double Ventas { get; set; }
+        public int MesasAtendidas { get; set; }
+    }
+}

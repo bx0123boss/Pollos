@@ -1,11 +1,15 @@
 using FastFoodWeb.Components;
-
+using FastFoodWeb.Services;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
+builder.Services.AddScoped<ConfiguracionService>();
+builder.Services.AddScoped<ServicioImpresion>();
+builder.Services.AddScoped<UserSessionService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,6 +23,20 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+// Habilitar acceso a la carpeta física de imágenes
+var imagesPath = @"C:\Jaeger Soft\Imagenes";
+if (!Directory.Exists(imagesPath))
+{
+    Directory.CreateDirectory(imagesPath);
+}
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(imagesPath),
+    RequestPath = "/imagenes"
+});
+
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()

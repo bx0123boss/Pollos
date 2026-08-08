@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmExportarInventario : Form
+    public partial class frmExportarInventario : frmBase
     {
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
         OleDbConnection conn;
@@ -67,5 +67,13 @@ namespace Punto_Venta
             MessageBox.Show("El inventario se ha actualizado con exito", "Exito!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
+
+        private void frmExportarInventario_Load(object sender, EventArgs e)
+        {
+            EstilizarDataGridView(dataGridView1);
+            EstilizarBotonPrimario(button1);
+            EstilizarBotonPrimario(button2);
+        }
     }
 }
+

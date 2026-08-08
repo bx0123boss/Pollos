@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Data.SqlClient;
+using Punto_Venta;
+using System;
 using System.Data;
-using System.Data.OleDb;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows.Forms;
+using static QuestPDF.Helpers.Colors;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Punto_Venta
 {
-    public partial class frmAgregarCompras : Form
+    public partial class frmAgregarCompras : frmBase
     {
-        OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
-        public string usuario = "";
-        OleDbCommand cmd;
+        private string idProv = "0";
+        private string nombreProv = "";
+
         public frmAgregarCompras()
         {
             InitializeComponent();
@@ -23,167 +22,432 @@ namespace Punto_Venta
 
         private void frmAgregarCompras_Load(object sender, EventArgs e)
         {
-            conectar.Open();
-            DataTable dt = new DataTable();
-            cmd = new OleDbCommand("Select Id from Compras;", conectar);
-            OleDbDataAdapter da = new OleDbDataAdapter(cmd);
-            da.Fill(dt);
-            comboBox1.DisplayMember = "Id";
-            comboBox1.ValueMember = "Id";
-            comboBox1.DataSource = dt;
-            cmd = new OleDbCommand("select id,nombre,cantidad from Articulos;", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                dataGridView1.Rows.Add(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), "0", reader[2].ToString());
-            }
-            cmbProveedor.SelectedIndex = 0;
-            lblUser.Text = usuario;
+            rdContado.Checked = true;
+
+            // ESTILOS HEREDADOS DE frmBase
+            EstilizarDataGridView(this.dataGridView1);
+
+            EstilizarBotonPrimario(this.button2); // Botón Guardar
+            EstilizarBotonPrimario(this.button1); // Botón Agregar
+            EstilizarBotonAdvertencia(this.button4); // Buscar Producto
+            EstilizarBotonAdvertencia(this.button5); // Buscar Proveedor
+
+            // Ocultamos el botón calcular viejo ya que ahora todo es automático
+            this.button3.Visible = false;
+
+            EstilizarTextBox(txtFolio);
+            EstilizarTextBox(txtID);
+            EstilizarTextBox(txtCantidad);
+            EstilizarTextBox(txtCosto);
+            EstilizarTextBox(txtVenta);
+            EstilizarTextBox(txtMenudeo);
+            EstilizarTextBox(textBox1); // Costos Extra
+
         }
 
-        private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        // =========================================================
+        // MOTOR DE CÁLCULO AUTOMÁTICO
+        // =========================================================
+        private void CalcularTotales()
         {
-            DataGridViewColumn col = dataGridView1.Columns[e.ColumnIndex] as DataGridViewColumn;
-            char punto = '.';
-            
-            if (col.Name == "Movimiento")
+            double totalCostoGrid = 0;
+            double totalIvaGrid = 0;
+
+            double.TryParse(textBox1.Text, out double costosExtra);
+
+            // Sumamos los totales 
+            for (int i = 0; i < dataGridView1.RowCount; i++)
             {
-                DataGridViewTextBoxCell cell = dataGridView1[e.ColumnIndex, e.RowIndex] as DataGridViewTextBoxCell;
-                if (cell != null)
+                double cant = Convert.ToDouble(dataGridView1[2, i].Value);
+                double costo = Convert.ToDouble(dataGridView1[3, i].Value);
+                double ivaU = Convert.ToDouble(dataGridView1[6, i].Value);
+
+                totalCostoGrid += (costo * cant);
+                totalIvaGrid += (ivaU * cant);
+            }
+
+            // Prorrateo de costos extra
+            double porcentaje = totalCostoGrid > 0 ? (costosExtra / totalCostoGrid) : 0;
+
+            // Repartir el costo extra
+            for (int i = 0; i < dataGridView1.RowCount; i++)
+            {
+                double costo = Convert.ToDouble(dataGridView1[3, i].Value);
+                double iv = Convert.ToDouble(dataGridView1[6, i].Value);
+
+                double costoE = costo * porcentaje;
+                double costoR = costo + costoE + iv;
+
+                dataGridView1[4, i].Value = Math.Round(costoE, 3);
+                dataGridView1[5, i].Value = Math.Round(costoR, 2);
+            }
+
+            // Actualizar Interfaz
+            lblTotal.Text = (totalCostoGrid + costosExtra).ToString("0.00", CultureInfo.InvariantCulture);
+            lblIVA.Text = totalIvaGrid.ToString("0.00", CultureInfo.InvariantCulture);
+            lblTotalSi.Text = (totalCostoGrid + costosExtra + totalIvaGrid).ToString("0.00", CultureInfo.InvariantCulture);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            CalcularTotales();
+        }
+
+        // =========================================================
+        // AGREGAR, BUSCAR Y ELIMINAR (UX)
+        // =========================================================
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtID.Text) || string.IsNullOrWhiteSpace(txtNombre.Text))
+            {
+                MessageBox.Show("Busque y seleccione un producto primero.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!double.TryParse(txtCantidad.Text, out double cantidad) || cantidad <= 0)
+            {
+                MessageBox.Show("Introduzca una cantidad válida mayor a cero.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtCantidad.Focus();
+                return;
+            }
+
+            double.TryParse(txtCosto.Text, out double costo);
+            double.TryParse(txtVenta.Text, out double iva);
+            double.TryParse(txtMenudeo.Text, out double menudeo);
+
+            dataGridView1.Rows.Add(txtID.Text, txtNombre.Text, cantidad, costo, 0, 0, iva, menudeo);
+
+            txtID.Clear();
+            txtNombre.Clear();
+            txtCantidad.Text = "0";
+            txtCosto.Clear();
+            txtVenta.Clear();
+            txtMenudeo.Clear();
+            txtID.Focus();
+
+            CalcularTotales();
+        }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete && dataGridView1.CurrentRow != null)
+            {
+                dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+                CalcularTotales();
+            }
+        }
+
+        private void txtID_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtID.Text)) return;
+
+            using (SqlConnection conn = new SqlConnection(Conexion.CadConSql))
+            {
+                conn.Open();
+                string query = "SELECT Nombre, PrecioVenta FROM Inventario WHERE Id = @Id";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    char[] chars = e.FormattedValue.ToString().ToCharArray();
-                    foreach (char c in chars)
+                    cmd.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = txtID.Text.Trim();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        if (c == punto)
+                        if (reader.Read())
                         {
-                            
+                            txtNombre.Text = Convert.ToString(reader["Nombre"]);
+                            txtMenudeo.Text = Convert.ToString(reader["PrecioVenta"]);
+                            txtCantidad.Focus();
                         }
-                        else if (char.IsDigit(c) == false)
+                        else
                         {
-                            MessageBox.Show("Solo puedes introducir números", "Alto", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            e.Cancel = true;
-                            
-                            break;
+                            using (frmBusquedaArticulo buscar = new frmBusquedaArticulo())
+                            {
+                                if (buscar.ShowDialog() == DialogResult.OK)
+                                {
+                                    txtID.Text = buscar.Id;
+                                    txtNombre.Text = buscar.Nombre;
+                                    txtMenudeo.Text = buscar.Precio;
+                                    txtCantidad.Focus();
+                                }
+                                else
+                                {
+                                    txtNombre.Focus();
+                                }
+                            }
                         }
                     }
                 }
             }
         }
 
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
-            double valorActual = Convert.ToDouble(dataGridView1[2, e.RowIndex].Value.ToString());
-            double valor = Convert.ToDouble(dataGridView1[3, e.RowIndex].Value.ToString());
-            double valorNuevo=0; 
-            switch(cmbProveedor.SelectedIndex)
+            using (frmBusquedaArticulo buscar = new frmBusquedaArticulo())
             {
-                case 0:
-                    valorNuevo = valorActual + valor;
-                    break;
-                case 1:
-                    valorNuevo = valorActual - valor;
-                    break;
-                case 2:
-                    valorNuevo = valorActual + valor;            
-                    break;
+                if (buscar.ShowDialog() == DialogResult.OK)
+                {
+                    txtID.Text = buscar.Id;
+                    txtNombre.Text = buscar.Nombre;
+                    txtMenudeo.Text = buscar.Precio;
+                    txtCantidad.Focus();
+                }
+                else
+                {
+                    txtNombre.Focus();
+                }
             }
-            dataGridView1[4, e.RowIndex].Value = valorNuevo;
         }
 
-        private void cmbProveedor_SelectedIndexChanged(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dataGridView1.RowCount; i++)
+            using (frmBuscarProveedor buscar = new frmBuscarProveedor())
             {
-                double valorActual = Convert.ToDouble(dataGridView1[2, i].Value.ToString());
-                double valor = Convert.ToDouble(dataGridView1[3, i].Value.ToString());
-                double valorNuevo = 0;
-                switch (cmbProveedor.SelectedIndex)
+                if (buscar.ShowDialog() == DialogResult.OK)
                 {
-                    case 0:
-                        valorNuevo = valorActual + valor;
-                        break;
-                    case 1:
-                        valorNuevo = valorActual - valor;
-                        break;
-                    case 2:
-                        valorNuevo = valorActual + valor;
-                        break;
+                    nombreProv = buscar.Nombre;
+                    idProv = buscar.ID;
+                    lblProveedor.Text = nombreProv;
                 }
-                dataGridView1[4,i].Value = valorNuevo;
             }
-            if (cmbProveedor.SelectedIndex == 0)
+        }
+
+        private void txtCosto_Leave(object sender, EventArgs e)
+        {
+            if (double.TryParse(txtCosto.Text, out double costo))
             {
-                comboBox1.Visible = false;
-                label1.Visible = false;
+                txtVenta.Text = Math.Round(costo * 0.16, 2).ToString();
             }
             else
             {
-                comboBox1.Visible = true;
-                label1.Visible = true;
+                txtCosto.Text = "0";
+                txtVenta.Text = "0";
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void ValidarNumeros(KeyPressEventArgs e)
         {
-            string movimiento = cmbProveedor.Text;
-            string relacion = "";
-            if (cmbProveedor.SelectedIndex!=0)
-            {             
-                relacion = comboBox1.Text;   
-            }
-            cmd = new OleDbCommand("INSERT INTO Compras(Movimiento,Fecha,Capturo,Relacion) VALUES ('" + movimiento + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "','" + usuario + "','" + relacion + "');", conectar);
-            cmd.ExecuteNonQuery();
-            string idInsertado = "";
-            cmd = new OleDbCommand("select @@IDENTITY;", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                idInsertado = reader[0].ToString();
-            }
-            for (int i = 0; i < dataGridView1.RowCount; i++)
-            {
-                string id= dataGridView1[0, i].Value.ToString();
-                string nombre = dataGridView1[1, i].Value.ToString();
-                double existencias = Convert.ToDouble(dataGridView1[2, i].Value.ToString());
-                double mov= Convert.ToDouble(dataGridView1[3, i].Value.ToString());
-                double suma = Convert.ToDouble(dataGridView1[4, i].Value.ToString());               
-                cmd = new OleDbCommand("UPDATE Articulos SET Cantidad=" + suma + " where Id=" + id+ ";", conectar);
-                cmd.ExecuteNonQuery();                
-                cmd = new OleDbCommand("INSERT INTO ComprasMovimientos(Folio,IdProducto,Nombre,ExistenciasAntiguas,Movimiento,ExistenciasActuales,Tipo,Fecha) VALUES ('" + idInsertado + "','" + id + "','" + nombre + "','" + existencias + "','" + mov + "','" + suma + "','" + movimiento + "','" + (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()) + "');", conectar);
-                cmd.ExecuteNonQuery();
-            }
-            MessageBox.Show("SE HA CREADO LA ORDEN CON EXITO", "CERRAR ORDEN", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            frmCompras com = new frmCompras();
-            com.Show();
-            com.usuario = usuario;
-            this.Close();
+            CultureInfo cc = System.Threading.Thread.CurrentThread.CurrentCulture;
+            if (char.IsNumber(e.KeyChar) || e.KeyChar.ToString() == cc.NumberFormat.NumberDecimalSeparator || Convert.ToInt32(e.KeyChar) == 8)
+                e.Handled = false;
+            else
+                e.Handled = true;
         }
-        public void formato(string id, double cant)
+
+        private void txtCantidad_KeyPress(object sender, KeyPressEventArgs e) { ValidarNumeros(e); }
+        private void txtCosto_KeyPress(object sender, KeyPressEventArgs e) { ValidarNumeros(e); }
+        private void txtVenta_KeyPress(object sender, KeyPressEventArgs e) { ValidarNumeros(e); }
+        private void txtMenudeo_KeyPress(object sender, KeyPressEventArgs e) { ValidarNumeros(e); }
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e) { ValidarNumeros(e); }
+
+        private void txtID_KeyPress(object sender, KeyPressEventArgs e)
         {
-            cmd = new OleDbCommand("select * from invent where idArticulo=" + id + ";", conectar);
-            OleDbDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
+            if (e.KeyChar == Convert.ToChar(Keys.Enter)) SendKeys.Send("+{TAB}");
+        }
+
+        // =========================================================
+        // GUARDADO EN BASE DE DATOS (TRANSACCIÓN NATIVA EN SQL SERVER)
+        // =========================================================
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtFolio.Text))
             {
-                string salida="";
-                string set = "";
-                switch (cmbProveedor.SelectedIndex)
+                MessageBox.Show("Ingrese un Folio para guardar la compra.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtFolio.Focus();
+                return;
+            }
+            if (idProv == "0")
+            {
+                MessageBox.Show("Debe seleccionar un proveedor.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (dataGridView1.RowCount == 0)
+            {
+                MessageBox.Show("No hay productos en la póliza.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            CalcularTotales();
+
+            string nombreAlmacenDestino = "INVENTARIO";
+
+            using (SqlConnection conn = new SqlConnection(Conexion.CadConSql))
+            {
+                conn.Open();
+                using (SqlTransaction transaction = conn.BeginTransaction())
                 {
-                    case 0:
-                        salida = "" + (Convert.ToDouble(Convert.ToString(reader[3].ToString())) + cant);
-                        set = "entrada";
-                        break;
-                    case 1:
-                        salida = "" + (Convert.ToDouble(Convert.ToString(reader[3].ToString())) - cant);
-                        set = "salida";
-                        break;
-                    case 2:
-                        salida = "" + (Convert.ToDouble(Convert.ToString(reader[3].ToString())) + cant);
-                        set = "entrada";
-                        break;
+                    try
+                    {
+                        DateTime fechaOperacion = DateTime.Now;
+
+                        // 1. RECORRER PRODUCTOS DEL GRID
+                        for (int i = 0; i < dataGridView1.RowCount; i++)
+                        {
+                            if (dataGridView1.Rows[i].IsNewRow) continue;
+
+                            string idProdStr = dataGridView1[0, i].Value.ToString();
+                            string nombreProd = dataGridView1[1, i].Value.ToString();
+                            double cant = Convert.ToDouble(dataGridView1[2, i].Value);
+                            double costo = Convert.ToDouble(dataGridView1[3, i].Value);
+                            double costoExtra = Convert.ToDouble(dataGridView1[4, i].Value);
+                            double costoReal = Convert.ToDouble(dataGridView1[5, i].Value);
+                            double iva = Convert.ToDouble(dataGridView1[6, i].Value);
+                            double precioVenta = Convert.ToDouble(dataGridView1[7, i].Value);
+
+                            int.TryParse(idProdStr, out int idProdInt);
+
+                            // Insertar detalle poliza
+                            string queryProdPoliza = "INSERT INTO ProductosPoliza (Nombre, Cantidad, Costo, CostoExtra, CostoReal, IVA, FolioPoliza) " +
+                                                     "VALUES (@Nom, @Cant, @Costo, @CExtra, @CReal, @Iva, @Folio)";
+
+                            using (SqlCommand cmd = new SqlCommand(queryProdPoliza, conn, transaction))
+                            {
+                                cmd.Parameters.Add("@Nom", SqlDbType.VarChar, 100).Value = nombreProd;
+                                cmd.Parameters.Add("@Cant", SqlDbType.Decimal).Value = cant;
+                                cmd.Parameters.Add("@Costo", SqlDbType.Decimal).Value = costo;
+                                cmd.Parameters.Add("@CExtra", SqlDbType.Decimal).Value = costoExtra;
+                                cmd.Parameters.Add("@CReal", SqlDbType.Decimal).Value = costoReal;
+                                cmd.Parameters.Add("@Iva", SqlDbType.Decimal).Value = iva;
+                                cmd.Parameters.Add("@Folio", SqlDbType.VarChar, 50).Value = txtFolio.Text;
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            // Comprobar existencia en la tabla PRODUCTOS
+                            bool productoExiste = false;
+                            double invActual = 0;
+                            double precioDB = 0;
+
+                            string queryCheck = "SELECT Cantidad, Especial FROM PRODUCTOS WHERE IdProducto = @Id";
+                            using (SqlCommand cmdCheck = new SqlCommand(queryCheck, conn, transaction))
+                            {
+                                cmdCheck.Parameters.Add("@Id", SqlDbType.Int).Value = idProdInt;
+                                using (SqlDataReader reader = cmdCheck.ExecuteReader())
+                                {
+                                    if (reader.Read())
+                                    {
+                                        productoExiste = true;
+                                        invActual = reader["Cantidad"] != DBNull.Value ? Convert.ToDouble(reader["Cantidad"]) : 0;
+                                        precioDB = reader["Especial"] != DBNull.Value ? Convert.ToDouble(reader["Especial"]) : 0;
+                                    }
+                                }
+                            }
+
+                            double nuevas = invActual + cant;
+
+                            if (productoExiste)
+                            {
+                                double nuevoEspecial = costoReal > precioDB ? costoReal : precioDB;
+
+                                // Se quitó FechaUltimaCompra ya que no existe en la tabla PRODUCTOS
+                                string updInv = "UPDATE PRODUCTOS SET Especial = @Esp, Cantidad = @Exis, Precio = @PVenta WHERE IdProducto = @Id";
+                                using (SqlCommand cmdUpd = new SqlCommand(updInv, conn, transaction))
+                                {
+                                    cmdUpd.Parameters.Add("@Esp", SqlDbType.Decimal).Value = nuevoEspecial;
+                                    cmdUpd.Parameters.Add("@Exis", SqlDbType.Decimal).Value = nuevas;
+                                    cmdUpd.Parameters.Add("@PVenta", SqlDbType.Decimal).Value = precioVenta;
+                                    cmdUpd.Parameters.Add("@Id", SqlDbType.Int).Value = idProdInt;
+                                    cmdUpd.ExecuteNonQuery();
+                                }
+
+                                string insKardex1 = "INSERT INTO Kardex (IdProducto, Tipo, Descripcion, ExistenciaAntes, ExistenciaDespues, Fecha, Precio) " +
+                                                    "VALUES (@Id, 'ENTRADA', @Desc, @EA, @ED, GETDATE(), @Pre)";
+                                using (SqlCommand cmdKardex = new SqlCommand(insKardex1, conn, transaction))
+                                {
+                                    cmdKardex.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = idProdStr;
+                                    cmdKardex.Parameters.Add("@Desc", SqlDbType.VarChar, 255).Value = "COMPRA DE ARTICULO FOLIO: " + txtFolio.Text;
+                                    cmdKardex.Parameters.Add("@EA", SqlDbType.Decimal).Value = invActual;
+                                    cmdKardex.Parameters.Add("@ED", SqlDbType.Decimal).Value = nuevas;
+                                    cmdKardex.Parameters.Add("@Pre", SqlDbType.Decimal).Value = precioVenta;
+                                    //cmdKardex.ExecuteNonQuery();
+                                }
+                            }
+                            else
+                            {
+                                // Se omitió IdProducto (IDENTITY) y FechaUltimaCompra para ajustarse al schema de PRODUCTOS
+                                string insInv = "INSERT INTO PRODUCTOS (Nombre, Cantidad, Especial, IdOrigen, Precio, Limite) " +
+                                                "VALUES (@Nom, @Cant, @Esp, NULL, @PVenta, 1)";
+                                using (SqlCommand cmdIns = new SqlCommand(insInv, conn, transaction))
+                                {
+                                    cmdIns.Parameters.Add("@Nom", SqlDbType.VarChar, 100).Value = nombreProd;
+                                    cmdIns.Parameters.Add("@Cant", SqlDbType.Decimal).Value = cant;
+                                    cmdIns.Parameters.Add("@Esp", SqlDbType.Decimal).Value = costoReal;
+                                    cmdIns.Parameters.Add("@PVenta", SqlDbType.Decimal).Value = precioVenta;
+                                    cmdIns.ExecuteNonQuery();
+                                }
+
+                                string insKardex2 = "INSERT INTO Kardex (IdProducto, Tipo, Descripcion, ExistenciaAntes, ExistenciaDespues, Fecha, idProveedor, Proveedor) " +
+                                                    "VALUES (@Id, 'ENTRADA', @Desc, 0, @ED, GETDATE(), @idProv, @NomProv)";
+                                using (SqlCommand cmdKardex = new SqlCommand(insKardex2, conn, transaction))
+                                {
+                                    cmdKardex.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = idProdStr;
+                                    cmdKardex.Parameters.Add("@Desc", SqlDbType.VarChar, 255).Value = "COMPRA DE ARTICULO FOLIO: " + txtFolio.Text;
+                                    cmdKardex.Parameters.Add("@ED", SqlDbType.Decimal).Value = cant;
+                                    cmdKardex.Parameters.Add("@idProv", SqlDbType.VarChar, 50).Value = idProv;
+                                    cmdKardex.Parameters.Add("@NomProv", SqlDbType.VarChar, 150).Value = nombreProv;
+                                    //cmdKardex.ExecuteNonQuery();
+                                }
+                            }
+                        }
+
+                        // 2. ACTUALIZAR PROVEEDOR (Si es a crédito)
+                        if (rdCredito.Checked)
+                        {
+                            double adeudoActual = 0;
+                            string qProv = "SELECT Adeudo FROM Proveedores WHERE Id = @IdP";
+                            using (SqlCommand cmdProv = new SqlCommand(qProv, conn, transaction))
+                            {
+                                cmdProv.Parameters.Add("@IdP", SqlDbType.Int).Value = Convert.ToInt32(idProv);
+                                object result = cmdProv.ExecuteScalar();
+                                if (result != null && result != DBNull.Value)
+                                    adeudoActual = Convert.ToDouble(result);
+                            }
+
+                            double.TryParse(lblTotal.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double totalLbl);
+                            double.TryParse(textBox1.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double extraTxt);
+
+                            double totalCompra = totalLbl + extraTxt;
+                            adeudoActual += totalCompra;
+
+                            string uProv = "UPDATE Proveedores SET Adeudo = @Adeudo WHERE Id = @IdP";
+                            using (SqlCommand cmdUProv = new SqlCommand(uProv, conn, transaction))
+                            {
+                                cmdUProv.Parameters.Add("@Adeudo", SqlDbType.Decimal).Value = adeudoActual;
+                                cmdUProv.Parameters.Add("@IdP", SqlDbType.Int).Value = Convert.ToInt32(idProv);
+                                cmdUProv.ExecuteNonQuery();
+                            }
+                        }
+
+                        // 3. INSERTAR PÓLIZA GENERAL
+                        string insPoliza = "INSERT INTO Poliza (Folio, Fecha, FechaCaptura, CostoTotal, CostoExtra, IdProv, Proveedor, IVA, Total, IdAlmacen) " +
+                                           "VALUES (@Folio, @Fech1, GETDATE(), @CostoT, @CostoE, @IdP, @Prov, @Iva, @Tot, @IdAlmacen)";
+                        using (SqlCommand cmdPol = new SqlCommand(insPoliza, conn, transaction))
+                        {
+                            cmdPol.Parameters.Add("@Folio", SqlDbType.VarChar, 50).Value = txtFolio.Text;
+                            cmdPol.Parameters.Add("@Fech1", SqlDbType.DateTime).Value = dateTimePicker1.Value.Date;
+                            cmdPol.Parameters.Add("@CostoT", SqlDbType.Decimal).Value = Convert.ToDecimal(lblTotal.Text, CultureInfo.InvariantCulture);
+                            cmdPol.Parameters.Add("@CostoE", SqlDbType.Decimal).Value = Convert.ToDecimal(textBox1.Text, CultureInfo.InvariantCulture);
+                            cmdPol.Parameters.Add("@IdP", SqlDbType.VarChar, 50).Value = idProv;
+                            cmdPol.Parameters.Add("@Prov", SqlDbType.VarChar, 150).Value = nombreProv;
+                            cmdPol.Parameters.Add("@Iva", SqlDbType.Decimal).Value = Convert.ToDecimal(lblIVA.Text, CultureInfo.InvariantCulture);
+                            cmdPol.Parameters.Add("@Tot", SqlDbType.Decimal).Value = Convert.ToDecimal(lblTotalSi.Text, CultureInfo.InvariantCulture);
+                            cmdPol.Parameters.Add("@IdAlmacen", SqlDbType.Int).Value = 0;
+                            cmdPol.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+
+                        MessageBox.Show("Póliza guardada y procesada correctamente", "COMPRA REGISTRADA", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        frmCompras inv = new frmCompras();
+                        inv.Show();
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Ocurrió un error al procesar la compra.\nLa base de datos no fue afectada.\n\nError: " + ex.Message, "Error Crítico", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                cmd = new OleDbCommand("UPDATE invent set "+set+"='" + salida + "' Where idArticulo=" + id + ";", conectar);
-                cmd.ExecuteNonQuery();
             }
         }
+        private void txtCosto_TextChanged(object sender, EventArgs e) { }
     }
 }

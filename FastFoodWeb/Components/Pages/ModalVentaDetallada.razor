@@ -1,0 +1,246 @@
+﻿@using Microsoft.Data.SqlClient
+@using FastFoodWeb.Models
+@inject IConfiguration Configuration
+@inject IJSRuntime JS
+
+@if (Mostrar && FolioSeleccionado != null)
+{
+    <div class="modal-backdrop fade show" style="background-color: rgba(0,0,0,0.6);"></div>
+    <div class="modal fade show d-block" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg">
+
+                <!-- ENCABEZADO MODAL -->
+                <div class="modal-header bg-dark text-white py-3">
+                    <h5 class="modal-title fw-bold">
+                        <i class="bi bi-receipt-cutoff me-2 text-warning"></i>Detalle de Venta Folio: #@FolioSeleccionado.IdFolio
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="CerrarModal"></button>
+                </div>
+
+                <!-- CUERPO DEL MODAL -->
+                <div class="modal-body p-4">
+
+                    <!-- INFORMACIÓN ENCABEZADO -->
+                    <div class="row g-3 mb-3 bg-light p-3 rounded-3 border">
+                        <div class="col-6 col-md-3">
+                            <span class="text-muted d-block small">Fecha / Hora</span>
+                            <strong class="small text-dark">@FolioSeleccionado.FechaHora.ToString("dd/MM/yyyy HH:mm:ss")</strong>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <span class="text-muted d-block small">Modalidad</span>
+                            <span class="badge bg-primary">@FolioSeleccionado.ModalidadVenta</span>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <span class="text-muted d-block small">Mesa</span>
+                            <strong class="text-dark">@FolioSeleccionado.Mesa</strong>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <span class="text-muted d-block small">Mesero</span>
+                            <strong class="text-dark">@FolioSeleccionado.Mesero</strong>
+                        </div>
+                        <div class="col-6 col-md-3 mt-2">
+                            <span class="text-muted d-block small">Estatus</span>
+                            <span class="badge @(FolioSeleccionado.Estatus == "CANCELADO" ? "bg-danger" : "bg-success")">
+                                @FolioSeleccionado.Estatus
+                            </span>
+                        </div>
+                        <div class="col-6 col-md-3 mt-2">
+                            <span class="text-muted d-block small">Utilidad Generada</span>
+                            <strong class="text-success">$@FolioSeleccionado.Utilidad.ToString("N2")</strong>
+                        </div>
+                    </div>
+
+                    <!-- TABLA DE ARTÍCULOS CONSUMIDOS -->
+                    <h6 class="fw-bold mb-2 text-dark"><i class="bi bi-basket-fill me-1 text-primary"></i>Artículos de la Orden</h6>
+
+                    <div class="table-responsive border rounded-3 mb-3" style="max-height: 260px; overflow-y: auto;">
+                        <table class="table table-hover table-striped align-middle m-0 small">
+                            <thead class="table-dark sticky-top">
+                                <tr>
+                                    <th style="width: 70px;">Cant</th>
+                                    <th>Descripción / Producto</th>
+                                    <th class="text-end" style="width: 100px;">P. Unit</th>
+                                    <th class="text-end" style="width: 110px;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (cargandoDetalles)
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center py-4">
+                                            <div class="spinner-border spinner-border-sm text-primary me-2"></div>
+                                            Cargando productos de la venta...
+                                        </td>
+                                    </tr>
+                                }
+                                else if (detallesConsumo.Count == 0)
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center py-4 text-muted">
+                                            <i class="bi bi-exclamation-circle fs-4 d-block mb-1 text-warning"></i>
+                                            No se encontraron conceptos grabados para este folio.
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var art in detallesConsumo)
+                                    {
+                                        <tr>
+                                            <td class="fw-bold text-center">@art.Cantidad.ToString("0.##")</td>
+                                            <td>
+                                                <div class="fw-semibold text-dark">@art.Nombre</div>
+                                                @if (!string.IsNullOrWhiteSpace(art.Comentario))
+                                                {
+                                                    <small class="text-muted fst-italic d-block">* @art.Comentario</small>
+                                                }
+                                            </td>
+                                            <td class="text-end">$@art.PrecioUnitario.ToString("N2")</td>
+                                            <td class="text-end fw-bold text-dark">$@art.Total.ToString("N2")</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- RESUMEN FINAL -->
+                    <div class="d-flex justify-content-end align-items-center bg-dark text-white p-3 rounded-3 shadow-sm">
+                        <div class="me-4 text-end">
+                            <span class="d-block text-muted small">Descuento Aplicado:</span>
+                            <span class="fw-bold text-white">$@FolioSeleccionado.Descuento.ToString("N2")</span>
+                        </div>
+                        <div class="text-end border-start ps-4">
+                            <span class="d-block text-muted small">Total Cobrado:</span>
+                            <h3 class="m-0 fw-bold text-warning">$@FolioSeleccionado.Total.ToString("N2")</h3>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- FOOTER CON ACCIONES -->
+                <div class="modal-footer bg-light">
+                    @if (FolioSeleccionado.Estatus != "CANCELADO")
+                    {
+                      @*   <button class="btn btn-outline-danger fw-bold me-auto" @onclick="ReimprimirTicket">
+                            <i class="bi bi-printer-fill me-1"></i> Reimprimir Ticket
+                        </button> *@
+                    }
+                    <button type="button" class="btn btn-secondary px-4 fw-bold" @onclick="CerrarModal">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool Mostrar { get; set; }
+    [Parameter] public FolioVenta? FolioSeleccionado { get; set; }
+    [Parameter] public EventCallback OnCerrar { get; set; }
+
+    private List<DetalleConsumoModel> detallesConsumo = new();
+    private bool cargandoDetalles = false;
+    private int idFolioCargado = -1;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Mostrar && FolioSeleccionado != null && FolioSeleccionado.IdFolio != idFolioCargado)
+        {
+            idFolioCargado = FolioSeleccionado.IdFolio;
+            await CargarDetalleVenta(FolioSeleccionado.IdFolio);
+        }
+    }
+
+    private async Task CargarDetalleVenta(int idFolio)
+    {
+        cargandoDetalles = true;
+        detallesConsumo.Clear();
+        string cadenaSql = Configuration.GetConnectionString("CadenaSQL")!;
+
+        try
+        {
+            using var con = new SqlConnection(cadenaSql);
+            await con.OpenAsync();
+
+            // Consulta idéntica a la utilizada en WinForms (utilizando LEFT JOIN para INVENTARIO)
+            string sql = @"
+                SELECT
+                    A.IdInventario,
+                    A.IdArticulosFolio,
+                    A.Cantidad,
+                    CASE
+                        WHEN A.IdInventario = 0 THEN ISNULL(P.Nombre, 'Sin Nombre')
+                        ELSE ISNULL(B.Nombre, 'Sin Nombre')
+                    END AS Nombre,
+                    CASE
+                        WHEN A.IdInventario = 0 THEN ISNULL(P.Precio, 0)
+                        ELSE ISNULL(B.Precio, 0)
+                    END AS Precio,
+                    A.Total,
+                    ISNULL(A.Comentario, '') AS Comentario,
+                    A.IdExtra AS Ids,
+                    A.IdPromo
+                FROM ArticulosFolio A
+                LEFT JOIN INVENTARIO B ON A.IdInventario = B.IdInventario
+                LEFT JOIN Promos P ON A.IdPromo = P.IdPromo
+                WHERE A.IdFolio = @Folio;";
+
+            using var cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@Folio", idFolio);
+
+            using var reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                double cantidad = Convert.ToDouble(reader["Cantidad"]);
+                double totalLinea = Convert.ToDouble(reader["Total"]);
+                double precioUnitario = Convert.ToDouble(reader["Precio"]);
+
+                // Si por alguna razón la columna Precio es 0 pero hay un total, lo calculamos
+                if (precioUnitario == 0 && cantidad > 0)
+                {
+                    precioUnitario = totalLinea / cantidad;
+                }
+
+                detallesConsumo.Add(new DetalleConsumoModel
+                {
+                    Cantidad = cantidad,
+                    Nombre = reader["Nombre"]?.ToString() ?? "",
+                    PrecioUnitario = precioUnitario,
+                    Total = totalLinea,
+                    Comentario = reader["Comentario"]?.ToString() ?? ""
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al consultar detalles del folio #{idFolio}: {ex.Message}");
+        }
+        finally
+        {
+            cargandoDetalles = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ReimprimirTicket()
+    {
+        await JS.InvokeVoidAsync("alert", $"Reimprimiendo comprobante del Folio #{FolioSeleccionado?.IdFolio}...");
+    }
+
+    private async Task CerrarModal()
+    {
+        idFolioCargado = -1;
+        await OnCerrar.InvokeAsync();
+    }
+
+    public class DetalleConsumoModel
+    {
+        public double Cantidad { get; set; }
+        public string Nombre { get; set; } = "";
+        public double PrecioUnitario { get; set; }
+        public double Total { get; set; }
+        public string Comentario { get; set; } = "";
+    }
+}

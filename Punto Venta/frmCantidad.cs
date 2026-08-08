@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient; // Asegúrate de tener esta referencia
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,56 @@ namespace Punto_Venta
     {
         public string comentario { get; set; }
         public double cantidad { get; set; }
+
         public frmCantidad()
         {
             InitializeComponent();
+        }
+        private void frmCantidad_Load(object sender, EventArgs e)
+        {
+            CargarBotonesDinamicos();
+        }
+
+        private void CargarBotonesDinamicos()
+        {
+            flowLayoutPanelBotones.Controls.Clear();
+
+            string query = "SELECT Nombre FROM BotonesComentario";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(Conexion.CadConSql))
+                {
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string nombreBoton = reader["Nombre"].ToString();
+
+                                Button btn = new Button();
+                                btn.Text = nombreBoton;
+                                btn.Width = 80;
+                                btn.Height = 49;
+                                btn.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular);
+                                btn.UseVisualStyleBackColor = true;
+
+                                // Asignar el manejador de eventos existente
+                                btn.Click += new EventHandler(button_Click);
+
+                                // Agregar al contenedor dinámico
+                                flowLayoutPanelBotones.Controls.Add(btn);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los botones de comentarios: " + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -25,6 +73,7 @@ namespace Punto_Venta
             textBox1.Text = (Convert.ToDouble(textBox1.Text) + 1).ToString();
             txtComentario.Focus();
         }
+
         public void Cantidad(double cant)
         {
             comentario = txtComentario.Text;
@@ -95,7 +144,7 @@ namespace Punto_Venta
         {
             if (textBox1.Text == "0")
             {
-                MessageBox.Show("La cantidad no es un numero valido, verifique", "Product error", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+                MessageBox.Show("La cantidad no es un numero valido, verifique", "Product error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -115,13 +164,13 @@ namespace Punto_Venta
 
         private void button15_Click(object sender, EventArgs e)
         {
-            textBox1.Text = (Convert.ToDouble(textBox1.Text) + 0.25 ).ToString();
+            textBox1.Text = (Convert.ToDouble(textBox1.Text) + 0.25).ToString();
             txtComentario.Focus();
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
-            textBox1.Text = (Convert.ToDouble(textBox1.Text) + 0.5 ).ToString();
+            textBox1.Text = (Convert.ToDouble(textBox1.Text) + 0.5).ToString();
             txtComentario.Focus();
         }
 
@@ -137,11 +186,11 @@ namespace Punto_Venta
             {
                 e.Handled = true;
             }
-
         }
 
         private void button16_Click(object sender, EventArgs e)
         {
+            // Mantiene el comportamiento original de redimensionado
             if (button16.Text == "◄")
             {
                 this.Size = new Size(372, 460);
@@ -149,16 +198,15 @@ namespace Punto_Venta
             }
             else
             {
-                this.Size = new Size(550, 460);
+                this.Size = new Size(650, 460); // Aumentado ligeramente a 650 para dar espacio cómodo al panel dinámico
                 button16.Text = "◄";
             }
         }
 
         private void button_Click(object sender, EventArgs e)
-        {// Verifica si el sender es un botón
+        {
             if (sender is Button button)
             {
-                // Accede a la propiedad Text del botón que hizo clic
                 txtComentario.AppendText(" " + button.Text);
             }
         }
@@ -180,7 +228,6 @@ namespace Punto_Venta
                 e.Handled = true;
             }
 
-            // only allow one decimal point
             if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
             {
                 e.Handled = true;

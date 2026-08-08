@@ -1,4 +1,6 @@
-﻿namespace Punto_Venta
+﻿using System.Windows.Forms;
+
+namespace Punto_Venta
 {
     partial class frmClaveVendendor
     {
@@ -37,11 +39,13 @@
             // txtPass
             // 
             this.txtPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPass.Location = new System.Drawing.Point(221, 9);
+            this.txtPass.Location = new System.Drawing.Point(258, 12);
+            this.txtPass.Margin = new System.Windows.Forms.Padding(4);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
-            this.txtPass.Size = new System.Drawing.Size(301, 47);
-            this.txtPass.TabIndex = 54;
+            this.txtPass.Size = new System.Drawing.Size(350, 47);
+            this.txtPass.TabIndex = 0;
+            this.txtPass.Enter += new System.EventHandler(this.txtPass_Enter);
             this.txtPass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPass_KeyPress);
             // 
             // label3
@@ -49,7 +53,8 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(12, 12);
+            this.label3.Location = new System.Drawing.Point(14, 16);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(217, 39);
             this.label3.TabIndex = 55;
@@ -58,10 +63,11 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(187, 62);
+            this.button1.Location = new System.Drawing.Point(218, 81);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(173, 64);
-            this.button1.TabIndex = 56;
+            this.button1.Size = new System.Drawing.Size(202, 84);
+            this.button1.TabIndex = 1;
             this.button1.Text = "Aceptar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -70,9 +76,10 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(563, 12);
+            this.button2.Location = new System.Drawing.Point(657, 16);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(26, 27);
+            this.button2.Size = new System.Drawing.Size(30, 35);
             this.button2.TabIndex = 57;
             this.button2.Text = "X";
             this.button2.UseVisualStyleBackColor = true;
@@ -80,18 +87,18 @@
             // 
             // frmClaveVendendor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(601, 172);
+            this.ClientSize = new System.Drawing.Size(701, 225);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtPass);
             this.Controls.Add(this.label3);
             this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmClaveVendendor";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clave";
             this.TopMost = true;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

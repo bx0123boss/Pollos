@@ -26,6 +26,7 @@ namespace Punto_Venta
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
+                    Conexion.CargarConfiguracion(1);
                     Application.Run(new Form1());
                 }
             }

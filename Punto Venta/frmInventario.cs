@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmInventario : Form
+    public partial class frmInventario : frmBase
     {
         public string usuario;
         public frmInventario()
@@ -44,17 +44,37 @@ namespace Punto_Venta
                 cmbOrigen.DisplayMember = "Nombre";
                 cmbOrigen.ValueMember = "IdOrigen";
                 cmbOrigen.DataSource = dt;
-
-               
-
             }
+            AplicarEstilos();
+        }
+
+        private void AplicarEstilos()
+        {
+            EstilizarBotonAdvertencia(button2);
+            EstilizarBotonAdvertencia(button9);
+            EstilizarBotonAdvertencia(button13);
+            EstilizarBotonAdvertencia(button5);
+            EstilizarBotonPeligro(button3);
+            EstilizarBotonPeligro(button8);
+            EstilizarBotonPeligro(button11);
+            EstilizarBotonPeligro(button12);
+            EstilizarTextBox(textBox1);
+            EstilizarComboBox(cmbOrigen);
+            EstilizarBotonPrimario(button1);
+            EstilizarBotonPrimario(button7);
+            EstilizarBotonPrimario(button10);
+            EstilizarBotonPrimario(button6);
+            EstilizarBotonPrimario(button14);
+            EstilizarDataGridView(dgvInventario);
+            this.dgvInventario.ReadOnly = true;
+            this.dgvInventario.AllowUserToAddRows = false;
+            this.dgvInventario.AllowUserToDeleteRows = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             frmAgregarInventario add = new frmAgregarInventario();
             add.ShowDialog();
-            this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -72,7 +92,6 @@ namespace Punto_Venta
             edita.txtPrecio.Text = dgvInventario[5, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.txtLimite.Text = dgvInventario[6, dgvInventario.CurrentRow.Index].Value.ToString();
             edita.ShowDialog();
-            this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -121,15 +140,13 @@ namespace Punto_Venta
             agregar.lista = cmbOrigen.SelectedValue.ToString();
             agregar.txtActuales.Text = dgvInventario[2, dgvInventario.CurrentRow.Index].Value.ToString();
             agregar.lblID.Text = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
-            agregar.Show();
-            this.Close();
+            agregar.ShowDialog();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             frmPlatillos platillo = new frmPlatillos();
             platillo.ShowDialog();
-            this.Close();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -139,8 +156,7 @@ namespace Punto_Venta
             agregar.lblProducto.Text = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
             agregar.txtActuales.Text = dgvInventario[2, dgvInventario.CurrentRow.Index].Value.ToString();
             agregar.lblID.Text = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
-            agregar.Show();
-            this.Close();
+            agregar.ShowDialog();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -277,15 +293,14 @@ namespace Punto_Venta
         private void button8_Click(object sender, EventArgs e)
         {
             frmOrigen or = new frmOrigen();
-            or.Show();
-            this.Close();
+            or.ShowDialog();
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
             frmCategorias cat = new frmCategorias();
             cat.tipo = "Categorias";
-            cat.Show();
+            cat.ShowDialog();
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -311,38 +326,45 @@ namespace Punto_Venta
                     ws.Cells[cont, 3] = dgvInventario[2, i].Value.ToString();
                 }
                 frmExportarInventario fis = new frmExportarInventario();
-                fis.Show();
-                this.Close();
+                fis.ShowDialog();
             }
             else
             {
                 frmExportarInventario fis = new frmExportarInventario();
-                fis.Show();
-                this.Close();
-
+                fis.ShowDialog();
             }
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            frmCompras com = new frmCompras();
+            frmPolizas com = new frmPolizas();
             com.usuario = usuario;
-            com.Show();
-            this.Close();
+            com.ShowDialog();
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
             frmCombos com = new frmCombos();
             com.ShowDialog();
-            this.Close();
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
             frmCategorias cat = new frmCategorias();
             cat.tipo = "Subcategorias";
-            cat.Show();
+            cat.ShowDialog();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            frmProveedores pro = new frmProveedores();
+            pro.ShowDialog();
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            frmBotonesComentario bot = new frmBotonesComentario();
+            bot.ShowDialog();
         }
     }
 }

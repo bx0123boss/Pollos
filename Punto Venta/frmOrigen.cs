@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmOrigen : Form
+    public partial class frmOrigen : frmBase
     {
         public frmOrigen()
         {
@@ -34,13 +34,15 @@ namespace Punto_Venta
                     dataGridView1.Columns[0].Visible = false;
                 }
             }
+            EstilizarDataGridView(dataGridView1);
+            EstilizarBotonPeligro(button1);
+            EstilizarBotonPrimario(button3);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             frmAgregarOrigen CAT = new frmAgregarOrigen();
-            CAT.Show();
-            this.Close();
+            CAT.ShowDialog();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -79,3 +81,4 @@ namespace Punto_Venta
         }
     }
 }
+

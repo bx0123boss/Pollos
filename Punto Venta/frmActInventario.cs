@@ -1,15 +1,16 @@
 ﻿
+using MigraDoc.DocumentObjectModel.Internals;
 using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Data.SqlClient;
-using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmActInventario : Form
+    public partial class frmActInventario : frmBase
     {
 
         public frmActInventario()
@@ -37,6 +38,10 @@ namespace Punto_Venta
                 }
 
             }
+            EstilizarDataGridView(dgvMesa);
+            this.dgvMesa.ReadOnly = true;
+            this.dgvMesa.AllowUserToAddRows = false;
+            this.dgvMesa.AllowUserToDeleteRows = false;
         }
         private void button1_Click(object sender, EventArgs e)
         {

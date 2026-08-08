@@ -1,0 +1,231 @@
+@using Microsoft.Data.SqlClient
+@using System.Data
+@using FastFoodWeb.Models
+@inject IConfiguration Configuration
+@inject IJSRuntime JS
+
+@if (Mostrar)
+{
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show d-block" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="bi bi-search me-2"></i>Buscar Cliente</h5>
+                    <button type="button" class="btn-close btn-close-white" @onclick="Cerrar"></button>
+                </div>
+                
+                <div class="modal-body p-4">
+                    @if (!mostrandoFormularioNuevo)
+                    {
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control form-control-lg" 
+                                   placeholder="Buscar por nombre o teléfono..." 
+                                   @bind="terminoBusqueda" 
+                                   @bind:event="oninput" 
+                                   @onkeyup="BuscarClientes" />
+                        </div>
+                        <button class="btn btn-success w-100 mb-3" @onclick="() => mostrandoFormularioNuevo = true">
+                            <i class="bi bi-person-plus-fill me-2"></i>Agregar Nuevo Cliente
+                        </button>
+
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            @if (clientes.Count == 0 && !string.IsNullOrWhiteSpace(terminoBusqueda))
+                            {
+                                <div class="alert alert-warning text-center">
+                                    No se encontraron clientes con ese nombre o teléfono.
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="list-group">
+                                    @foreach (var c in clientes)
+                                    {
+                                        <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" 
+                                                @onclick="() => SeleccionarCliente(c)">
+                                            <div>
+                                                <h5 class="mb-1 fw-bold text-primary">@c.Nombre</h5>
+                                                <p class="mb-1 text-muted small"><i class="bi bi-geo-alt me-1"></i>@(string.IsNullOrWhiteSpace(c.Direccion) ? "Sin dirección" : c.Direccion)</p>
+                                            </div>
+                                            <span class="badge bg-secondary rounded-pill fs-6"><i class="bi bi-telephone me-1"></i>@c.Telefono</span>
+                                        </button>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nombre</label>
+                            <input type="text" class="form-control" @bind="nuevoCliente.Nombre" placeholder="Nombre completo" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Teléfono</label>
+                            <input type="number" class="form-control" @bind="nuevoCliente.Telefono" placeholder="Número a 10 dígitos" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Dirección</label>
+                            <input type="text" class="form-control" @bind="nuevoCliente.Direccion" placeholder="Calle y número" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Colonia</label>
+                            <input type="text" class="form-control" @bind="nuevoCliente.Colonia" placeholder="Colonia" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Referencia</label>
+                            <input type="text" class="form-control" @bind="nuevoCliente.Referencia" placeholder="Color de casa, entre calles, etc." />
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button class="btn btn-secondary" @onclick="CancelarNuevo">Cancelar</button>
+                            <button class="btn btn-primary" @onclick="GuardarNuevoCliente">
+                                <i class="bi bi-save me-1"></i>Guardar y Seleccionar
+                            </button>
+                        </div>
+                    }
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="Cerrar">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public bool Mostrar { get; set; }
+
+    [Parameter]
+    public EventCallback OnCerrar { get; set; }
+
+    [Parameter]
+    public EventCallback<Cliente> OnClienteSeleccionado { get; set; }
+
+    private string terminoBusqueda = "";
+    private List<Cliente> clientes = new();
+    
+    private bool mostrandoFormularioNuevo = false;
+    private Cliente nuevoCliente = new Cliente();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Mostrar && clientes.Count == 0)
+        {
+            await BuscarClientes();
+        }
+    }
+
+    private async Task BuscarClientes()
+    {
+        clientes.Clear();
+        try
+        {
+            using (SqlConnection con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL")))
+            {
+                await con.OpenAsync();
+                string sql = @"SELECT TOP 20 IdCliente, Nombre, Telefono, Direccion, Referencia, Colonia 
+                               FROM Clientes 
+                               WHERE (Nombre LIKE @Busqueda OR Telefono LIKE @Busqueda) 
+                               ORDER BY Nombre";
+                               
+                using (SqlCommand cmd = new SqlCommand(sql, con))
+                {
+                    cmd.Parameters.AddWithValue("@Busqueda", "%" + terminoBusqueda + "%");
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            clientes.Add(new Cliente
+                            {
+                                Id = Convert.ToInt32(reader["IdCliente"]),
+                                Nombre = reader["Nombre"]?.ToString() ?? "",
+                                Telefono = reader["Telefono"]?.ToString() ?? "",
+                                Direccion = reader["Direccion"]?.ToString() ?? "",
+                                Referencia = reader["Referencia"]?.ToString() ?? ""
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Ignorar errores menores o reportarlos
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private async Task SeleccionarCliente(Cliente c)
+    {
+        await OnClienteSeleccionado.InvokeAsync(c);
+        terminoBusqueda = "";
+        clientes.Clear();
+    }
+
+    private async Task Cerrar()
+    {
+        terminoBusqueda = "";
+        clientes.Clear();
+        mostrandoFormularioNuevo = false;
+        nuevoCliente = new Cliente();
+        await OnCerrar.InvokeAsync();
+    }
+
+    private void CancelarNuevo()
+    {
+        mostrandoFormularioNuevo = false;
+        nuevoCliente = new Cliente();
+    }
+
+    private async Task GuardarNuevoCliente()
+    {
+        if (string.IsNullOrWhiteSpace(nuevoCliente.Nombre) || string.IsNullOrWhiteSpace(nuevoCliente.Telefono))
+        {
+            await JS.InvokeVoidAsync("alert", "El nombre y el teléfono son obligatorios.");
+            return;
+        }
+
+        try
+        {
+            using (SqlConnection con = new SqlConnection(Configuration.GetConnectionString("CadenaSQL")))
+            {
+                await con.OpenAsync();
+                string sql = @"INSERT INTO Clientes (Nombre, Telefono, Direccion, Referencia, Colonia) 
+                               VALUES (@Nombre, @Telefono, @Direccion, @Referencia, @Colonia);
+                               SELECT SCOPE_IDENTITY();";
+                               
+                using (SqlCommand cmd = new SqlCommand(sql, con))
+                {
+                    cmd.Parameters.AddWithValue("@Nombre", nuevoCliente.Nombre ?? (object)DBNull.Value);
+                    
+                    // Convert telefono to decimal (numeric 15,0) as in DB schema
+                    if (decimal.TryParse(nuevoCliente.Telefono, out decimal telDecimal))
+                        cmd.Parameters.AddWithValue("@Telefono", telDecimal);
+                    else
+                        cmd.Parameters.AddWithValue("@Telefono", (object)DBNull.Value);
+
+                    cmd.Parameters.AddWithValue("@Direccion", nuevoCliente.Direccion ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Referencia", nuevoCliente.Referencia ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Colonia", nuevoCliente.Colonia ?? (object)DBNull.Value);
+
+                    int nuevoId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                    nuevoCliente.Id = nuevoId;
+                    
+                    // Seleccionarlo inmediatamente
+                    await SeleccionarCliente(nuevoCliente);
+                    
+                    // Resetear formulario
+                    mostrandoFormularioNuevo = false;
+                    nuevoCliente = new Cliente();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await JS.InvokeVoidAsync("alert", "Error al guardar el cliente: " + ex.Message);
+        }
+    }
+}

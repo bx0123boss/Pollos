@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmEditarPass : Form
+    public partial class frmEditarPass : frmBase
     {
         public int id;
 
@@ -59,8 +59,7 @@ namespace Punto_Venta
 
         private void frmEditarPass_FormClosing(object sender, FormClosingEventArgs e)
         {
-            frmUsuarios user = new frmUsuarios();
-            user.Show();
         }
     }
 }
+

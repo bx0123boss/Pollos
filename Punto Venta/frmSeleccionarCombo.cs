@@ -37,65 +37,45 @@ namespace Punto_Venta
 
         private void frmSeleccionarCombo_Load(object sender, EventArgs e)
         {
-            Random random = new Random(); 
-            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            try
             {
-                try
+                using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
                 {
                     conectar.Open();
-                    
-                    string diaSemana = DateTime.Now.ToString("dddd");
-                    string query = "SELECT * FROM Promos WHERE " + diaSemana + " = 1 ORDER BY Nombre;";
-                    SqlDataAdapter da = new SqlDataAdapter(query, conectar);
-                    da.Fill(ds, "Promos");
-                    dgvInventario.DataSource = ds.Tables["Promos"];
-                    //dgvInventario.Columns[0].Visible = false;
+                    string query = "SELECT IdPromo, CodigoPromo, Nombre, Precio FROM Promos ORDER BY Nombre;";
+                    using (SqlDataAdapter da = new SqlDataAdapter(query, conectar))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        dgvInventario.DataSource = dt;
+                    }
                 }
-                catch (Exception ex)
+
+                // VALIDACIÓN CLAVE: Solo selecciona automáticamente si SÍ hay registros
+                if (dgvInventario.Rows.Count > 0 && dgvInventario.CurrentRow != null)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    seleccionarPromo();
                 }
             }
-            articulosPromo(dgvInventario[0, 0].Value.ToString());
-            dgvInventario.Rows[0].Selected = true;
-            foreach (DataRow row in ds.Tables["Promos"].Rows)
+            catch (Exception ex)
             {
-                // Generar valores aleatorios para los componentes de color
-                int red = random.Next(256);    // Valores entre 0 y 255 (256 excluido)
-                int green = random.Next(256);
-                int blue = random.Next(256);
-
-                // Crear un nuevo objeto Color con los valores aleatorios
-                Color randomColor = Color.FromArgb(red, green, blue);
-
-                StringBuilder sb = new StringBuilder();
-                string id = Convert.ToString(row["IdPromo"]); 
-                string codigoPromo= Convert.ToString(row["CodigoPromo"]);
-                string nombre = row["Nombre"].ToString(); 
-                double precio = Convert.ToDouble(row["Precio"]); 
-                Button but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.FlatAppearance.BorderSize = 0;
-                but.Font = new System.Drawing.Font(new FontFamily("Calibri"), 11, FontStyle.Bold);
-                but.BackColor = randomColor;
-                //but.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFFFF");
-                but.ForeColor = Color.FromName("White");
-                but.Size = new System.Drawing.Size(104, 56);
-                but.Text = row["Nombre"].ToString();
-                but.Tag = new Tuple<string, string,string, double>(id, codigoPromo,nombre, precio);
-                sb.Append(nombre + "\n");
-                sb.Append($"Precio: ${precio} \nSe vende:");
-                sb.Append(row["Lunes"].ToString() == "1" ? " Lunes" : "");
-                sb.Append(row["Martes"].ToString() == "1" ? ", Martes" : "");
-                sb.Append(row["Miercoles"].ToString() == "1" ? ", Miércoles" : "");
-                sb.Append(row["Jueves"].ToString() == "1" ? ", Jueves" : "");
-                sb.Append(row["Viernes"].ToString() == "1" ? ", Viernes" : "");
-                sb.Append(row["Sabado"].ToString() == "1" ? ", Sábado" : "");
-                sb.Append(row["Domingo"].ToString() == "1" ? ", Domingo" : "");
-                toolTip1.SetToolTip(but, sb.ToString());
-                flowLayoutPanel2.Controls.Add(but);
-                but.Click += new EventHandler(this.botonPromos);
+                MessageBox.Show("Error al cargar las promociones: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private void seleccionarPromo()
+        {
+            // Si no hay datos cargados en el DataGridView, abortar
+            if (dgvInventario.Rows.Count == 0 || dgvInventario.CurrentRow == null)
+                return;
+
+            dgvPromo.Rows.Clear();
+            flowLayoutPanel1.Controls.Clear();
+
+            idPromo = dgvInventario[0, dgvInventario.CurrentRow.Index].Value?.ToString() ?? "";
+            nombrePromo = dgvInventario[1, dgvInventario.CurrentRow.Index].Value?.ToString() ?? "";
+            precioPromo = Convert.ToDouble(dgvInventario[2, dgvInventario.CurrentRow.Index].Value ?? 0);
+
+            articulosPromo(idPromo);
         }
 
         private void botonPromos(object sender, EventArgs e)
@@ -119,18 +99,12 @@ namespace Punto_Venta
         }
         private void dgvInventario_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            seleccionarPromo();
+            if (e.RowIndex >= 0)
+            {
+                seleccionarPromo();
+            }
         }
 
-        private void seleccionarPromo()
-        {
-            dgvPromo.Rows.Clear();
-            flowLayoutPanel1.Controls.Clear();
-            idPromo = dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString();
-            nombrePromo = dgvInventario[1, dgvInventario.CurrentRow.Index].Value.ToString();
-            precioPromo = Convert.ToDouble(dgvInventario[2, dgvInventario.CurrentRow.Index].Value.ToString());
-            articulosPromo(dgvInventario[0, dgvInventario.CurrentRow.Index].Value.ToString());
-        }
 
         private void filtroBoton(object sender, EventArgs e)
         {
@@ -430,9 +404,16 @@ namespace Punto_Venta
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            string id = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-            string nombre = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
-            string categoria = dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString();
+            if (dataGridView1.Rows.Count == 0 || dataGridView1.CurrentRow == null)
+            {
+                MessageBox.Show("No hay ningún producto seleccionado.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string id = dataGridView1[0, dataGridView1.CurrentRow.Index].Value?.ToString();
+            string nombre = dataGridView1[1, dataGridView1.CurrentRow.Index].Value?.ToString();
+            string categoria = dataGridView1[3, dataGridView1.CurrentRow.Index].Value?.ToString();
+
             DgvPedidoprevio.Rows.Add(id, "1", nombre, categoria, false, "1");
             comparaCategorias();
         }

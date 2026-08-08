@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmGastos : Form
+    public partial class frmGastos : frmBase
     {
         private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Jaeger Soft\FastFood.accdb");
@@ -125,3 +125,4 @@ namespace Punto_Venta
         }
     }
 }
+

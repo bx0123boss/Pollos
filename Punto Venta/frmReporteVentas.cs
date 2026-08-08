@@ -8,7 +8,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Punto_Venta
 {
-    public partial class frmReporteVentas : Form
+    public partial class frmReporteVentas : frmBase
     {
         public string usuario = "Administrador";
         public frmReporteVentas()
@@ -49,7 +49,11 @@ namespace Punto_Venta
                     dataGridView1.Columns["Utilidad"].DefaultCellStyle.Format = "N2";
                 }
             }
-
+            EstilizarBotonPrimario(button1);
+            EstilizarDataGridView(dataGridView1);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
         }
         private void CargarFoliosPorDia(DateTime dia)
         {
@@ -119,7 +123,6 @@ namespace Punto_Venta
                     detalles.button2.Hide();
                 }
                 detalles.ShowDialog();
-                this.Close();
             }
             catch 
             {
@@ -166,8 +169,7 @@ namespace Punto_Venta
         private void button2_Click(object sender, EventArgs e)
         {
             frmArticulosCancelados art = new frmArticulosCancelados();
-            art.Show();
-            this.Close();
+            art.ShowDialog();
         }
 
         private void label1_Click(object sender, EventArgs e)

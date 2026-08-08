@@ -14,7 +14,7 @@ using static Punto_Venta.frmAjustarFolios;
 
 namespace Punto_Venta
 {
-    public partial class frmAjustarFolios : Form
+    public partial class frmAjustarFolios : frmBase
     {
         decimal total;
         int numFolios;

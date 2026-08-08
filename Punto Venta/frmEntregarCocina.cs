@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Globalization;
-using LibPrintTicket;
 using System.Drawing.Printing;
 
 namespace Punto_Venta
 {
-    public partial class frmEntregarCocina : Form
+    public partial class frmEntregarCocina : frmBase
     {
         private DataSet ds;
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon); 
@@ -483,3 +477,4 @@ namespace Punto_Venta
         }
     }
 }
+

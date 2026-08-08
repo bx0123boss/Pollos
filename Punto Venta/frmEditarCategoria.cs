@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmEditarCategoria : Form
+    public partial class frmEditarCategoria : frmBase
     {
         public string id = "",nombre="";
         OleDbConnection conectar = new OleDbConnection(Conexion.CadCon);
@@ -61,3 +61,4 @@ namespace Punto_Venta
         }
     }
 }
+

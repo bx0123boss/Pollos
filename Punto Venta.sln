@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Punto Venta", "Punto Venta\Punto Venta.csproj", "{ACF38459-005A-41EF-8611-3208A1966B7A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastFoodWeb", "FastFoodWeb\FastFoodWeb.csproj", "{88402022-F841-4F7F-960D-198760EEFA1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketJaegersoft", "..\..\Leo\BRUNO-PERLA-RED\TicketJaegersoft\TicketJaegersoft.csproj", "{DD044446-14C9-C94B-9FD3-4352B755D6FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Punto Venta", "Punto Venta\Punto Venta.csproj", "{ACF38459-005A-41EF-8611-3208A1966B7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ACF38459-005A-41EF-8611-3208A1966B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ACF38459-005A-41EF-8611-3208A1966B7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ACF38459-005A-41EF-8611-3208A1966B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACF38459-005A-41EF-8611-3208A1966B7A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88402022-F841-4F7F-960D-198760EEFA1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88402022-F841-4F7F-960D-198760EEFA1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88402022-F841-4F7F-960D-198760EEFA1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88402022-F841-4F7F-960D-198760EEFA1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD044446-14C9-C94B-9FD3-4352B755D6FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD044446-14C9-C94B-9FD3-4352B755D6FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD044446-14C9-C94B-9FD3-4352B755D6FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD044446-14C9-C94B-9FD3-4352B755D6FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACF38459-005A-41EF-8611-3208A1966B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACF38459-005A-41EF-8611-3208A1966B7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACF38459-005A-41EF-8611-3208A1966B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACF38459-005A-41EF-8611-3208A1966B7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

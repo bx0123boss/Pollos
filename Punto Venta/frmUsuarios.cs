@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmUsuarios : Form
+    public partial class frmUsuarios : frmBase
     {
         public frmUsuarios()
         {
@@ -29,13 +29,29 @@ namespace Punto_Venta
                 dataGridView1.DataSource = ds.Tables["Id"];
                 dataGridView1.Columns[0].Visible = false;
             }
+            EstilizarDataGridView(dataGridView1);
+            EstilizarBotonPeligro(button3);
+            EstilizarBotonPrimario(button1);
+            EstilizarBotonAdvertencia(button4);
+            EstilizarBotonAdvertencia(button2);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             frmAgregarUsuario add = new frmAgregarUsuario();
-            add.Show();
-            this.Close();
+            add.ShowDialog();
+            using (SqlConnection conectar = new SqlConnection(Conexion.CadConSql))
+            using (SqlDataAdapter da = new SqlDataAdapter("SELECT IdUsuario, Usuario, TipoUsuario FROM Usuarios;", conectar))
+            {
+                DataSet ds = new DataSet();
+                da.Fill(ds, "Id");
+                dataGridView1.DataSource = ds.Tables["Id"];
+                dataGridView1.Columns[0].Visible = false;
+            }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -46,8 +62,7 @@ namespace Punto_Venta
             }
             frmEditarPass edit = new frmEditarPass();
             edit.id = Convert.ToInt32(dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString());
-            edit.Show();
-            this.Close();
+            edit.ShowDialog();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -81,6 +96,14 @@ namespace Punto_Venta
                     }
                 }
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            frmAsignarPermisos ad = new frmAsignarPermisos();
+            ad.NombreUsuarioSeleccionado = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
+            ad.IdUsuarioSeleccionado = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
+            ad.ShowDialog();
         }
     }
 }

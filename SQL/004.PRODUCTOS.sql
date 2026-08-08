@@ -9,6 +9,7 @@ CREATE TABLE PRODUCTOS (
     Medida VARCHAR(30),
     IdOrigen INT FOREIGN KEY REFERENCES ORIGEN(IdOrigen),
     Precio NUMERIC(8,2),
-    Limite NUMERIC(6,2)
+    Limite NUMERIC(6,2),
+	Especial NUMERIC(10,2),
 );
 COMMIT TRANSACTION;

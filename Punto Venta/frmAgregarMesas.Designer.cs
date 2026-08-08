@@ -38,9 +38,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(77, 69);
+            this.button1.Location = new System.Drawing.Point(90, 90);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(133, 38);
+            this.button1.Size = new System.Drawing.Size(155, 50);
             this.button1.TabIndex = 2;
             this.button1.Text = "Aceptar";
             this.button1.UseVisualStyleBackColor = true;
@@ -48,9 +49,10 @@
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(88, 12);
+            this.txtNombre.Location = new System.Drawing.Point(103, 16);
+            this.txtNombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(184, 20);
+            this.txtNombre.Size = new System.Drawing.Size(214, 25);
             this.txtNombre.TabIndex = 0;
             // 
             // label1
@@ -58,7 +60,8 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(9, 11);
+            this.label1.Location = new System.Drawing.Point(10, 14);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 18);
             this.label1.TabIndex = 57;
@@ -66,9 +69,10 @@
             // 
             // txtUbicacion
             // 
-            this.txtUbicacion.Location = new System.Drawing.Point(100, 38);
+            this.txtUbicacion.Location = new System.Drawing.Point(117, 50);
+            this.txtUbicacion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtUbicacion.Name = "txtUbicacion";
-            this.txtUbicacion.Size = new System.Drawing.Size(172, 20);
+            this.txtUbicacion.Size = new System.Drawing.Size(200, 25);
             this.txtUbicacion.TabIndex = 1;
             this.txtUbicacion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUbicacion_KeyPress);
             // 
@@ -77,7 +81,8 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(9, 37);
+            this.label2.Location = new System.Drawing.Point(10, 48);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 18);
             this.label2.TabIndex = 60;
@@ -85,10 +90,10 @@
             // 
             // frmAgregarMesas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(284, 119);
+            this.ClientSize = new System.Drawing.Size(331, 156);
             this.Controls.Add(this.txtUbicacion);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
@@ -96,9 +101,10 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmAgregarMesas";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Agregar Mesas";
+            this.Load += new System.EventHandler(this.frmAgregarMesas_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

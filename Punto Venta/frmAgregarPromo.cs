@@ -15,7 +15,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Punto_Venta
 {
-    public partial class frmAgregarPromo : Form
+    public partial class frmAgregarPromo : frmBase
     {
         public string id;
         bool lunes, martes, miercoles, jueves, viernes, sabado, domingo;
@@ -263,3 +263,4 @@ namespace Punto_Venta
         }
     }
 }
+

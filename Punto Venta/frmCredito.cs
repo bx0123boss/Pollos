@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Punto_Venta
 {
-    public partial class frmCredito : Form
+    public partial class frmCredito : frmBase
     {
         public double iva { get; set; }
         public frmCredito()
@@ -50,3 +50,4 @@ namespace Punto_Venta
      
     }
 }
+

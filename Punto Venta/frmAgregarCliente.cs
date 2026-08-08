@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 
 namespace Punto_Venta
 {
-    public partial class frmAgregarCliente : Form
+    public partial class frmAgregarCliente : frmBase
     {
         public int id;
         public string Nombre { get; set; }
@@ -96,5 +96,21 @@ namespace Punto_Venta
                 e.Handled = true;
             }
         }
+
+        private void frmAgregarCliente_Load(object sender, EventArgs e)
+        {
+            EstilizarTextBox(txtNombre);
+            EstilizarTextBox(txtTelefono);
+            EstilizarTextBox(txtDireccion);
+            EstilizarTextBox(txtReferencia);
+            EstilizarTextBox(txtColonia);
+            EstilizarBotonPrimario(button2);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            CerrarTeclado();
+        }
     }
 }
+

@@ -1,6 +1,16 @@
-﻿@inherits LayoutComponentBase
+﻿@using FastFoodWeb.Models
+@using FastFoodWeb.Services
+@inject ConfiguracionService ConfigService
+@inherits LayoutComponentBase
 
-<div class="page">
+<PageTitle>Jaegersoft Web</PageTitle>
+<div class="page"
+     style="
+     --color-primario:@config.ColorPrimario;
+     --color-secundario:@config.ColorSecundario;
+     --color-acento:@config.ColorSecundario;
+     ">
+
     <div class="sidebar">
         <NavMenu />
     </div>
@@ -12,8 +22,22 @@
     </main>
 </div>
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
+@code {
+    private ConfiguracionApariencia config = new ConfiguracionApariencia
+    {
+        ColorPrimario = "#003366",
+        ColorSecundario = "#ff6600"
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Traemos la configuración real de la BD
+        var configDb = await ConfigService.ObtenerColores();
+
+        // Si la BD devolvió algo válido, lo usamos
+        if (!string.IsNullOrEmpty(configDb.ColorPrimario))
+        {
+            config = configDb;
+        }
+    }
+}

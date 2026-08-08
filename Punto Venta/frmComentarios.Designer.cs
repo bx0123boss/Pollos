@@ -36,9 +36,10 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(191, 242);
+            this.button1.Location = new System.Drawing.Point(223, 316);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(143, 47);
+            this.button1.Size = new System.Drawing.Size(167, 61);
             this.button1.TabIndex = 59;
             this.button1.Text = "Aceptar";
             this.button1.UseVisualStyleBackColor = true;
@@ -47,10 +48,11 @@
             // txtPass
             // 
             this.txtPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPass.Location = new System.Drawing.Point(12, 48);
+            this.txtPass.Location = new System.Drawing.Point(14, 63);
+            this.txtPass.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPass.Multiline = true;
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(494, 188);
+            this.txtPass.Size = new System.Drawing.Size(576, 245);
             this.txtPass.TabIndex = 57;
             // 
             // label3
@@ -58,7 +60,8 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(40, 9);
+            this.label3.Location = new System.Drawing.Point(47, 12);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(436, 25);
             this.label3.TabIndex = 58;
@@ -66,17 +69,18 @@
             // 
             // frmComentarios
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(518, 301);
+            this.ClientSize = new System.Drawing.Size(604, 394);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtPass);
             this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmComentarios";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Comentarios";
+            this.Load += new System.EventHandler(this.frmComentarios_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmComentarios_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();
